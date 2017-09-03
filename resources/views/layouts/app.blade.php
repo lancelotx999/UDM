@@ -1,35 +1,17 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
-
-
-
-
 <head>
-
     <!--required meta-->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-
-
     <title>Urban Development Maps</title>
-
-
-
-
     <!-- Fonts-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
-
-
     <!-- Styles-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!--link rel="stylesheet" href="{{ URL::asset('css/style.css')}}"-->
 
     <style>
         @import url("https://bootswatch.com/flatly/bootstrap.min.css");
@@ -100,56 +82,22 @@
 
 
 <body id="app-layout">
-<script>
-    $(document).ready(function() {
-  $('[data-toggle=offcanvas]').click(function() {
-    $('.row-offcanvas').toggleClass('active');
-  });
-});
-</script>
-    <div class="navbar navbar-fixed-top navbar-default" role="navigation" >
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Urban Development Maps</a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Maps</a></li>
-                <li><a href="#about">Charts</a></li>
-                
-            </ul>
-        </div>
-        <!-- /.nav-collapse -->
-    </div>
-    <!-- /.container -->
-</div>
-<!-- /.navbar -->
+ @include('layouts.partials._header')
 
 <div class="container-fluid">
     <div class="row row-offcanvas row-offcanvas-left" >
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-            <div class="sidebar-nav">
-                <ul class="nav">
-                    <li><input type="checkbox" name="vehicle" value="Heatmaps"><span id="cb_span">Security</span></li>
-                    <li><input type="checkbox" name="vehicle" value="Security"><span id="cb_span">Heatmaps</span></li>
-                    <li><input type="checkbox" name="vehicle" value="Heatmaps"><span id="cb_span">People fucking</span></li>
-                    <li><input type="checkbox" name="vehicle" value="Security"><span id="cb_span">People kissing</span></li>
-                    <li><input type="checkbox" name="vehicle" value="Heatmaps"><span id="cb_span">cumstains</span></li>
-                    <li><input type="checkbox" name="vehicle" value="Security"><span id="cb_span">dropped cash</span></li>
-                    
-                </ul>
-            </div>
-            <!--/.well -->
-        </div>
-        <!--/span-->
+        @include('layouts/partials._overlay')
+        
 
         <div class="col-xs-12 col-sm-9">
+            
             <br>
+            <ol class="breadcrumb">
+                <li class="active">Ground Floor</li>
+                <li><a href="#">Level 1</a></li>
+                <li><a href="#">Level 2</a></li>
+                <li><a href="#">Level 3</a></li>
+            </ol>
             <div class="jumbotron">
                 <a href="#" class="visible-xs" data-toggle="offcanvas"><i class="fa fa-lg fa-reorder"></i></a>
                 <h1>Hello, world!</h1>
@@ -182,11 +130,7 @@
     </div>
     <!--/row-->
 
-    <hr>
-
-    <footer>
-        <p>©Swinburne University of Technology</p>
-    </footer>
+    @include('layouts/partials._footer')
 
 </div>
 </body>

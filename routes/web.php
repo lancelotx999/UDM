@@ -12,5 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts/app');
+});
+
+
+Route::get('/chart', function () {
+    return view('chart');
 });
