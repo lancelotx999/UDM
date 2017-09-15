@@ -14,7 +14,7 @@
       
 
       // load the external svg from a file
-      d3.xml("{{ asset('assets/groundfloor.svg') }}", "image/svg+xml", function(xml) {
+      d3.xml("assets/groundfloor.svg", "image/svg+xml", function(xml) {
       var importedNode = document.importNode(xml.documentElement, true);
       d3.select("div#vis")
         .each(function() {
