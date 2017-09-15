@@ -1,4 +1,6 @@
 
+window.d3 = require('d3');
+
 window._ = require('lodash');
 
 /**

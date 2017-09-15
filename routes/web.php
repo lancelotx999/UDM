@@ -11,8 +11,9 @@
 |
 */
 
+//loads the child 1st
 Route::get('/', function () {
-    return view('layouts/app');
+    return view('child');
 });
 
 
