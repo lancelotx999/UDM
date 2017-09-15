@@ -10,9 +10,8 @@
     <!-- Fonts-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
-    <!-- Styles-->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <link href="{{asset('css/app.cs')}}" rel="stylesheet">
     <style>
         @import url("https://bootswatch.com/flatly/bootstrap.min.css");
 
@@ -23,6 +22,31 @@
           padding-left: 15px;
           padding-right: 15px;
         }
+        /* Make the chart container fill the page using CSS. */
+        #chart {
+            position: fixed;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+            bottom: 0px;
+        }
+
+        #states {
+  fill: #aaa;
+}
+
+#states .active {
+  fill: orange;
+}
+
+#state-borders {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+}
 
         /*
          * Off Canvas
@@ -98,30 +122,7 @@
                 <li><a href="#">Level 2</a></li>
                 <li><a href="#">Level 3</a></li>
             </ol>
-            <div class="jumbotron">
-                <a href="#" class="visible-xs" data-toggle="offcanvas"><i class="fa fa-lg fa-reorder"></i></a>
-                <h1>Hello, world!</h1>
-                <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
-            </div>
-            <div class="row">
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Bootstrap is a front-end framework that uses CSS and JavaScript to facilitate responsive Web design. Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap
-                        friendly HTML, CSS and Javascript.</p>
-                    <p><a class="btn btn-default" href="#">View details »</a></p>
-                </div>
-                <!--/span-->
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Bootply is a playground for Bootstrap that enables developers and designers to test, prototype and create mockups using Bootstrap friendly HTML, CSS and Javascript. Bootstrap is a front-end framework that uses CSS and JavaScript to
-                        facilitate responsive Web design. </p>
-                    <p><a class="btn btn-default" href="#">View details »</a></p>
-                </div>
-                <!--/span-->
-
-                
-                <!--/span-->
-            </div>
+            @yield('content')
             <!--/row-->
         </div>
         <!--/span-->
@@ -133,6 +134,7 @@
     @include('layouts/partials._footer')
 
 </div>
+<script src="{{ assets('js/app.js')}}"></script>
 </body>
 <!--/.container-->
 </html>
