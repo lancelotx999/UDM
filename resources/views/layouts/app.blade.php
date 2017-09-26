@@ -22,7 +22,7 @@
           padding-left: 15px;
           padding-right: 15px;
         }
-        /* Make the chart container fill the page using CSS. */
+        /* Make the data visualization container fill the page using CSS. */
         #chart {
             position: fixed;
             left: 0px;
@@ -31,27 +31,7 @@
             bottom: 0px;
         }
 
-        #states {
-  fill: #aaa;
-}
-
-#states .active {
-  fill: orange;
-}
-
-#state-borders {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 1.5px;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  pointer-events: none;
-}
-
-        /*
-         * Off Canvas
-         * --------------------------------------------------
-         */
+        /*Off Canvas*/
         @media screen and (max-width: 768px) {
           .row-offcanvas {
             position: relative;
@@ -82,20 +62,90 @@
         }
 
         #sidebar {
-            padding:15px;
-            margin-top:10px;
+            padding:20px;
+            
             background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('https://mdbootstrap.com/img/Photos/Others/img (51).jpg');
           -webkit-background-size: cover;
           -moz-background-size:  cover;
           -o-background-size: cover;
           background-size: cover;
             background-color: #224562;
-            width:240px;
+            width:15%;
             height: 800px;
             height:height;
             display: table;
         }
         #cb_span{color:white;}
+
+        #main-content {
+            width:85%;
+        }
+
+
+        /*zoom to bounding box */
+        .background {
+          fill: none;
+          pointer-events: all;
+        }
+
+        .feature {
+          fill: #ccc;
+          cursor: pointer;
+        }
+
+        .feature.active {
+          fill: orange;
+        }
+
+        .mesh {
+          fill: none;
+          stroke: #fff;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+
+
+
+        /*footer*/
+        footer {
+          margin-left:-15px;
+          margin-right:-15px;
+
+        }
+
+
+
+        footer.page-footer {
+          padding-top: 20px;
+          background-color: #262626;
+          color: #fff; 
+        }
+
+        footer.page-footer .container-fluid {
+          width: auto; 
+        }
+  
+
+  
+        footer.page-footer a {
+          color: #fff; 
+        }
+
+        footer.page-footer .title {
+          text-transform: uppercase; 
+        }
+
+        footer .desc {
+          font-size: 1.20rem;
+        }
+
+        ul.links { 
+          list-style-type: none;
+          
+         }
+
+        
+
     </style>
 
 
@@ -113,7 +163,7 @@
         @include('layouts/partials._overlay')
         
 
-        <div class="col-xs-12 col-sm-9">
+        <div class="col-xs-12 col-sm-9" id="main-content">
             
             <br>
             <ol class="breadcrumb">
