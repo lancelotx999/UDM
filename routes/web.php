@@ -20,3 +20,6 @@ Route::get('/', function () {
 Route::get('/chart', function () {
     return view('chart');
 });
+
+
+Route::get('/test', 'SecurityController@index');
