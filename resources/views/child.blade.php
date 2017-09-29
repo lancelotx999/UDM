@@ -28,12 +28,15 @@
         <script>
 
         var svg = d3.select("svg")
-          .append("svg")
-          .attr("width", "100%")
-          .attr("height", "100%")
-          .call(d3.zoom().on("zoom", function () {
-                  svg.attr("transform", d3.event.transform)
-          })).append("g");
+            .append("svg")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .call(d3.zoom()
+                .on("zoom", function () {
+                    svg.attr("transform", d3.event.transform)
+                }))
+            .on("dblclick.zoom", null)
+            .append("g");
 
         d3.xml("assets/groundfloor.svg")
             .mimeType("image/svg+xml")
@@ -44,6 +47,37 @@
                 return svg.node().appendChild(g);
             });
 
+        // Due to the document not loaded yet, this line of code will only 
+        // execute once the above scripts are done loaded in the document.
+        $(document).ready(function () {
+
+            // 'rect3769' = G block
+            // 'path4596' = A/B block
+            // 'path4598' = E block
+            // 'path4600' = L block
+
+            d3.select("#rect3769").on("click", function () {
+                console.log("G block was clicked and turned red!");
+                d3.select(this).style('fill', 'red');
+            });
+
+            d3.select("#path4596").on("click", function () {
+                console.log("A/B block was clicked!");
+                d3.select(this).style('fill', 'blue');
+            });
+
+            d3.select("#path4598").on("click", function () {
+                console.log("E block was clicked!");
+                d3.select(this).style('fill', 'green');
+            });
+
+            d3.select("#path4600").on("click", function () {
+                console.log("L block was clicked!");
+                d3.select(this).style('fill', 'yellow');
+            });
+
+        });
+
         function floor (level) {
             d3.selectAll('g')
                 .filter(function () { 
@@ -51,13 +85,14 @@
                     return d3.select(this).attr('id');
                 })
                 .each(function () {
-                    var curfloor = d3.select(this).transition();
+                    var currfloor = d3.select(this).transition();
                     if (this.id === level) { 
-                        curfloor.style('opacity', 1) 
+                        currfloor.style('opacity', 1) 
                     } else { 
-                        curfloor.style('opacity', 0.01) 
+                        currfloor.style('opacity', 0.01) 
                     }
-                });
+                }
+            );
         };
 
         </script>
