@@ -20,10 +20,6 @@ footer {
   	padding-right: 15px;
 }
 
-#firstfloor {
-  opacity: 0;
-}
-
 /*Off Canvas*/
 @media screen and (max-width: 768px) {
   	.row-offcanvas {
@@ -127,4 +123,8 @@ footer .desc {
 
 ul.links { 
   	list-style-type: none;
+}
+
+.active {
+  background-color: #fff;
 }

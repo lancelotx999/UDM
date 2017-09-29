@@ -25,7 +25,7 @@
   <defs
      id="defs3703" />
   <g
-     id="layer3">
+     id="level_g">
     <rect
        y="0.38103876"
        x="0.85042262"
@@ -134,9 +134,58 @@
          style="font-size:12px;fill:#483737">L</tspan></text>
   </g>
 
-  <g id="firstfloor">
-    <text x="0" y="35" font-family="Verdana" font-size="35">
-    Hello, out there
-  </text>
+  <g id="level_1" opacity="0.01">
+    <text x="286.67477" y="361.39062" font-family="Verdana" font-size="35">
+      Hello, I am floor one
+    </text>
   </g>
+
+  <g id="level_2" opacity="0.01">
+    <text x="286.67477" y="361.39062" font-family="Verdana" font-size="35">
+      Hello, I am floor two
+    </text>
+  </g>
+
+  <g id="level_3" opacity="0.01">
+    <text x="286.67477" y="361.39062" font-family="Verdana" font-size="35">
+      Hello, I am floor three
+    </text>
+  </g>
+
+  <g id="level_4" opacity="0.01">
+    <text x="286.67477" y="361.39062" font-family="Verdana" font-size="35">
+      Hello, I am floor four
+    </text>
+  </g>
+
+  <g id="level_5" opacity="0.01">
+    <text x="286.67477" y="361.39062" font-family="Verdana" font-size="35">
+      Hello, I am floor five
+    </text>
+  </g>
+
+  <g id="level_6" opacity="0.01">
+    <text x="286.67477" y="361.39062" font-family="Verdana" font-size="35">
+      Hello, I am floor six
+    </text>
+  </g>
+
+  <g id="level_7" opacity="0.01">
+    <text x="286.67477" y="361.39062" font-family="Verdana" font-size="35">
+      Hello, I am floor seven
+    </text>
+  </g>
+
+  <g id="level_8" opacity="0.01">
+    <text x="286.67477" y="361.39062" font-family="Verdana" font-size="35">
+      Hello, I am floor eight
+    </text>
+  </g>
+
+  <g id="level_9" opacity="0.01">
+    <text x="286.67477" y="361.39062" font-family="Verdana" font-size="35">
+      Hello, I am floor nine
+    </text>
+  </g>
+
 </svg>
