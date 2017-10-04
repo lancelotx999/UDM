@@ -17,9 +17,9 @@ Route::get('/', function () {
 });
 
 
-Route::get('/chart', function () {
-    return view('chart');
-});
+// Route::get('/chart', function () {
+//     return view('chart');
+// });
 
 
-Route::get('/test', 'SecurityController@index');
+Route::get('/chart', 'SecurityController@index');

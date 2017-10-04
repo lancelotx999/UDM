@@ -19,25 +19,31 @@ class SecurityController extends Controller
         $securityLogs = Security::all();
         $data = [];
 
+        $data['securityLogs'] = $securityLogs;
 
-        foreach ($securityLogs as $securityLog) {
+        // echo "<script>console.log( 'Security Log: " . $data['securityLogs'] . "' );</script>";
 
-          array_push($data, $securityLog);
 
-          echo "<script>console.log( 'Security Log: " . $securityLog . "' );</script>";
-          echo "<script>console.log( 'Security Logs: " . $securityLogs . "' );</script>";
-          // echo "<script>console.log( 'Data: " . $data[0] . "' );</script>";
-          // if ($request->email == $securityLog->email && $request->password == $securityLog->password) {
-          //     $data['securityLog'] = Security::find($securityLog->id);
-          //
-          //     // return Security::find($securityLog->id);
-          //
-          //     // return $request->session()->put('current_securityLog', Security::find($securityLog->id));
-          //
-          // }
-          return view('/child',$data);
+        // foreach ($securityLogs as $securityLog) {
+        //
+        //   array_push($data, $securityLog);
+        //
+          // echo "<script>console.log( 'Security Log: " . $securityLog . "' );</script>";
+        //   echo "<script>console.log( 'Security Logs: " . $securityLogs . "' );</script>";
+        //   // echo "<script>console.log( 'Data: " . $data[0] . "' );</script>";
+        //   // if ($request->email == $securityLog->email && $request->password == $securityLog->password) {
+        //   //     $data['securityLog'] = Security::find($securityLog->id);
+        //   //
+        //   //     // return Security::find($securityLog->id);
+        //   //
+        //   //     // return $request->session()->put('current_securityLog', Security::find($securityLog->id));
+        //   //
+        //   // }
+        //
+        // }
 
-        }
+        return view('/chart',$data);
+
 
     }
 
