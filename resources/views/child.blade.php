@@ -1,16 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div id="vis"></div>
 
 <script>
 // Extract the width and height that was computed by CSS.
-var chartDiv = document.getElementById("vis"),
-    width = chartDiv.clientWidth,
-    height = chartDiv.clientHeight;
+var chartDiv = document.getElementById("vis");
+var width = chartDiv.clientWidth;
+var height = chartDiv.clientHeight;
 
 // load the external svg from a file
-d3.xml("assets/groundfloor.svg", "image/svg+xml", function(xml) {
+d3.xml("{{ asset('assets/groundfloor.svg') }}", "image/svg+xml", function(xml) {
 var importedNode = document.importNode(xml.documentElement, true);
 d3.select("div#vis")
   .each(function() {
@@ -22,8 +23,6 @@ d3.select("div#vis")
 
 
 function zoomPanSVG () {
-
-
 
 
   svg = d3.select('svg');
@@ -43,9 +42,7 @@ function zoomPanSVG () {
   function zoomed() {
     svg_group.style("stroke-width", 1.5 / d3.event.scale + "px");
     svg_group.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-    // $zoomService.$broadcast('zoom', {
-    //    scale: d3.event.scale
-    // });
+    
   }
   
   var zoomed = false;
@@ -56,5 +53,5 @@ function zoomPanSVG () {
 
 
 </script>
-@endsection
 
+@endsection
