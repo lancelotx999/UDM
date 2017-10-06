@@ -35,9 +35,7 @@
 	createSecurityChart(securityLogs, dateMin, dateMax);
 
 	function createSecurityChart(securityLogs, dateMin, dateMax){
-		if (securityLogs == null || securityLogs == undefined) {
 			var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
-		}
 
 		// parse the date / time
 		var parseTime = d3.timeParse("%Y-%m-%d");
@@ -70,6 +68,7 @@
 		    .x(function(d) { return x(d.date); })
 		    .y(function(d) { return y(d.transactionQuantity); });
 
+
 		// Adds the svg canvas
 		var svg = d3.select("#securityChart")
 		    .append("svg")
@@ -78,7 +77,6 @@
 	    	.append("g")
 	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-
 		console.log("!!!!!!!!!!!!!!!!!!!!");
 		console.log("securityLogs: ");
 		console.log(securityLogs);
@@ -86,11 +84,11 @@
 		// Scale the range of the securityLogs
 		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
 			securityLogs = securityLogs.filter(function (d){
-				return d.date > dateMin;
+				return d.date >= dateMin;
 			})
 
 			securityLogs = securityLogs.filter(function (d){
-				return d.date < dateMax;
+				return d.date <= dateMax;
 			})
 			x.domain(d3.extent(securityLogs, function(d) { return d.date; }));
 		}
@@ -154,7 +152,6 @@
 		  .attr("class", "axis")
 		  .call(d3.axisLeft(y));
 
-
 	  console.log("------------------------------");
 	  console.log("securityChart securityLogs: ");
 	  console.log(securityLogs);
@@ -177,6 +174,25 @@
 		document.getElementById('securityChartSlider').innerHTML = dateSlider;
 
 		tempData = [];
+
+		var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
+
+		// parse the date / time
+		var parseTime = d3.timeParse("%Y-%m-%d");
+
+		// format the securityLogs
+		securityLogs.forEach(function(d) {
+			d.roomId = d.roomId;
+
+			if (d.date instanceof Date) {
+				d.date = d.date;
+			}
+			else {
+				d.date = parseTime(d.date);
+			}
+			// d.date = d.date.getTime();
+			d.transactionQuantity = +d.transactionQuantity;
+		});
 
 		securityLogs.forEach(function (d){
 			tempData.push(d.date.getTime());
@@ -201,6 +217,11 @@
 					slide: function( event, ui ) {
 						dateMin = new Date(ui.values[0]);
 						dateMax = new Date(ui.values[1]);
+
+						console.log("dateMin: ");
+						console.log(dateMin);
+						console.log("dateMax: ");
+						console.log(dateMax);
 
 						$( "#date-securityChart").val(dateMin + " - " + dateMax );
 
@@ -246,6 +267,9 @@
 
 
 	function createApplyButton(securityLogs){
+
+		document.getElementById("applyButton").innerHTML = "";
+
 		var applyButton = document.createElement("applyButton");
 
 		applyButton.innerHTML = "Do Something";
@@ -254,14 +278,24 @@
 
 		applyButton.addEventListener ("click", function() {
 
+			console.log($('#applyButton').length);
+
 			console.log("---------- Submit Button Clicked ----------");
+
 			var min = new Date($("#dateSlider-securityChart").slider( "values", 0 )),
 				max = new Date($("#dateSlider-securityChart").slider( "values", 1 ));
+
+				console.log("min: ");
+				console.log(min);
+				console.log("max: ");
+				console.log(max);
 
 			console.log("max: ");
 			console.log(max);
 			console.log("min: ");
 			console.log(min);
+
+			document.getElementById("securityChart").innerHTML = "";
 
 			createSecurityChart(securityLogs, min, max)
 		});
@@ -276,7 +310,7 @@
 		var day = date.getDate().toString();
 		day = day.length > 1 ? day : '0' + day;
 
-		return month + '/' + day + '/' + year;
+		return day + '/' + month + '/' + year;
 	}
 </script>
 
