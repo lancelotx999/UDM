@@ -10,8 +10,9 @@
     <!-- Fonts-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
     <link href="{{asset('css/app.cs')}}" rel="stylesheet">
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+
     <style>
         @import url("https://bootswatch.com/flatly/bootstrap.min.css");
 
@@ -63,7 +64,7 @@
 
         #sidebar {
             padding:20px;
-            
+
             background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('https://mdbootstrap.com/img/Photos/Others/img (51).jpg');
           -webkit-background-size: cover;
           -moz-background-size:  cover;
@@ -118,38 +119,38 @@
         footer.page-footer {
           padding-top: 20px;
           background-color: #262626;
-          color: #fff; 
+          color: #fff;
         }
 
         footer.page-footer .container-fluid {
-          width: auto; 
+          width: auto;
         }
-  
 
-  
+
+
         footer.page-footer a {
-          color: #fff; 
+          color: #fff;
         }
 
         footer.page-footer .title {
-          text-transform: uppercase; 
+          text-transform: uppercase;
         }
 
         footer .desc {
           font-size: 1.20rem;
         }
 
-        ul.links { 
+        ul.links {
           list-style-type: none;
-          
+
          }
 
-        
+
 
     </style>
 
 
-    
+
 </head>
 
 
@@ -161,10 +162,10 @@
 <div class="container-fluid">
     <div class="row row-offcanvas row-offcanvas-left" >
         @include('layouts/partials._overlay')
-        
+
 
         <div class="col-xs-12 col-sm-9" id="main-content">
-            
+
             <br>
             <ol class="breadcrumb">
                 <li class="active">Ground Floor</li>
