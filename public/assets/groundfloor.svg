@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.1"
+   viewBox="0 0 800.40002 647.40002"
+   height="647.40002"
+   width="800.40002"
    id="svg3699"
-   width="800"
-   height="647"
-   viewBox="0 0 800 647"
-   sodipodi:docname="groundfloor.svg"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
+   version="1.1">
   <metadata
      id="metadata3705">
     <rdf:RDF>
@@ -29,209 +23,342 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs3703" />
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1337"
-     inkscape:window-height="852"
-     id="namedview3701"
-     showgrid="false"
-     inkscape:zoom="0.93"
-     inkscape:cx="280.11751"
-     inkscape:cy="288.33087"
-     inkscape:window-x="510"
-     inkscape:window-y="104"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="layer3" />
+     id="defs3703">
+    <marker
+       style="overflow:visible"
+       id="marker5297"
+       refX="0.0"
+       refY="0.0"
+       orient="auto">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path5295" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto">
+      <path
+         transform="scale(0.8) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path5031" />
+    </marker>
+  </defs>
   <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="Background">
+     transform="translate(-0.65042262,-0.18103875)"
+     id="layer3">
     <rect
-       style="fill:#ede2ba;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect4603"
-       width="800"
+       y="0.96682519"
+       x="2.124289"
        height="647"
-       x="0.85042262"
-       y="0.38103876"
-       inkscape:label="background" />
+       width="800"
+       id="rect4603"
+       style="fill:#ede2ba;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       id="text5790"
+       y="361.39062"
+       x="286.67477"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         id="tspan5802"
+         style="font-size:12px;fill:#483737"
+         y="361.39062"
+         x="286.67477">Swinburne University of Technology Sarawak Campus</tspan><tspan
+         style="font-size:12px;fill:#483737"
+         id="tspan5794"
+         y="411.39062"
+         x="286.67477" /></text>
+    <path
+       id="path4641"
+       style="fill:none;stroke:#ffffff;stroke-width:2.79999995;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 42.031626,406.66532 -2.155468,316.13566 M 516.23459,381.87743 H 801.8341 M 154.11596,342.00128 H 92.685125 M 155.1937,264.40443 154.11596,394.81024 M -797.52316,89.811517 -784.59036,117.8326 V 234.22787 M 515.15686,571.55862 731.78139,570.48089 767.34662,509.05005 768.42435,57.479496 200.45853,49.935358 0,145.85369 m 438.63774,234.94601 77.59685,1.07773 v 267.27804 m -50.6535,-1.07774 3.2332,-85.14098 -32.33202,-93.76286 2.15547,-88.37419 H 414.92759 L 365.35183,401.27665 62.508573,395.88798 42.031626,406.66532 157.34917,650.2332" />
+    <rect
+       y="403.13663"
+       x="542.59601"
+       height="138.6973"
+       width="202.71143"
+       id="rect3775"
+       style="opacity:0.35499998;fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="424.47467"
+       x="257.58069"
+       height="161.55948"
+       width="118.88339"
+       id="rect3773"
+       style="opacity:0.35499998;fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.99215686" />
+    <rect
+       y="235.48056"
+       x="88.400475"
+       height="92.972908"
+       width="59.441696"
+       id="rect3771"
+       style="opacity:0.35499998;fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="l001"
+       d="m 301.49609,160.40309 h 92.68512 c -12.20685,-24.8991 0.99329,-47.3785 18.60577,-69.437665 -43.96066,-24.547206 -86.72888,-22.860704 -128.53463,0 11.91819,24.688455 24.85678,49.632015 17.24374,69.437665 z"
+       style="opacity:1;fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="eblock"
+       d="M 751.87715,85.767363 V 337.51474 h -179.5309 v -41.85652 h 103.48184 l 10e-6,-210.577157 z"
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       id="abblock"
+       d="M 431.01844,86.169218 V 267.5426 H 308.70572 v 69.72968 H 552.18806 V 305.64625 85.407145 Z"
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40099999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       ry="0"
+       y="125.74205"
+       x="181.37338"
+       height="242.33922"
+       width="64.01413"
+       id="gblock"
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40077841;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="g001"
+       width="63.891716"
+       height="38.831577"
+       x="181.48091"
+       y="125.84959"
+       ry="0" />
+    <rect
+       ry="0"
+       y="173.34161"
+       x="52.628838"
+       height="33.986977"
+       width="64.264038"
+       id="c102"
+       style="opacity:0.35499998;fill:#d9ccbe;fill-opacity:0.99215686;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
-       x="286.67477"
-       y="361.39062"
-       id="text5790"
-       inkscape:label="swinburnetext"><tspan
-         sodipodi:role="line"
-         x="286.67477"
-         y="361.39062"
-         style="font-size:12px;fill:#483737"
-         id="tspan5802">Swinburne University of Technology Sarawak Campus</tspan><tspan
-         sodipodi:role="line"
-         x="286.67477"
-         y="411.39062"
-         id="tspan5794"
-         style="font-size:12px;fill:#483737" /></text>
-    <path
-       inkscape:connector-curvature="0"
-       d="M 42.031626,406.66532 -2.155468,316.13566 M 516.23459,381.87743 H 801.8341 M 154.11596,342.00128 H 92.685125 M 155.1937,264.40443 154.11596,394.81024 M -797.52316,89.811517 -784.59036,117.8326 V 234.22787 M 515.15686,571.55862 731.78139,570.48089 767.34662,509.05005 768.42435,57.479496 200.45853,49.935358 0,145.85369 m 438.63774,234.94601 77.59685,1.07773 v 267.27804 m -50.6535,-1.07774 3.2332,-85.14098 -32.33202,-93.76286 2.15547,-88.37419 H 414.92759 L 365.35183,401.27665 62.508573,395.88798 42.031626,406.66532 157.34917,650.2332"
-       style="fill:none;stroke:#ffffff;stroke-width:2.79999995;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path4641"
-       inkscape:label="roadrails" />
-    <rect
-       style="opacity:0.35499998;fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect3775"
-       width="202.71143"
-       height="138.6973"
-       x="542.59601"
-       y="403.13663"
-       inkscape:label="parking" />
-    <rect
-       style="opacity:0.35499998;fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect3773"
-       width="118.88339"
-       height="161.55948"
-       x="257.58069"
-       y="424.47467"
-       inkscape:label="mph" />
-    <rect
-       style="opacity:0.35499998;fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect3771"
-       width="59.441696"
-       height="92.972908"
-       x="88.400475"
-       y="235.48056"
-       inkscape:label="canteen" />
-    <path
-       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 301.49609,160.40309 h 92.68512 c -12.20685,-24.8991 0.99329,-47.3785 18.60577,-69.437665 -43.96066,-24.547206 -86.72888,-22.860704 -128.53463,0 11.91819,24.688455 24.85678,49.632015 17.24374,69.437665 z"
-       id="path4600"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc"
-       inkscape:label="lblock" />
-    <path
-       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 634.75267,88.26972 v 221.76325 h 27.0536 v -24.38633 h 50.29682 v -30.86396 h 17.14664 V 87.888683 Z"
-       id="path4598"
-       inkscape:connector-curvature="0"
-       inkscape:label="eblock" />
-    <path
-       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 446.57479,86.876325 V 268.24971 H 324.26207 v 69.72968 H 567.74441 V 306.35336 86.114252 Z"
-       id="path4596"
-       inkscape:connector-curvature="0"
-       inkscape:label="abblock" />
+       x="208.97406"
+       y="119.83414"
+       id="gblocktext"><tspan
+         x="208.97406"
+         y="119.83414"
+         id="tspan910"
+         style="font-size:12px;fill:#483737">G</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="481.53665"
+       y="79.168427"
+       id="text918"><tspan
+         x="481.53665"
+         y="79.168427"
+         id="tspan916"
+         style="font-size:12px;fill:#483737">A/B</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="709.10419"
+       y="81.432129"
+       id="text932"><tspan
+         x="709.10419"
+         y="81.432129"
+         id="tspan930"
+         style="font-size:12px;fill:#483737">E</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="203.70276"
+       y="145.7536"
+       id="text938-7-7"><tspan
+         x="203.70276"
+         y="145.7536"
+         id="tspan936-1-6"
+         style="font-size:8px;fill:#483737">G001</tspan></text>
     <rect
        style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="gblock"
-       width="64.01413"
-       height="242.33922"
-       x="181.37338"
-       y="125.74205"
-       ry="0"
-       inkscape:label="gblock" />
+       id="e216"
+       width="33.223076"
+       height="36.026089"
+       x="718.86633"
+       y="197.87848"
+       ry="0" />
     <rect
-       inkscape:label="g001"
-       ry="0"
-       y="125.6171"
-       x="181.24843"
-       height="33.986977"
-       width="64.264038"
-       id="g001"
-       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.15008958;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
-      <title
-         id="title3888">g001</title>
-    </rect>
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="e005"
+       width="33.218803"
+       height="36.728924"
+       x="718.51489"
+       y="102.06113"
+       ry="0" />
+    <rect
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="b004"
+       width="39.179096"
+       height="73.318489"
+       x="512.88153"
+       y="85.534584"
+       ry="0" />
+    <rect
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.39972612;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="g002"
+       width="63.960918"
+       height="40.647438"
+       x="181.4021"
+       y="327.26968"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="202.73441"
+       y="351.39746"
+       id="text938-7-5-19"><tspan
+         x="202.73441"
+         y="351.39746"
+         id="tspan936-1-7-5"
+         style="font-size:8px;fill:#483737">G002</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="726.52191"
+       y="218.35524"
+       id="text938-7-7-1"><tspan
+         x="726.52191"
+         y="218.35524"
+         id="tspan936-1-6-6"
+         style="font-size:8px;fill:#483737">E002</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="726.87543"
+       y="122.89582"
+       id="text938-7-7-1-6"><tspan
+         x="726.87543"
+         y="122.89582"
+         id="tspan936-1-6-6-4"
+         style="font-size:8px;fill:#483737">E005</tspan></text>
+    <rect
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.39879233;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="b005"
+       width="39.160847"
+       height="50.759361"
+       x="512.9339"
+       y="158.81892"
+       ry="0" />
+    <rect
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.39955184;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="b006"
+       width="39.179008"
+       height="50.761711"
+       x="512.91693"
+       y="209.69669"
+       ry="0" />
+    <rect
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="b008"
+       width="30.777533"
+       height="22.55689"
+       x="521.37701"
+       y="260.51703"
+       ry="0" />
+    <rect
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="b001"
+       width="38.938751"
+       height="104.74695"
+       x="431.01843"
+       y="162.79565"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="522.48438"
+       y="126.89748"
+       id="text938-7-7-3"><tspan
+         x="522.48438"
+         y="126.89748"
+         id="tspan936-1-6-8"
+         style="font-size:8px;fill:#483737">B004</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="522.48438"
+       y="186.89748"
+       id="text938-7-7-9"><tspan
+         x="522.48438"
+         y="186.89748"
+         id="tspan936-1-6-9"
+         style="font-size:8px;fill:#483737">B005</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="521.98438"
+       y="237.89748"
+       id="text938-7-7-6"><tspan
+         x="521.98438"
+         y="237.89748"
+         id="tspan936-1-6-7"
+         style="font-size:8px;fill:#483737">B006</tspan></text>
+    <rect
+       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="b009"
+       width="30.777533"
+       height="22.55689"
+       x="490.59949"
+       y="260.51703"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="527.82489"
+       y="275.27734"
+       id="text938-7-7-6-2"><tspan
+         x="527.82489"
+         y="275.27734"
+         id="tspan936-1-6-7-6"
+         style="font-size:8px;fill:#483737">B008</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="497.41931"
+       y="275.10056"
+       id="text938-7-7-6-3"><tspan
+         x="497.41931"
+         y="275.10056"
+         id="tspan936-1-6-7-0"
+         style="font-size:8px;fill:#483737">B009</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="440.77756"
+       y="209.53938"
+       id="text938-7-7-6-8"><tspan
+         x="440.77756"
+         y="209.53938"
+         id="tspan936-1-6-7-1"
+         style="font-size:8px;fill:#483737">B001-</tspan><tspan
+         id="tspan2198"
+         x="440.77756"
+         y="219.53938"
+         style="font-size:8px;fill:#483737">B003</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
-       x="199.29665"
-       y="145.97906"
-       id="g001text"
-       inkscape:label="g001text"><tspan
-         sodipodi:role="line"
-         x="199.29665"
-         y="145.97906"
-         style="font-size:12px;fill:#483737"
-         id="tspan3900">G001</tspan></text>
-    <rect
-       style="fill:#d9ccbe;fill-opacity:1;stroke:#583a3a;stroke-width:0.15008958;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="g003"
-       width="64.264038"
-       height="33.986977"
-       x="181.37338"
-       y="334.0943"
-       ry="0"
-       inkscape:label="g003">
-      <title
-         id="title3886">g003</title>
-    </rect>
+       x="344.18362"
+       y="68.532249"
+       id="lblocktext"><tspan
+         x="344.18362"
+         y="68.532249"
+         id="tspan910-6"
+         style="font-size:12px;fill:#483737">L</tspan></text>
     <text
-       inkscape:label="g003text"
-       id="g003text"
-       y="355.65649"
-       x="200.37192"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
-         id="tspan3904"
-         style="font-size:12px;fill:#483737"
-         y="355.65649"
-         x="200.37192"
-         sodipodi:role="line">G003</tspan></text>
-    <text
-       inkscape:label="gblocktext"
-       id="gblocktext"
-       y="250.28014"
-       x="208.97406"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
-         style="font-size:12px;fill:#483737"
-         id="tspan910"
-         y="250.28014"
-         x="208.97406"
-         sodipodi:role="line">G</tspan></text>
-    <text
-       inkscape:label="a/b"
-       id="text918"
-       y="227.16843"
-       x="496.53665"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
-         style="font-size:12px;fill:#483737"
-         id="tspan916"
-         y="227.16843"
-         x="496.53665"
-         sodipodi:role="line">A/B</tspan></text>
-    <text
-       inkscape:label="e"
-       id="text932"
-       y="180.43213"
-       x="677.10419"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
-         style="font-size:12px;fill:#483737"
-         id="tspan930"
-         y="180.43213"
-         x="677.10419"
-         sodipodi:role="line">E</tspan></text>
-    <text
-       inkscape:label="l"
-       id="text938"
-       y="117.99972"
-       x="342.01483"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
-       xml:space="preserve"><tspan
-         style="font-size:12px;fill:#483737"
-         id="tspan936"
-         y="117.99972"
-         x="342.01483"
-         sodipodi:role="line">L</tspan></text>
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';letter-spacing:0px;word-spacing:0px;fill:#483737;fill-opacity:1;stroke:none"
+       x="337.98441"
+       y="115.89748"
+       id="text938-7-7-4"><tspan
+         x="337.98441"
+         y="115.89748"
+         id="tspan936-1-6-5"
+         style="font-size:8px;fill:#483737">L001</tspan></text>
   </g>
 </svg>
