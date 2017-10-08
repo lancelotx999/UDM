@@ -1,25 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-<br>
-<ol class="breadcrumb">
-  <li class="active">Ground Floor</li>
-  <li><a href="#">Level 1</a></li>
-  <li><a href="#">Level 2</a></li>
-  <li><a href="#">Level 3</a></li>
-</ol>
 
-<div id="vis"></div>
-<svg viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <br />
+        <ol class="breadcrumb">
+            <li class="active"><button onclick="floor('level_g')">Level G</button></li>
+            <li><button onclick="floor('level_1')">Level 1</button></li>
+            <li><button onclick="floor('level_2')">Level 2</button></li>
+            <li><button onclick="floor('level_3')">Level 3</button></li>
+            <li><button onclick="floor('level_4')">Level 4</button></li>
+            <li><button onclick="floor('level_5')">Level 5</button></li>
+            <li><button onclick="floor('level_6')">Level 6</button></li>
+            <li><button onclick="floor('level_7')">Level 7</button></li>
+            <li><button onclick="floor('level_8')">Level 8</button></li>
+            <li><button onclick="floor('level_9')">Level 9</button></li>
+        </ol>
+    </div>
+</div>
 
-<script>
-var chartDiv = document.getElementById("vis");
-var width = chartDiv.clientWidth;
-var height = chartDiv.clientHeight;
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+
+        <svg viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid meet"></svg>
+
+        <script>
+
+        // Responsible for zooming and panning
         var svg = d3.select("svg")
             .append("svg")
             .attr("width", "100%")
-            .attr("height", "100vh")
+            .attr("height", "100%")
             .call(d3.zoom()
                 .on("zoom", function () {
                     svg.attr("transform", d3.event.transform)
@@ -27,14 +39,82 @@ var height = chartDiv.clientHeight;
             .on("dblclick.zoom", null)
             .append("g");
 
-        d3.xml("assets/groundfloor.svg")
-            .mimeType("image/svg+xml")
-            .get(function(error, xml) {
-                var g;
-                if (error) throw error;
-                g = xml.getElementsByTagName('svg')[0];
-                return svg.node().appendChild(g);
-            });
+        // Requests the chosen floor
+        function floor (level) {
+            // Clear any loaded or unwanted svg(s)
+            svg.selectAll("svg").transition().remove();
+            // Check and load the requested svg
+            if (level === 'level_g') {
+                // Retrieve floor G
+                retrieve('groundfloor.svg');
+            }
+            else if (level === 'level_1') {
+                // Retrieve floor 1
+                console.log("Hello, I am floor 1");
+            }
+            else if (level === 'level_2') {
+                // Retrieve floor 2
+                retrieve('secondfloor.svg');
+            }
+            else if (level === 'level_3') {
+                // Retrieve floor 3
+                console.log("Hello, I am floor 3");
+            }
+            else if (level === 'level_4') {
+                // Retrieve floor 4
+                console.log("Hello, I am floor 4");
+            }
+            else if (level === 'level_5') {
+                // Retrieve floor 5
+                console.log("Hello, I am floor 5");
+            }
+            else if (level === 'level_6') {
+                // Retrieve floor 6
+                console.log("Hello, I am floor 6");
+            }
+            else if (level === 'level_7') {
+                // Retrieve floor 7
+                console.log("Hello, I am floor 7");
+            }
+            else if (level === 'level_8') {
+                // Retrieve floor 8
+                console.log("Hello, I am floor 8");
+            }
+            else if (level === 'level_9') {
+                // Retrieve floor 9
+                console.log("Hello, I am floor 9");
+            }
+
+            // d3.selectAll('g')
+            //     .filter(function () { 
+            //         // Filter out 'g' elements without any ID tagged
+            //         return d3.select(this).attr('id');
+            //     })
+            //     .each(function () {
+            //         var currfloor = d3.select(this).transition();
+            //         if (this.id === level) { 
+            //             currfloor.style('opacity', 1) 
+            //         } else { 
+            //             currfloor.style('opacity', 0.01) 
+            //         }
+            //     }
+            // );
+        };
+
+        // Retrieves the SVG file
+        function retrieve (file) {
+            d3.xml("assets/" + file)
+                .mimeType("image/svg+xml")
+                .get(function(error, xml) {
+                    var g;
+                    if (error) throw error;
+                    g = xml.getElementsByTagName('svg')[0];
+                    return svg.node().appendChild(g);
+                }
+            );
+        }
+
+        floor('level_g'); // Default load floor G
 
         // Due to the document not loaded yet, this line of code will only 
         // execute once the above scripts are done loaded in the document.
@@ -64,78 +144,14 @@ var height = chartDiv.clientHeight;
                 console.log("L block was clicked!");
                 d3.select(this).style('fill', 'yellow');
             });
-
         });
 
-        function floor (level) {
-            d3.selectAll('g')
-                .filter(function () { 
-                    // Filter out 'g' elements without any ID tagged
-                    return d3.select(this).attr('id');
-                })
-                .each(function () {
-                    var currfloor = d3.select(this).transition();
-                    if (this.id === level) { 
-                        currfloor.style('opacity', 1) 
-                    } else { 
-                        currfloor.style('opacity', 0.01) 
-                    }
-                }
-            );
-        };
+        </script>
 
-        
+    </div>
 
+</div>
 
-// Extract the width and height that was computed by CSS.
-/**
-var chartDiv = document.getElementById("vis");
-var width = chartDiv.clientWidth;
-var height = chartDiv.clientHeight;
-
-// load the external svg from a file
-d3.xml("assets/groundfloor.svg")
-            .mimeType("image/svg+xml")
-            .get(function(error, xml) {
-var importedNode = document.importNode(xml.documentElement, true);
-d3.select("div#vis")
-  .each(function() {
-    this.appendChild(importedNode);
-  })
-
-  
-});
-
-
-function zoomPanSVG() {
-
-
-  svg = d3.select('svg');
-  svg_group = d3.select('g');
-  
-  var width = 400, height = 200;
-  
-  zoom = d3.behavior.zoom()
-      .translate([0, 0])
-      .scale(1)
-      .scaleExtent([.5, 20])
-      .on("zoom", zoomed);
-
-      
-  svg.call(zoom);
-  
-  function zoomed() {
-    svg_group.style("stroke-width", 1.5 / d3.event.scale + "px");
-    svg_group.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-    
-  }
-  
-  var zoomed = false;
-
-}
-*/
-
-
-</script>
+@endsection
 
 @endsection
