@@ -10,8 +10,15 @@
     <!-- Fonts-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
+
+
+    
     <link href="{{asset('css/app.cs')}}" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}">
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
     <style>
         @import url("https://bootswatch.com/flatly/bootstrap.min.css");
 
@@ -71,7 +78,7 @@
           background-size: cover;
             background-color: #224562;
             width:15%;
-            height: 800px;
+            height: 100vh;
             height:height;
             display: table;
         }
@@ -165,21 +172,15 @@
 
         <div class="col-xs-12 col-sm-9" id="main-content">
             
-            <br>
-            <ol class="breadcrumb">
-                <li class="active">Ground Floor</li>
-                <li><a href="#">Level 1</a></li>
-                <li><a href="#">Level 2</a></li>
-                <li><a href="#">Level 3</a></li>
-            </ol>
+            
             @yield('content')
-            <!--/row-->
+            
         </div>
-        <!--/span-->
+        
 
 
     </div>
-    <!--/row-->
+    
 
     @include('layouts/partials._footer')
 
