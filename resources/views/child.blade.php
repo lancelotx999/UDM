@@ -23,7 +23,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12">
 
-        <svg viewBox="0 0 1024 768" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg viewBox="-50 -50 1024 768" preserveAspectRatio="xMidYMid meet"></svg>
 
         <script>
 
@@ -50,7 +50,7 @@
             }
             else if (level === 'level_1') {
                 // Retrieve floor 1
-                console.log("Hello, I am floor 1");
+                retrieve('firstfloor.svg');
             }
             else if (level === 'level_2') {
                 // Retrieve floor 2
@@ -58,31 +58,31 @@
             }
             else if (level === 'level_3') {
                 // Retrieve floor 3
-                console.log("Hello, I am floor 3");
+                retrieve('thirdfloor.svg');
             }
             else if (level === 'level_4') {
                 // Retrieve floor 4
-                console.log("Hello, I am floor 4");
+                retrieve('fourthfloor.svg');
             }
             else if (level === 'level_5') {
                 // Retrieve floor 5
-                console.log("Hello, I am floor 5");
+                retrieve('fifthfloor.svg');
             }
             else if (level === 'level_6') {
                 // Retrieve floor 6
-                console.log("Hello, I am floor 6");
+                retrieve('sixthfloor.svg');
             }
             else if (level === 'level_7') {
                 // Retrieve floor 7
-                console.log("Hello, I am floor 7");
+                retrieve('seventhfloor.svg');
             }
             else if (level === 'level_8') {
                 // Retrieve floor 8
-                console.log("Hello, I am floor 8");
+                retrieve('eighthfloor.svg');
             }
             else if (level === 'level_9') {
                 // Retrieve floor 9
-                console.log("Hello, I am floor 9");
+                retrieve('ninthfloor.svg');
             }
 
             // d3.selectAll('g')
