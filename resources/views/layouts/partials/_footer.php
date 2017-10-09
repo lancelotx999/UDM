@@ -1,6 +1,5 @@
-<hr>
 <footer class="page-footer blue center-on-small-only">
-
+    <hr />
     <!--Footer Links-->
     <div class="container-fluid">
         <div class="row">
@@ -15,7 +14,7 @@
 
             <!--Second column-->
             <div class="col-md-6">
-                <h5 class="title">Links</h5>
+                <br />
                 <ul class="links">
                     <li><a href="http://www.idsdatanet.com/about-ids/company">More on IDS</a></li>
                     <li><a href="#!">Contact Us</a></li>
