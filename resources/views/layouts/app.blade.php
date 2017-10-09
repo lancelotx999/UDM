@@ -19,21 +19,44 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+    <style>
+        @import url("https://bootswatch.com/flatly/bootstrap.min.css");
+        #sidebar {
+            background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('https://mdbootstrap.com/img/Photos/Others/img (51).jpg');
+        }
+
+        a:active{
+            text-decoration: underline;
+            color: blue;
+        }
+        </style>
 </head>
 
-<body>
+<body id="app-layout">
+ @include('layouts.partials._header')
 
-    @include('layouts.partials._header')
+<div class="container-fluid" >
+    <div class="row row-offcanvas row-offcanvas-left" >
+        @include('layouts/partials._overlay')
+        
 
-    <div class="container-fluid">
+        <div class="col-xs-12 col-sm-9" id="main-content"  >
+            
+            
+            @yield('content')
+            
+        </div>
+        
 
-<!--    @include('layouts/partials._overlay') -->
-
-        @yield('content')
-
-        @include('layouts/partials._footer')
 
     </div>
+    
+@include('layouts/partials._footer')
+    
+
+</div>
+
+
 
 </body>
 

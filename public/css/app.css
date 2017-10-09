@@ -11407,15 +11407,18 @@ body {
   padding-top: 50px;
 }
 
+
+
+
+
 footer {
   padding-left: 15px;
   padding-right: 15px;
 }
 
 svg {
-  border: 1px solid #ccc;
   width: 100%;
-  height: 100vh;
+  height: 85vh;
   background: #fff;
 }
 
@@ -11452,7 +11455,7 @@ svg {
   background-size: cover;
   background-color: #224562;
   width: 15%;
-  height: 800px;
+  height: 100vh;
   height: height;
   display: table;
 }

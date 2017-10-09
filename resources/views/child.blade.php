@@ -2,28 +2,26 @@
 
 @section('content')
 
-<div class="row">
-    <div class="col-xs-12 col-sm-12">
+
         <br />
         <ol class="breadcrumb">
-            <li class="active"><button onclick="floor('level_g')">Level G</button></li>
-            <li><button onclick="floor('level_1')">Level 1</button></li>
-            <li><button onclick="floor('level_2')">Level 2</button></li>
-            <li><button onclick="floor('level_3')">Level 3</button></li>
-            <li><button onclick="floor('level_4')">Level 4</button></li>
-            <li><button onclick="floor('level_5')">Level 5</button></li>
-            <li><button onclick="floor('level_6')">Level 6</button></li>
-            <li><button onclick="floor('level_7')">Level 7</button></li>
-            <li><button onclick="floor('level_8')">Level 8</button></li>
-            <li><button onclick="floor('level_9')">Level 9</button></li>
+            <li><a href="#" onclick="floor('level_g')">Ground Level</a></li>
+            <li><a href="#" onclick="floor('level_1')">Level 1</a></li>
+            <li><a href="#" onclick="floor('level_2')">Level 2</a></li>
+            <li><a href="#" onclick="floor('level_3')">Level 3</a></li>
+            <li><a href="#" onclick="floor('level_4')">Level 4</a></li>
+            <li><a href="#" onclick="floor('level_5')">Level 5</a></li>
+            <li><a href="#" onclick="floor('level_6')">Level 6</a></li>
+            <li><a href="#" onclick="floor('level_7')">Level 7</a></li>
+            <li><a href="#" onclick="floor('level_8')">Level 8</a></li>
+            <li><a href="#" onclick="floor('level_9')">Level 9</a></li>
         </ol>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-xs-12 col-sm-12">
 
-        <svg viewBox="-50 -50 1024 768" preserveAspectRatio="xMidYMid meet"></svg>
+
+    
+
+        <svg viewBox="0% 0% 1024 768" preserveAspectRatio="xMidYMid meet"></svg>
 
         <script>
 
@@ -148,8 +146,8 @@
 
         </script>
 
-    </div>
+    
 
-</div>
+
 
 @endsection

@@ -1,11 +1,11 @@
-<!-- <script src="{{ asset('js/app.js') }}">
+<script>
     $(document).ready(function() {
   $('[data-toggle=offcanvas]').click(function() {
     $('.row-offcanvas').toggleClass('active');
   });
 });
-</script> -->
-<div class="navbar navbar-fixed-top navbar-default" role="navigation" >
+</script>
+<div class="navbar navbar-fixed-top navbar-default" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,8 +17,8 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Maps</a></li>
-                <li><a href="/chart">Charts</a></li>
+                <li class="active"><a href="#">Maps</a></li>
+                <li><a href="#about">Charts</a></li>
                 
             </ul>
         </div>
