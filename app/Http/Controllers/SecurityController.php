@@ -14,38 +14,25 @@ class SecurityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $securityLogs = Security::all();
-        $data = [];
+     public function securityChart()
+     {
+         $securityLogs = Security::all();
+         $data = [];
 
-        $data['securityLogs'] = $securityLogs;
+         $data['securityLogs'] = $securityLogs;
 
-        // echo "<script>console.log( 'Security Log: " . $data['securityLogs'] . "' );</script>";
+         return view('/chart',$data);
+     }
 
+     public function securityMap()
+     {
+         $securityLogs = Security::all();
+         $data = [];
 
-        // foreach ($securityLogs as $securityLog) {
-        //
-        //   array_push($data, $securityLog);
-        //
-          // echo "<script>console.log( 'Security Log: " . $securityLog . "' );</script>";
-        //   echo "<script>console.log( 'Security Logs: " . $securityLogs . "' );</script>";
-        //   // echo "<script>console.log( 'Data: " . $data[0] . "' );</script>";
-        //   // if ($request->email == $securityLog->email && $request->password == $securityLog->password) {
-        //   //     $data['securityLog'] = Security::find($securityLog->id);
-        //   //
-        //   //     // return Security::find($securityLog->id);
-        //   //
-        //   //     // return $request->session()->put('current_securityLog', Security::find($securityLog->id));
-        //   //
-        //   // }
-        //
-        // }
+         $data['securityLogs'] = $securityLogs;
 
-        return view('/chart',$data);
-
-
-    }
+         return view('/child',$data);
+     }
 
     /**
      * Show the form for creating a new resource.

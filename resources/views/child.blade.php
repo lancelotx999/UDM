@@ -86,16 +86,16 @@
             }
 
             // d3.selectAll('g')
-            //     .filter(function () { 
+            //     .filter(function () {
             //         // Filter out 'g' elements without any ID tagged
             //         return d3.select(this).attr('id');
             //     })
             //     .each(function () {
             //         var currfloor = d3.select(this).transition();
-            //         if (this.id === level) { 
-            //             currfloor.style('opacity', 1) 
-            //         } else { 
-            //             currfloor.style('opacity', 0.01) 
+            //         if (this.id === level) {
+            //             currfloor.style('opacity', 1)
+            //         } else {
+            //             currfloor.style('opacity', 0.01)
             //         }
             //     }
             // );
@@ -116,7 +116,7 @@
 
         floor('level_g'); // Default load floor G
 
-        // Due to the document not loaded yet, this line of code will only 
+        // Due to the document not loaded yet, this line of code will only
         // execute once the above scripts are done loaded in the document.
         $(document).ready(function () {
 
@@ -144,8 +144,48 @@
                 console.log("L block was clicked!");
                 d3.select(this).style('fill', 'yellow');
             });
+
+            securityLogs.forEach(function (d){
+                d3.select("#" + d.roomId.toLowerCase()).on("click", function () {
+                    console.log("L block was clicked!");
+                    d3.select(this).style('fill', 'yellow');
+                });
+            })
+
+
+
+
         });
 
+        </script>
+        <script>
+            var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
+
+            // parse the date / time
+    		var parseTime = d3.timeParse("%Y-%m-%d");
+
+    		// format the securityLogs
+    		securityLogs.forEach(function(d) {
+    			d.roomId = d.roomId;
+
+    			if (d.date instanceof Date) {
+    				d.date = d.date;
+    			}
+    			else {
+    				d.date = parseTime(d.date);
+    			}
+    			// d.date = d.date.getTime();
+    			d.transactionQuantity = +d.transactionQuantity;
+    		});
+
+            securityLogs.forEach(function (d){
+                // console.log(d.roomId.toLowerCase());
+                d3.select("#" + d.roomId.toLowerCase()).style('fill', 'yellow');
+
+            })
+
+
+            console.log(securityLogs);
         </script>
 
     </div>
@@ -153,4 +193,3 @@
 </div>
 
 @endsection
-
