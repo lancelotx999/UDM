@@ -20,9 +20,9 @@
 	<div class="col-xs-12 col-sm-12">
 		<div id='securityChart'>
 		</div>
-		<div id='securityChartSlider'>
+		<div id='securityChartFilters'>
 		</div>
-		<div id='applyButton'>
+		<div id='securityChartApplyButton'>
 		</div>
 	</div>
 </div>
@@ -32,27 +32,71 @@
 		dateMin = null,
 		dateMax = null;
 
-	createSecurityChart(securityLogs, dateMin, dateMax);
+	createSecurityChart(securityLogs, dateMin, dateMax, 'All', 'All');
 
-	function createSecurityChart(securityLogs, dateMin, dateMax){
-			var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
+	function createSecurityChart(securityLogs, dateMin, dateMax, floor, block){
+		var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
 
 		// parse the date / time
 		var parseTime = d3.timeParse("%Y-%m-%d");
 
 		// format the securityLogs
 		securityLogs.forEach(function(d) {
-			d.roomId = d.roomId;
+			if (floor.toUpperCase() == 'ALL' && block.toUpperCase() == 'ALL') {
+				d.roomId = d.roomId;
+				d.block = d.roomId[0].toUpperCase();
+				d.floor = d.roomId[1];
+				d.transactionQuantity = +d.transactionQuantity;
 
-			if (d.date instanceof Date) {
-				d.date = d.date;
+				if (d.date instanceof Date) {
+					d.date = d.date;
+				}
+				else {
+					d.date = parseTime(d.date);
+				}
 			}
-			else {
-				d.date = parseTime(d.date);
+			if (floor.toUpperCase() == d.roomId[1] && block.toUpperCase() == 'ALL') {
+				d.roomId = d.roomId;
+				d.block = d.roomId[0].toUpperCase();
+				d.floor = d.roomId[1];
+				d.transactionQuantity = +d.transactionQuantity;
+
+				if (d.date instanceof Date) {
+					d.date = d.date;
+				}
+				else {
+					d.date = parseTime(d.date);
+				}
 			}
-			// d.date = d.date.getTime();
-			d.transactionQuantity = +d.transactionQuantity;
+			if (floor.toUpperCase() == 'ALL' && block.toUpperCase() == d.roomId[0].toUpperCase()) {
+				d.roomId = d.roomId;
+				d.block = d.roomId[0].toUpperCase();
+				d.floor = d.roomId[1];
+				d.transactionQuantity = +d.transactionQuantity;
+
+				if (d.date instanceof Date) {
+					d.date = d.date;
+				}
+				else {
+					d.date = parseTime(d.date);
+				}
+			}
+			else if(floor.toUpperCase() == d.roomId[1] && block.toUpperCase() == d.roomId[0].toUpperCase()){
+				d.roomId = d.roomId;
+				d.block = d.roomId[0].toUpperCase();
+				d.floor = d.roomId[1];
+				d.transactionQuantity = +d.transactionQuantity;
+
+				if (d.date instanceof Date) {
+					d.date = d.date;
+				}
+				else {
+					d.date = parseTime(d.date);
+				}
+			}
+
 		});
+
 
 		// Set the dimensions of the canvas / graph
 		var margin = {top: 30, right: 20, bottom: 70, left: 50},
@@ -73,14 +117,10 @@
 		var svg = d3.select("#securityChart")
 		    .append("svg")
 	        .attr("width", width + margin.left + margin.right)
-	        .attr("height", height + margin.top + margin.bottom)
+	        .attr("height", (height*1.4) + margin.top + margin.bottom)
 	    	.append("g")
 	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		console.log("!!!!!!!!!!!!!!!!!!!!");
-		console.log("securityLogs: ");
-		console.log(securityLogs);
-		console.log("!!!!!!!!!!!!!!!!!!!!");
 		// Scale the range of the securityLogs
 		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
 			securityLogs = securityLogs.filter(function (d){
@@ -95,10 +135,7 @@
 		else {
 			x.domain(d3.extent(securityLogs, function(d) { return d.date; }));
 		}
-		console.log("!!!!!!!!!!!!!!!!!!!!");
-		console.log("securityLogs: ");
-		console.log(securityLogs);
-		console.log("!!!!!!!!!!!!!!!!!!!!");
+
 	    y.domain([0, d3.max(securityLogs, function(d) { return d.transactionQuantity; })]);
 
 	    // Nest the entries by symbol
@@ -123,7 +160,7 @@
 	        // Add the Legend
 	        svg.append("text")
 	            .attr("x", (legendSpace/2)+i*legendSpace)  // space legend
-	            .attr("y", height + (margin.bottom/2)+ 5)
+	            .attr("y", (height*1.25) + (margin.bottom/2)+ 5)
 	            .attr("class", "legend")    // style the legend
 	            .style("fill", function() { // Add the colours dynamically
 	                return d.color = color(d.key); })
@@ -143,25 +180,27 @@
 
 		// Add the X Axis
 		svg.append("g")
-		  .attr("class", "axis")
-		  .attr("transform", "translate(0," + height + ")")
-		  .call(d3.axisBottom(x));
+				.attr("class", "axis")
+				.attr("transform", "translate(0," + height + ")")
+				.call(d3.axisBottom(x)
+					.tickFormat(d3.timeFormat("%d/%m/%Y")))
+				.selectAll("text")
+				.style("text-anchor", "end")
+				.attr("dx", "-.8em")
+				.attr("dy", ".15em")
+				.attr("transform", "rotate(-65)");
 
 		// Add the Y Axis
 		svg.append("g")
 		  .attr("class", "axis")
 		  .call(d3.axisLeft(y));
 
-	  console.log("------------------------------");
-	  console.log("securityChart securityLogs: ");
-	  console.log(securityLogs);
-	  console.log("------------------------------");
-	  createSecurityChartSlider(securityLogs, dateMin, dateMax);
-	  createApplyButton(securityLogs);
+		createSecurityChartFilters(securityLogs, dateMin, dateMax, 'All', 'All');
+		createSecurityApplyButton(securityLogs);
 
 	}
 
-	function createSecurityChartSlider(securityLogs, dateMin, dateMax){
+	function createSecurityChartFilters(securityLogs, dateMin, dateMax, floor, block){
 
 		var dateSlider = "";
 
@@ -170,8 +209,34 @@
 		dateSlider += "</p>";
 		dateSlider += "<div id='dateSlider-securityChart' style='width:85%;margin: auto;'></div></br>";
 
+		var floorSelector = "";
+		floorSelector += "<p>Floor For Security Chart : <select id='selectFloor-securityChart' size='1' style='width: 202px;'>";4
+		floorSelector += "<option value=All>All</option>";
+		floorSelector += "<option value=G>G</option>";
+		floorSelector += "<option value=1>1</option>";
+		floorSelector += "<option value=2>2</option>";
+		floorSelector += "<option value=3>3</option>";
+		floorSelector += "<option value=4>4</option>";
+		floorSelector += "<option value=5>5</option>";
+		floorSelector += "<option value=6>6</option>";
+		floorSelector += "<option value=7>7</option>";
+		floorSelector += "<option value=8>8</option>";
+		floorSelector += "<option value=9>9</option>";
+		floorSelector += "</select></p></br>";
 
-		document.getElementById('securityChartSlider').innerHTML = dateSlider;
+		var blockSelector = "";
+		blockSelector += "<p>Buildings For Security Chart : <select id='selectBlock-securityChart' size='1' style='width: 202px;'>";4
+		blockSelector += "<option value=All>All</option>";
+		blockSelector += "<option value=A>A</option>";
+		blockSelector += "<option value=B>B</option>";
+		blockSelector += "<option value=E>E</option>";
+		blockSelector += "<option value=G>G</option>";
+		blockSelector += "<option value=L>L</option>";
+		blockSelector += "</select></p></br>";
+
+
+
+		document.getElementById('securityChartFilters').innerHTML = dateSlider + floorSelector + blockSelector;
 
 		tempData = [];
 
@@ -183,6 +248,9 @@
 		// format the securityLogs
 		securityLogs.forEach(function(d) {
 			d.roomId = d.roomId;
+			d.block = d.roomId[0].toUpperCase();
+			d.floor = d.roomId[1];
+			d.transactionQuantity = +d.transactionQuantity;
 
 			if (d.date instanceof Date) {
 				d.date = d.date;
@@ -190,22 +258,11 @@
 			else {
 				d.date = parseTime(d.date);
 			}
-			// d.date = d.date.getTime();
-			d.transactionQuantity = +d.transactionQuantity;
 		});
 
 		securityLogs.forEach(function (d){
 			tempData.push(d.date.getTime());
 		});
-		console.log("------------------------------");
-		console.log("securitySlider securityLogs: ");
-		console.log(securityLogs);
-		console.log("dateMin: ");
-		console.log(dateMin);
-		console.log("dateMax: ");
-		console.log(dateMax);
-		console.log("------------------------------");
-
 
 		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
 			$(function (){
@@ -218,18 +275,7 @@
 						dateMin = new Date(ui.values[0]);
 						dateMax = new Date(ui.values[1]);
 
-						console.log("dateMin: ");
-						console.log(dateMin);
-						console.log("dateMax: ");
-						console.log(dateMax);
-
-						$( "#date-securityChart").val(dateMin + " - " + dateMax );
-
-						// console.log(securityLogs);
-						// console.log("NOT NULL SLIDER");
-						// createSecurityChart(securityLogs, dateMin, dateMax);
-						// createSecurityChartSlider(securityLogs, dateMin, dateMax);
-
+						$( "#date-securityChart").val(getFormattedDate(dateMin) + " - " + getFormattedDate(dateMax) );
 					}
 				});
 			})
@@ -246,16 +292,6 @@
 						var dateMax = new Date(ui.values[1]);
 
 						$( "#date-securityChart").val(getFormattedDate(dateMin) + " - " + getFormattedDate(dateMax) );
-
-
-						console.log("NULL SLIDER");
-						console.log(dateMin);
-						console.log(dateMax);
-
-						// console.log(securityLogs);
-						// createSecurityChart(securityLogs, dateMin, dateMax);
-						// createSecurityChartSlider(securityLogs, dateMin, dateMax);
-
 					}
 				});
 			})
@@ -266,38 +302,30 @@
 	}
 
 
-	function createApplyButton(securityLogs){
+	function createSecurityApplyButton(securityLogs){
 
-		document.getElementById("applyButton").innerHTML = "";
+		document.getElementById("securityChartApplyButton").innerHTML = "";
 
-		var applyButton = document.createElement("applyButton");
+		var securityChartApplyButton = document.createElement("securityChartApplyButton");
 
-		applyButton.innerHTML = "Do Something";
+		securityChartApplyButton.innerHTML = "Apply Filter";
 
-		document.getElementById("applyButton").appendChild(applyButton);
+		document.getElementById("securityChartApplyButton").appendChild(securityChartApplyButton);
 
-		applyButton.addEventListener ("click", function() {
-
-			console.log($('#applyButton').length);
-
+		securityChartApplyButton.addEventListener ("click", function() {
 			console.log("---------- Submit Button Clicked ----------");
+			console.log($("#dateSlider-securityChart").val());
+			console.log($("#selectFloor-securityChart").val());
+			console.log($("#selectBlock-securityChart").val());
 
 			var min = new Date($("#dateSlider-securityChart").slider( "values", 0 )),
-				max = new Date($("#dateSlider-securityChart").slider( "values", 1 ));
-
-				console.log("min: ");
-				console.log(min);
-				console.log("max: ");
-				console.log(max);
-
-			console.log("max: ");
-			console.log(max);
-			console.log("min: ");
-			console.log(min);
+				max = new Date($("#dateSlider-securityChart").slider( "values", 1 )),
+				floor = $("#selectFloor-securityChart").val(),
+				block = $("#selectBlock-securityChart").val();
 
 			document.getElementById("securityChart").innerHTML = "";
 
-			createSecurityChart(securityLogs, min, max)
+			createSecurityChart(securityLogs, min, max, floor, block)
 		});
 	}
 

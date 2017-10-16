@@ -144,17 +144,6 @@
                 console.log("L block was clicked!");
                 d3.select(this).style('fill', 'yellow');
             });
-
-            securityLogs.forEach(function (d){
-                d3.select("#" + d.roomId.toLowerCase()).on("click", function () {
-                    console.log("L block was clicked!");
-                    d3.select(this).style('fill', 'yellow');
-                });
-            })
-
-
-
-
         });
 
         </script>
@@ -179,9 +168,7 @@
     		});
 
             securityLogs.forEach(function (d){
-                // console.log(d.roomId.toLowerCase());
-                d3.select("#" + d.roomId.toLowerCase()).style('fill', 'yellow');
-
+                    console.log(d);
             })
 
 

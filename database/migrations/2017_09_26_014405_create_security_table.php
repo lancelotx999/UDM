@@ -23,6 +23,223 @@ class CreateSecurityTable extends Migration
 
         DB::table('security')->insert(
         array(
+            'roomId' => "X999",
+            'date' => date("2016-03-01"),
+            'transactionQuantity' => 666,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-02"),
+            'transactionQuantity' => 541,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-03"),
+            'transactionQuantity' => 512,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-04"),
+            'transactionQuantity' => 120,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-05"),
+            'transactionQuantity' => 240,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-06"),
+            'transactionQuantity' => 360,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-07"),
+            'transactionQuantity' => 480,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-08"),
+            'transactionQuantity' => 666,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-09"),
+            'transactionQuantity' => 420,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-10"),
+            'transactionQuantity' => 500,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-11"),
+            'transactionQuantity' => 560,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-12"),
+            'transactionQuantity' => 900,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-13"),
+            'transactionQuantity' => 666,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-14"),
+            'transactionQuantity' => 415,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-15"),
+            'transactionQuantity' => 999,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-16"),
+            'transactionQuantity' => 666,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-17"),
+            'transactionQuantity' => 420,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-18"),
+            'transactionQuantity' => 555,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-19"),
+            'transactionQuantity' => 666,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-20"),
+            'transactionQuantity' => 548,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-21"),
+            'transactionQuantity' => 482,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-22"),
+            'transactionQuantity' => 542,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-23"),
+            'transactionQuantity' => 625,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-24"),
+            'transactionQuantity' => 421,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-25"),
+            'transactionQuantity' => 600,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-26"),
+            'transactionQuantity' => 874,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-27"),
+            'transactionQuantity' => 515,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-28"),
+            'transactionQuantity' => 800,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-29"),
+            'transactionQuantity' => 700,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-30"),
+            'transactionQuantity' => 900,
+        ));
+
+        DB::table('security')->insert(
+        array(
+            'roomId' => "X999",
+            'date' => date("2016-03-31"),
+            'transactionQuantity' => 999,
+        ));
+
+        DB::table('security')->insert(
+        array(
             'roomId' => "B207",
             'date' => date("2016-03-01"),
             'transactionQuantity' => 542,
