@@ -32,6 +32,11 @@
 		dateMin = null,
 		dateMax = null;
 
+	var enrollmentData = {!! json_encode($enrollmentData->toArray()) !!};
+
+	console.log(enrollmentData);
+
+
 	createSecurityChart(securityLogs, dateMin, dateMax, 'All', 'All');
 
 	function createSecurityChart(securityLogs, dateMin, dateMax, floor, block){
@@ -117,7 +122,7 @@
 		var svg = d3.select("#securityChart")
 		    .append("svg")
 	        .attr("width", width + margin.left + margin.right)
-	        .attr("height", (height*1.4) + margin.top + margin.bottom)
+	        .attr("height", (height*1.2) + margin.top + margin.bottom)
 	    	.append("g")
 	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -300,7 +305,6 @@
 
 
 	}
-
 
 	function createSecurityApplyButton(securityLogs){
 

@@ -22,5 +22,5 @@ Route::get('/', function () {
 // });
 
 
-Route::get('/chart', 'SecurityController@securityChart');
+Route::get('/chart', 'ChartController@chartPage');
 Route::get('/map', 'SecurityController@securityMap');
