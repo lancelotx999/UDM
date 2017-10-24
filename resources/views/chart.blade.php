@@ -25,19 +25,26 @@
 		<div id='securityChartApplyButton'>
 		</div>
 	</div>
+	<div class="col-xs-12 col-sm-12">
+		<div id='enrollmentChart'>
+		</div>
+		<div id='enrollmentChartFilters'>
+		</div>
+		<div id='enrollmentChartApplyButton'>
+		</div>
+	</div>
 </div>
 
 <script>
 	var securityLogs = null,
+		enrollmentData = null,
 		dateMin = null,
 		dateMax = null;
 
-	var enrollmentData = {!! json_encode($enrollmentData->toArray()) !!};
-
-	console.log(enrollmentData);
-
 
 	createSecurityChart(securityLogs, dateMin, dateMax, 'All', 'All');
+
+	createEnrollmentChart(enrollmentData, ['All'], ['All']);
 
 	function createSecurityChart(securityLogs, dateMin, dateMax, floor, block){
 		var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
@@ -109,14 +116,9 @@
 		    height = 300 - margin.top - margin.bottom;
 
 		// Set the ranges
-		var x = d3.scaleTime().range([0, width]);
-		var y = d3.scaleLinear().range([height, 0]);
-
-		// Define the line
-		var line = d3.line()
-		    .x(function(d) { return x(d.date); })
-		    .y(function(d) { return y(d.transactionQuantity); });
-
+		var x = d3.scaleTime().rangeRound([0, width]),
+			y = d3.scaleLinear().rangeRound([height, 0]),
+		    z = d3.scaleOrdinal(d3.schemeCategory10);
 
 		// Adds the svg canvas
 		var svg = d3.select("#securityChart")
@@ -125,6 +127,11 @@
 	        .attr("height", (height*1.2) + margin.top + margin.bottom)
 	    	.append("g")
 	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the line
+		var line = d3.line()
+			.x(function(d) { return x(d.date); })
+			.y(function(d) { return y(d.transactionQuantity); });
 
 		// Scale the range of the securityLogs
 		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
@@ -143,13 +150,13 @@
 
 	    y.domain([0, d3.max(securityLogs, function(d) { return d.transactionQuantity; })]);
 
+		// console.log(securityLogs);
+
 	    // Nest the entries by symbol
 	    var securityLogsNest = d3.nest()
 	        .key(function(d) {return d.roomId;})
 	        .entries(securityLogs);
 
-	    // set the colour scale
-	    var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 	    legendSpace = width/securityLogsNest.length; // spacing for the legend
 
@@ -158,7 +165,7 @@
 	        svg.append("path")
 	            .attr("class", "line")
 	            .style("stroke", function() { // Add the colours dynamically
-	                return d.color = color(d.key); })
+	                return d.z = z(d.key); })
 	            .attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign an ID
 	            .attr("d", line(d.values));
 
@@ -168,7 +175,7 @@
 	            .attr("y", (height*1.25) + (margin.bottom/2)+ 5)
 	            .attr("class", "legend")    // style the legend
 	            .style("fill", function() { // Add the colours dynamically
-	                return d.color = color(d.key); })
+	                return d.z = z(d.key); })
 	            .on("click", function(){
 	                // Determine if current line is visible
 	                var active   = d.active ? false : true,
@@ -206,7 +213,6 @@
 	}
 
 	function createSecurityChartFilters(securityLogs, dateMin, dateMax, floor, block){
-
 		var dateSlider = "";
 
 		dateSlider += "<p>Date Range for Security Chart : ";
@@ -238,8 +244,6 @@
 		blockSelector += "<option value=G>G</option>";
 		blockSelector += "<option value=L>L</option>";
 		blockSelector += "</select></p></br>";
-
-
 
 		document.getElementById('securityChartFilters').innerHTML = dateSlider + floorSelector + blockSelector;
 
@@ -301,9 +305,6 @@
 				});
 			})
 		}
-
-
-
 	}
 
 	function createSecurityApplyButton(securityLogs){
@@ -331,6 +332,224 @@
 
 			createSecurityChart(securityLogs, min, max, floor, block)
 		});
+	}
+
+	function createEnrollmentChart(enrollmentData, year, semester){
+		var enrollmentData = {!! json_encode($enrollmentData->toArray()) !!};
+		var faculty = ["business", "engineering", "design", "computing"];
+
+		// format the enrollmentData
+		enrollmentData.forEach(function(d){
+			d.found = false;
+			d.year = d.year;
+			d.semester = d.semester;
+			d.computing = +d.computing;
+			d.design = +d.design;
+			d.business = +d.business;
+			d.engineering = +d.engineering;
+			d.total = d.computing + d.engineering + d.design + d.business;
+			d.data = {computing: +d.computing, design: +d.design, business: +d.business, engineering: +d.engineering};
+
+		})
+
+		console.log(enrollmentData);
+
+		// Prepare the data for filtering
+		enrollmentData.forEach(function(d){
+			if (year.includes("All") && semester.includes("All")) {
+				d.found = true;
+			}
+			else if (semester.includes("All")) {
+				year.forEach(function(x){
+					if (d.year == x) {
+						d.found = true;
+
+					}
+				})
+			}
+			else if (year.includes("All")) {
+				semester.forEach(function(x){
+					if (d.semester == x) {
+						d.found = true;
+
+					}
+				})
+			}
+			else {
+				year.forEach(function(x){
+					semester.forEach(function(y){
+						if (d.year == x && d.semester == y) {
+							d.found = true;
+						}
+					})
+				})
+			}
+		})
+
+
+		// enrollmentData.sort(function(a, b) { return b.total - a.total; })
+
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 20, bottom: 70, left: 50},
+		    width = 600 - margin.left - margin.right,
+		    height = 300 - margin.top - margin.bottom;
+
+		// Set the ranges
+		// var x = d3.scaleTime().range([0, width]);
+		var x = d3.scaleBand().rangeRound([0, width]),
+			y = d3.scaleLinear().rangeRound([height, 0]),
+			z = d3.scaleOrdinal(d3.schemeCategory10);
+
+		// Adds the svg canvas
+		var svg = d3.select("#enrollmentChart")
+		    .append("svg")
+	        .attr("width", width + margin.left + margin.right)
+	        .attr("height", height + margin.top + margin.bottom)
+	    	.append("g")
+	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the stack
+		var stack = d3.stack()
+			.keys(faculty);
+			// .order(d3.stackOrderNone)
+			// .offset(d3.stackOffsetNone);
+
+		var preparedEnrollmentData = [];
+
+		enrollmentData.forEach(function(d){
+			preparedEnrollmentData.push({computing: d.computing, business: d.business, design: d.design, engineering: d.engineering, key: d.year + " " + d.semester});
+		})
+
+		var stackData = stack(preparedEnrollmentData);
+
+		//Filter the data
+		enrollmentData = enrollmentData.filter(function (d){
+			return d.found;
+		})
+
+		// Scale the range of the securityLogs
+		x.domain(enrollmentData.map(function(d) { return d.year + " " + d.semester; }));
+		y.domain([0, d3.max(enrollmentData, function(d) { return d.total})]).nice();
+		z.domain(faculty);
+
+		svg.selectAll(".serie")
+			.data(stackData)
+			.enter().append("g")
+			.attr("class", "serie")
+			.attr("fill", function(d) { return z(d.key.toLowerCase()); })
+			.selectAll("rect")
+			.data(function(d){return d;})
+			.enter().append("rect")
+			.attr("x", function(d) { return x(d.data.key); })
+			.attr("y", function(d) {return y(d[1])})
+			.attr("height", function(d) { return y(d[0]) - y(d[1]); })
+			.attr("width", x.bandwidth());
+
+			svg.append("g")
+				.attr("class", "axis axis--x")
+				.attr("transform", "translate(0," + height + ")")
+				.call(d3.axisBottom(x))
+				.selectAll("text")
+				.style("text-anchor", "end")
+				.attr("dx", "-.8em")
+				.attr("dy", ".15em")
+				.attr("transform", "rotate(-65)");
+
+			svg.append("g")
+				.attr("class", "axis axis--y")
+				.call(d3.axisLeft(y).ticks(null, "s"))
+				.append("text")
+				.attr("x", 2)
+				.attr("y", y(y.ticks(10).pop()))
+				.attr("dy", "0.35em")
+				.attr("text-anchor", "start")
+				.attr("fill", "#000")
+				.text("Students");
+
+			var legend = svg.selectAll(".legend")
+				.data(faculty.reverse())
+				.enter().append("g")
+				.attr("class", "legend")
+				.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; })
+				.style("font", "10px sans-serif");
+
+			legend.append("rect")
+				.attr("x", width + 18)
+				.attr("width", 18)
+				.attr("height", 18)
+				.attr("fill", z);
+
+			legend.append("text")
+				.attr("x", width + 44)
+				.attr("y", 9)
+				.attr("dy", ".35em")
+				.attr("text-anchor", "start")
+				.text(function(d) { return d; });
+
+			createEnrollmentChartFilters(enrollmentData, 'All', 'All');
+
+			createEnrollmentApplyButton(enrollmentData);
+
+	}
+
+	function createEnrollmentChartFilters(enrollmentData, year, semester){
+		var yearSelector = "";
+		yearSelector += "<p>Year For Enrollment Chart : <select id='selectYear-enrollmentChart' multiple size='5' style='width: 202px;'>";4
+		yearSelector += "<option value=All selected>All</option>";
+		yearSelector += "<option value=2016>2016</option>";
+		yearSelector += "<option value=2015>2015</option>";
+		yearSelector += "<option value=2014>2014</option>";
+		yearSelector += "<option value=2013>2013</option>";
+		yearSelector += "<option value=2012>2012</option>";
+		yearSelector += "<option value=2011>2011</option>";
+		yearSelector += "<option value=2010>2010</option>";
+		yearSelector += "<option value=2009>2009</option>";
+		yearSelector += "<option value=2008>2008</option>";
+		yearSelector += "<option value=2007>2007</option>";
+		yearSelector += "<option value=2006>2006</option>";
+		yearSelector += "<option value=2005>2005</option>";
+		yearSelector += "<option value=2004>2004</option>";
+		yearSelector += "<option value=2003>2003</option>";
+		yearSelector += "<option value=2002>2002</option>";
+		yearSelector += "<option value=2001>2001</option>";
+		yearSelector += "<option value=2000>2000</option>";
+		yearSelector += "</select></p></br>";
+
+		var semesterSelector = "";
+		semesterSelector += "<p>Semester For Security Chart : <select id='selectSemester-enrollmentChart' multiple size='5' style='width: 202px;'>";4
+		semesterSelector += "<option value=All selected>All</option>";
+		semesterSelector += "<option value=1>1</option>";
+		semesterSelector += "<option value=2>2</option>";
+		semesterSelector += "<option value=Winter>Winter</option>";
+		semesterSelector += "<option value=Summer>Summer</option>";
+		semesterSelector += "</select></p></br>";
+
+		document.getElementById('enrollmentChartFilters').innerHTML = yearSelector + semesterSelector;
+
+	}
+
+	function createEnrollmentApplyButton(enrollmentData){
+		document.getElementById("enrollmentChartApplyButton").innerHTML = "";
+
+		var enrollmentChartApplyButton = document.createElement("enrollmentChartApplyButton");
+
+		enrollmentChartApplyButton.innerHTML = "Apply Filter";
+
+		document.getElementById("enrollmentChartApplyButton").appendChild(enrollmentChartApplyButton);
+
+		enrollmentChartApplyButton.addEventListener ("click", function() {
+			console.log("---------- Submit Button Clicked ----------");
+			console.log($("#selectYear-enrollmentChart").val());
+			console.log($("#selectSemester-enrollmentChart").val());
+
+			var year = $("#selectYear-enrollmentChart").val(),
+				semester = $("#selectSemester-enrollmentChart").val();
+
+			document.getElementById("enrollmentChart").innerHTML = "";
+
+			createEnrollmentChart(enrollmentData, year, semester);
+		});
+
 	}
 
 	function getFormattedDate(date) {
