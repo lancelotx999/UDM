@@ -125,32 +125,5 @@
         });
 
         </script>
-        <script>
-            var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
-
-            // parse the date / time
-    		var parseTime = d3.timeParse("%Y-%m-%d");
-
-    		// format the securityLogs
-    		securityLogs.forEach(function(d) {
-    			d.roomId = d.roomId;
-
-    			if (d.date instanceof Date) {
-    				d.date = d.date;
-    			}
-    			else {
-    				d.date = parseTime(d.date);
-    			}
-    			// d.date = d.date.getTime();
-    			d.transactionQuantity = +d.transactionQuantity;
-    		});
-
-            securityLogs.forEach(function (d){
-                    console.log(d);
-            })
-
-
-            console.log(securityLogs);
-        </script>
 
 @endsection
