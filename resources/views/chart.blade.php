@@ -15,22 +15,34 @@
 	  stroke-width: 2px;
 	}
 
+	div.tooltip {
+    position: absolute;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 1px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
 </style>
 <div class="row">
 	<div class="col-xs-12 col-sm-12">
-		<div id='securityChart'>
-		</div>
-		<div id='securityChartFilters'>
-		</div>
-		<div id='securityChartApplyButton'>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-12">
+		<h1>Enrollment Statistics</h1>
 		<div id='enrollmentChart'>
 		</div>
 		<div id='enrollmentChartFilters'>
 		</div>
 		<div id='enrollmentChartApplyButton'>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-12">
+		<h1>Security Log</h1>
+		<div id='securityChart'>
+		</div>
+		<div id='securityChartFilters'>
+		</div>
+		<div id='securityChartApplyButton'>
 		</div>
 	</div>
 </div>
@@ -128,6 +140,11 @@
 	    	.append("g")
 	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+		// Define the div for the tooltip
+		var tooltip = d3.select("#securityChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
 		// Define the line
 		var line = d3.line()
 			.x(function(d) { return x(d.date); })
@@ -157,7 +174,6 @@
 	        .key(function(d) {return d.roomId;})
 	        .entries(securityLogs);
 
-
 	    legendSpace = width/securityLogsNest.length; // spacing for the legend
 
 		// Loop through each symbol / key
@@ -168,6 +184,50 @@
 	                return d.z = z(d.key); })
 	            .attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign an ID
 	            .attr("d", line(d.values));
+
+			d.values.forEach(function(d2){
+				svg.append("circle")
+					.attr("r", 4)
+					.data(d.values)
+					.attr("cx", function() { return x(d2.date); })
+					.attr("cy", function() { return y(d2.transactionQuantity); })
+					.style("fill", function() { // Add the colours dynamically
+		                return d.z = z(d.key); })
+					.on("mouseover", function() {
+						tooltip.transition()
+							.duration(200)
+							.style("opacity", .9);
+
+						tooltip.html("Room: " + d.key + "<br/>" + "<br/>" + "Date: " + getFormattedDate(d2.date) + "<br/>" + "<br/>" + "Entries: " + d2.transactionQuantity)
+							.style("left", (d3.event.pageX / 1.5) + "px")
+							.style("top", (d3.event.pageY / 10) + "px");
+					})
+					.on("mouseout", function(d) {
+						tooltip.transition()
+							.duration(500)
+							.style("opacity", 0);
+					});
+			})
+
+			// svg.append("circle")
+			// 	.data(d.values)
+			// 	.attr("r", 5)
+			// 	.attr("cx", function(d) { return x(d.date); })
+			// 	.attr("cy", function(d) { return y(d.transactionQuantity); })
+			// 	.on("mouseover", function(d) {
+			// 		tooltip.transition()
+			// 			.duration(200)
+			// 			.style("opacity", .9);
+			//
+			// 		tooltip.html(d.date + "<br/>"  + d.transactionQuantity)
+			// 			.style("left", (d3.event.pageX) + "px")
+			// 			.style("top", (d3.event.pageY - 28) + "px");
+			// 	})
+			// 	.on("mouseout", function(d) {
+			// 		tooltip.transition()
+			// 			.duration(500)
+			// 			.style("opacity", 0);
+			// 	});
 
 	        // Add the Legend
 	        svg.append("text")
@@ -189,6 +249,12 @@
 	                })
 	            .text(d.key);
 	    });
+
+		// console.log(securityLogs);
+		securityLogs.forEach(function(d){
+
+		})
+
 
 		// Add the X Axis
 		svg.append("g")
@@ -352,8 +418,6 @@
 
 		})
 
-		console.log(enrollmentData);
-
 		// Prepare the data for filtering
 		enrollmentData.forEach(function(d){
 			if (year.includes("All") && semester.includes("All")) {
@@ -386,7 +450,6 @@
 			}
 		})
 
-
 		// enrollmentData.sort(function(a, b) { return b.total - a.total; })
 
 		// Set the dimensions of the canvas / graph
@@ -407,6 +470,11 @@
 	        .attr("height", height + margin.top + margin.bottom)
 	    	.append("g")
 	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the div for the tooltip
+		var tooltip = d3.select("#enrollmentChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
 
 		// Define the stack
 		var stack = d3.stack()
@@ -443,7 +511,29 @@
 			.attr("x", function(d) { return x(d.data.key); })
 			.attr("y", function(d) {return y(d[1])})
 			.attr("height", function(d) { return y(d[0]) - y(d[1]); })
+			.on("mouseover", function(d) {
+				// console.log(d);
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", .9);
+
+				tooltip.html(
+					"Semester: " + d.data.key + "<br/>" + "<br/>" +
+					"Computing: " + d.data.computing + "<br/>" + "<br/>" +
+					"Engineering: " + d.data.engineering + "<br/>" + "<br/>" +
+					"Design: " + d.data.design + "<br/>" + "<br/>" +
+					"Business: " + d.data.business + "<br/>" + "<br/>"
+				)
+					.style("left", (d3.event.pageX / 1.5) + "px")
+					.style("top", (d3.event.pageY / 10) + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			})
 			.attr("width", x.bandwidth());
+
 
 			svg.append("g")
 				.attr("class", "axis axis--x")
