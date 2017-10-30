@@ -528,6 +528,7 @@
 			.attr("y", function(d) {return y(d[1])})
 			.attr("height", function(d) { return y(d[0]) - y(d[1]); })
 			.on("mouseover", function(d) {
+				console.log(d);
 				// console.log(d);
 				tooltip.transition()
 					.duration(200)
@@ -538,7 +539,8 @@
 					"Computing: " + d.data.computing + "<br/>" + "<br/>" +
 					"Engineering: " + d.data.engineering + "<br/>" + "<br/>" +
 					"Design: " + d.data.design + "<br/>" + "<br/>" +
-					"Business: " + d.data.business + "<br/>" + "<br/>"
+					"Business: " + d.data.business + "<br/>" + "<br/>" +
+					"Total: " + (d.data.computing + d.data.engineering + d.data.design + d.data.business) + "<br/>" + "<br/>"
 				)
 					.style("left", (d3.event.pageX / 1.5) + "px")
 					.style("top", (d3.event.pageY / 10) + "px");
