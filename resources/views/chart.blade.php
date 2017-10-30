@@ -29,21 +29,43 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12">
 		<h1>Enrollment Statistics</h1>
-		<div id='enrollmentChart'>
-		</div>
-		<div id='enrollmentChartFilters'>
-		</div>
-		<div id='enrollmentChartApplyButton'>
+		<div class="row">
+			<div class="col-xs-8 col-sm-8">
+				<div id='enrollmentChart'>
+				</div>
+			</div>
+			<div class="col-xs-2 col-sm-2">
+				<div id='enrollmentChartFilters'>
+				</div>
+			</div>
+			<div class="col-xs-2 col-sm-2">
+				<div id='enrollmentChartApplyButton'>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-sm-12">
 		<h1>Security Log</h1>
-		<div id='securityChart'>
+		<div class="row">
+			<div class="col-xs-8 col-sm-8">
+				<div id='securityChart'>
+				</div>
+			</div>
+			<div class="col-xs-2 col-sm-2">
+				<div id='securityChartFilters'>
+				</div>
+			</div>
+			<div class="col-xs-2 col-sm-2">
+				<div id='securityChartApplyButton'>
+				</div>
+			</div>
+
+
+
+
+
 		</div>
-		<div id='securityChartFilters'>
-		</div>
-		<div id='securityChartApplyButton'>
-		</div>
+
 	</div>
 </div>
 
@@ -136,7 +158,7 @@
 		var svg = d3.select("#securityChart")
 		    .append("svg")
 	        .attr("width", width + margin.left + margin.right)
-	        .attr("height", (height*1.2) + margin.top + margin.bottom)
+	        .attr("height", (height) + margin.top + margin.bottom)
 	    	.append("g")
 	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -191,6 +213,7 @@
 					.data(d.values)
 					.attr("cx", function() { return x(d2.date); })
 					.attr("cy", function() { return y(d2.transactionQuantity); })
+					.attr("id", 'circle'+d.key.replace(/\s+/g, '')) // assign an ID
 					.style("fill", function() { // Add the colours dynamically
 		                return d.z = z(d.key); })
 					.on("mouseover", function() {
@@ -232,7 +255,7 @@
 	        // Add the Legend
 	        svg.append("text")
 	            .attr("x", (legendSpace/2)+i*legendSpace)  // space legend
-	            .attr("y", (height*1.25) + (margin.bottom/2)+ 5)
+				.attr("y", (height*1.25) + (margin.bottom/2)+ 5)
 	            .attr("class", "legend")    // style the legend
 	            .style("fill", function() { // Add the colours dynamically
 	                return d.z = z(d.key); })
@@ -241,19 +264,18 @@
 	                var active   = d.active ? false : true,
 	                newOpacity = active ? 0 : 1;
 	                // Hide or show the elements based on the ID
-	                d3.select("#tag"+d.key.replace(/\s+/g, ''))
+					d3.select("#tag"+d.key.replace(/\s+/g, ''))
 	                    .transition().duration(100)
 	                    .style("opacity", newOpacity);
+
+					d3.selectAll("#circle"+d.key.replace(/\s+/g, ''))
+	                    .transition().duration(100)
+						.style("opacity", newOpacity)
 	                // Update whether or not the elements are active
 	                d.active = active;
 	                })
 	            .text(d.key);
 	    });
-
-		// console.log(securityLogs);
-		securityLogs.forEach(function(d){
-
-		})
 
 
 		// Add the X Axis
@@ -606,7 +628,7 @@
 		yearSelector += "</select></p></br>";
 
 		var semesterSelector = "";
-		semesterSelector += "<p>Semester For Security Chart : <select id='selectSemester-enrollmentChart' multiple size='5' style='width: 202px;'>";4
+		semesterSelector += "<p>Semester For Enrollment Chart : <select id='selectSemester-enrollmentChart' multiple size='5' style='width: 202px;'>";4
 		semesterSelector += "<option value=All selected>All</option>";
 		semesterSelector += "<option value=1>1</option>";
 		semesterSelector += "<option value=2>2</option>";
