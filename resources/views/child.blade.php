@@ -252,7 +252,7 @@
 
         tempData = [];
 
-        var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
+        var heatmapLogs = {!! json_encode($heatmapLogs->toArray()) !!};
 
         // parse the date / time
         var parseTime = d3.timeParse("%Y-%m-%d");
