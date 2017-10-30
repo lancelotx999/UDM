@@ -12,9 +12,7 @@
 */
 
 //loads the child 1st
-Route::get('/', function () {
-    return view('child');
-});
+Route::get('/', 'HeatmapController@heatmapMap');
 
 
 // Route::get('/chart', function () {
@@ -22,5 +20,5 @@ Route::get('/', function () {
 // });
 
 
-Route::get('/chart', 'ChartController@chartPage');
+Route::get('/chart', 'SecurityController@securityChart');
 Route::get('/map', 'SecurityController@securityMap');
