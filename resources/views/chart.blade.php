@@ -59,13 +59,7 @@
 				<div id='securityChartApplyButton'>
 				</div>
 			</div>
-
-
-
-
-
 		</div>
-
 	</div>
 </div>
 
