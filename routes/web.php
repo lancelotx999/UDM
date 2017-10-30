@@ -22,4 +22,11 @@ Route::get('/', function () {
 
 Route::get('/chart', 'ChartController@chartPage');
 Route::get('/map', 'SecurityController@securityMap');
-Route::resource('/fileCRUD','FileController'); 
+
+// Routes for uploading database data
+Route::get('Upload', function()
+{
+	return view ('Upload');
+});
+Route::post()
+
