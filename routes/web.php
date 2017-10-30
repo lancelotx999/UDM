@@ -16,11 +16,10 @@ Route::get('/', function () {
     return view('child');
 });
 
-
 // Route::get('/chart', function () {
 //     return view('chart');
 // });
 
-
 Route::get('/chart', 'ChartController@chartPage');
 Route::get('/map', 'SecurityController@securityMap');
+Route::resource('/fileCRUD','FileController'); 
