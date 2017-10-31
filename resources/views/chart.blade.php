@@ -69,12 +69,14 @@
 		dateMin = null,
 		dateMax = null;
 
+// new Date("01/01/2015"), new Date("12/31/2015")
+	createSecurityChart(securityLogs, new Date("01/01/2016"), new Date("12/31/2016"), 'All', 'All');
 
-	createSecurityChart(securityLogs, dateMin, dateMax, 'All', 'All');
-
-	createEnrollmentChart(enrollmentData, ['All'], ['All']);
+	createEnrollmentChart(enrollmentData, ['2016'], ['All']);
 
 	function createSecurityChart(securityLogs, dateMin, dateMax, floor, block){
+		console.log(dateMin);
+		console.log(dateMax);
 		var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
 
 		// parse the date / time
@@ -226,26 +228,6 @@
 					});
 			})
 
-			// svg.append("circle")
-			// 	.data(d.values)
-			// 	.attr("r", 5)
-			// 	.attr("cx", function(d) { return x(d.date); })
-			// 	.attr("cy", function(d) { return y(d.transactionQuantity); })
-			// 	.on("mouseover", function(d) {
-			// 		tooltip.transition()
-			// 			.duration(200)
-			// 			.style("opacity", .9);
-			//
-			// 		tooltip.html(d.date + "<br/>"  + d.transactionQuantity)
-			// 			.style("left", (d3.event.pageX) + "px")
-			// 			.style("top", (d3.event.pageY - 28) + "px");
-			// 	})
-			// 	.on("mouseout", function(d) {
-			// 		tooltip.transition()
-			// 			.duration(500)
-			// 			.style("opacity", 0);
-			// 	});
-
 	        // Add the Legend
 	        svg.append("text")
 	            .attr("x", (legendSpace/2)+i*legendSpace)  // space legend
@@ -365,6 +347,7 @@
 					slide: function( event, ui ) {
 						dateMin = new Date(ui.values[0]);
 						dateMax = new Date(ui.values[1]);
+
 
 						$( "#date-securityChart").val(getFormattedDate(dateMin) + " - " + getFormattedDate(dateMax) );
 					}
