@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Security;
 use App\Enrollment;
+use App\ClubRecruitment;
 
 
 class ChartController extends Controller
@@ -19,10 +20,12 @@ class ChartController extends Controller
      {
          $securityLogs = Security::all();
          $enrollmentData = Enrollment::all();
+         $clubRecruitmentData = ClubRecruitment::all();
          $data = [];
 
          $data['securityLogs'] = $securityLogs;
          $data['enrollmentData'] = $enrollmentData;
+         $data['clubRecruitmentData'] = $clubRecruitmentData;
 
          return view('/chart',$data);
      }
