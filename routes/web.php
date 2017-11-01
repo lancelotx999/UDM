@@ -26,7 +26,6 @@ Route::get('/map', 'SecurityController@securityMap');
 // Routes for uploading database data
 Route::get('Upload', function()
 {
-	return view ('Upload');
+	return view ('dbManager/Upload');
 });
-Route::post()
-
+Route::post('Upload','FileTransferController@UploadVerification');
