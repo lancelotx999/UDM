@@ -1,9 +1,5 @@
-<form action="uploadFile" method="post"" enctype="multipart/form-data">
-  {!! csrf_field() !!}
-    <input type="file" name="uploadedfile" id="uploadedfile">
-    <input type="submit" value="Upload CSV" name="submit">
-
-
+<form method = "POST" enctype="multipart/form-data" action="UploadFile" >
+	{!! csrf_field() !!}
+	File:<input id="file" name="file" type="file">
+	<input type="submit">
 </form>
-
-

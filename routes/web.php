@@ -28,4 +28,4 @@ Route::get('Upload', function()
 {
 	return view ('dbManager/Upload');
 });
-Route::post('Upload','FileTransferController@UploadVerification');
+Route::post('UploadFile','FileTransferController@UploadVerification');
