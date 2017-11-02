@@ -25,9 +25,23 @@
 
 
     <svg preserveAspectRatio="xMidYMid meet"></svg>
-    <div id='HeatmapChartFilters'></div>
-    <div id='HeatmapChartApplyButton'></div>
-        
+   
+    
+     <div class="row">
+            <div class="col-xs-8 col-sm-8">
+                <div id='securityChart'>
+                </div>
+            </div>
+            <div class="col-xs-2 col-sm-2">
+                 <div id='heatmapChartFilters'></div>
+            </div>
+            <div class="col-xs-2 col-sm-2">
+                <div id='heatmapChartApplyButton'></div>
+                
+            </div>
+        </div>   
+
+    
 
     <script>
 
@@ -103,8 +117,9 @@
         );
     }
 
+    floor('level_g'); // Default load floor G
 
-
+    
 
     var heatmapLogs = null,
         dateMin = null,
@@ -130,13 +145,11 @@
                     d.floor = d.roomId[1];
                     d.temperature = +d.temperature;
 
-                    if (d.date instanceof Date) && (d.time instanceof Date) {
+                    if (d.date instanceof Date) {
                         d.date = d.date;
-                        d.time = d.time;
                     }
                     else {
-                        d.date = parseDate(d.dateTime);
-                        d.time = parseTime(d.dateTime);
+                        d.date = parseTime(d.date);
                     }
                 }
                 if (floor.toUpperCase() == d.roomId[1] && block.toUpperCase() == 'ALL') {
@@ -145,13 +158,11 @@
                     d.floor = d.roomId[1];
                     d.temperature = +d.temperature;
 
-                    if (d.date instanceof Date) && (d.time instanceof Date) {
+                    if (d.date instanceof Date) {
                         d.date = d.date;
-                        d.time = d.time;
                     }
                     else {
-                        d.date = parseDate(d.dateTime);
-                        d.time = parseTime(d.dateTime);
+                        d.date = parseTime(d.date);
                     }
                 }
                 if (floor.toUpperCase() == 'ALL' && block.toUpperCase() == d.roomId[0].toUpperCase()) {
@@ -160,13 +171,11 @@
                     d.floor = d.roomId[1];
                     d.temperature = +d.temperature;
 
-                    if (d.date instanceof Date) && (d.time instanceof Date) {
+                    if (d.date instanceof Date) {
                         d.date = d.date;
-                        d.time = d.time;
                     }
                     else {
-                        d.date = parseDate(d.dateTime);
-                        d.time = parseTime(d.dateTime);
+                        d.date = parseTime(d.date);
                     }
                 }
                 else if(floor.toUpperCase() == d.roomId[1] && block.toUpperCase() == d.roomId[0].toUpperCase()){
@@ -175,35 +184,34 @@
                     d.floor = d.roomId[1];
                     d.temperature = +d.temperature;
 
-                    if (d.date instanceof Date) && (d.time instanceof Date) {
+                    if (d.date instanceof Date) {
                         d.date = d.date;
-                        d.time = d.time;
                     }
                     else {
-                        d.date = parseDate(d.dateTime);
-                        d.time = parseTime(d.dateTime);
+                        d.date = parseTime(d.date);
                     }
                 }
-
             });
 
 
-
+            //set the data
             var data = d3.range(d.temperature);
+            
 
-
-            // Set the range
-            var colors = d3.scaleLinear()
+            // Set the color range
+            var colors = d3.scaleLinear() // d3.scaleQuantize()
                 .domain([11.00,35.00])
                 .range(['#ffffd4','#fed98e','#fe9929','#d95f0e','#993404']);
                     
+
+            //data.forEach(function(d) {
             var svg = d3.select("svg");
-            var rects = svg.selectAll(".rects")
+            var rects = svg.selectAll("rect")
                 .data(data)
                 .enter()
-                .append("rect")
+                .append("rect", d.roomId)
                 .attr("fill", d=>colors(d));
-
+            //});
 
             createHeatmapChartFilters(heatmapLogs, dateMin, dateMax, 'All', 'All');
             createHeatmapApplyButton(heatmapLogs);
@@ -219,7 +227,7 @@
         dateSlider += "<p>Date Range for Heatmap Chart : ";
         dateSlider += "<input type='date-' id='date-HeatmapChart'>";
         dateSlider += "</p>";
-        dateSlider += "<div id='dateSlider-securityChart' style='width:85%;margin: auto;'></div></br>";
+        dateSlider += "<div id='dateSlider-heatmapChart' style='width:85%;margin: auto;'></div></br>";
 
         var floorSelector = "";
         floorSelector += "<p>Floor For Heatmap Chart : <select id='selectFloor-heatmapChart' size='1' style='width: 202px;'>";4
@@ -352,6 +360,15 @@
 
         return day + '/' + month + '/' + year;
     }
+    
+
+
+        
+
+
+
+
+    
 
 
 

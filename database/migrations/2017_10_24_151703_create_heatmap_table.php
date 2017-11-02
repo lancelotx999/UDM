@@ -16,7 +16,7 @@ class CreateHeatmapTable extends Migration
         Schema::create('heatmap', function (Blueprint $table) {
             $table->increments('id');
             $table->string('roomId');
-            $table->dateTime('dateTime');
+            $table->date('date');
             $table->decimal('temperature', 3, 1);
             $table->timestamps();
         });
@@ -24,785 +24,652 @@ class CreateHeatmapTable extends Migration
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 07:00:00"),
+            'date' => date("2016-03-01"),
             'temperature' => 16.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 07:30:00"),
+            'date' => date("2016-03-02"),
             'temperature' => 23,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 08:10:00"),
+            'date' => date("2016-03-03"),
             'temperature' => 20.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 08:30:00"),
+            'date' => date("2016-03-04"),
             'temperature' => 22,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 09:00:00"),
+            'date' => date("2016-03-05"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 09:30:00"),
+            'date' => date("2016-03-06"),
             'temperature' => 19.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 10:00:00"),
+            'date' => date("2016-03-07"),
             'temperature' => 22.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 10:30:00"),
+            'date' => date("2016-03-08"),
             'temperature' => 26.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 11:00:00"),
+            'date' => date("2016-03-09"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 11:30:00"),
+            'date' => date("2016-03-10"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 12:00:00"),
+            'date' => date("2016-03-11"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 12:30:00"),
+            'date' => date("2016-03-12"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 13:00:00"),
+            'date' => date("2016-03-13"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 13:30:00"),
+            'date' => date("2016-03-14"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 14:00:00"),
+            'date' => date("2016-03-15"),
             'temperature' => 23.2,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 14:30:00"),
+            'date' => date("2016-03-16"),
             'temperature' => 24.0,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 15:00:00"),
+            'date' => date("2016-03-17"),
             'temperature' => 27.3,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 15:30:00"),
+            'date' => date("2016-03-18"),
             'temperature' => 22.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 16:00:00"),
+            'date' => date("2016-03-19"),
             'temperature' => 21.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 16:30:00"),
+            'date' => date("2016-03-20"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 17:00:00"),
+            'date' => date("2016-03-21"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 17:30:00"),
+            'date' => date("2016-03-22"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 18:00:00"),
+            'date' => date("2016-03-23"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 18:30:00"),
+            'date' => date("2016-03-24"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 19:00:00"),
+            'date' => date("2016-03-25"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 19:30:00"),
+            'date' => date("2016-03-26"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 20:00:00"),
+            'date' => date("2016-03-27"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-01 20:30:00"),
+            'date' => date("2016-03-28"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-02 07:00:00"),
+            'date' => date("2016-03-29"),
             'temperature' => 16.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-02 07:30:00"),
+            'date' => date("2016-03-30"),
             'temperature' => 16.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
             'roomId' => "A207",
-            'dateTime' => date("2016-03-02 08:10:00"),
+            'date' => date("2016-03-31"),
             'temperature' => 16.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 08:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-01"),
             'temperature' => 22,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 09:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-02"),
             'temperature' => 22.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 09:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-03"),
             'temperature' => 23.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 10:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-04"),
             'temperature' => 22.6,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 10:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-05"),
             'temperature' => 16.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 11:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-06"),
             'temperature' => 16.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 11:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-07"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 12:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-08"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 12:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-09"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 13:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-10"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 13:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-11"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 14:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-12"),
             'temperature' => 23.2,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 14:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-13"),
             'temperature' => 24.0,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 15:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-14"),
             'temperature' => 27.3,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 15:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-15"),
             'temperature' => 22.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 16:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-16"),
             'temperature' => 21.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 16:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-17"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 17:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-18"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 17:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-19"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 18:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-20"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 18:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-21"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 19:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-22"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 19:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-23"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 20:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-24"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-02 20:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-25"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 07:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-26"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 07:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-27"),
             'temperature' => 23,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 08:10:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-28"),
             'temperature' => 22.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 08:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-29"),
             'temperature' => 22,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 09:00:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-30"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 09:30:00"),
+            'roomId' => "A302",
+            'date' => date("2016-03-31"),
             'temperature' => 19.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 10:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-01"),
             'temperature' => 22.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 10:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-02"),
             'temperature' => 26.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 11:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-03"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 11:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-04"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 12:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-05"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 12:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-06"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 13:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-07"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 13:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-08"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 14:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-09"),
             'temperature' => 23.2,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 14:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-10"),
             'temperature' => 24.0,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 15:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-11"),
             'temperature' => 27.3,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 15:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-12"),
             'temperature' => 22.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 16:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-13"),
             'temperature' => 21.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 16:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-14"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 17:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-15"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 17:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-16"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 18:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-17"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 18:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-18"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 19:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-19"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 19:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-20"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 20:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-21"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-03 20:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-22"),
             'temperature' => 17.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 07:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-23"),
             'temperature' => 16.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 07:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-24"),
             'temperature' => 16.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 08:10:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-25"),
             'temperature' => 16.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 08:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-26"),
             'temperature' => 22,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 09:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-27"),
             'temperature' => 22.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 09:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-28"),
             'temperature' => 23.8,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 10:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-29"),
             'temperature' => 22.6,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 10:30:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-30"),
             'temperature' => 16.1,
         ));
 
         DB::table('heatmap')->insert(
         array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 11:00:00"),
+            'roomId' => "A224",
+            'date' => date("2016-03-31"),
             'temperature' => 16.1,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 11:30:00"),
-            'temperature' => 17.8,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 12:00:00"),
-            'temperature' => 17.8,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 12:30:00"),
-            'temperature' => 17.8,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 13:00:00"),
-            'temperature' => 17.8,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 13:30:00"),
-            'temperature' => 17.8,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 14:00:00"),
-            'temperature' => 23.2,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 14:30:00"),
-            'temperature' => 24.0,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 15:00:00"),
-            'temperature' => 27.3,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 15:30:00"),
-            'temperature' => 22.8,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 16:00:00"),
-            'temperature' => 21.1,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 16:30:00"),
-            'temperature' => 17.8,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 17:00:00"),
-            'temperature' => 17.8,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 17:30:00"),
-            'temperature' => 21.4,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 18:00:00"),
-            'temperature' => 23.1,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 18:30:00"),
-            'temperature' => 22.9,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 19:00:00"),
-            'temperature' => 17.8,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 19:30:00"),
-            'temperature' => 17.8,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 20:00:00"),
-            'temperature' => 17.8,
-        ));
-
-        DB::table('heatmap')->insert(
-        array(
-            'roomId' => "A207",
-            'dateTime' => date("2016-03-04 20:30:00"),
-            'temperature' => 17.8,
         ));
 
         
