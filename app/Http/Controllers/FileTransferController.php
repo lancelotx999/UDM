@@ -10,6 +10,8 @@ class FileTransferController extends Controller
 {
 	public function UploadVerification(Request $request)
 	{
-		dd($request->get("file"));
+		$file = $request->file('file');
+		$filename = $file->getClientOriginalName();
+		echo $filename;
 	}
 }
