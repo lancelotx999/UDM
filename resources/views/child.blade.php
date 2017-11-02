@@ -2,7 +2,7 @@
 
 @section('content')
 
-<script src="http://colorbrewer2.org/export/colorbrewer.js">//color scaling for the temperature</script> 
+<script src="http://colorbrewer2.org/export/colorbrewer.js">//color scaling for the temperature</script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -25,8 +25,8 @@
 
 
     <svg preserveAspectRatio="xMidYMid meet"></svg>
-   
-    
+
+
      <div class="row">
             <div class="col-xs-8 col-sm-8">
                 <div id='securityChart'>
@@ -37,11 +37,11 @@
             </div>
             <div class="col-xs-2 col-sm-2">
                 <div id='heatmapChartApplyButton'></div>
-                
-            </div>
-        </div>   
 
-    
+            </div>
+        </div>
+
+
 
     <script>
 
@@ -119,7 +119,7 @@
 
     floor('level_g'); // Default load floor G
 
-    
+
 
     var heatmapLogs = null,
         dateMin = null,
@@ -127,13 +127,25 @@
 
 
 
-    //Heatmap checkbox onclick function 
-    d3.select("#Heatmap").on("change",displayHeatmap);
-    displayHeatmap(heatmapLogs, dateMin, dateMax, 'All', 'All');
+    //Heatmap checkbox onclick function
+    // d3.select("#overlayCheck").on("click",displayHeatmap);
+    // document.getElementById('#overlayCheck-heatmap').addEventListener('click', displayHeatmap);
+    // document.getElementById('.overlayCheck-heatmap').addEventListener('click', displayHeatmap);
+    document.getElementById('overlayCheck-heatmap').addEventListener('click', displayHeatmap);
+    // displayHeatmap(heatmapLogs, dateMin, dateMax, 'All', 'All');
 
     function displayHeatmap(heatmapLogs, dateMin, dateMax, floor, block){
-        if(d3.select("#Heatmap").property("checked")){
+        // console.log(document.getElementById("overlayCheck-heatmap").checked);
+        // console.log("baboon");
+
+        floor = "G",
+        block = "G";
+
+
+        if(document.getElementById("overlayCheck-heatmap").checked){
             var heatmapLogs = {!! json_encode($heatmapLogs->toArray()) !!};
+
+            console.log(heatmapLogs);
 
             var parseDate = d3.timeParse("%Y-%m-%d");
             var parseTime = d3.timeParse("%H:%M:%S");
@@ -193,31 +205,45 @@
                 }
             });
 
-
             //set the data
-            var data = d3.range(d.temperature);
-            
+            // var data = d3.range(d.temperature);
+            // console.log(data);
 
             // Set the color range
             var colors = d3.scaleLinear() // d3.scaleQuantize()
                 .domain([11.00,35.00])
                 .range(['#ffffd4','#fed98e','#fe9929','#d95f0e','#993404']);
-                    
 
-            //data.forEach(function(d) {
-            var svg = d3.select("svg");
-            var rects = svg.selectAll("rect")
-                .data(data)
-                .enter()
-                .append("rect", d.roomId)
-                .attr("fill", d=>colors(d));
-            //});
+            var opacityTest = d3.scaleLinear().rangeRound([0, 100]);
 
-            createHeatmapChartFilters(heatmapLogs, dateMin, dateMax, 'All', 'All');
-            createHeatmapApplyButton(heatmapLogs);
+            opacityTest.domain([d3.min(heatmapLogs, function(d) { return d.temperature}), d3.max(heatmapLogs, function(d) { return d.temperature})]).nice();
+
+
+            console.log(d3.max(heatmapLogs, function(d) { return d.temperature}));
+            console.log(d3.min(heatmapLogs, function(d) { return d.temperature}));
+
+            // data.forEach(function(d) {
+            // var svg = d3.select("svg");
+            // var rects = svg.selectAll("rect")
+            //     .data(data)
+            //     .enter()
+            //     .append("rect", d.roomId)
+            //     .attr("fill", d=>colors(d));
+            // });
+
+            console.log(d3.max(heatmapLogs, function(d) { return d.temperature}));
+
+            heatmapLogs.forEach(function(d){
+                // console.log("#"+d.roomId.toLowerCase());
+                // console.log(d3.selectAll("#"+d.roomId.toLowerCase()));
+                d3.select("#"+d.roomId.toLowerCase())
+                    .style("opacity", opacityTest(d.temperature)/100)
+                    .style("fill", "red");
+            })
+
+            // createHeatmapChartFilters(heatmapLogs, dateMin, dateMax, 'All', 'All');
+            // createHeatmapApplyButton(heatmapLogs);
         }
-
-
     }
 
     function createHeatmapChartFilters(heatmapLogs, dateMin, dateMax, floor, block){
@@ -360,26 +386,22 @@
 
         return day + '/' + month + '/' + year;
     }
-    
 
+    //Security checkbox onclick function
+    // d3.select("#Security").on("change",displaySecurity);
+    // displaySecurity();
+    // function displaySecurity(){
+    //     if(d3.select("#Security").property("checked")){
+    //         alert("This is alert box!");
+    //     }
+    // }
 
-        
-
-
-
-
-    
-
-
-
-
-    //Security checkbox onclick function 
-    d3.select("#Security").on("change",displaySecurity);
-    displaySecurity();
-    function displaySecurity(){
-        if(d3.select("#Security").property("checked")){
-            alert("This is alert box!");
-        }
+    function getCheckedCheckboxesFor(checkboxName) {
+        var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+            Array.prototype.forEach.call(checkboxes, function(el) {
+                values.push(el.value);
+            });
+        return values;
     }
 
 
@@ -387,6 +409,6 @@
 
 
     </script>
-        
+
 
 @endsection
