@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\UploadCSV;
+use App\Http\Requests\CSV;
 use Storage;
 
 
@@ -37,7 +37,7 @@ class FileTransferController extends Controller
 		return  $filename;
 	}
 
-	public function uploadFile(UploadCSV $request)
+	public function uploadFile(CSV $request)
 	{
 		return "swag";
 	}

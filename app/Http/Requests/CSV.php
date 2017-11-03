@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UploadCSV extends FormRequest
+class CSV extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,14 @@ class UploadCSV extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'required|mimes:csv',
+            'file' => 'required|mimes:csv,xlsx',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'file.mimes' => 'Invalid file extension',
         ];
     }
 }
