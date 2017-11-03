@@ -23,24 +23,17 @@
         <li><a href="#" onclick="floor('level_9')">Level 9</a></li>
     </ul>
 
-
+<div id='securityChart'>
     <svg preserveAspectRatio="xMidYMid meet"></svg>
-
+</div>
 
      <div class="row">
-            <div class="col-xs-8 col-sm-8">
-                <div id='securityChart'>
-                </div>
-            </div>
-            <div class="col-xs-2 col-sm-2">
-                 <div id='heatmapChartFilters'></div>
-            </div>
-            <div class="col-xs-2 col-sm-2">
-                <div id='heatmapChartApplyButton'></div>
-
-            </div>
+        <div class="col-xs-8 col-sm-8">
+            
+            <div id='heatmapChartFilters'></div>
+            <div id='heatmapChartApplyButton'></div>
         </div>
-
+    </div>
 
 
     <script>
@@ -127,29 +120,23 @@
 
 
 
-    //Heatmap checkbox onclick function
-    // d3.select("#overlayCheck").on("click",displayHeatmap);
-    // document.getElementById('#overlayCheck-heatmap').addEventListener('click', displayHeatmap);
-    // document.getElementById('.overlayCheck-heatmap').addEventListener('click', displayHeatmap);
-    document.getElementById('overlayCheck-heatmap').addEventListener('click', displayHeatmap);
-    // displayHeatmap(heatmapLogs, dateMin, dateMax, 'All', 'All');
-
+    //Heatmap checkbox onclick function 
+    d3.select("#Heatmap").on("change",displayHeatmap);
+    displayHeatmap(heatmapLogs, dateMin, dateMax, 'All', 'All');
     function displayHeatmap(heatmapLogs, dateMin, dateMax, floor, block){
-        // console.log(document.getElementById("overlayCheck-heatmap").checked);
-        // console.log("baboon");
-
+        
+        //set default floor and block values. (G)round floor (G) Block
         floor = "G",
         block = "G";
 
 
-        if(document.getElementById("overlayCheck-heatmap").checked){
+        if(d3.select("#Heatmap").property("checked")){
             var heatmapLogs = {!! json_encode($heatmapLogs->toArray()) !!};
 
-            console.log(heatmapLogs);
-
+            //console.log(heatmapLogs);
             var parseDate = d3.timeParse("%Y-%m-%d");
-            var parseTime = d3.timeParse("%H:%M:%S");
 
+            //parse filter data 
             heatmapLogs.forEach(function(d) {
                 if (floor.toUpperCase() == 'ALL' && block.toUpperCase() == 'ALL') {
                     d.roomId = d.roomId;
@@ -161,7 +148,7 @@
                         d.date = d.date;
                     }
                     else {
-                        d.date = parseTime(d.date);
+                        d.date = parseDate(d.date);
                     }
                 }
                 if (floor.toUpperCase() == d.roomId[1] && block.toUpperCase() == 'ALL') {
@@ -174,7 +161,7 @@
                         d.date = d.date;
                     }
                     else {
-                        d.date = parseTime(d.date);
+                        d.date = parseDate(d.date);
                     }
                 }
                 if (floor.toUpperCase() == 'ALL' && block.toUpperCase() == d.roomId[0].toUpperCase()) {
@@ -187,7 +174,7 @@
                         d.date = d.date;
                     }
                     else {
-                        d.date = parseTime(d.date);
+                        d.date = parseDate(d.date);
                     }
                 }
                 else if(floor.toUpperCase() == d.roomId[1] && block.toUpperCase() == d.roomId[0].toUpperCase()){
@@ -200,58 +187,45 @@
                         d.date = d.date;
                     }
                     else {
-                        d.date = parseTime(d.date);
+                        d.date = parseDate(d.date);
                     }
                 }
             });
 
-            //set the data
-            // var data = d3.range(d.temperature);
-            // console.log(data);
-
+            //check db for highest and lowest temperature value
+            var minTemp = d3.min(heatmapLogs, function(d) {return d.temperature;}),
+                maxTemp = d3.max(heatmapLogs, function(d) {return d.temperature;});
+            // console.log(d3.max(heatmapLogs, function(d) { return d.temperature}));
+            // console.log(d3.min(heatmapLogs, function(d) { return d.temperature}));
+            
             // Set the color range
-            var colors = d3.scaleLinear() // d3.scaleQuantize()
-                .domain([11.00,35.00])
-                .range(['#ffffd4','#fed98e','#fe9929','#d95f0e','#993404']);
+            var colors = d3.scaleQuantize()
+                    .range(['#ffffd4','#fed98e','#fe9929','#d95f0e','#993404']);
 
+            colors.domain([minTemp, maxTemp]).nice();
             var opacityTest = d3.scaleLinear().rangeRound([0, 100]);
 
             opacityTest.domain([d3.min(heatmapLogs, function(d) { return d.temperature}), d3.max(heatmapLogs, function(d) { return d.temperature})]).nice();
-
-
-            console.log(d3.max(heatmapLogs, function(d) { return d.temperature}));
-            console.log(d3.min(heatmapLogs, function(d) { return d.temperature}));
-
-            // data.forEach(function(d) {
-            // var svg = d3.select("svg");
-            // var rects = svg.selectAll("rect")
-            //     .data(data)
-            //     .enter()
-            //     .append("rect", d.roomId)
-            //     .attr("fill", d=>colors(d));
-            // });
-
-            console.log(d3.max(heatmapLogs, function(d) { return d.temperature}));
+            
 
             heatmapLogs.forEach(function(d){
                 // console.log("#"+d.roomId.toLowerCase());
                 // console.log(d3.selectAll("#"+d.roomId.toLowerCase()));
                 d3.select("#"+d.roomId.toLowerCase())
-                    .style("opacity", opacityTest(d.temperature)/100)
-                    .style("fill", "red");
+                    .style("fill", colors(d.temperature));
             })
 
-            // createHeatmapChartFilters(heatmapLogs, dateMin, dateMax, 'All', 'All');
-            // createHeatmapApplyButton(heatmapLogs);
+
+            createHeatmapChartFilters(heatmapLogs, dateMin, dateMax, 'All', 'All');
+            createHeatmapApplyButton(heatmapLogs);
         }
     }
 
     function createHeatmapChartFilters(heatmapLogs, dateMin, dateMax, floor, block){
-
         var dateSlider = "";
 
         dateSlider += "<p>Date Range for Heatmap Chart : ";
-        dateSlider += "<input type='date-' id='date-HeatmapChart'>";
+        dateSlider += "<input type='date-' id='date-heatmapChart'>";
         dateSlider += "</p>";
         dateSlider += "<div id='dateSlider-heatmapChart' style='width:85%;margin: auto;'></div></br>";
 
@@ -279,8 +253,6 @@
         blockSelector += "<option value=G>G</option>";
         blockSelector += "<option value=L>L</option>";
         blockSelector += "</select></p></br>";
-
-
 
         document.getElementById('heatmapChartFilters').innerHTML = dateSlider + floorSelector + blockSelector;
 
@@ -313,15 +285,14 @@
         if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
             $(function (){
                 $("#dateSlider-heatmapChart").slider({
-                    range: true,
+                    
                     min: Math.min.apply(null, tempData),
                     max: Math.max.apply(null, tempData),
-                    values: [dateMin.getTime(), dateMax.getTime() ],
+                    values: [dateMin.getTime()],
                     slide: function( event, ui ) {
                         dateMin = new Date(ui.values[0]);
-                        dateMax = new Date(ui.values[1]);
 
-                        $( "#date-heatmapChart").val(getFormattedDate(dateMin) + " - " + getFormattedDate(dateMax) );
+                        $( "#date-heatmapChart").val(getFormattedDate(dateMin));
                     }
                 });
             })
@@ -329,22 +300,18 @@
         else {
             $(function (){
                 $("#dateSlider-heatmapChart").slider({
-                    range: true,
+                    
                     min: Math.min.apply(null, tempData),
                     max: Math.max.apply(null, tempData),
-                    values: [Math.min.apply(null, tempData), Math.max.apply(null, tempData) ],
+                    values: [Math.min.apply(null, tempData)],
                     slide: function( event, ui ) {
                         var dateMin = new Date(ui.values[0]);
-                        var dateMax = new Date(ui.values[1]);
 
-                        $( "#date-heatmapChart").val(getFormattedDate(dateMin) + " - " + getFormattedDate(dateMax) );
+                        $( "#date-heatmapChart").val(getFormattedDate(dateMin));
                     }
                 });
             })
         }
-
-
-
     }
 
 
@@ -388,20 +355,12 @@
     }
 
     //Security checkbox onclick function
-    // d3.select("#Security").on("change",displaySecurity);
-    // displaySecurity();
-    // function displaySecurity(){
-    //     if(d3.select("#Security").property("checked")){
-    //         alert("This is alert box!");
-    //     }
-    // }
-
-    function getCheckedCheckboxesFor(checkboxName) {
-        var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
-            Array.prototype.forEach.call(checkboxes, function(el) {
-                values.push(el.value);
-            });
-        return values;
+    d3.select("#Security").on("change",displaySecurity);
+    displaySecurity();
+    function displaySecurity(){
+        if(d3.select("#Security").property("checked")){
+            alert("This is alert box!");
+        }
     }
 
 

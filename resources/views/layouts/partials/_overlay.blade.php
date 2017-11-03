@@ -1,8 +1,19 @@
 <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 	<div class="sidebar-nav">
         <ul class="nav">
-            <li><input type="checkbox" name="overlayCheck" id="overlayCheck-heatmap" value="Heatmaps"><span id="cb_span">Heatmaps</span></li>
-            <li><input type="checkbox" name="overlayCheck" id="overlayCheck-security" value="Security"><span id="cb_span">Security</span></li>
-        </ul>
+            <li>
+            	<label for="check_security">
+            	<input type="checkbox" id="Heatmap">
+            		<span id="cb_span">Heatmap</span></li>
+            	</label>
+
+            <li>
+            	<input type="checkbox" id="Security">
+            		<span id="cb_span">Security</span></li>
+            	</label>
+
+
+            </li>
+        </ul>        
     </div>
 </div>
