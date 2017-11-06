@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Heatmap;
+use App\Security;
 
 
 class HeatmapController extends Controller
@@ -19,9 +20,11 @@ class HeatmapController extends Controller
      public function heatmapMap()
      {
          $heatmapLogs = Heatmap::all();
+         $securityLogs = Security::all();
          $data = [];
 
          $data['heatmapLogs'] = $heatmapLogs;
+         $data['securityLogs'] = $securityLogs;
 
          return view('/child',$data);
      }
