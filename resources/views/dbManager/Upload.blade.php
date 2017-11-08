@@ -1,15 +1,40 @@
-<form method = "POST" enctype="multipart/form-data" action="UploadFile" >
-	{!! csrf_field() !!}
-	File:<input id="file" name="file" type="file">
-	<input type="submit">
-</form>
+@extends('layouts.app')
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+@section('content')
+
+<br />
+
+<style type="text/css">
+
+.bottom-space {
+    padding-bottom: 50vh;
+}
+
+</style>
+
+<div class="row bottom-space">
+    <div class="col-xs-12 col-sm-12">
+
+    <h3>Db Upload Feature</h3><hr />
+
+    <form method = "POST" enctype="multipart/form-data" action="UploadFile" >
+    	{!! csrf_field() !!}
+    	<p>Choose File:</p>
+        <p><input id="file" name="file" type="file"></p><hr />
+    	<p><input type="submit" /></p>
+    </form>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     </div>
-@endif
+</div>
+
+@endsection
