@@ -40,7 +40,7 @@
 
     <script>
 
-    // Responsible for zooming and panning
+    //Zoom panning for SVG
     var svg = d3.select("svg")
         .append("svg")
         .attr("width", "100%")
@@ -112,7 +112,8 @@
         );
     }
     
-    displayFloor('G'); // Default load floor G
+    // Default load floor G
+    displayFloor('G'); 
 
 
     //variable for database table 
@@ -122,7 +123,8 @@
     $('input.example').on('change', function() {
             $('input.example').not(this).prop('checked', false);  
     });
-    //event on checkbox
+
+    //function on checkbox
     d3.select("#Heatmap").on("change", function(){
         if(d3.select("#Heatmap").property("checked")){
             displayHeatmap(heatmapLogs, dateMin, 'All', 'All');
@@ -141,7 +143,7 @@
     
 
 
-//======= Heatmap checkbox onclick function ========/ 
+    //Heatmap checkbox 
     function displayHeatmap(heatmapLogs, dateMin, floor, block){
 
         //initialize initial floor and block when page loads
@@ -158,10 +160,9 @@
 
         if(d3.select("#Heatmap").property("checked")){
             var heatmapLogs = {!! json_encode($heatmapLogs->toArray()) !!};
-
             var parseDate = d3.timeParse("%Y-%m-%d");
            
-            //parse json
+            //parse array to json
             heatmapLogs.forEach(function(d) {
                 if (floor.toUpperCase() == 'ALL' && block.toUpperCase() == 'ALL') {
                     d.roomId = d.roomId;
@@ -233,7 +234,7 @@
             var opacityTest = d3.scaleLinear().rangeRound([0, 100]);
             opacityTest.domain([d3.min(heatmapLogs, function(d) { return d.temperature}), d3.max(heatmapLogs, function(d) { return d.temperature})]).nice();
            
-            //get the temprature data only based on the date selected
+            //filters out all the data and selects data based on date selected
             if (dateMin != null && dateMin != undefined) {
                 heatmapLogs = heatmapLogs.filter(function (d){
                     return d.date == dateMin;
@@ -242,8 +243,6 @@
             
             // Fill the SVG for each room in the DB
             heatmapLogs.forEach(function(d){
-                // console.log("#"+d.roomId.toLowerCase());
-                // console.log(d3.selectAll("#"+d.roomId.toLowerCase()));
                 d3.select("#"+d.roomId.toLowerCase())
                     //.style("opacity", opacityTest(d.temperature)/100)
                     //.style("fill", "red");
@@ -276,8 +275,10 @@
         dateSlider += "</p>";
         dateSlider += "<div id='dateSlider-heatmapChart' style='width:85%;margin: auto;'></div></br>";
 
+        //display filter
         document.getElementById('heatmapChartFilters').innerHTML = floorSelector + dateSlider;
         
+        //display floor base on dropdown selection
         $('select').change(function () {
             floor = $("#selectFloor-heatmapChart").val();
             displayFloor(floor);
@@ -286,8 +287,6 @@
         tempData = [];
 
         var heatmapLogs = {!! json_encode($heatmapLogs->toArray()) !!};
-
-        // parse the date / time
         var parseTime = d3.timeParse("%Y-%m-%d");
 
         // format the securityLogs
@@ -309,6 +308,7 @@
             tempData.push(d.date.getTime());
         });
 
+        //map the dates from the DB to the slider
         if (dateMin != null && dateMin != undefined) {
             $(function (){
                 $("#dateSlider-heatmapChart").slider({
@@ -316,11 +316,12 @@
                     min: Math.min.apply(null, tempData),
                     max: Math.max.apply(null, tempData),
                     value: dateMin.getTime(),
+                    //obtain the date value from slider and input in textbox
                     slide: function( event, ui ) {
                         dateMin = new Date(ui.value);
-
                         $( "#date-heatmapChart").val(getFormattedDate(dateMin));
                     },                    
+                    //when user stopped sliding and invoke display simultaneously
                     stop: function(event, ui) {
                         dateMin = new Date(ui.value);
                         displayHeatmap(heatmapLogs, dateMin, floor, block)
@@ -338,7 +339,6 @@
                     value: Math.min.apply(null, tempData),
                     slide: function( event, ui ) {
                         var dateMin = new Date(ui.value);
-
                         $( "#date-heatmapChart").val(getFormattedDate(dateMin));
                     },
                     stop: function(event, ui) {
@@ -352,14 +352,12 @@
         }
     }
 
-
+    //Security overlay
     function displaySecurity(securityLogs, dateMin, floor, block){
 
-        //initialize initial floor and block when page loads
         floor = 'G';
         block = 'G';    
         
-        //parse date obtained from slider
         if(dateMin != null)
         {
             var parsedateMin = d3.timeFormat("%Y-%m-%d");
@@ -426,16 +424,12 @@
                 }
             });
 
-            //check db for highest and lowest temperature value
             var minSecurity = d3.min(securityLogs, function(d) {return d.transactionQuantity;}),
                 maxSecurity = d3.max(securityLogs, function(d) {return d.transactionQuantity;});
             
-            
-            // Set the color range
             var colors = d3.scaleLinear()
                         .range(['#ffffd4','#fed98e','#fe9929','#d95f0e','#993404']);
 
-            // Set the domain for the colors var
             colors.domain([minSecurity, maxSecurity]).nice();
 
             // opacity alternative for filling the svg
@@ -449,13 +443,8 @@
                 })
             }
             
-            // Fill the SVG for each room in the DB
             securityLogs.forEach(function(d){
-                // console.log("#"+d.roomId.toLowerCase());
-                // console.log(d3.selectAll("#"+d.roomId.toLowerCase()));
                 d3.select("#"+d.roomId.toLowerCase())
-                    //.style("opacity", opacityTest(d.temperature)/100)
-                    //.style("fill", "red");
                     .style("fill", colors(d.transactionQuantity));
 
             })
@@ -473,7 +462,7 @@
         dateSlider += "<div id='dateSlider-securityChart' style='width:85%;margin: auto;'></div></br>";
 
         var floorSelector = "";
-        floorSelector += "<p>Floor For Security Map : <select id='selectFloor-securityChart' size='1' style='width: 202px;'>";4
+        floorSelector += "<p>Floor For Security Map : <select id='selectFloor-securityChart' size='1' style='width: 202px;'>";
         floorSelector += "<option value=All>All</option>";
         floorSelector += "<option value=G>G</option>";
         floorSelector += "<option value=1>1</option>";
@@ -493,14 +482,13 @@
             floor = $("#selectFloor-securityChart").val();
             displayFloor(floor);
         });
+
         tempData = [];
 
         var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
 
-        // parse the date / time
         var parseTime = d3.timeParse("%Y-%m-%d");
 
-        // format the securityLogs
         securityLogs.forEach(function(d) {
             d.roomId = d.roomId;
             d.block = d.roomId[0].toUpperCase();
@@ -557,6 +545,7 @@
         }
     }
 
+    //formats date for date input box from UI slider
     function getFormattedDate(date) {
         var year = date.getFullYear();
 
@@ -569,7 +558,7 @@
         return day + '/' + month + '/' + year;
     }
 
-    
+    //uncheck all boxes on Mozilla browser refresh
     function uncheck() {
         $(':checkbox:checked').prop('checked',false);
     }
