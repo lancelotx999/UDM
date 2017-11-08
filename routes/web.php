@@ -12,9 +12,7 @@
 */
 
 //loads the child 1st
-Route::get('/', function () {
-    return view('child');
-});
+Route::get('/', 'SecurityController@securityMap');
 
 
 // Route::get('/chart', function () {

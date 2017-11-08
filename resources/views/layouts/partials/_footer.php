@@ -6,28 +6,29 @@
 
             <!--First column-->
             <div class="col-md-6 desc">
-                <h5 class="title">Independent Data Services</h5>
-                <p>IDS has been providing operational reporting solutions to the upstream oil and gas industry for over twenty years. In that time we have helped over 200 companies across the globe to capture, analyse, and report on their operational data. This is a small project dedicated to visualize big data from urban areas such as heatmaps, security and so on.</p>
-                © 2015 Copyright: <a href=#> IDS </a>
+                <h5 class="title">Urban Development Maps</h5>
+                <p>A Final Year Project.</p>
+                <strong>&copy; 2017 Copyright UDM</strong>
             </div>
+
             <!--/.First column-->
 
             <!--Second column-->
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <br />
                 <ul class="links">
-                    <li><a href="http://www.idsdatanet.com/about-ids/company">More on IDS</a></li>
                     <li><a href="#!">Contact Us</a></li>
-                    <li><a href="#!">Blog</a></li>
                     <li><a href="#!">DMCA</a></li>
                     <li><a href="#!">FAQ</a></li>
                 </ul>
-            </div>
+            </div> -->
             <!--/.Second column-->
         </div>
+
+    <hr />
+
     </div>
     <!--/.Footer Links-->
-
 
 </footer>
 <!--/.Footer-->

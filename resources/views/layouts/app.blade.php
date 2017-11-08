@@ -20,15 +20,6 @@
             ]) !!};
         </script>
 
-        <style>
-            @import url("https://bootswatch.com/flatly/bootstrap.min.css");
-
-            a:active{
-                text-decoration: underline;
-                color: blue;
-            }
-        </style>
-
     </head>
 
     <body id="app-layout">
