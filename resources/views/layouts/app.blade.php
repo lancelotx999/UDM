@@ -31,7 +31,7 @@
 
     </head>
 
-    <body id="app-layout">
+    <body id="app-layout" onload="uncheck()">
 
         @include('layouts.partials._header')
 
