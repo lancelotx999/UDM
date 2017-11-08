@@ -16,14 +16,20 @@
 	}
 
 </style>
+
 <div class="row">
 	<div class="col-xs-12 col-sm-12">
-		<div id='securityChart'>
-		</div>
-		<div id='securityChartFilters'>
-		</div>
-		<div id='securityChartApplyButton'>
-		</div>
+		<ul class="chart-filter">
+			<h3><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h3>
+			<div id='securityChartFilters'></div>
+			<div id='securityChartApplyButton'></div>
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<div id='securityChart'></div>
 	</div>
 </div>
 
@@ -209,13 +215,13 @@
 
 		var dateSlider = "";
 
-		dateSlider += "<p>Date Range for Security Chart : ";
-		dateSlider += "<input type='date-' id='date-securityChart'>";
-		dateSlider += "</p>";
-		dateSlider += "<div id='dateSlider-securityChart' style='width:85%;margin: auto;'></div></br>";
+		dateSlider += "<div class='row'><div class='col-sm-12 col-xs-12'>Date Range for Security Chart: ";
+		dateSlider += "<input type='date-' id='date-securityChart'></div>";
+		dateSlider += "</div><div class='row'><div class='col-sm-6 col-xs-12'>";
+		dateSlider += "<br /><div id='dateSlider-securityChart'></div><br /></div></div>";
 
 		var floorSelector = "";
-		floorSelector += "<p>Floor For Security Chart : <select id='selectFloor-securityChart' size='1' style='width: 202px;'>";4
+		floorSelector += "<div class='row'><div class='col-sm-12 col-xs-12'>Floor For Security Chart:</div></div><div class='row'><div class='col-sm-12 col-xs-12'><select id='selectFloor-securityChart' size='1' style='width: 170px;'>";4
 		floorSelector += "<option value=All>All</option>";
 		floorSelector += "<option value=G>G</option>";
 		floorSelector += "<option value=1>1</option>";
@@ -227,17 +233,17 @@
 		floorSelector += "<option value=7>7</option>";
 		floorSelector += "<option value=8>8</option>";
 		floorSelector += "<option value=9>9</option>";
-		floorSelector += "</select></p></br>";
+		floorSelector += "</select></div></div></br>";
 
 		var blockSelector = "";
-		blockSelector += "<p>Buildings For Security Chart : <select id='selectBlock-securityChart' size='1' style='width: 202px;'>";4
+		blockSelector += "<div class='row'><div class='col-sm-12 col-xs-12'>Buildings For Security Chart:</div></div><div class='row'><div class='col-sm-12 col-xs-12'><select id='selectBlock-securityChart' size='1' style='width: 170px;'>";4
 		blockSelector += "<option value=All>All</option>";
 		blockSelector += "<option value=A>A</option>";
 		blockSelector += "<option value=B>B</option>";
 		blockSelector += "<option value=E>E</option>";
 		blockSelector += "<option value=G>G</option>";
 		blockSelector += "<option value=L>L</option>";
-		blockSelector += "</select></p></br>";
+		blockSelector += "</select></div></div><hr />";
 
 
 
@@ -312,7 +318,7 @@
 
 		var securityChartApplyButton = document.createElement("securityChartApplyButton");
 
-		securityChartApplyButton.innerHTML = "Apply Filter";
+		securityChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
 
 		document.getElementById("securityChartApplyButton").appendChild(securityChartApplyButton);
 
