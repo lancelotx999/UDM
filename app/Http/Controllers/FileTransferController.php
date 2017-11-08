@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CSV;
-use Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
+use PHPExcel_Cell;
+use PHPExcel_Cell_DataType;
+use PHPExcel_Cell_IValueBinder;
+use PHPExcel_Cell_DefaultValueBinder;
 
 class FileTransferController extends Controller
 {
@@ -39,8 +43,19 @@ class FileTransferController extends Controller
 
 	public function uploadFile(CSV $request)
 	{
-		return "swag";
-	}
+		$file = $request->file('file');
 
+		Excel::load($file, function($reader) 
+		{
+			$reader->noHeading();
+	
+			foreach ($reader->toArray() as $row) 
+			{
+				dd($row);
+			}
+
+		});
+
+	}
 	
 }
