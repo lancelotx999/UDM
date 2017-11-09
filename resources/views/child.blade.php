@@ -45,6 +45,7 @@
         </div>
     </div>
 
+
     <script>
 
     //Zoom panning for SVG
@@ -121,8 +122,6 @@
     
     // Default load floor G
     displayFloor('G'); 
-
-        floor('level_g'); // Default load floor G
 
 
     //variable for database table 

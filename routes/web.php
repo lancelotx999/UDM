@@ -12,7 +12,7 @@
 */
 
 //loads the child 1st
-Route::get('/', 'SecurityController@securityMap');
+Route::get('/', 'HeatmapController@heatmapMap');
 
 
 // Route::get('/chart', function () {
