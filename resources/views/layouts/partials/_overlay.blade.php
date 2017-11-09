@@ -1,12 +1,20 @@
 <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 	<div class="sidebar-nav">
         <ul class="nav">
-            <li><input type="checkbox" name="vehicle" value="Heatmaps" id="security" />
-            	<label for="security">Security</label>
+            <li>
+            	<label for="check_heatmap">
+            	<input type="checkbox" id="Heatmap" class="example">
+            		<span id="cb_span">Heatmap</span></li>
+            	</label>
+
+            <li>
+            <label for="check_security">
+            	<input type="checkbox" id="Security" class="example">
+            		<span id="cb_span">Security</span></li>
+            	</label>
+
             </li>
-            <li><input type="checkbox" name="vehicle" value="Security" id="heatmaps" />
-            	<label for="heatmaps">Heatmaps</label>
-            </li>
+
         </ul>
     </div>
 </div>
