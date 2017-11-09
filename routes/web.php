@@ -21,4 +21,7 @@ Route::get('/', 'HeatmapController@heatmapMap');
 
 
 Route::get('/chart', 'ChartController@chartPage');
+Route::get('/chart/security', 'ChartController@securityChartPage');
+Route::get('/chart/enrollment', 'ChartController@enrollmentChartPage');
+Route::get('/chart/clubRecruitment', 'ChartController@clubRecruitmentChartPage');
 Route::get('/map', 'SecurityController@securityMap');

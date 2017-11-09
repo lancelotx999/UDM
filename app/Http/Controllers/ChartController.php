@@ -30,6 +30,36 @@ class ChartController extends Controller
          return view('/chart',$data);
      }
 
+     public function securityChartPage()
+     {
+         $securityLogs = Security::all();
+         $data = [];
+
+         $data['securityLogs'] = $securityLogs;
+
+         return view('/charts/securityChart',$data);
+     }
+
+     public function enrollmentChartPage()
+     {
+         $enrollmentData = Enrollment::all();
+         $data = [];
+
+         $data['enrollmentData'] = $enrollmentData;
+
+         return view('/charts/enrollmentChart',$data);
+     }
+
+     public function clubRecruitmentChartPage()
+     {
+         $clubRecruitmentData = ClubRecruitment::all();
+         $data = [];
+
+         $data['clubRecruitmentData'] = $clubRecruitmentData;
+
+         return view('/charts/clubRecruitmentChart',$data);
+     }
+
 
     /**
      * Show the form for creating a new resource.
