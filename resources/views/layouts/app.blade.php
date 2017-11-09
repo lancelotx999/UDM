@@ -22,14 +22,16 @@
 
     </head>
 
-    <body id="app-layout">
+    <body id="app-layout" onload="uncheck()">
 
         @include('layouts.partials._header')
 
         <div class="container-fluid" >
             <div class="row is-flex row-offcanvas row-offcanvas-left" >
 
-                @include('layouts/partials._overlay')
+                @if(\Request::is('map') || \Request::is('/'))
+                    @include('layouts/partials._overlay')
+                @endif
                 
                 <div class="col-xs-12 col-sm-9" id="main-content"  >
                         

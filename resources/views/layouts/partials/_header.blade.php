@@ -10,7 +10,7 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/map"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;Maps</a></li>
+                <li><a href="/"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;Maps</a></li>
                 <li><a>&#124;</a></li>
                 <li><a href="/chart"><i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp;Charts</a></li>
             </ul>
