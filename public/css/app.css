@@ -11424,6 +11424,12 @@ svg {
   background: #f6f6f6;
 }
 
+#securityChart svg,
+#enrollmentChart svg,
+#clubRecruitmentChart svg {
+  background: url("/images/concrete_seamless.gif");
+}
+
 .navbar-default .navbar-brand,
 .navbar-default .navbar-brand:hover {
   color: #DC2D27;

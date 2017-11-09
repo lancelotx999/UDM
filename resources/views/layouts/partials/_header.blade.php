@@ -1,3 +1,11 @@
+<style type="text/css">
+    
+    ul.nav li.dropdown:hover > ul.dropdown-menu {
+        display: block;    
+    }
+
+</style>
+
 <div class="navbar navbar-fixed-top navbar-default" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -12,7 +20,34 @@
             <ul class="nav navbar-nav">
                 <li><a href="/"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;Maps</a></li>
                 <li><a>&#124;</a></li>
-                <li><a href="/chart"><i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp;Charts</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" data-target="/chart" href="/chart">
+                        <i class="fa fa-area-chart" aria-hidden="true"></i>
+                        &nbsp;Charts
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/chart/enrollment">
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                &nbsp;Enrolment Statistics
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/chart/security">
+                                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                                &nbsp;Security Log
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/chart/clubRecruitment">
+                                <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                                &nbsp;Club Recruitment Data
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
             </ul>
         </div>
         <!-- /.nav-collapse -->

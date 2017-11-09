@@ -39,12 +39,6 @@
 		height: 20vh;
 	}
 
-	#securityChart svg,
-	#enrollmentChart svg,
-	#clubRecruitmentChart svg {
-		background: url("/images/concrete_seamless.gif");
-	}
-
 </style>
 
 <div class="row">
@@ -52,10 +46,10 @@
 		<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Enrolment Statistics</h1>
 		<hr />
 		<div class="row">
-			<div class="col-xs-8 col-sm-8">
+			<div class=" col-sm-8 col-xs-8">
 				<div id='enrollmentChart'></div>
 			</div>
-			<div class="col-xs-3 col-sm-3 chart-filter">
+			<div class="col-sm-3 col-xs-3 chart-filter">
 				<div class="row">
 					<div class="col-sm-12 col-xs-12">
 						<hr />

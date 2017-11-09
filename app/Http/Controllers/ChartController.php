@@ -37,7 +37,7 @@ class ChartController extends Controller
 
          $data['securityLogs'] = $securityLogs;
 
-         return view('/charts/securityChart',$data);
+         return view('/chartSecurity',$data);
      }
 
      public function enrollmentChartPage()
@@ -47,7 +47,7 @@ class ChartController extends Controller
 
          $data['enrollmentData'] = $enrollmentData;
 
-         return view('/charts/enrollmentChart',$data);
+         return view('/chartEnrollment',$data);
      }
 
      public function clubRecruitmentChartPage()
@@ -57,7 +57,7 @@ class ChartController extends Controller
 
          $data['clubRecruitmentData'] = $clubRecruitmentData;
 
-         return view('/charts/clubRecruitmentChart',$data);
+         return view('/chartClubRecruitment',$data);
      }
 
 
