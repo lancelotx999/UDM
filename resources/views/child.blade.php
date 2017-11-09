@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+<style type="text/css">
+        
+    #main-content {
+        width: 85% !important; 
+    }
+
+</style>
+
 @section('content')
 
     <br />

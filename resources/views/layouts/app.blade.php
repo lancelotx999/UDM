@@ -29,7 +29,9 @@
         <div class="container-fluid" >
             <div class="row is-flex row-offcanvas row-offcanvas-left" >
 
-                @include('layouts/partials._overlay')
+                @if(\Request::is('map'))
+                    @include('layouts/partials._overlay')
+                @endif
                 
                 <div class="col-xs-12 col-sm-9" id="main-content"  >
                         
