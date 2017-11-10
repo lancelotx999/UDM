@@ -47,7 +47,8 @@
                         </li>
                     </ul>
                 </li>
-
+                <li><a>&#124;</a></li>
+                <li><a href="/editor"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Map Editor</a></li>
             </ul>
         </div>
         <!-- /.nav-collapse -->

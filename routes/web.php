@@ -14,11 +14,9 @@
 //loads the child 1st
 Route::get('/', 'HeatmapController@heatmapMap');
 
-
-// Route::get('/chart', function () {
-//     return view('chart');
-// });
-
+Route::get('/editor', function () {
+    return view('editor');
+});
 
 Route::get('/chart', 'ChartController@chartPage');
 Route::get('/chart/security', 'ChartController@securityChartPage');
