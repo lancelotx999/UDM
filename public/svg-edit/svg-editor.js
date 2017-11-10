@@ -69,7 +69,9 @@ TODOS
 			curConfig = {
 				// We do not put on defaultConfig to simplify object copying
 				//   procedures (we obtain instead from defaultExtensions)
-				extensions: [],
+				extensions: [
+					'ext-server_opensave.js'
+				],
 				/**
 				* Can use window.location.origin to indicate the current
 				* origin. Can contain a '*' to allow all domains or 'null' (as
