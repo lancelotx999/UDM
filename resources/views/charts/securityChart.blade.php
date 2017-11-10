@@ -284,7 +284,7 @@
 		var dateSlider = "";
 
 		dateSlider += "<p>Date Range for Security Chart : ";
-		dateSlider += "<input type='date-' id='date-securityChart'>";
+		dateSlider += "<input type='date-' id='date-securityChart' style='width:50%;'>";
 		dateSlider += "</p>";
 		dateSlider += "<div id='dateSlider-securityChart' style='width:85%;margin: auto;'></div></br>";
 
