@@ -52,7 +52,7 @@
 		<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Enrolment Statistics</h1>
 		<hr />
 		<div class="row">
-			<div class="col-xs-3 col-sm-3 chart-filter">
+			<div class="col-xs-4 col-sm-4 chart-filter">
 				<div class="row">
 					<div class="col-sm-12 col-xs-12">
 						<hr />
