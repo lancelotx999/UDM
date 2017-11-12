@@ -4,35 +4,44 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use DB;
+use Input;
+use App\EnrollmentCSV;
+use App\SecurityCSV;
 
 class FileTransferController extends Controller
 {
-	public function fileExists(Request $request)
+	public function getFileName(Request $request)
 	{
-		if ($request->hasFile('file'))
-		{
-			return 1;
-		}
-		else
-		{
-			return 0;
-		}
+		$file = $request->file('file');
+		$roomID = basename($file->getClientOriginalName(),'.csv');
+		return $roomID;
+	}
+
+
+	public function securityDBupdate(Request $request)
+	{
+
 	}
 
 	public function uploadFile(Request $request)
-	{
-		$file = $request->file('file');
-		$results = Excel::load($file , function($reader) {})->get()->toArray();
-		$results = array_filter($results);
-		dd($results);
+	{		
+			$file = $request->file('file');
+			$roomID = basename($file->getClientOriginalName(),'.csv');
 
-		foreach ($results as $sheet)
-		{
-			foreach ($sheet as $row)
+			
+			Excel::load($file, function($reader) 
 			{
-				
-			}
-		}
+				$reader->each(function($sheet)
+				{
+					$sheet->each(function($row)
+					{
+						$dbdata['date'] = $row['date'];
+						$dbdata['transaction_quantity'] = $row['transaction_quantity'];
+
+					});
+				});	
+			});
 
 	}
 	
