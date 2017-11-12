@@ -45,6 +45,11 @@
 		background: url("/images/concrete_seamless.gif");
 	}
 
+	#main-content
+	{
+		width:100%;
+	}
+
 </style>
 
 <div class="row">

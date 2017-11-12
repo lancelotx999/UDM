@@ -35,11 +35,7 @@ svg {
   background: #f6f6f6;
 }
 
-.navbar-default .navbar-brand,
-.navbar-default .navbar-brand:hover {
-  color: #DC2D27;
-  font-family: 'Orbitron', sans-serif;
-}
+
 
 .breadcrumb {
   background: #f6f6f6;
@@ -95,9 +91,8 @@ svg {
 
 #sidebar {
   padding: 20px;
-
-  background-color: #262626;
-  background: url("/images/dark-wall.gif");
+    background: #252b31;
+    color: #e1ffff;
   width: 15%;
 }
 
@@ -170,6 +165,129 @@ ul.links {
   background-color: #fff;
 }
 
+#main-content {
+  width: 85%; 
+  padding:20px;
+}
+
+svg, #heatmapChart{
+  height: 100%;
+  width: 100%;
+}
+
+
+.navbar-default .navbar-brand{
+  color: #000;
+  font-family: "Raleway", sans-serif;
+}
+
+.navbar-nav {
+  font-size: 15px;
+}
+
+#menu-toggle{
+  position:absolute;
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    padding: .375rem .75rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    
+    }
+
+    .btn-secondary {
+    color: #fff;
+    background-color: #868e96;
+    border-color: #868e96;
+    }
+
+.footer-basic-centered{
+  background-color: #171a21;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  text-align: center;
+  font: normal 18px sans-serif;
+  padding: 45px;
+}
+
+.footer-basic-centered .footer-title{
+  color:  #fff;
+  font-size: 24px;
+  margin-bottom: 23px;
+}
+
+.footer-basic-centered .footer-subtitle{
+  color:  #8d9093;
+  font-size: 24px;
+  margin-bottom: 23px;
+}
+
+.footer-basic-centered .footer-copyright{
+  color:  #8f9296;
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-basic-centered .footer-links{
+  list-style: none;
+  font-weight: bold;
+  color:  #ffffff;
+  padding: 35px 0 23px;
+  margin: 0;
+}
+
+.footer-basic-centered .footer-links a{
+  display:inline-block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* If you don't want the footer to be responsive, remove these media queries */
+
+@media (max-width: 600px) {
+
+  .footer-basic-centered{
+    padding: 35px;
+  }
+
+  .footer-basic-centered .footer-title{
+    font-size: 18px;
+  }
+
+  .footer-basic-centered .footer-subtitle{
+    font-size: 18px;
+  }
+
+  .footer-basic-centered .footer-copyright{
+    font-size: 12px;
+  }
+
+  .footer-basic-centered .footer-links{
+    font-size: 14px;
+    padding: 25px 0 20px;
+  }
+
+  .footer-basic-centered .footer-links a{
+    line-height: 1.8;
+  }
+}
 /*** custom checkboxes ***/
 
 // input[type=checkbox] { display:none; } /* to hide the checkbox itself */
