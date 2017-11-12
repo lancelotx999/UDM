@@ -24,19 +24,9 @@ svgEditor.addExtension("imagelib", function() {'use strict';
 	});
 
 	var img_libs = [{
-			name: 'Demo library (local)',
+			name: 'Map library (Server)',
 			url: svgEditor.curConfig.extPath + 'imagelib/index.html',
-			description: 'Demonstration library for SVG-edit on this server'
-		},
-		{
-			name: 'IAN Symbol Libraries',
-			url: 'https://ian.umces.edu/symbols/catalog/svgedit/album_chooser.php',
-			description: 'Free library of illustrations'
-		},
-		{
-			name: 'Openclipart',
-			url: 'https://openclipart.org/svgedit',
-			description: 'Share and Use Images. Over 50,000 Public Domain SVG Images and Growing.'
+			description: 'Map library for SVG-edit on this server'
 		}
 	];
 

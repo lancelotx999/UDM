@@ -2,19 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8" />
+<link rel="stylesheet" href="../../svg-editor.css" type="text/css"/>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 </head>
 <body>
 
 <h1>Select an image:</h1>
-<a href="smiley.svg">smiley.svg</a>
-<br>
-<a href="../../images/logo.png">logo.png</a>
+<div id="links"></div>
 
 <script>
 /*globals $*/
 /*jslint vars: true*/
-$('a').click(function() {'use strict';
+
+$.ajax ({
+  	url: "../../../editor",
+  	success: function(data) {
+    $(data).find("a:contains(.svg)").each(function(){
+        // will loop through 
+        $('<p></p>').html(this).appendTo('#links');
+     	});
+  	},
+  	complete: function() {
+  		$('a').click(function() {'use strict';
 	var meta_str;
 	var href = this.href;
 	var target = window.parent;
@@ -63,6 +72,8 @@ $('a').click(function() {'use strict';
 		}, 'html'); // 'html' is necessary to keep returned data as a string
 	}
 	return false;
+});
+  	}
 });
 
 </script>
