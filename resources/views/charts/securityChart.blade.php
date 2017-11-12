@@ -33,14 +33,12 @@
 
 <div class="row">
 	<div class="col-xs-12 col-sm-12">
-		<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-line-chart" aria-hidden="true"></i>&nbsp;Security Log</h1>
-		<hr />
 		<div class="row">
 			<div class="col-xs-3 col-sm-3 chart-filter">
 				<div class="row">
 					<div class="col-sm-12 col-xs-12">
 						<hr />
-						<h4><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options: Security</h4>
+						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
 						<hr />
 						<div id='securityChartFilters'></div>
 					</div>
@@ -52,6 +50,9 @@
 				</div>
 			</div>
 			<div class="col-xs-8 col-sm-8">
+				<hr />
+				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-line-chart" aria-hidden="true"></i>&nbsp;Security Log</h1>
+				<hr />				
 				<div id='securityChart'></div>
 			</div>
 		</div>
@@ -238,12 +239,12 @@
 
 	function createSecurityChartFilters(securityLogs, dateMin, dateMax, floor, block){
 		var dateSlider = "";
-		dateSlider += "<p>Date Range for Security Chart : ";
+		dateSlider += "<p class='white-text'>Date Range for Security Chart:&nbsp;";
 		dateSlider += "<input type='date-' id='date-securityChart'>";
 		dateSlider += "</p>";
 		dateSlider += "<div id='dateSlider-securityChart' style='width:85%;margin: auto;'></div></br>";
 		var floorSelector = "";
-		floorSelector += "<p>Floor For Security Chart:</p><p><select id='selectFloor-securityChart' size='1' style='width: 202px;'>";4
+		floorSelector += "<p class='white-text'>Floor For Security Chart:</p><p><select id='selectFloor-securityChart' size='1' style='width: 202px;'>";4
 		floorSelector += "<option value=All>All</option>";
 		floorSelector += "<option value=G>G</option>";
 		floorSelector += "<option value=1>1</option>";
@@ -257,7 +258,7 @@
 		floorSelector += "<option value=9>9</option>";
 		floorSelector += "</select></p><hr />";
 		var blockSelector = "";
-		blockSelector += "<p>Buildings For Security Chart:</p><p><select id='selectBlock-securityChart' size='1' style='width: 202px;'>";4
+		blockSelector += "<p class='white-text'>Buildings For Security Chart:</p><p><select id='selectBlock-securityChart' size='1' style='width: 202px;'>";4
 		blockSelector += "<option value=All>All</option>";
 		blockSelector += "<option value=A>A</option>";
 		blockSelector += "<option value=B>B</option>";

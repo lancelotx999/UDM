@@ -29,7 +29,7 @@
         <div class="container-fluid" >
             <div class="row is-flex row-offcanvas row-offcanvas-left" >
 
-                @if(\Request::is('map') || \Request::is('/'))
+                @if (\Request::is('map') || \Request::is('/'))
                     @include('layouts/partials._overlay')
                 @endif
                 
@@ -44,4 +44,5 @@
             
         </div>
     </body>
+    
 </html>

@@ -33,14 +33,12 @@
 
 <div class="row">
 	<div class="col-xs-12 col-sm-12">
-		<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-pie-chart" aria-hidden="true"></i>&nbsp;Club Recruitment Data</h1>
-		<hr />
 		<div class="row">
 			<div class="col-xs-3 col-sm-3 chart-filter">
 				<div class="row">
 					<div class="col-sm-12 col-xs-12">
 						<hr />
-						<h4><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options: Club Recruitment</h4>
+						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
 						<hr />
 						<div id='clubRecruitmentChartFilters'></div>
 					</div>
@@ -52,6 +50,9 @@
 				</div>
 			</div>
 			<div class="col-xs-8 col-sm-8">
+				<hr />
+				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-pie-chart" aria-hidden="true"></i>&nbsp;Club Recruitment Data</h1>
+				<hr />
 				<div id='clubRecruitmentChart'></div>
 			</div>
 		</div>
@@ -183,7 +184,7 @@
 
 	function createClubRecruitmentFilters(clubRecruitmentData, year, semester) {
 		var yearSelector = "";
-		yearSelector += "<p>Year For Enrollment Chart:</p><p><select id='selectYear-clubRecruitmentChart' style='width: 202px;'>";4
+		yearSelector += "<p class='white-text'>Year For Enrollment Chart:</p><p><select id='selectYear-clubRecruitmentChart' style='width: 202px;'>";4
 		yearSelector += "<option value=2016>2016</option>";
 		yearSelector += "<option value=2015>2015</option>";
 		yearSelector += "<option value=2014>2014</option>";
@@ -203,7 +204,7 @@
 		yearSelector += "<option value=2000>2000</option>";
 		yearSelector += "</select></p><hr />";
 		var semesterSelector = "";
-		semesterSelector += "<p>Semester For Enrollment Chart:</p><p><select id='selectSemester-clubRecruitmentChart' style='width: 202px;'>";4
+		semesterSelector += "<p class='white-text'>Semester For Enrollment Chart:</p><p><select id='selectSemester-clubRecruitmentChart' style='width: 202px;'>";4
 		semesterSelector += "<option value=1>1</option>";
 		semesterSelector += "<option value=2>2</option>";
 		semesterSelector += "</select></p><hr />";

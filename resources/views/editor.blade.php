@@ -3,9 +3,11 @@
 @section('content')
 
 <style type="text/css">
+
 	.hide {
 		visibility: hidden;
 	}
+
 </style>
 
 <br />
