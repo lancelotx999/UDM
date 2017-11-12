@@ -56,5 +56,9 @@ header("Content-Type: " .  $mime);
 header("Content-Transfer-Encoding: binary");
 
 echo $contents;
+
+$dir = "../../assets/";
+
+file_put_contents($dir . $file, $contents);
  
 ?>
