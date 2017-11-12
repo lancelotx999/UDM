@@ -23,3 +23,11 @@ Route::get('/chart/security', 'ChartController@securityChartPage');
 Route::get('/chart/enrollment', 'ChartController@enrollmentChartPage');
 Route::get('/chart/clubRecruitment', 'ChartController@clubRecruitmentChartPage');
 Route::get('/map', 'SecurityController@securityMap');
+
+// Routes for uploading database data
+Route::get('/upload', function()
+{
+	return view ('dbManager/Upload');
+});
+
+Route::post('UploadFile','FileTransferController@uploadFile');
