@@ -56,10 +56,5 @@ header("Content-Type: " .  $mime);
 header("Content-Transfer-Encoding: binary");
 
 echo $contents;
-
-define('../../assets/', 'path to the directory with trailing slash');
-$fp = fopen(DIR_PATH . $file, 'w+');
-fwrite($fp, $contents);
-fclose($fp);
  
 ?>

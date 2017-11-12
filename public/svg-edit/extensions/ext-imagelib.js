@@ -90,6 +90,7 @@ svgEditor.addExtension("imagelib", function() {'use strict';
 			char1 = response.charAt(0);
 		}
 		
+		svgCanvas.setDocumentTitle(id.replace('http:\/\/127\.0\.0\.1:8000\/assets\/', '').replace('\.svg', ''));
 		
 		// Hide possible transfer dialog box
 		$('#dialog_box').hide();
