@@ -113,6 +113,7 @@
     //variable for database table 
     var heatmapLogs = null,
         securityLogs = null,
+        electricLogs = null,
         dateMin = null;
     $('input.example').on('change', function() {
             $('input.example').not(this).prop('checked', false);  
@@ -123,15 +124,23 @@
     d3.select("#Heatmap").on("change", function(){
         if(d3.select("#Heatmap").property("checked")){
             displayHeatmap(heatmapLogs, dateMin, 'All', 'All');
-            document.getElementById('securityMapFilters').innerHTML = "";
+            document.getElementById('MapFilters').innerHTML = "";
             createHeatmapChartFilters(heatmapLogs, dateMin, 'All', 'All');
         }
     });
     d3.select("#Security").on("change",function(){
         if(d3.select("#Security").property("checked")){
             displaySecurity(securityLogs, dateMin, 'All', 'All');
-            document.getElementById('heatmapChartFilters').innerHTML = "";
+            document.getElementById('MapFilters').innerHTML = "";
             createSecurityMapFilters(securityLogs, dateMin, 'All', 'All');
+        }
+    });
+
+    d3.select("#Electric").on("change",function(){
+        if(d3.select("#Electric").property("checked")){
+            displayElectricFootprint(electricLogs, dateMin, 'All', 'All');
+            document.getElementById('MapFilters').innerHTML = "";
+            createElectricFootprintFilters(electricLogs, dateMin, 'All', 'All');
         }
     });
     
@@ -212,6 +221,9 @@
                     }
                 }
             });
+            var tooltip = d3.select("#heatmapChart").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
 
             //check db for highest and lowest temperature value
             var minTemp = d3.min(heatmapLogs, function(d) {return d.temperature;}),
@@ -219,8 +231,8 @@
             
             
             // Set the color range
-            var colors = d3.scaleLinear()
-                        .range(['#ffffd4','#fed98e','#fe9929','#d95f0e','#993404']);
+            var colors = d3.scaleQuantize()
+                        .range(['#fff5f0','#fee0d2','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#99000d']);
 
             // Set the domain for the colors var
             colors.domain([minTemp, maxTemp]).nice();
@@ -242,7 +254,8 @@
                     //.style("opacity", opacityTest(d.temperature)/100)
                     //.style("fill", "red");
                     .style("fill", colors(d.temperature));
-
+                    
+                
             })
         }
     }
@@ -250,7 +263,6 @@
     function createHeatmapChartFilters(heatmapLogs, dateMin, floor, block){
         var floorSelector = "";
         floorSelector += "<legend style='color:#fff; margin-bottom: 5px;  margin-top: 70px;'>Filters</legend><p>Floor For Heatmap: <select id='selectFloor-heatmapChart' size='1' style='width: 80%;color: #000;'>";
-        floorSelector += "<option value=All>All</option>";
         floorSelector += "<option value=G>G</option>";
         floorSelector += "<option value=1>1</option>";
         floorSelector += "<option value=2>2</option>";
@@ -265,13 +277,13 @@
 
         var dateSlider = "";
 
-        dateSlider += "<p style='paddingtop:5px;'>Select Date for Heatmap: ";
+        dateSlider += "<p style='padding-top:5px;'>Select Date for Heatmap: ";
         dateSlider += "<input type='date-' id='date-heatmapChart' style='color: #000;width:80%;'>";
         dateSlider += "</p>";
         dateSlider += "<div id='dateSlider-heatmapChart' style='width:80%;margin: 2px;'></div></br>";
 
         //display filter
-        document.getElementById('heatmapChartFilters').innerHTML = floorSelector + dateSlider;
+        document.getElementById('MapFilters').innerHTML = floorSelector + dateSlider;
         
         //display floor base on dropdown selection
         $('select').change(function () {
@@ -422,8 +434,8 @@
             var minSecurity = d3.min(securityLogs, function(d) {return d.transactionQuantity;}),
                 maxSecurity = d3.max(securityLogs, function(d) {return d.transactionQuantity;});
             
-            var colors = d3.scaleLinear()
-                        .range(['#ffffd4','#fed98e','#fe9929','#d95f0e','#993404']);
+            var colors = d3.scaleQuantize()
+                        .range(['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#0c2c84']);
 
             colors.domain([minSecurity, maxSecurity]).nice();
 
@@ -451,7 +463,6 @@
     function createSecurityMapFilters(securityLogs, dateMin, floor, block){
         var floorSelector = "";
         floorSelector += "<legend style='color:#fff; margin-bottom: 5px;  margin-top: 70px;'>Filters</legend><p>Floor For Security Map : <select id='selectFloor-securityChart' size='1' style='width: 80%; color: #000;'>";
-        floorSelector += "<option value=All>All</option>";
         floorSelector += "<option value=G>G</option>";
         floorSelector += "<option value=1>1</option>";
         floorSelector += "<option value=2>2</option>";
@@ -466,12 +477,12 @@
 
         var dateSlider = "";
 
-        dateSlider += "<p style='paddingtop:5px;'>Select Date for Security display: ";
+        dateSlider += "<p style='padding-top:5px;'>Select Date for Security display: ";
         dateSlider += "<input type='date-' id='date-securityChart' style='color: #000;width:80%;'>";
         dateSlider += "</p>";
         dateSlider += "<div id='dateSlider-securityChart' style='width:80%;margin: 2px;'></div></br>";
 
-        document.getElementById('securityMapFilters').innerHTML = floorSelector + dateSlider;
+        document.getElementById('MapFilters').innerHTML = floorSelector + dateSlider;
 
         $('select').change(function () {
             floor = $("#selectFloor-securityChart").val();
@@ -539,6 +550,210 @@
             })
         }
     }
+
+    //electrical foorprint iverlay
+    function displayElectricFootprint(electricLogs, dateMin, floor, block){
+
+        floor = 'G';
+        block = 'G';    
+        
+        if(dateMin != null)
+        {
+            var parsedateMin = d3.timeFormat("%Y-%m-%d");
+            dateMin = parsedateMin(dateMin);
+        }    
+
+        if(d3.select("#Electric").property("checked")){
+            var electricLogs = {!! json_encode($electricLogs->toArray()) !!};
+
+            var parseDate = d3.timeParse("%Y-%m-%d");
+
+            electricLogs.forEach(function(d) {
+                if (floor.toUpperCase() == 'ALL' && block.toUpperCase() == 'ALL') {
+                    d.roomId = d.roomId;
+                    d.block = d.roomId[0].toUpperCase();
+                    d.floor = d.roomId[1];
+                    d.electricity = +d.electricity;
+
+                    if (d.date instanceof Date) {
+                        d.date = d.date;
+                    }
+                    else {
+                        d.date = parseDate(d.date);
+                    }
+                }
+                if (floor.toUpperCase() == d.roomId[1] && block.toUpperCase() == 'ALL') {
+                    d.roomId = d.roomId;
+                    d.block = d.roomId[0].toUpperCase();
+                    d.floor = d.roomId[1];
+                    d.electricity = +d.electricity;
+
+                    if (d.date instanceof Date) {
+                        d.date = d.date;
+                    }
+                    else {
+                        d.date = parseDate(d.date);
+                    }
+                }
+                if (floor.toUpperCase() == 'ALL' && block.toUpperCase() == d.roomId[0].toUpperCase()) {
+                    d.roomId = d.roomId;
+                    d.block = d.roomId[0].toUpperCase();
+                    d.floor = d.roomId[1];
+                    d.electricity = +d.electricity;
+
+                    if (d.date instanceof Date) {
+                        d.date = d.date;
+                    }
+                    else {
+                        d.date = parseDate(d.date);
+                    }
+                }
+                else if(floor.toUpperCase() == d.roomId[1] && block.toUpperCase() == d.roomId[0].toUpperCase()){
+                    d.roomId = d.roomId;
+                    d.block = d.roomId[0].toUpperCase();
+                    d.floor = d.roomId[1];
+                    d.electricity = +d.electricity;
+
+                    if (d.date instanceof Date) {
+                        d.date = d.date;
+                    }
+                    else {
+                        d.date = parseDate(d.date);
+                    }
+                }
+            });
+
+            var minElectricity = d3.min(electricLogs, function(d) {return d.electricity;}),
+                maxElectricity = d3.max(electricLogs, function(d) {return d.electricity;});
+            
+            var colors = d3.scaleQuantize()
+                        .range(['#ffffe5','#f7fcb9','#d9f0a3','#addd8e','#78c679','#41ab5d','#238443','#005a32']);
+
+            colors.domain([minElectricity, maxElectricity]).nice();
+
+            // opacity alternative for filling the svg
+            // var opacityTest = d3.scaleLinear().rangeRound([0, 100]);
+            // opacityTest.domain([d3.min(securityLogs, function(d) { return d.transactionQuantity}), d3.max(securityLogs, function(d) { return d.transactionQuantity})]).nice();
+           
+            //get the temprature data only based on the date selected
+            if (dateMin != null && dateMin != undefined) {
+                electricLogs = electricLogs.filter(function (d){
+                    return d.date == dateMin;
+                })
+            }
+            
+            electricLogs.forEach(function(d){
+                d3.select("#"+d.roomId.toLowerCase())
+                    .style("fill", colors(d.electricity));
+
+            })
+
+
+        }
+    }
+
+    function createElectricFootprintFilters(electricLogs, dateMin, floor, block){
+        var floorSelector = "";
+        floorSelector += "<legend style='color:#fff; margin-bottom: 5px;  margin-top: 70px;'>Filters</legend><p>Floor For Electrical Footprint Map : <select id='selectFloor-electricChart' size='1' style='width: 80%; color: #000;'>";
+        floorSelector += "<option value=G>G</option>";
+        floorSelector += "<option value=1>1</option>";
+        floorSelector += "<option value=2>2</option>";
+        floorSelector += "<option value=3>3</option>";
+        floorSelector += "<option value=4>4</option>";
+        floorSelector += "<option value=5>5</option>";
+        floorSelector += "<option value=6>6</option>";
+        floorSelector += "<option value=7>7</option>";
+        floorSelector += "<option value=8>8</option>";
+        floorSelector += "<option value=9>9</option>";
+        floorSelector += "</select></p>";
+
+        var dateSlider = "";
+
+        dateSlider += "<p style='padding-top:5px;'>Select Date for electricity usage display: ";
+        dateSlider += "<input type='date-' id='date-electricChart' style='color: #000;width:80%;'>";
+        dateSlider += "</p>";
+        dateSlider += "<div id='dateSlider-electricChart' style='width:80%;margin: 2px;'></div></br>";
+
+        document.getElementById('MapFilters').innerHTML = floorSelector + dateSlider;
+
+        $('select').change(function () {
+            floor = $("#selectFloor-electricChart").val();
+            displayFloor(floor);
+        });
+
+        tempData = [];
+
+        var electricLogs = {!! json_encode($electricLogs->toArray()) !!};
+
+        var parseTime = d3.timeParse("%Y-%m-%d");
+
+        electricLogs.forEach(function(d) {
+            d.roomId = d.roomId;
+            d.block = d.roomId[0].toUpperCase();
+            d.floor = d.roomId[1];
+            d.electricity = +d.electricity;
+
+            if (d.date instanceof Date) {
+                d.date = d.date;
+            }
+            else {
+                d.date = parseTime(d.date);
+            }
+        });
+
+        electricLogs.forEach(function (d){
+            tempData.push(d.date.getTime());
+        });
+
+        if (dateMin != null && dateMin != undefined) {
+            $(function (){
+                $("#dateSlider-electricChart").slider({
+                    
+                    min: Math.min.apply(null, tempData),
+                    max: Math.max.apply(null, tempData),
+                    values: [Math.min.apply(null, tempData)],
+                    slide: function( event, ui ) {
+                        dateMin = new Date(ui.value);
+                        $( "#date-electricChart").val(getFormattedDate(dateMin));
+                    },                    
+                    stop: function(event, ui) {
+                        dateMin = new Date(ui.value);
+                        displayElectricFootprint(electricLogs, dateMin, floor, block)
+                    }
+                });
+            })
+        }
+        else {
+            $(function (){
+                $("#dateSlider-electricChart").slider({
+                    
+                    min: Math.min.apply(null, tempData),
+                    max: Math.max.apply(null, tempData),
+                    values: [Math.min.apply(null, tempData)],
+                    slide: function( event, ui ) {
+                        var dateMin = new Date(ui.value);
+                        $( "#date-electricChart").val(getFormattedDate(dateMin));
+                    },                    
+                    stop: function(event, ui) {
+                        dateMin = new Date(ui.value);
+                        displayElectricFootprint(electricLogs, dateMin, floor, block)
+                    }
+                });
+            })
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     //formats date for date input box from UI slider
     function getFormattedDate(date) {

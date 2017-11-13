@@ -13,15 +13,16 @@
             	<label for="check_security"><span id="cb_span">Security</span></label>
             </li>            	
 
-            </li>
+            <li>
+                <input type="checkbox" id="Electric" class="example">
+                <label for="check_electric"><span id="cb_span">Electrical Foorprint</span></label>
+            </li> 
 
         </ul>
 
 
         <div id="overlay-filters">
-            
-            <div id='heatmapChartFilters'></div>
-            <div id='securityMapFilters'></div>
+            <div id='MapFilters'></div>
         </div>
 
     </div>

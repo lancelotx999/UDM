@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Heatmap;
 use App\Security;
+use App\ElectricalFootprint;
 
 
 class HeatmapController extends Controller
@@ -21,10 +22,13 @@ class HeatmapController extends Controller
      {
          $heatmapLogs = Heatmap::all();
          $securityLogs = Security::all();
+         $electricLogs = ElectricalFootprint::all();
          $data = [];
 
          $data['heatmapLogs'] = $heatmapLogs;
          $data['securityLogs'] = $securityLogs;
+         $data['electricLogs'] = $electricLogs;
+
 
          return view('/child',$data);
      }
@@ -38,6 +42,8 @@ class HeatmapController extends Controller
 
          return view('/child',$data);
      }
+
+     
 
 
     /**
