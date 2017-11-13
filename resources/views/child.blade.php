@@ -490,25 +490,28 @@
                 .attr("class", "tooltip")
                 .style("opacity", 0);
 
-                console.log(securityLogs);
-
             securityLogs.forEach(function(d){
-                d3.select("#"+d.roomId.toLowerCase())
+                if (d.roomId != "X999") {
+                console.log(d);
+
+                    d3.select("#"+d.roomId.toLowerCase())
                     .style("fill", colors(d.transactionQuantity))
                     .on("mouseover", function() {
-						tooltip.transition()
-							.duration(200)
-							.style("opacity", .9);
+                        tooltip.transition()
+                            .duration(200)
+                            .style("opacity", .9);
 
-						tooltip.html("Date: " + d.date + "<br/>" + "<br/>" + "Room: " + d.roomId + "<br/>" + "<br/>" + "Entries: " + d.transactionQuantity)
+                        tooltip.html("Date: " + d.date + "<br/>" + "<br/>" + "Room: " + d.roomId + "<br/>" + "<br/>" + "Entries: " + d.transactionQuantity)
                             .style("left", (d3.event.pageX / 1.5) + "px")
                             .style("top", (d3.event.pageY) + "px");
-					})
+                    })
                     .on("mouseout", function(d) {
-						tooltip.transition()
-							.duration(500)
-							.style("opacity", 0);
-					});;
+                        tooltip.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    });
+                }
+                
 
             })
 
