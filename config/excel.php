@@ -494,7 +494,7 @@ return array(
             | Enable/disable date formatting
             |--------------------------------------------------------------------------
             */
-            'enabled' => false,
+            'enabled' => true,
 
             /*
             |--------------------------------------------------------------------------
@@ -504,7 +504,7 @@ return array(
             | If set to false, a carbon object will return
             |
             */
-            'format'  => true,
+            'format'  => false,
 
             /*
             |--------------------------------------------------------------------------

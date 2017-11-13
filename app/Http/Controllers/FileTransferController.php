@@ -6,12 +6,10 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
 use Input;
-use App\EnrollmentCSV;
-use App\SecurityCSV;
 
 class FileTransferController extends Controller
 {
-	public function getFileName(Request $request)
+	public static function getFileName(Request $request)
 	{
 		$file = $request->file('file');
 		$roomID = basename($file->getClientOriginalName(),'.csv');
@@ -32,12 +30,18 @@ class FileTransferController extends Controller
 			
 			Excel::load($file, function($reader) 
 			{
+				$reader->formatDates(true, 'Y-m-d');
+
 				$reader->each(function($sheet)
 				{
 					$sheet->each(function($row)
 					{
+						$dbdata['roomId'] = $row['roomid'];
 						$dbdata['date'] = $row['date'];
-						$dbdata['transaction_quantity'] = $row['transaction_quantity'];
+						$dbdata['transactionQuantity'] = $row['transaction_quantity'];
+
+						
+						DB::table('security')->insert($dbdata);
 
 					});
 				});	
