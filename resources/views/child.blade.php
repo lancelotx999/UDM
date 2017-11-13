@@ -283,7 +283,7 @@
 							.duration(200)
 							.style("opacity", .9);
 
-						tooltip.html("Date: " + d.date + "<br/>" + "<br/>" + "Room: " + d.roomId + "<br/>" + "<br/>" + "Temperature: " + d.temperature)
+						tooltip.html("Date: " + d.date + "<br/>" + "<br/>" + "Room: " + d.roomId + "<br/>" + "<br/>" + "Temperature: " + d.temperature + " &#8451;")
                             .style("left", (d3.event.pageX / 1.5) + "px")
                             .style("top", (d3.event.pageY) + "px");
 					})
@@ -700,10 +700,28 @@
                     return d.date == dateMin;
                 })
             }
+
+            var tooltip = d3.select('body').append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
             
             electricLogs.forEach(function(d){
                 d3.select("#"+d.roomId.toLowerCase())
-                    .style("fill", colors(d.electricity));
+                    .style("fill", colors(d.electricity))
+                    .on("mouseover", function() {
+                        tooltip.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+
+                        tooltip.html("Date: " + d.date + "<br/>" + "<br/>" + "Room: " + d.roomId + "<br/>" + "<br/>" + "Voltage: " + d.electricity + " V")
+                            .style("left", (d3.event.pageX / 1.5) + "px")
+                            .style("top", (d3.event.pageY) + "px");
+                    })
+                    .on("mouseout", function(d) {
+                        tooltip.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    });
 
             })
 
