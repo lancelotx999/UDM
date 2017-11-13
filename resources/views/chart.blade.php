@@ -335,8 +335,8 @@
 	function createSecurityChartFilters(securityLogs, dateMin, dateMax, floor, block){
 		var dateSlider = "";
 
-		dateSlider += "<p class='white-text'>Date Range for Security Chart:&nbsp;";
-		dateSlider += "<input type='date-' id='date-securityChart'>";
+		dateSlider += "<p class='white-text'>Date Range for Security Chart:&nbsp;</p>";
+		dateSlider += "<p><input type='date-' id='date-securityChart'>";
 		dateSlider += "</p>";
 		dateSlider += "<div id='dateSlider-securityChart' style='width:85%;margin: auto;'></div></br>";
 

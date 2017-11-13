@@ -710,7 +710,7 @@
 
     function createElectricFootprintFilters(electricLogs, dateMin, floor, block){
         var floorSelector = "";
-        floorSelector += "<h4 style='color:#fff; margin-bottom: 5px;  margin-top: 70px;'>i class='fa fa-cogs' aria-hidden='true'></i>&nbsp;Filters: Electrical</h4><hr /><p>Floor For Electrical Footprint Map : <select id='selectFloor-electricChart' size='1' style='width: 80%; color: #000;'>";
+        floorSelector += "<h4 style='color:#fff; margin-bottom: 5px;  margin-top: 70px;'><i class='fa fa-cogs' aria-hidden='true'></i>&nbsp;Filters: Electrical</h4><hr /><p>Floor For Electrical Footprint Map : <select id='selectFloor-electricChart' size='1' style='width: 80%; color: #000;'>";
         floorSelector += "<option value=G>G</option>";
         floorSelector += "<option value=1>1</option>";
         floorSelector += "<option value=2>2</option>";
