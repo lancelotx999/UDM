@@ -1,23 +1,5 @@
 @extends('layouts.app')
 
-<style type="text/css">
-
-    #main-content {
-        width: 85% !important;
-    }
-
-    div.tooltip {
-		position: absolute;
-		padding: 2px;
-		font: 12px sans-serif;
-		background: lightsteelblue;
-		border: 1px;
-		border-radius: 8px;
-		pointer-events: none;
-	}
-
-</style>
-
 @section('content')
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -26,37 +8,35 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
-    <br />
-    <ul class="breadcrumb">
-        <li><a href="#" onclick="displayFloor('G')">Level G</a></li>
-        <li><a href="#" onclick="displayFloor('1')">Level 1</a></li>
-        <li><a href="#" onclick="displayFloor('2')">Level 2</a></li>
-        <li><a href="#" onclick="displayFloor('3')">Level 3</a></li>
-        <li><a href="#" onclick="displayFloor('4')">Level 4</a></li>
-        <li><a href="#" onclick="displayFloor('5')">Level 5</a></li>
-        <li><a href="#" onclick="displayFloor('6')">Level 6</a></li>
-        <li><a href="#" onclick="displayFloor('7')">Level 7</a></li>
-        <li><a href="#" onclick="displayFloor('8')">Level 8</a></li>
-        <li><a href="#" onclick="displayFloor('9')">Level 9</a></li>
-    </ul>
+    <style type="text/css">
+        
+    #main-content {
+        width: 85%;
+    }
 
-    <div id='heatmapChart'>
-        <svg preserveAspectRatio="xMidYMid meet"></svg>
-    </div>
+        div.tooltip {
+        position: absolute;
+        padding: 2px;
+        font: 12px sans-serif;
+        background: lightsteelblue;
+        border: 1px;
+        border-radius: 8px;
+        pointer-events: none;
+    }
 
-     <div class="row">
-        <div class="col-xs-12 col-sm-12">
+    </style>
 
-            <div id='heatmapChartFilters'></div>
-        </div>
-        <div class="col-xs-12 col-sm-12">
-
-            <div id='securityMapFilters'></div>
-        </div>
-    </div>
-
+    <a class="btn btn-secondary" id="menu-toggle" onclick="toggleOverlay()">Hide/Show Filter</a>
+    <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 800.40002 647.40002" ></svg>
 
     <script>
+
+    // var dims = {
+    //     width: 1800,
+    //     height: 1800,
+    //     svg_dx: 100,
+    //     svg_dy: 100
+    // };
 
     //Zoom panning for SVG
     var svg = d3.select("svg")
@@ -64,6 +44,9 @@
         .attr("width", "100%")
         .attr("height", "100%")
         .call(d3.zoom()
+            // .extent([[dims.svg_dx, dims.svg_dy], [dims.width-(dims.svg_dx*2), dims.height-dims.svg_dy]])
+            .scaleExtent([0.85, 3])
+            // .translateExtent([[dims.svg_dx, dims.svg_dy], [dims.width-(dims.svg_dx*2), dims.height-dims.svg_dy]])
             .on("zoom", function () {
                 svg.attr("transform", d3.event.transform)
             }))
@@ -133,6 +116,20 @@
     // Default load floor G
     displayFloor('G');
 
+    function toggleOverlay() {
+        var x = document.getElementById("sidebar");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            $('#main-content').css({
+                'width': '85%'
+            });
+        } else {
+            x.style.display = "none";
+            $('#main-content').css({
+                'width': '100%'
+            });
+        }
+    }
 
     //variable for database table
     var heatmapLogs = null,
@@ -157,9 +154,6 @@
             createSecurityMapFilters(securityLogs, dateMin, 'All', 'All');
         }
     });
-
-
-
 
     //Heatmap checkbox
     function displayHeatmap(heatmapLogs, dateMin, floor, block){
@@ -295,8 +289,7 @@
 
     function createHeatmapChartFilters(heatmapLogs, dateMin, floor, block){
         var floorSelector = "";
-        floorSelector += "<p>Floor For Heatmap Chart : <select id='selectFloor-heatmapChart' size='1' style='width: 202px;'>";
-        floorSelector += "<option value=All>All</option>";
+        floorSelector += "<h4 style='color:#fff; margin-bottom: 5px;  margin-top: 70px;'><i class='fa fa-cogs' aria-hidden='true'></i>&nbsp;Filters: Heatmap</h4><hr /><p>Floor For Heatmap: <select id='selectFloor-heatmapChart' size='1' style='width: 80%;color: #000;'>";
         floorSelector += "<option value=G>G</option>";
         floorSelector += "<option value=1>1</option>";
         floorSelector += "<option value=2>2</option>";
@@ -307,14 +300,14 @@
         floorSelector += "<option value=7>7</option>";
         floorSelector += "<option value=8>8</option>";
         floorSelector += "<option value=9>9</option>";
-        floorSelector += "</select></p></br>";
+        floorSelector += "</select></p>";
 
         var dateSlider = "";
 
-        dateSlider += "<p>Date for Heatmap Chart : ";
-        dateSlider += "<input type='date-' id='date-heatmapChart'>";
+        dateSlider += "<p style='paddingtop:5px;'>Select Date for Heatmap: ";
+        dateSlider += "<input type='date-' id='date-heatmapChart' style='color: #000;width:80%;'>";
         dateSlider += "</p>";
-        dateSlider += "<div id='dateSlider-heatmapChart' style='width:85%;margin: auto;'></div></br>";
+        dateSlider += "<div id='dateSlider-heatmapChart' style='width:80%;margin: 2px;'></div>";
 
         //display filter
         document.getElementById('heatmapChartFilters').innerHTML = floorSelector + dateSlider;
@@ -515,16 +508,8 @@
     }
 
     function createSecurityMapFilters(securityLogs, dateMin, floor, block){
-        var dateSlider = "";
-
-        dateSlider += "<p>Date for Security Map : ";
-        dateSlider += "<input type='date-' id='date-securityChart'>";
-        dateSlider += "</p>";
-        dateSlider += "<div id='dateSlider-securityChart' style='width:85%;margin: auto;'></div></br>";
-
-        var floorSelector = "";
-        floorSelector += "<p>Floor For Security Map : <select id='selectFloor-securityChart' size='1' style='width: 202px;'>";
-        floorSelector += "<option value=All>All</option>";
+var floorSelector = "";
+        floorSelector += "<h4 style='color:#fff; margin-bottom: 5px;  margin-top: 70px;'><i class='fa fa-cogs' aria-hidden='true'></i>&nbsp;Filters: Security</h4><hr /><p>Floor For Security Map : <select id='selectFloor-securityChart' size='1' style='width: 80%; color: #000;'>";
         floorSelector += "<option value=G>G</option>";
         floorSelector += "<option value=1>1</option>";
         floorSelector += "<option value=2>2</option>";
@@ -535,7 +520,14 @@
         floorSelector += "<option value=7>7</option>";
         floorSelector += "<option value=8>8</option>";
         floorSelector += "<option value=9>9</option>";
-        floorSelector += "</select></p></br>";
+        floorSelector += "</select></p>";
+
+        var dateSlider = "";
+
+        dateSlider += "<p style='paddingtop:5px;'>Select Date for Security display: ";
+        dateSlider += "<input type='date-' id='date-securityChart' style='color: #000;width:80%;'>";
+        dateSlider += "</p>";
+        dateSlider += "<div id='dateSlider-securityChart' style='width:80%;margin: 2px;'></div>";
 
         document.getElementById('securityMapFilters').innerHTML = floorSelector + dateSlider;
 
