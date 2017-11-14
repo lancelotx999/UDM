@@ -37,7 +37,8 @@ class FileTransferController extends Controller
 					$sheet->each(function($row)
 					{
 						$dbdata['roomId'] = $row['roomid'];
-						$dbdata['date'] = $row['date'];
+
+						$dbdata['date'] = date('Y-m-d',strtotime($row['date']));
 						$dbdata['transactionQuantity'] = $row['transaction_quantity'];
 
 						
