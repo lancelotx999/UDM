@@ -21,9 +21,9 @@ class FileTransferController extends Controller
 					$sheet->each(function($row)
 					{
 						$dbdata['roomId'] = $row['roomid'];
-						$dbdata['date'] = date('Y-m-d',strtotime($row['date']));
+						$dbdata['date'] = date('Y-m-d',strtotime(str_replace('/', '-',$row['date'])));
 						$dbdata['transactionQuantity'] = $row['transaction_quantity'];
-						
+
 						DB::table('security')->insert($dbdata);
 
 					});
