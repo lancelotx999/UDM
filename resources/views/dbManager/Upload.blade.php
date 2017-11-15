@@ -19,7 +19,7 @@
 
     <p>Upload a CSV file to the database.</p>
 
-    <form method = "POST" enctype="multipart/form-data" action="UploadFile" value ="" >
+    <form method = "POST" enctype="multipart/form-data" action="UploadDB" value ="" >
     	{!! csrf_field() !!}
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
     	<p>Choose File:</p>
