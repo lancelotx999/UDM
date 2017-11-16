@@ -49,8 +49,8 @@
                 </li>
                 <li><a>&#124;</a></li>
                 <li><a href="/editor"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Map Editor</a></li>
-                <!-- <li><a>&#124;</a></li>
-                <li><a href="/upload"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp;CSV Upload</a></li> -->
+                <li><a>&#124;</a></li>
+                <li><a href="/upload"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp;CSV Upload</a></li>
             </ul>
         </div>
         <!-- /.nav-collapse -->
