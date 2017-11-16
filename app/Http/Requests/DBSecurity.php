@@ -7,20 +7,13 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 
-
 class DBSecurity extends \Maatwebsite\Excel\Files\ExcelFile
 {
     public function getFile()
     {
-        $fileurl = ("/storage/app/public/DB.csv");
-        $file = file($fileurl);
-        dd($file);
-        
-        $filename = $file->getPathName();
-  
-
-        $raw = Excel::load($file, function($reader) {})->get();
-        $headers = $file->first()->first()->keys()->toArray();
+        $filename = storage_path("app/DB.csv");
+        $raw = Excel::load($filename, function($reader) {})->get();
+        $headers = $raw->first()->first()->keys()->toArray();
 
         if (in_array("roomid",$headers))
         {

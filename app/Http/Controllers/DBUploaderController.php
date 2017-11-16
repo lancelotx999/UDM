@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 use DB;
 
 use App\Http\Requests\DBSecurity;
@@ -29,6 +30,7 @@ class DBUploaderController extends Controller
 
 					});
 			});
+		Storage::delete($data);
 	}
 
 	public function uploadSecurity(DBSecurity $request)
@@ -47,8 +49,7 @@ class DBUploaderController extends Controller
 					});
 			});
 
-			return $this;	
-		
+			Storage::delete($data);
 	}
 
 	public function uploadClubRecruitment(DBClubRecruitment $request)
@@ -68,8 +69,7 @@ class DBUploaderController extends Controller
 					});
 			});
 
-			return $this;	
-		
+			Storage::delete($data);	
 	}
 
 	public function uploadEnrollment(DBEnrollment $request)
@@ -91,8 +91,7 @@ class DBUploaderController extends Controller
 					});
 			});
 
-			return $this;	
-		
+		Storage::delete($data);	
 	}
 	
 }

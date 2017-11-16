@@ -11,7 +11,9 @@ class FileTransferController extends Controller
 {
 	public function UploadtoDB(Request $request)
 	{
-		$request->file('file')->storeAs('public',"DB.csv");
+        $file = $request->file('file');
+        Storage::putFileAs('DB.csv', $request->file('file'),'');
+
 		$file = $request->file('file');
 		$raw = Excel::load($file, function($reader) {})->get();
 		$headers = $raw->first()->first()->keys()->toArray();
@@ -27,7 +29,7 @@ class FileTransferController extends Controller
                 }
             }
         }
-        else if (in_array("roomid",$headers))
+        if (in_array("roomid",$headers))
         {
             if (in_array("date",$headers))
             {
@@ -37,7 +39,7 @@ class FileTransferController extends Controller
                 }
             }
         }
-        else if (in_array("year",$headers))
+        if (in_array("year",$headers))
         {
             if (in_array("semester",$headers))
             {
@@ -50,7 +52,7 @@ class FileTransferController extends Controller
                 }
             }
         }
-        else if (in_array("year",$headers))
+        if (in_array("year",$headers))
         {
             if (in_array("semester",$headers))
             {

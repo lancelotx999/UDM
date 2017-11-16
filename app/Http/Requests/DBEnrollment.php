@@ -7,15 +7,12 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 
-
 class DBEnrollment extends \Maatwebsite\Excel\Files\ExcelFile
 {
     public function getFile()
     {
-        $file = Input::file('file');
-        $filename = $file->getPathName();
-
-        $raw = Excel::load($file, function($reader) {})->get();
+        $filename = storage_path("app/DB.csv");
+        $raw = Excel::load($filename, function($reader) {})->get();
         $headers = $raw->first()->first()->keys()->toArray();
 
         if (in_array("year",$headers))
