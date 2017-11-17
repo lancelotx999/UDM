@@ -48,9 +48,44 @@
                     </ul>
                 </li>
                 <li><a>&#124;</a></li>
+                @if (Auth::check() and Auth::user()->hasRole('admin'))
                 <li><a href="/editor"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Map Editor</a></li>
                 <li><a>&#124;</a></li>
                 <li><a href="/upload"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp;CSV Upload</a></li>
+                <li><a>&#124;</a></li>
+                @endif
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if (Auth::guest())
+                <li><a>&#124;</a></li>
+                <li><a href="{{ url('/register') }}"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Register</a></li>
+                <li><a>&#124;</a></li>
+                <li><a href="{{ url('/login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Login</a></li>
+                <li><a>&#124;</a></li>
+                @else
+                <li><a>&#124;</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;
+                        {{ explode(' ', trim(Auth::user()->name))[0] }} <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a  href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Log out
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                <li><a>&#124;</a></li>
+                @endif
             </ul>
         </div>
         <!-- /.nav-collapse -->

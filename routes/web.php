@@ -11,27 +11,31 @@
 |
 */
 
-//loads the child 1st
+// Routes for public access of maps and charts
 Route::get('/', 'HeatmapController@heatmapMap');
-
-Route::get('/editor', function () {
-    return view('editor');
-});
+Route::get('/map', 'SecurityController@securityMap');
 
 Route::get('/chart', 'ChartController@chartPage');
 Route::get('/chart/security', 'ChartController@securityChartPage');
 Route::get('/chart/enrollment', 'ChartController@enrollmentChartPage');
 Route::get('/chart/clubRecruitment', 'ChartController@clubRecruitmentChartPage');
-Route::get('/map', 'SecurityController@securityMap');
 
-// Routes for uploading database data
-Route::get('/upload', function()
-{
+// Routes for Admin use only
+Route::get('/editor', function () {
+    return view('editor');
+})->middleware('auth');;
+
+Route::get('/upload', function() {
 	return view ('dbManager/Upload');
-});
+})->middleware('auth');;
 
 Route::post('UploadDB','FileTransferController@UploadtoDB');
 Route::get('UploadDBSecurity','DBUploaderController@uploadSecurity');
 Route::get('UploadDBHeatmap','DBUploaderController@uploadHeatmap');
 Route::get('UploadDBClubRecruitment','DBUploaderController@uploadClubRecruitment');
 Route::get('UploadDBEnrollment','DBUploaderController@uploadEnrollment');
+
+// Routes for authentication
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

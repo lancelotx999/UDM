@@ -2,16 +2,6 @@
 
 @section('content')
 
-<br />
-
-<style type="text/css">
-
-.bottom-space {
-    padding-bottom: 50vh;
-}
-
-</style>
-
 <div class="row bottom-space">
     <div class="col-xs-12 col-sm-12">
 
