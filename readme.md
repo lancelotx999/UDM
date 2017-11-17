@@ -25,6 +25,27 @@ Once migration is done, you can now serve the web application (default http://12
 php artisan serve
 ```
 
+You can login as either an admin or an user available by default, or register as a user if you like:
+```
+// Admins
+Name => Sean Lee
+Email => 4308131@UDM.com
+Password => 4308131
+
+Name => Kenneth Yeo
+Email => 4332466@UDM.com
+Password => 4332466
+
+// Users          
+Name => Kevin Wong
+Email => 4310128@SCVMS.com
+Password => 4310128
+
+Name => Leslie Ling
+Email => 4331990@UDM.com
+Password => 4331990
+```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
