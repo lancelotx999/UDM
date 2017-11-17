@@ -7,6 +7,24 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+## Quickstart Running UDM
+Make sure you have [Docker](https://www.docker.com/get-docker) installed and enabled, then on your console run the following:
+```dockerfile
+docker run --name mariadb-udm -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=udm -p 3306:3306 -d mariadb
+```
+
+The database is created inside the container titled `mariadb-udm`, migrate the database with Laravel's `artisan` command and wait for completion:
+```php
+// This will migrate the database, takes a moment. Go make a coffee while waiting!
+php artisan migrate
+```
+
+Once migration is done, you can now serve the web application (default http://127.0.0.1:8000/):
+```php
+// Will serve the web app live
+php artisan serve
+```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
