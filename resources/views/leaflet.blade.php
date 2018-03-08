@@ -34,7 +34,20 @@
     </style>
     <div id="map"></div>
 
+    <img src="{{URL::asset('images/swinlogo.png')}}" alt="profile Pic" height="200" width="200">
     <script>
+
+        // var data = {{ asset('/public/data/states.geojson') }};
+        // var data = {{ URL::asset('public/data/states.geojson') }};
+        // var data = http://localhost:8000/public/data/states.geojson;
+        // var data = {{ asset('/public/images/swinlogo.png') }};
+        // var data = {{URL::asset('data/states.geojson')}};
+        // var json = File::get("/data/states.geojson");
+        //
+        // console.log("---------- data ----------");
+        // console.log(data);
+        // console.log("---------- data ----------");
+
         initializeMap();
 
         function initializeMap()
