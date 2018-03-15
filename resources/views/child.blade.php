@@ -9,7 +9,7 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
     <style type="text/css">
-        
+
     #main-content {
         width: 85%;
     }
@@ -320,7 +320,7 @@
 
         //display filter
         document.getElementById('MapFilters').innerHTML = floorSelector + dateSlider;
-        
+
         //display floor base on dropdown selection
         $('select').change(function () {
             floor = $("#selectFloor-heatmapChart").val();
@@ -469,7 +469,7 @@
 
             var minSecurity = d3.min(securityLogs, function(d) {return d.transactionQuantity;}),
                 maxSecurity = d3.max(securityLogs, function(d) {return d.transactionQuantity;});
-            
+
             var colors = d3.scaleQuantize()
                         .range(['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#0c2c84']);
 
@@ -511,7 +511,7 @@
                             .style("opacity", 0);
                     });
                 }
-                
+
 
             })
 
@@ -520,19 +520,19 @@
     }
 
     function createSecurityMapFilters(securityLogs, dateMin, floor, block){
-    var floorSelector = "";
-        floorSelector += "<h4 style='color:#fff; margin-bottom: 5px;  margin-top: 70px;'><i class='fa fa-cogs' aria-hidden='true'></i>&nbsp;Filters: Security</h4><hr /><p>Floor For Security Map : <select id='selectFloor-securityChart' size='1' style='width: 80%; color: #000;'>";
-        floorSelector += "<option value=G>G</option>";
-        floorSelector += "<option value=1>1</option>";
-        floorSelector += "<option value=2>2</option>";
-        floorSelector += "<option value=3>3</option>";
-        floorSelector += "<option value=4>4</option>";
-        floorSelector += "<option value=5>5</option>";
-        floorSelector += "<option value=6>6</option>";
-        floorSelector += "<option value=7>7</option>";
-        floorSelector += "<option value=8>8</option>";
-        floorSelector += "<option value=9>9</option>";
-        floorSelector += "</select></p>";
+        var floorSelector = "";
+            floorSelector += "<h4 style='color:#fff; margin-bottom: 5px;  margin-top: 70px;'><i class='fa fa-cogs' aria-hidden='true'></i>&nbsp;Filters: Security</h4><hr /><p>Floor For Security Map : <select id='selectFloor-securityChart' size='1' style='width: 80%; color: #000;'>";
+            floorSelector += "<option value=G>G</option>";
+            floorSelector += "<option value=1>1</option>";
+            floorSelector += "<option value=2>2</option>";
+            floorSelector += "<option value=3>3</option>";
+            floorSelector += "<option value=4>4</option>";
+            floorSelector += "<option value=5>5</option>";
+            floorSelector += "<option value=6>6</option>";
+            floorSelector += "<option value=7>7</option>";
+            floorSelector += "<option value=8>8</option>";
+            floorSelector += "<option value=9>9</option>";
+            floorSelector += "</select></p>";
 
         var dateSlider = "";
 
@@ -614,13 +614,13 @@
     function displayElectricFootprint(electricLogs, dateMin, floor, block){
 
         floor = 'G';
-        block = 'G';    
-        
+        block = 'G';
+
         if(dateMin != null)
         {
             var parsedateMin = d3.timeFormat("%Y-%m-%d");
             dateMin = parsedateMin(dateMin);
-        }    
+        }
 
         if(d3.select("#Electric").property("checked")){
             var electricLogs = {!! json_encode($electricLogs->toArray()) !!};
@@ -684,7 +684,7 @@
 
             var minElectricity = d3.min(electricLogs, function(d) {return d.electricity;}),
                 maxElectricity = d3.max(electricLogs, function(d) {return d.electricity;});
-            
+
             var colors = d3.scaleQuantize()
                         .range(['#ffffe5','#f7fcb9','#d9f0a3','#addd8e','#78c679','#41ab5d','#238443','#005a32']);
 
@@ -693,7 +693,7 @@
             // opacity alternative for filling the svg
             // var opacityTest = d3.scaleLinear().rangeRound([0, 100]);
             // opacityTest.domain([d3.min(securityLogs, function(d) { return d.transactionQuantity}), d3.max(securityLogs, function(d) { return d.transactionQuantity})]).nice();
-           
+
             //get the temprature data only based on the date selected
             if (dateMin != null && dateMin != undefined) {
                 electricLogs = electricLogs.filter(function (d){
@@ -704,7 +704,7 @@
             var tooltip = d3.select('body').append("div")
                 .attr("class", "tooltip")
                 .style("opacity", 0);
-            
+
             electricLogs.forEach(function(d){
                 d3.select("#"+d.roomId.toLowerCase())
                     .style("fill", colors(d.electricity))
@@ -785,14 +785,14 @@
         if (dateMin != null && dateMin != undefined) {
             $(function (){
                 $("#dateSlider-electricChart").slider({
-                    
+
                     min: Math.min.apply(null, tempData),
                     max: Math.max.apply(null, tempData),
                     values: [Math.min.apply(null, tempData)],
                     slide: function( event, ui ) {
                         dateMin = new Date(ui.value);
                         $( "#date-electricChart").val(getFormattedDate(dateMin));
-                    },                    
+                    },
                     stop: function(event, ui) {
                         dateMin = new Date(ui.value);
                         displayElectricFootprint(electricLogs, dateMin, floor, block)
@@ -803,14 +803,14 @@
         else {
             $(function (){
                 $("#dateSlider-electricChart").slider({
-                    
+
                     min: Math.min.apply(null, tempData),
                     max: Math.max.apply(null, tempData),
                     values: [Math.min.apply(null, tempData)],
                     slide: function( event, ui ) {
                         var dateMin = new Date(ui.value);
                         $( "#date-electricChart").val(getFormattedDate(dateMin));
-                    },                    
+                    },
                     stop: function(event, ui) {
                         dateMin = new Date(ui.value);
                         displayElectricFootprint(electricLogs, dateMin, floor, block)
