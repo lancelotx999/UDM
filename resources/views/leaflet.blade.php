@@ -36,7 +36,7 @@
       position: relative;
     }
 
-    path {
+    /* path {
       fill: #000;
       fill-opacity: .2;
       stroke: #fff;
@@ -46,7 +46,7 @@
     path:hover {
       fill: brown;
       fill-opacity: .7;
-    }
+    } */
 
 
 </style>
@@ -57,7 +57,8 @@
 <script>
 
     var map = L.map('map')
-        .setView([0, 0], 0)
+        // .setView([0, 0], 0)
+        .setView(new L.LatLng(40, -74), 10) //NYC Location
         .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
 
     map.options.minZoom = 2;
@@ -69,6 +70,8 @@
 
     map.fitBounds(new L.LatLngBounds(southWest, northEast), {reset: true});
 
+    map.setView(new L.LatLng(40.7, -73.8), 10) //NYC Location
+
     var svg = d3.select(map.getPanes().overlayPane).append("svg")
         g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
@@ -77,19 +80,35 @@
 	    .attr("class", "tooltip")
 	    .style("opacity", 0);
 
-    boroughOverlay();
+    //Major Overlays
+    // boroughOverlay();
+    // districtOverlay();
+    //
+    // // Minor Overlays
+    // policePrecintOverlay();
+    // fireBattalionOverlay();
+    schoolDistrictOverlay();
 
     function boroughOverlay(){
         d3.json("data/NYC-Overlays/boroughs.geojson", function(error, collection) {
             if (error) throw error;
 
+            console.log("---------- collection ----------");
+            console.log(collection);
+            console.log("---------- collection ----------");
+
             var transform = d3.geo.transform({point: projectPoint}),
                 path = d3.geo.path().projection(transform);
 
             var feature = g.selectAll("path")
+                .attr("class", "boroughOverlay")
                 .data(collection.features)
                 .enter()
                 .append("path")
+                .style("fill", "#000")
+                .style("fill-opacity", .2)
+                .style("stroke", "#fff")
+                .style("stroke-width", 1.5 +"px")
                 .on("mouseover", function(d){
                     console.log("---------- d ----------");
                     console.log(d);
@@ -97,6 +116,10 @@
                     console.log("---------- this ----------");
                     console.log(this);
                     console.log("---------- this ----------");
+
+                    d3.select(this)
+                        .style("fill", "grey")
+                        .style("fill-opacity", .7);
 
                     popup.transition()
      				   .duration(200)
@@ -107,6 +130,11 @@
    					// .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
                 .on("mouseout", function(d) {
+
+                    d3.select(this)
+                        .style("fill", "#000")
+                        .style("fill-opacity", .2);
+
                     popup.transition()
      				   .duration(500)
      				   .style("opacity", 0);
@@ -155,8 +183,405 @@
         });
     }
 
+    function districtOverlay(){
+        d3.json("data/NYC-Overlays/community_districts.geojson", function(error, collection) {
+            if (error) throw error;
 
+            console.log("---------- collection ----------");
+            console.log(collection);
+            console.log("---------- collection ----------");
 
+            var transform = d3.geo.transform({point: projectPoint}),
+                path = d3.geo.path().projection(transform);
+
+            var feature = g.selectAll("path")
+                .attr("class", "districtOverlay")
+                .data(collection.features)
+                .enter()
+                .append("path")
+                .style("fill", "#000")
+                .style("fill-opacity", .2)
+                .style("stroke", "#fff")
+                .style("stroke-width", 1.5 +"px")
+                .on("mouseover", function(d){
+                    console.log("---------- d ----------");
+                    console.log(d);
+                    console.log("---------- d ----------");
+                    console.log("---------- this ----------");
+                    console.log(this);
+                    console.log("---------- this ----------");
+
+                    d3.select(this)
+                        .style("fill", "brown")
+                        .style("fill-opacity", .7);
+
+                    // this.style("fill", "brown")
+                    //     .style("fill-opacity", .7);
+
+                    popup.transition()
+     				   .duration(200)
+     				   .style("opacity", .9);
+
+                   popup.html("District")
+               		.attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
+   					// .attr("style", "top: 58%; left: 0px; position: absolute;");
+                })
+                .on("mouseout", function(d) {
+
+                    d3.select(this)
+                        .style("fill", "#000")
+                        .style("fill-opacity", .2);
+
+                    // this.style("fill", "#000")
+                    //     .style("fill-opacity", .2);
+
+                    popup.transition()
+     				   .duration(500)
+     				   .style("opacity", 0);
+     		   	});
+
+            // console.log("---------- feature ----------");
+            // console.log(feature);
+            // console.log("---------- feature ----------");
+            // console.log("---------- transform ----------");
+            // console.log(transform);
+            // console.log("---------- transform ----------");
+            // console.log("---------- path ----------");
+            // console.log(path);
+            // console.log("---------- path ----------");
+            // console.log("---------- collection ----------");
+            // console.log(collection);
+            // console.log("---------- collection ----------");
+            // console.log("---------- collection.features ----------");
+            // console.log(collection.features);
+            // console.log("---------- collection.features ----------");
+
+            map.on("moveend", reset);
+            reset();
+
+            // Reposition the SVG to cover the features.
+            function reset() {
+                var bounds = path.bounds(collection),
+                    topLeft = bounds[0],
+                    bottomRight = bounds[1];
+
+                svg.attr("width", bottomRight[0] - topLeft[0])
+                    .attr("height", bottomRight[1] - topLeft[1])
+                    .style("left", topLeft[0] + "px")
+                    .style("top", topLeft[1] + "px");
+
+                g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+                feature.attr("d", path);
+            }
+
+            // Use Leaflet to implement a D3 geometric transformation.
+            function projectPoint(x, y) {
+                var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+                this.stream.point(point.x, point.y);
+            }
+        });
+    }
+
+    function policePrecintOverlay(){
+        d3.json("data/NYC-Overlays/police_precincts.geojson", function(error, collection) {
+            if (error) throw error;
+
+            console.log("---------- collection ----------");
+            console.log(collection);
+            console.log("---------- collection ----------");
+
+            var transform = d3.geo.transform({point: projectPoint}),
+                path = d3.geo.path().projection(transform);
+
+            var feature = g.selectAll("path")
+                .attr("class", "policePrecintOverlay")
+                .data(collection.features)
+                .enter()
+                .append("path")
+                .style("fill", "#000")
+                .style("fill-opacity", .2)
+                .style("stroke", "#fff")
+                .style("stroke-width", 1.5 +"px")
+                .on("mouseover", function(d){
+                    console.log("---------- d ----------");
+                    console.log(d);
+                    console.log("---------- d ----------");
+                    console.log("---------- this ----------");
+                    console.log(this);
+                    console.log("---------- this ----------");
+
+                    d3.select(this)
+                        .style("fill", "blue")
+                        .style("fill-opacity", .7);
+
+                    // this.style("fill", "brown")
+                    //     .style("fill-opacity", .7);
+
+                    popup.transition()
+                       .duration(200)
+                       .style("opacity", .9);
+
+                   popup.html("District")
+                    .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
+                    // .attr("style", "top: 58%; left: 0px; position: absolute;");
+                })
+                .on("mouseout", function(d) {
+
+                    d3.select(this)
+                        .style("fill", "#000")
+                        .style("fill-opacity", .2);
+
+                    // this.style("fill", "#000")
+                    //     .style("fill-opacity", .2);
+
+                    popup.transition()
+                       .duration(500)
+                       .style("opacity", 0);
+                });
+
+            // console.log("---------- feature ----------");
+            // console.log(feature);
+            // console.log("---------- feature ----------");
+            // console.log("---------- transform ----------");
+            // console.log(transform);
+            // console.log("---------- transform ----------");
+            // console.log("---------- path ----------");
+            // console.log(path);
+            // console.log("---------- path ----------");
+            // console.log("---------- collection ----------");
+            // console.log(collection);
+            // console.log("---------- collection ----------");
+            // console.log("---------- collection.features ----------");
+            // console.log(collection.features);
+            // console.log("---------- collection.features ----------");
+
+            map.on("moveend", reset);
+            reset();
+
+            // Reposition the SVG to cover the features.
+            function reset() {
+                var bounds = path.bounds(collection),
+                    topLeft = bounds[0],
+                    bottomRight = bounds[1];
+
+                svg.attr("width", bottomRight[0] - topLeft[0])
+                    .attr("height", bottomRight[1] - topLeft[1])
+                    .style("left", topLeft[0] + "px")
+                    .style("top", topLeft[1] + "px");
+
+                g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+                feature.attr("d", path);
+            }
+
+            // Use Leaflet to implement a D3 geometric transformation.
+            function projectPoint(x, y) {
+                var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+                this.stream.point(point.x, point.y);
+            }
+        });
+    }
+
+    function fireBattalionOverlay(){
+        d3.json("data/NYC-Overlays/fire_battalions.geojson", function(error, collection) {
+            if (error) throw error;
+
+            console.log("---------- collection ----------");
+            console.log(collection);
+            console.log("---------- collection ----------");
+
+            var transform = d3.geo.transform({point: projectPoint}),
+                path = d3.geo.path().projection(transform);
+
+            var feature = g.selectAll("path")
+                .attr("class", "fireBattalionOverlay")
+                .data(collection.features)
+                .enter()
+                .append("path")
+                .style("fill", "#000")
+                .style("fill-opacity", .2)
+                .style("stroke", "#fff")
+                .style("stroke-width", 1.5 +"px")
+                .on("mouseover", function(d){
+                    console.log("---------- d ----------");
+                    console.log(d);
+                    console.log("---------- d ----------");
+                    console.log("---------- this ----------");
+                    console.log(this);
+                    console.log("---------- this ----------");
+
+                    d3.select(this)
+                        .style("fill", "red")
+                        .style("fill-opacity", .7);
+
+                    // this.style("fill", "brown")
+                    //     .style("fill-opacity", .7);
+
+                    popup.transition()
+                       .duration(200)
+                       .style("opacity", .9);
+
+                   popup.html("District")
+                    .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
+                    // .attr("style", "top: 58%; left: 0px; position: absolute;");
+                })
+                .on("mouseout", function(d) {
+
+                    d3.select(this)
+                        .style("fill", "#000")
+                        .style("fill-opacity", .2);
+
+                    // this.style("fill", "#000")
+                    //     .style("fill-opacity", .2);
+
+                    popup.transition()
+                       .duration(500)
+                       .style("opacity", 0);
+                });
+
+            // console.log("---------- feature ----------");
+            // console.log(feature);
+            // console.log("---------- feature ----------");
+            // console.log("---------- transform ----------");
+            // console.log(transform);
+            // console.log("---------- transform ----------");
+            // console.log("---------- path ----------");
+            // console.log(path);
+            // console.log("---------- path ----------");
+            // console.log("---------- collection ----------");
+            // console.log(collection);
+            // console.log("---------- collection ----------");
+            // console.log("---------- collection.features ----------");
+            // console.log(collection.features);
+            // console.log("---------- collection.features ----------");
+
+            map.on("moveend", reset);
+            reset();
+
+            // Reposition the SVG to cover the features.
+            function reset() {
+                var bounds = path.bounds(collection),
+                    topLeft = bounds[0],
+                    bottomRight = bounds[1];
+
+                svg.attr("width", bottomRight[0] - topLeft[0])
+                    .attr("height", bottomRight[1] - topLeft[1])
+                    .style("left", topLeft[0] + "px")
+                    .style("top", topLeft[1] + "px");
+
+                g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+                feature.attr("d", path);
+            }
+
+            // Use Leaflet to implement a D3 geometric transformation.
+            function projectPoint(x, y) {
+                var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+                this.stream.point(point.x, point.y);
+            }
+        });
+    }
+
+    function schoolDistrictOverlay(){
+        d3.json("data/NYC-Overlays/fire_battalions.geojson", function(error, collection) {
+            if (error) throw error;
+
+            console.log("---------- collection ----------");
+            console.log(collection);
+            console.log("---------- collection ----------");
+
+            var transform = d3.geo.transform({point: projectPoint}),
+                path = d3.geo.path().projection(transform);
+
+            var feature = g.selectAll("path")
+                .attr("class", "schoolDistrictOverlay")
+                .data(collection.features)
+                .enter()
+                .append("path")
+                .style("fill", "#000")
+                .style("fill-opacity", .2)
+                .style("stroke", "#fff")
+                .style("stroke-width", 1.5 +"px")
+                .on("mouseover", function(d){
+                    console.log("---------- d ----------");
+                    console.log(d);
+                    console.log("---------- d ----------");
+                    console.log("---------- this ----------");
+                    console.log(this);
+                    console.log("---------- this ----------");
+
+                    d3.select(this)
+                        .style("fill", "yellow")
+                        .style("fill-opacity", .7);
+
+                    // this.style("fill", "brown")
+                    //     .style("fill-opacity", .7);
+
+                    popup.transition()
+                       .duration(200)
+                       .style("opacity", .9);
+
+                   popup.html("District")
+                    .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
+                    // .attr("style", "top: 58%; left: 0px; position: absolute;");
+                })
+                .on("mouseout", function(d) {
+
+                    d3.select(this)
+                        .style("fill", "#000")
+                        .style("fill-opacity", .2);
+
+                    // this.style("fill", "#000")
+                    //     .style("fill-opacity", .2);
+
+                    popup.transition()
+                       .duration(500)
+                       .style("opacity", 0);
+                });
+
+            // console.log("---------- feature ----------");
+            // console.log(feature);
+            // console.log("---------- feature ----------");
+            // console.log("---------- transform ----------");
+            // console.log(transform);
+            // console.log("---------- transform ----------");
+            // console.log("---------- path ----------");
+            // console.log(path);
+            // console.log("---------- path ----------");
+            // console.log("---------- collection ----------");
+            // console.log(collection);
+            // console.log("---------- collection ----------");
+            // console.log("---------- collection.features ----------");
+            // console.log(collection.features);
+            // console.log("---------- collection.features ----------");
+
+            map.on("moveend", reset);
+            reset();
+
+            // Reposition the SVG to cover the features.
+            function reset() {
+                var bounds = path.bounds(collection),
+                    topLeft = bounds[0],
+                    bottomRight = bounds[1];
+
+                svg.attr("width", bottomRight[0] - topLeft[0])
+                    .attr("height", bottomRight[1] - topLeft[1])
+                    .style("left", topLeft[0] + "px")
+                    .style("top", topLeft[1] + "px");
+
+                g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+                feature.attr("d", path);
+            }
+
+            // Use Leaflet to implement a D3 geometric transformation.
+            function projectPoint(x, y) {
+                var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+                this.stream.point(point.x, point.y);
+            }
+        });
+    }
 
 
 
