@@ -28,12 +28,12 @@ a:active{
   color: blue;
 }
 
-svg {
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  background: #f6f6f6;
-}
+// svg {
+//   width: 100%;
+//   height: 100%;
+//   min-height: 100vh;
+//   background: #f6f6f6;
+// }
 
 .bottom-space {
   padding-bottom: 50vh;
@@ -157,26 +157,26 @@ footer.page-footer {
   padding-top: 20px;
   background-color: #262626;
   background: url("/images/dark-wall.gif");
-  color: #fff; 
+  color: #fff;
 }
 
 footer.page-footer .container-fluid {
-  width: auto; 
+  width: auto;
 }
 
 footer.page-footer a {
-  color: #fff; 
+  color: #fff;
 }
 
 footer.page-footer .title {
-  text-transform: uppercase; 
+  text-transform: uppercase;
 }
 
 footer .desc {
   font-size: 1.20rem;
 }
 
-ul.links { 
+ul.links {
   padding: 0;
   list-style-type: none;
 }
@@ -185,10 +185,10 @@ ul.links {
   background-color: #fff;
 }
 
-svg, #heatmapChart{
-  height: 100%;
-  width: 100%;
-}
+// svg, #heatmapChart{
+//   height: 100%;
+//   width: 100%;
+// }
 
 .navbar-nav {
   font-size: 15px;
@@ -218,7 +218,7 @@ svg, #heatmapChart{
     padding: .375rem .75rem;
     line-height: 1.5;
     border-radius: .25rem;
-    
+
     }
 
     .btn-secondary {
@@ -297,6 +297,24 @@ svg, #heatmapChart{
     line-height: 1.8;
   }
 }
+// cheap fix for pointer event
+.leaflet-marker-shadow, .leaflet-image-layer, .leaflet-pane > svg path, .leaflet-tile-container {
+    pointer-events: all !important;
+}
+
+div.tooltip {
+    position: absolute;
+    font-size: 100% !important;
+    width: auto;
+    height: auto;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
 /*** custom checkboxes ***/
 
 // input[type=checkbox] { display:none; } /* to hide the checkbox itself */
