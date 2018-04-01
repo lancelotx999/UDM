@@ -80,7 +80,7 @@
 
     PruneCluster.Cluster.ENABLE_MARKERS_LIST = true;
     pruneCluster.Cluster.Size = 2;
-    
+
 
     //overrides for pruneCluster
     pruneCluster.spiderfier.onAdd = function(map){
@@ -272,15 +272,15 @@
             // d3.select(this).style("opacity", 1);
             // d3.select(this).style("fill", "#ffff00");
 
-            div.transition()
-                .duration(200)
-                .style("opacity", .9);
-
-            var htmlContent = "";
-
-            markers.forEach(function(d){
-                htmlContent += "Something in HTML";
-            })
+            // popup.transition()
+            //     .duration(200)
+            //     .style("opacity", .9);
+            //
+            // var htmlContent = "";
+            //
+            // markers.forEach(function(d){
+            //     htmlContent += "Something in HTML";
+            // })
 
             // console.log("---------- event.clientX ----------");
             // console.log(event.clientX);
@@ -291,13 +291,16 @@
 
             // 169 250
 
-            // div.html(htmlContent)
+            // popup.html(htmlContent)
             //     .style("left", (event.clientX - 20) + "px")
             //     .style("top", (event.clientY -350) + "px");
 
-            div.html(htmlContent)
-                .style("left", 50 + "px")
-                .style("top", 50 + "px");
+            // popup.html(htmlContent)
+            //     .style("left", d3.event.x + "px")
+            //     .style("top", d3.event.y + "px");
+
+                // .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
+
         });
         m.on('mouseout', function() {
             //do mouseout stuff here
@@ -306,9 +309,9 @@
             // d3.select(this).style("opacity", 0.25);
             // d3.select(this).style("fill", function(d) { return d.color; });
 
-            div.transition()
-                .duration(500)
-                .style("opacity", 0);
+            // popup.transition()
+            //     .duration(500)
+            //     .style("opacity", 0);
         });
 
         return m;
@@ -420,20 +423,20 @@
             canvas.fill();
             canvas.closePath();
 
-            //adding crosses to the circle
-            canvas.beginPath();
-            canvas.strokeStyle = 'rgba(0,0,0,1)';
-            canvas.moveTo(22,10);
-            canvas.lineTo(22,34);
-            canvas.stroke();
-            canvas.closePath();
-
-            canvas.beginPath();
-            canvas.strokeStyle = 'rgba(0,0,0,1)';
-            canvas.moveTo(10,22);
-            canvas.lineTo(34,22);
-            canvas.stroke();
-            canvas.closePath();
+            // //adding crosses to the circle
+            // canvas.beginPath();
+            // canvas.strokeStyle = 'rgba(0,0,0,1)';
+            // canvas.moveTo(22,10);
+            // canvas.lineTo(22,34);
+            // canvas.stroke();
+            // canvas.closePath();
+            //
+            // canvas.beginPath();
+            // canvas.strokeStyle = 'rgba(0,0,0,1)';
+            // canvas.moveTo(10,22);
+            // canvas.lineTo(34,22);
+            // canvas.stroke();
+            // canvas.closePath();
 
             // console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
             // console.log(data);
@@ -490,7 +493,6 @@
 
     });
 
-
     var svg = d3.select(map.getPanes().overlayPane).append("svg")
         g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
@@ -499,8 +501,8 @@
 	    .attr("class", "tooltip")
 	    .style("opacity", 0);
 
-    // Overlay selection should be based on radio buttons or tickboxes
-    //Major Overlays
+    // // Overlay selection should be based on radio buttons or tickboxes
+    // // Major Overlays
     // boroughOverlay();
     // districtOverlay();
     //
@@ -508,9 +510,13 @@
     // policePrecintOverlay();
     // fireBattalionOverlay();
     // schoolDistrictOverlay();
+    subwayLineOverlay(); // Incomplete
 
     // Markers
-    subwayEntranceMarker();
+    // subwayEntranceMarker();
+    // collegesUniversitiesMarker();
+
+    // educationModule();
 
     function boroughOverlay(){
         d3.json("data/NYC-Overlays/boroughs.geojson", function(error, collection) {
@@ -548,9 +554,9 @@
      				   .duration(200)
      				   .style("opacity", .9);
 
-                   popup.html("this is the text for popup <b>HTML TAGS WORK HERE</b>")
-               		.attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
-   					// .attr("style", "top: 58%; left: 0px; position: absolute;");
+                    popup.html("<p>Borough Code: " + d.properties.BoroCode + "</p>" + "<p>Borough Name: " + d.properties.BoroName + "</p>")
+                        .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
+                        // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
                 .on("mouseout", function(d) {
 
@@ -562,6 +568,8 @@
      				   .duration(500)
      				   .style("opacity", 0);
      		   	});
+
+
 
             // console.log("---------- feature ----------");
             // console.log(feature);
@@ -645,7 +653,7 @@
      				   .duration(200)
      				   .style("opacity", .9);
 
-                   popup.html("District")
+                   popup.html("<p> Borough Community District ID: " + d.properties.BoroCD + "</p>")
                		.attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
    					// .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -745,9 +753,9 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                   popup.html("District")
-                    .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
-                    // .attr("style", "top: 58%; left: 0px; position: absolute;");
+                    popup.html("<p>Police Precint: " + d.properties.Precint + "</p>")
+                        .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
+                        // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
                 .on("mouseout", function(d) {
 
@@ -845,9 +853,9 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                   popup.html("District")
-                    .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
-                    // .attr("style", "top: 58%; left: 0px; position: absolute;");
+                    popup.html("<p>Fire Battalion: " + d.properties.FireBN + "</p>")
+                        .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
+                        // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
                 .on("mouseout", function(d) {
 
@@ -907,7 +915,7 @@
     }
 
     function schoolDistrictOverlay(){
-        d3.json("data/NYC-Overlays/fire_battalions.geojson", function(error, collection) {
+        d3.json("data/NYC-Overlays/school_districts.geojson", function(error, collection) {
             if (error) throw error;
 
             console.log("---------- collection ----------");
@@ -945,7 +953,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                   popup.html("District")
+                   popup.html("<p>School District: " + d.properties.schoolDist + "</p>")
                     .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                     // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1006,6 +1014,124 @@
         });
     }
 
+    function subwayLineOverlay(){
+        d3.json("data/NYC-Overlays/subway_lines.geojson", function(error, collection) {
+            if (error) throw error;
+
+            console.log("---------- collection ----------");
+            console.log(collection);
+            console.log("---------- collection ----------");
+
+            var transform = d3.geo.transform({point: projectPoint}),
+                path = d3.geo.path().projection(transform);
+
+            // var transform = d3.geo.orthographic(),
+            //     path = d3.geo.path().projection(transform);
+
+            // var transform = d3.geo.path(),
+            //     path = d3.geo.path().projection(transform);
+
+            // var feature = g.selectAll("path")
+            //     .attr("class", "subwayLineOverlay")
+            //     .data(collection.features)
+            //     .enter()
+            //     .append("path")
+            //     .style("fill", "red")
+            //     .style("fill-opacity", 1)
+            //     .style("stroke", "#fff")
+            //     .style("stroke-width", 0.5 +"px")
+            //     .on("mouseover", function(d){
+            //         console.log("---------- d ----------");
+            //         console.log(d);
+            //         console.log("---------- d ----------");
+            //         console.log("---------- this ----------");
+            //         console.log(this);
+            //         console.log("---------- this ----------");
+            //
+            //         d3.select(this)
+            //             .style("fill", "red")
+            //             .style("fill-opacity", .7);
+            //
+            //         // this.style("fill", "brown")
+            //         //     .style("fill-opacity", .7);
+            //
+            //         popup.transition()
+            //            .duration(200)
+            //            .style("opacity", .9);
+            //
+            //        popup.html("District")
+            //         .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
+            //         // .attr("style", "top: 58%; left: 0px; position: absolute;");
+            //     })
+            //     .on("mouseout", function(d) {
+            //
+            //         d3.select(this)
+            //             .style("fill", "#000")
+            //             .style("fill-opacity", .2);
+            //
+            //         // this.style("fill", "#000")
+            //         //     .style("fill-opacity", .2);
+            //
+            //         popup.transition()
+            //            .duration(500)
+            //            .style("opacity", 0);
+            //     });
+
+            // var lineFeatures = g.selectAll("path")
+            //     .data(collection.features)
+            //     .enter()
+            //     .append("path")
+            //     .attr("class", "subwayLineOverlay")
+            //     .attr("style", "opacity:1")
+            //     .style("fill", "red")
+            //     .style("fill-opacity", 1)
+            //     .style("stroke", "#fff")
+            //     .style("stroke-width", 0.5 +"px");
+
+
+            // console.log("---------- feature ----------");
+            // console.log(feature);
+            // console.log("---------- feature ----------");
+            // console.log("---------- transform ----------");
+            // console.log(transform);
+            // console.log("---------- transform ----------");
+            // console.log("---------- path ----------");
+            // console.log(path);
+            // console.log("---------- path ----------");
+            // console.log("---------- collection ----------");
+            // console.log(collection);
+            // console.log("---------- collection ----------");
+            // console.log("---------- collection.features ----------");
+            // console.log(collection.features);
+            // console.log("---------- collection.features ----------");
+
+            map.on("moveend", reset);
+            reset();
+
+            // Reposition the SVG to cover the features.
+            function reset() {
+                var bounds = path.bounds(collection),
+                    topLeft = bounds[0],
+                    bottomRight = bounds[1];
+
+                svg.attr("width", bottomRight[0] - topLeft[0])
+                    .attr("height", bottomRight[1] - topLeft[1])
+                    .style("left", topLeft[0] + "px")
+                    .style("top", topLeft[1] + "px");
+
+                g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+                feature.attr("d", path);
+            }
+
+            // Use Leaflet to implement a D3 geometric transformation.
+            function projectPoint(x, y) {
+                var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+                this.stream.point(point.x, point.y);
+            }
+        });
+    }
+
     function subwayEntranceMarker(){
         var marker_img = "data:image/png;base64,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";
 
@@ -1018,22 +1144,14 @@
                 })
             );
 
+            console.log("---------- data ----------");
+            console.log(data);
+            console.log("---------- data ----------");
+
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<P>Well Name - data.well_name: " + data.well_name + "</P>" +
-                    "<P>Water Depth/Ground Level (MSL) - data.wellbore_name: " + data.wellbore_name + "</P>" +
-                    "<P>Well Depth - data.depth_md_msl: " + data.depth_md_msl + "</P>" +
-                    "<P>Pay Type - data.latitude: " + data.latitude + "</P>" +
-                    "<P>Region - data.region: " + data.region + "</P>" +
-                    "<P>Country - data.country: " + data.country + "</P>" +
-                    "<P>Basin - data.basin_name: " + data.basin_name + "</P>" +
-                    "<P>Block - data.block: " + data.block + "</P>" +
-                    "<P>Field - data.field: " + data.field + "</P>" +
-                    "<P>Latitude - data.latitude: " + data.latitude + "</P>" +
-                    "<P>Longitude: -  data.longitude" + data.longitude + "</P>" +
-                    "<P>Number Of Wellbores  data.number_wellbores: " + data.number_wellbores + "</P>" +
-                    "<P>Number Of Operations - data.latitude: " + data.latitude + "</P>" +
-                    "<P>Last Operation Date - data.last_operation_date: " + data.last_operation_date + "</P>"
+                    "<P>Subway: " + data.name + "</P>" +
+                    "<P>Line: " + data.line + "</P>"
                 );
                 // marker.setPopupContent(
                 //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
@@ -1041,20 +1159,8 @@
             }
             else {
                 marker.bindPopup(
-                    "<P>Well Name - data.well_name: " + data.well_name + "</P>" +
-                    "<P>Water Depth/Ground Level (MSL) - data.wellbore_name: " + data.wellbore_name + "</P>" +
-                    "<P>Well Depth - data.depth_md_msl: " + data.depth_md_msl + "</P>" +
-                    "<P>Pay Type - data.latitude: " + data.latitude + "</P>" +
-                    "<P>Region - data.region: " + data.region + "</P>" +
-                    "<P>Country - data.country: " + data.country + "</P>" +
-                    "<P>Basin - data.basin_name: " + data.basin_name + "</P>" +
-                    "<P>Block - data.block: " + data.block + "</P>" +
-                    "<P>Field - data.field: " + data.field + "</P>" +
-                    "<P>Latitude - data.latitude: " + data.latitude + "</P>" +
-                    "<P>Longitude: -  data.longitude" + data.longitude + "</P>" +
-                    "<P>Number Of Wellbores  data.number_wellbores: " + data.number_wellbores + "</P>" +
-                    "<P>Number Of Operations - data.latitude: " + data.latitude + "</P>" +
-                    "<P>Last Operation Date: " + data.last_operation_date + "</P>"
+                    "<P>Subway: " + data.name + "</P>" +
+                    "<P>Line: " + data.line + "</P>"
                 );
 
                 // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
@@ -1080,14 +1186,14 @@
         d3.json("data/NYC-Markers/subwayEntrances.geojson", function(error, collection) {
             if (error) throw error;
 
-            console.log("---------- collection ----------");
-            console.log(collection);
-            console.log("---------- collection ----------");
+            // console.log("---------- collection ----------");
+            // console.log(collection);
+            // console.log("---------- collection ----------");
 
             collection.features.forEach(function(d){
-                console.log("---------- d ----------");
-                console.log(d);
-                console.log("---------- d ----------");
+                // console.log("---------- d ----------");
+                // console.log(d);
+                // console.log("---------- d ----------");
 
                 var m = new PruneCluster.Marker(d.geometry.coordinates[1], d.geometry.coordinates[0]);
 
@@ -1279,6 +1385,271 @@
 
     }
 
+    function collegesUniversitiesMarker(){
+        var marker_img = "data:image/png;base64,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";
+
+        pruneCluster.PrepareLeafletMarker = function (marker, data, category) {
+            marker.setIcon(
+                L.icon({
+                    iconUrl: marker_img,
+                    iconSize: [24, 24],
+                    data: data
+                })
+            );
+
+            // console.log("---------- data ----------");
+            // console.log(data);
+            // console.log("---------- data ----------");
+
+            // console.log("---------- marker ----------");
+            // console.log(marker);
+            // console.log("---------- marker ----------");
+
+            if (marker.getPopup()) {
+                marker.setPopupContent(
+                    "<P>Name: " + data.name + "</P>" +
+                    "<P>Area: " + data.city + "</P>"
+                );
+                // marker.setPopupContent(
+                //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
+                // );
+            }
+            else {
+                marker.bindPopup(
+                    "<P>Name: " + data.name + "</P>" +
+                    "<P>Area: " + data.city + "</P>"
+                );
+
+                // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
+            }
+
+            marker._popup.options.closeOnClick = false;
+            marker._popup.options.autoPan = false;
+
+            marker._popup.setLatLng(marker._latlng);
+
+            map.addLayer(marker._popup);
+
+            var pos = map.latLngToLayerPoint(marker._latlng);
+
+            L.DomUtil.setPosition(marker._popup._wrapper.parentNode, pos);
+
+            var draggable = new L.Draggable(marker._popup._container, marker._popup._wrapper);
+            draggable.enable();
+
+            map.closePopup(marker._popup);
+        };
+
+        d3.json("data/NYC-Markers/collegesUniversities.geojson", function(error, collection) {
+            if (error) throw error;
+
+            // console.log("---------- collection ----------");
+            // console.log(collection);
+            // console.log("---------- collection ----------");
+
+            collection.features.forEach(function(d){
+                // console.log("---------- d ----------");
+                // console.log(d);
+                // console.log("---------- d ----------");
+
+                var m = new PruneCluster.Marker(d.geometry.coordinates[1], d.geometry.coordinates[0]);
+
+                console.log("---------- m ----------");
+                console.log(m);
+                console.log("---------- m ----------");
+
+                m.data = d.properties;
+
+                // m.category = categories.indexOf(d.purpose);
+
+                pruneCluster.RegisterMarker(m);
+
+                // console.log("---------- pruneCluster ----------");
+                // console.log(pruneCluster);
+                // console.log("---------- pruneCluster ----------");
+
+            })
+
+            map.addLayer(pruneCluster);
+
+            // svg.selectAll("image").remove();
+            //
+            // var pin = g.selectAll("pin")
+            //     .data(collection.features)
+            //     .enter()
+            //     .append('image')
+            //     .attr('class', 'subwayEntrance-Marker')
+            //     // .attr("class", "lasso-marker")
+            //     .attr('xlink:href', marker_img)
+            //     // .attr('xlink:href', function(d){
+            //     //     if (d.selected == true ) {
+            //     //         return pin_Selected;
+            //     //     }
+            //     //     else if (d.found == true){
+            //     //         return pin_Found;
+            //     //     }
+            //     //     else {
+            //     //         return pin_Selected;
+            //     //     }
+            //     // });
+            //     // .attr('height', 100)
+            //     // .attr('width', 100)
+            //     // .attr("x", function(d){
+            //     //     var LatLng = new L.LatLng(d.geometry.coordinates[1], d.geometry.coordinates[0]);
+            //     //     return map.latLngToLayerPoint(LatLng).x;
+            //     // })
+            //     // .attr("y", function(d){
+            //     //     var LatLng = new L.LatLng(d.geometry.coordinates[1], d.geometry.coordinates[0]);
+            //     //     return map.latLngToLayerPoint(LatLng).y;
+            //     // });
+            //     // .attr("x", -20)
+            //     // .attr("y", -20);
+            //     .attr("transform",function(d) {
+            //
+            //         console.log("---------- d ----------");
+            //         console.log(d);
+            //         console.log("---------- d ----------");
+            //
+            //         // console.log(d.geometry.coordinates[0]);
+            //
+            //         // var LatLng = new L.LatLng(d.geometry.coordinates[0], d.geometry.coordinates[1]);
+            //         var LatLng = new L.LatLng(d.geometry.coordinates[1], d.geometry.coordinates[0]);
+            //
+            //         console.log("---------- LatLng ----------");
+            //         console.log(LatLng);
+            //         console.log("---------- LatLng ----------");
+            //
+            //         return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            //         // return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            //         // return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            //
+            //
+            //     });
+            //     // .attr("x", function(d){
+            //     //     return d.geometry.coordinates[1];
+            //     // })
+            //     // .attr("y", function(d){
+            //     //     return d.geometry.coordinates[0];
+            //     // });
+            //     // .on("mouseover", function(d) {
+            //     //     d3.select(this).attr('xlink:href', pin_Hover)
+            //     //         .attr("x", -35)
+            //     //         .attr("y", -50)
+            //     //         .attr('height', 60)
+            //     //         .attr('width', 60);
+            //     //
+            //     //     popup.transition()
+            //     //         .duration(200)
+            //     //         .style("opacity", .9);
+            //     //
+            //     //     popup.html("<table><tr><th>Well Name</th><th>"+d.well_name+"</th></tr><tr><td>Region</td><td>"+d.region+"</td></tr><tr><td>Country</td><td>"+d.country+
+            //     //         "</td></tr><tr><td>Block</td><td>"+d.block+"</td></tr><tr><td>Basin</td><td>"+d.basin_name+
+            //     //         "</td></tr><tr><td>Location</td><td>" + d.latitude_degree + " " + d.latitude_minute + " " + d.latitude_second + " " + d.latitude_NS + " " +  d.longitude_degree + " " + d.longitude_minute + " " + d.longitude_second + " " + d.longitude_EW +
+            //     //         "</td></tr><tr><td>Number Of Wellbores</td><td>"+d.number_wellbores+"</td></tr><tr><td>Purpose</td><td>"+d.purpose+
+            //     //         "</td></tr><tr><td>Total Days On Well</td><td>"+parseFloat(Math.round(d.total_days * 100) / 100).toFixed(2)+"</td></tr><tr><td>Last Operation Date</td><td>"+d.last_operation_date+"</td></tr></table>")
+            //     //         .attr("style", "top: 70%; left: 0%; position: absolute;");
+            //     // })
+            //     // .on("mouseout", function(d) {
+            //     //     if (d.selected == true || d.existenceCheck == true) {
+            //     //         d3.select(this).attr('xlink:href', pin_Selected)
+            //     //         .attr('height', 30)
+            //     //         .attr('width', 30)
+            //     //         .attr("x", -20)
+            //     //         .attr("y", -20);
+            //     //     }
+            //     //     else if (d.found == true) {
+            //     //         d3.select(this).attr('xlink:href', pin_Found)
+            //     //         .attr('height', 30)
+            //     //         .attr('width', 30)
+            //     //         .attr("x", -20)
+            //     //         .attr("y", -20);
+            //     //     }
+            //     //     else {
+            //     //         d3.select(this).attr('xlink:href', pin_Unselected)
+            //     //         .attr('height', 30)
+            //     //         .attr('width', 30)
+            //     //         .attr("x", -20)
+            //     //         .attr("y", -20);
+            //     //     }
+            //     //
+            //     //     popup.transition()
+            //     //         .duration(500)
+            //     //         .style("opacity", 0);
+            //     // })
+            //     // .on("contextmenu", function (d) {
+            //     //     d3.event.preventDefault();
+            //     //     // react on right-clicking
+            //     //
+            //     //     if (d.existenceCheck == true) {
+            //     //         if (actionMenuShowing == true) {
+            //     //             d3.select(".actionMenu").remove();
+            //     //             actionMenuShowing = false;
+            //     //         }
+            //     //         else {
+            //     //             actionMenuShowing = true;
+            //     //             // Build the popup
+            //     //             actionMenu = d3.select("#" + "MapMenuHost")
+            //     //             .append("div")
+            //     //             .attr("class", "actionMenu");
+            //     //
+            //     //             actionMenu.html("<h1>Action Menu</h1><p>Action 1(Placeholder)</p><p>Action 2(Placeholder)</p><p>Action 3(Placeholder)</p><p>Action 4(Placeholder)</p><p>Action 5(Placeholder)</p><p>Action 6(Placeholder)</p>")
+            //     //             .attr("style", "top: "+ ((d3.event.y-100)) + "px; left: "+ ((d3.event.x-100)) + "px; position: absolute;");
+            //     //         }
+            //     //     }
+            //     // });
+            //
+            //
+            // // pin.attr("transform",function(d) {
+            // //
+            // //     if (typeof d.LatLng != 'undefined') {
+            // //         return "translate("+ (map.latLngToLayerPoint(d.LatLng).x - positionOffset) +","+ (map.latLngToLayerPoint(d.LatLng).y - positionOffset) +")";
+            // //     }
+            // //     else {
+            // //         return "";
+            // //     }
+            // // })
+            // //     .attr('xlink:href', function(d){
+            // //         if (d.selected == true || d.existenceCheck == true) {
+            // //             return pin_Selected;
+            // //         }
+            // //         else if (d.found == true) {
+            // //             return pin_Found;
+            // //         }
+            // //         else {
+            // //             return pin_Unselected;
+            // //         }
+            // //     });
+            //
+            // // pin.attr("transform",function(d) {
+            // //
+            // //     console.log("---------- d ----------");
+            // //     console.log(d);
+            // //     console.log("---------- d ----------");
+            // //
+            // //     // console.log(d.geometry.coordinates[0]);
+            // //
+            // //     // var LatLng = new L.LatLng(d.geometry.coordinates[0], d.geometry.coordinates[1]);
+            // //     var LatLng = new L.LatLng(d.geometry.coordinates[1], d.geometry.coordinates[0]);
+            // //
+            // //     console.log("---------- LatLng ----------");
+            // //     console.log(LatLng);
+            // //     console.log("---------- LatLng ----------");
+            // //
+            // //     return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            // //     // return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            // //     // return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            // //
+            // //
+            // // });
+
+        });
+
+    }
+
+    function educationModule(){
+        schoolDistrictOverlay();
+        collegesUniversitiesMarker();
+    }
 
 
 
