@@ -510,11 +510,12 @@
     // policePrecintOverlay();
     // fireBattalionOverlay();
     // schoolDistrictOverlay();
-    subwayLineOverlay(); // Incomplete
+    // subwayLineOverlay(); // Incomplete
 
     // Markers
     // subwayEntranceMarker();
     // collegesUniversitiesMarker();
+    // busStopMarkers();
 
     // educationModule();
 
@@ -1184,6 +1185,263 @@
         };
 
         d3.json("data/NYC-Markers/subwayEntrances.geojson", function(error, collection) {
+            if (error) throw error;
+
+            // console.log("---------- collection ----------");
+            // console.log(collection);
+            // console.log("---------- collection ----------");
+
+            collection.features.forEach(function(d){
+                // console.log("---------- d ----------");
+                // console.log(d);
+                // console.log("---------- d ----------");
+
+                var m = new PruneCluster.Marker(d.geometry.coordinates[1], d.geometry.coordinates[0]);
+
+                m.data = d.properties;
+
+                // m.category = categories.indexOf(d.purpose);
+
+                pruneCluster.RegisterMarker(m);
+
+                // console.log("---------- pruneCluster ----------");
+                // console.log(pruneCluster);
+                // console.log("---------- pruneCluster ----------");
+
+            })
+
+            map.addLayer(pruneCluster);
+
+            // svg.selectAll("image").remove();
+            //
+            // var pin = g.selectAll("pin")
+            //     .data(collection.features)
+            //     .enter()
+            //     .append('image')
+            //     .attr('class', 'subwayEntrance-Marker')
+            //     // .attr("class", "lasso-marker")
+            //     .attr('xlink:href', marker_img)
+            //     // .attr('xlink:href', function(d){
+            //     //     if (d.selected == true ) {
+            //     //         return pin_Selected;
+            //     //     }
+            //     //     else if (d.found == true){
+            //     //         return pin_Found;
+            //     //     }
+            //     //     else {
+            //     //         return pin_Selected;
+            //     //     }
+            //     // });
+            //     // .attr('height', 100)
+            //     // .attr('width', 100)
+            //     // .attr("x", function(d){
+            //     //     var LatLng = new L.LatLng(d.geometry.coordinates[1], d.geometry.coordinates[0]);
+            //     //     return map.latLngToLayerPoint(LatLng).x;
+            //     // })
+            //     // .attr("y", function(d){
+            //     //     var LatLng = new L.LatLng(d.geometry.coordinates[1], d.geometry.coordinates[0]);
+            //     //     return map.latLngToLayerPoint(LatLng).y;
+            //     // });
+            //     // .attr("x", -20)
+            //     // .attr("y", -20);
+            //     .attr("transform",function(d) {
+            //
+            //         console.log("---------- d ----------");
+            //         console.log(d);
+            //         console.log("---------- d ----------");
+            //
+            //         // console.log(d.geometry.coordinates[0]);
+            //
+            //         // var LatLng = new L.LatLng(d.geometry.coordinates[0], d.geometry.coordinates[1]);
+            //         var LatLng = new L.LatLng(d.geometry.coordinates[1], d.geometry.coordinates[0]);
+            //
+            //         console.log("---------- LatLng ----------");
+            //         console.log(LatLng);
+            //         console.log("---------- LatLng ----------");
+            //
+            //         return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            //         // return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            //         // return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            //
+            //
+            //     });
+            //     // .attr("x", function(d){
+            //     //     return d.geometry.coordinates[1];
+            //     // })
+            //     // .attr("y", function(d){
+            //     //     return d.geometry.coordinates[0];
+            //     // });
+            //     // .on("mouseover", function(d) {
+            //     //     d3.select(this).attr('xlink:href', pin_Hover)
+            //     //         .attr("x", -35)
+            //     //         .attr("y", -50)
+            //     //         .attr('height', 60)
+            //     //         .attr('width', 60);
+            //     //
+            //     //     popup.transition()
+            //     //         .duration(200)
+            //     //         .style("opacity", .9);
+            //     //
+            //     //     popup.html("<table><tr><th>Well Name</th><th>"+d.well_name+"</th></tr><tr><td>Region</td><td>"+d.region+"</td></tr><tr><td>Country</td><td>"+d.country+
+            //     //         "</td></tr><tr><td>Block</td><td>"+d.block+"</td></tr><tr><td>Basin</td><td>"+d.basin_name+
+            //     //         "</td></tr><tr><td>Location</td><td>" + d.latitude_degree + " " + d.latitude_minute + " " + d.latitude_second + " " + d.latitude_NS + " " +  d.longitude_degree + " " + d.longitude_minute + " " + d.longitude_second + " " + d.longitude_EW +
+            //     //         "</td></tr><tr><td>Number Of Wellbores</td><td>"+d.number_wellbores+"</td></tr><tr><td>Purpose</td><td>"+d.purpose+
+            //     //         "</td></tr><tr><td>Total Days On Well</td><td>"+parseFloat(Math.round(d.total_days * 100) / 100).toFixed(2)+"</td></tr><tr><td>Last Operation Date</td><td>"+d.last_operation_date+"</td></tr></table>")
+            //     //         .attr("style", "top: 70%; left: 0%; position: absolute;");
+            //     // })
+            //     // .on("mouseout", function(d) {
+            //     //     if (d.selected == true || d.existenceCheck == true) {
+            //     //         d3.select(this).attr('xlink:href', pin_Selected)
+            //     //         .attr('height', 30)
+            //     //         .attr('width', 30)
+            //     //         .attr("x", -20)
+            //     //         .attr("y", -20);
+            //     //     }
+            //     //     else if (d.found == true) {
+            //     //         d3.select(this).attr('xlink:href', pin_Found)
+            //     //         .attr('height', 30)
+            //     //         .attr('width', 30)
+            //     //         .attr("x", -20)
+            //     //         .attr("y", -20);
+            //     //     }
+            //     //     else {
+            //     //         d3.select(this).attr('xlink:href', pin_Unselected)
+            //     //         .attr('height', 30)
+            //     //         .attr('width', 30)
+            //     //         .attr("x", -20)
+            //     //         .attr("y", -20);
+            //     //     }
+            //     //
+            //     //     popup.transition()
+            //     //         .duration(500)
+            //     //         .style("opacity", 0);
+            //     // })
+            //     // .on("contextmenu", function (d) {
+            //     //     d3.event.preventDefault();
+            //     //     // react on right-clicking
+            //     //
+            //     //     if (d.existenceCheck == true) {
+            //     //         if (actionMenuShowing == true) {
+            //     //             d3.select(".actionMenu").remove();
+            //     //             actionMenuShowing = false;
+            //     //         }
+            //     //         else {
+            //     //             actionMenuShowing = true;
+            //     //             // Build the popup
+            //     //             actionMenu = d3.select("#" + "MapMenuHost")
+            //     //             .append("div")
+            //     //             .attr("class", "actionMenu");
+            //     //
+            //     //             actionMenu.html("<h1>Action Menu</h1><p>Action 1(Placeholder)</p><p>Action 2(Placeholder)</p><p>Action 3(Placeholder)</p><p>Action 4(Placeholder)</p><p>Action 5(Placeholder)</p><p>Action 6(Placeholder)</p>")
+            //     //             .attr("style", "top: "+ ((d3.event.y-100)) + "px; left: "+ ((d3.event.x-100)) + "px; position: absolute;");
+            //     //         }
+            //     //     }
+            //     // });
+            //
+            //
+            // // pin.attr("transform",function(d) {
+            // //
+            // //     if (typeof d.LatLng != 'undefined') {
+            // //         return "translate("+ (map.latLngToLayerPoint(d.LatLng).x - positionOffset) +","+ (map.latLngToLayerPoint(d.LatLng).y - positionOffset) +")";
+            // //     }
+            // //     else {
+            // //         return "";
+            // //     }
+            // // })
+            // //     .attr('xlink:href', function(d){
+            // //         if (d.selected == true || d.existenceCheck == true) {
+            // //             return pin_Selected;
+            // //         }
+            // //         else if (d.found == true) {
+            // //             return pin_Found;
+            // //         }
+            // //         else {
+            // //             return pin_Unselected;
+            // //         }
+            // //     });
+            //
+            // // pin.attr("transform",function(d) {
+            // //
+            // //     console.log("---------- d ----------");
+            // //     console.log(d);
+            // //     console.log("---------- d ----------");
+            // //
+            // //     // console.log(d.geometry.coordinates[0]);
+            // //
+            // //     // var LatLng = new L.LatLng(d.geometry.coordinates[0], d.geometry.coordinates[1]);
+            // //     var LatLng = new L.LatLng(d.geometry.coordinates[1], d.geometry.coordinates[0]);
+            // //
+            // //     console.log("---------- LatLng ----------");
+            // //     console.log(LatLng);
+            // //     console.log("---------- LatLng ----------");
+            // //
+            // //     return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            // //     // return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            // //     // return "translate("+ (map.latLngToLayerPoint(LatLng).x) +","+ (map.latLngToLayerPoint(LatLng).y) +")";
+            // //
+            // //
+            // // });
+
+        });
+
+    }
+
+    function busStopMarkers(){
+        var marker_img = "data:image/png;base64,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"
+
+        pruneCluster.PrepareLeafletMarker = function (marker, data, category) {
+            marker.setIcon(
+                L.icon({
+                    iconUrl: marker_img,
+                    iconSize: [24, 24],
+                    data: data
+                })
+            );
+
+            console.log("---------- data ----------");
+            console.log(data);
+            console.log("---------- data ----------");
+
+            if (marker.getPopup()) {
+                marker.setPopupContent(
+                    "<P>Borough: " + data.boro_name + "</P>" +
+                    "<P>Borough ID: " + data.boro_code + "</P>" +
+                    "<P>Borough Community District ID: " + data.boro_cd + "</P>" +
+                    "<P>Street: " + data.street + "</P>"
+                );
+                // marker.setPopupContent(
+                //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
+                // );
+            }
+            else {
+                marker.bindPopup(
+                    "<P>Borough: " + data.boro_name + "</P>" +
+                    "<P>Borough ID: " + data.boro_code + "</P>" +
+                    "<P>Borough Community District ID: " + data.boro_cd + "</P>" +
+                    "<P>Street: " + data.street + "</P>"
+                );
+
+                // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
+            }
+
+            marker._popup.options.closeOnClick = false;
+            marker._popup.options.autoPan = false;
+
+            marker._popup.setLatLng(marker._latlng);
+
+            map.addLayer(marker._popup);
+
+            var pos = map.latLngToLayerPoint(marker._latlng);
+
+            L.DomUtil.setPosition(marker._popup._wrapper.parentNode, pos);
+
+            var draggable = new L.Draggable(marker._popup._container, marker._popup._wrapper);
+            draggable.enable();
+
+            map.closePopup(marker._popup);
+        };
+
+        d3.json("data/NYC-Markers/busStops.geojson", function(error, collection) {
             if (error) throw error;
 
             // console.log("---------- collection ----------");
