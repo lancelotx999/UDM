@@ -506,7 +506,6 @@
 	    .attr("class", "tooltip")
 	    .style("opacity", 0);
 
-<<<<<<< HEAD
     // Overlay selection should be based on radio buttons or tickboxes
     //Major Overlays
     d3.select("#Borough").on("change", function(){
@@ -559,27 +558,6 @@
             map.removeLayer(pruneCluster);
         }
     });
-=======
-    // // Overlay selection should be based on radio buttons or tickboxes
-    // // Major Overlays
-    // boroughOverlay();
-    // districtOverlay();
-    //
-    // // Minor Overlays
-    // policePrecintOverlay();
-    // fireBattalionOverlay();
-    // schoolDistrictOverlay();
-    // subwayLineOverlay(); // Incomplete
-
-    // Markers
-    // subwayEntranceMarker();
-    // collegesUniversitiesMarker();
-    busStopMarker();
-
-    // educationModule();
-
-
->>>>>>> leaflet
 
     function boroughOverlay(){  
         d3.json("data/NYC-Overlays/boroughs.geojson", function(error, collection) {
