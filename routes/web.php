@@ -29,6 +29,7 @@ Route::get('/upload', function() {
 	return view ('dbManager/Upload');
 })->middleware('auth');;
 
+// Routes for adding data into server
 Route::post('UploadDB','FileUploadController@UploadtoServer');
 
 // Routes for authentication

@@ -15,14 +15,12 @@ class FileUploadController extends Controller
   			$mime = $file->getClientMimeType();
 
   			$request->validate([
-    			'file' => 'required|mimes:geojson,json,csv,xls,xlsx'
+    			'file' => 'required|mimes:csv,txt,geojson,json,xls,xlsx'
     		]);
 
-
     		$file->storeAs('',$file->getClientOriginalName());
-
-
     	} 	
     }
 
 }
+ 
