@@ -29,8 +29,8 @@
     }
 
     #map {
-        width: 960px;
-        height: 500px;
+        width: 100%;
+        height: 100vh;
     }
 
     svg {
@@ -54,7 +54,7 @@
 <div id="popup"></div>
 <div id="map"></div>
 
-<img src="{{URL::asset('images/swinlogo.png')}}" alt="profile Pic" height="200" width="200">
+<!-- <img src="{{URL::asset('images/swinlogo.png')}}" alt="profile Pic" height="200" width="200"> -->
 <script>
 
     var map = L.map('map')
@@ -501,13 +501,13 @@
 
     // Overlay selection should be based on radio buttons or tickboxes
     //Major Overlays
-    // boroughOverlay();
-    // districtOverlay();
+    boroughOverlay();
+    districtOverlay();
     //
     // // Minor Overlays
-    // policePrecintOverlay();
-    // fireBattalionOverlay();
-    // schoolDistrictOverlay();
+    policePrecintOverlay();
+    fireBattalionOverlay();
+    schoolDistrictOverlay();
 
     // Markers
     subwayEntranceMarker();
