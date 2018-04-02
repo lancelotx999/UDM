@@ -29,11 +29,14 @@
         <div class="container-fluid" >
             <div class="row is-flex row-offcanvas row-offcanvas-left" >
 
-                @if (\Request::is('map') || \Request::is('/'))
+                @if (\Request::is('map') || \Request::is('/') || \Request::is('map/swinburne'))
                     @include('layouts/partials._overlay')
+                    <div class="col-xs-12 col-sm-9" id="main-content" style="padding: 0px">
+                @endif
+                @if (\Request::is('chart') || \Request::is('/chart'))
+                    <div class="col-xs-12 col-sm-9" id="main-content-chart" style="padding: 0px">
                 @endif
                 
-                <div class="col-xs-12 col-sm-9" id="main-content" style="padding: 0px">
                         
                     @yield('content')
                     

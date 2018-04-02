@@ -20,7 +20,10 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="dropdown">
+                <li><a href="/"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;Maps</a></li>
+                <li><a>&#124;</a></li>
+                <li><a href="/chart"><i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp;Chart</a></li>
+                <!-- <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" data-target="/map" href="/map">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
                         &nbsp;Maps
@@ -40,9 +43,9 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
-                <li><a>&#124;</a></li>
+                <!-- <li><a>&#124;</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" role="menu" data-toggle="dropdown" data-target="/chart" href="/chart">
                         <i class="fa fa-area-chart" aria-hidden="true"></i>
@@ -95,7 +98,7 @@
                         </li>
                         
                     </ul>
-                </li>
+                </li> -->
 
                 
                 @if (Auth::check() and Auth::user()->hasRole('admin'))
