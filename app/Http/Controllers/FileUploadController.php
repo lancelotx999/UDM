@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class FileUploadController extends Controller
 {
@@ -12,13 +13,22 @@ class FileUploadController extends Controller
     	if ($request->file('file')->isValid())
     	{
     		$file = $request->file('file');
-  			$mime = $file->getClientMimeType();
+            $filepath = $file->getPathName();
 
   			$request->validate([
-    			'file' => 'required|mimes:csv,txt,geojson,json,xls,xlsx'
+    			'file' => 'required|mimes:csv,txt,xlsx'
     		]);
 
-    		$file->storeAs('',$file->getClientOriginalName());
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filepath);
+            $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+            dd($sheetData);
+
+        //    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+        //    $spreadsheet = $reader->load($file);
+
+
+
+    		
     	} 	
     }
 
