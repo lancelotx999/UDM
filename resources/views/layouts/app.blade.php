@@ -33,16 +33,18 @@
                     @include('layouts/partials._overlay')
                 @endif
                 
-                <div class="col-xs-12 col-sm-9" id="main-content"  >
+                <div class="col-xs-12 col-sm-9" id="main-content" style="padding: 0px">
                         
                     @yield('content')
                     
                 </div>
             </div>
-            
-            @include('layouts/partials._footer')
+        
+        
             
         </div>
+<a class="beta-notice" href="https://github.com/lancelotx999/UDM">A beta project of Urban Development Maps. Swinburne University of Technology. UDM &copy; 2017</a>
+        
     </body>
     
 </html>

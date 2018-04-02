@@ -27,12 +27,16 @@
         border-radius: 8px;
         pointer-events: none;
     }
-
+/*
     #map {
         width: 960px;
         height: 500px;
     }
+*/
 
+    #map{
+        width:100%;
+    }
     svg {
       position: relative;
     }
@@ -54,7 +58,7 @@
 <div id="popup"></div>
 <div id="map"></div>
 
-<img src="{{URL::asset('images/swinlogo.png')}}" alt="profile Pic" height="200" width="200">
+<!-- <img src="{{URL::asset('images/swinlogo.png')}}" alt="profile Pic" height="200" width="200"> -->
 <script>
 
     var map = L.map('map')
@@ -503,19 +507,19 @@
 
     // // Overlay selection should be based on radio buttons or tickboxes
     // // Major Overlays
-    // boroughOverlay();
-    // districtOverlay();
+    //boroughOverlay();
+    //districtOverlay();
     //
     // // Minor Overlays
     // policePrecintOverlay();
-    // fireBattalionOverlay();
+    //fireBattalionOverlay();
     // schoolDistrictOverlay();
     // subwayLineOverlay(); // Incomplete
 
-    // Markers
+    // // Markers
     // subwayEntranceMarker();
     // collegesUniversitiesMarker();
-    busStopMarker();
+    // busStopMarker();
 
     // educationModule();
 
