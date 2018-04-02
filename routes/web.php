@@ -29,11 +29,7 @@ Route::get('/upload', function() {
 	return view ('dbManager/Upload');
 })->middleware('auth');;
 
-Route::post('UploadDB','FileTransferController@UploadtoDB');
-Route::get('UploadDBSecurity','DBUploaderController@uploadSecurity');
-Route::get('UploadDBHeatmap','DBUploaderController@uploadHeatmap');
-Route::get('UploadDBClubRecruitment','DBUploaderController@uploadClubRecruitment');
-Route::get('UploadDBEnrollment','DBUploaderController@uploadEnrollment');
+Route::post('UploadDB','FileUploadController@UploadtoServer');
 
 // Routes for authentication
 Auth::routes();
