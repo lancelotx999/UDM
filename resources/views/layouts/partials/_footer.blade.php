@@ -26,6 +26,6 @@
 
             <p class="footer-subtitle">A Final Year Project. Swinburne University of Technology.</p>
 
-            <p class="footer-copyright">UDM &copy; 2017</p>
+            <p class="footer-copyright">UDM &copy; 2017-2018</p>
 
 </footer>

@@ -33,6 +33,10 @@
         height: 100vh;
     }
 
+    #main-content {
+        width: 85%;
+    }
+
     svg {
       position: relative;
     }
@@ -51,6 +55,7 @@
 
 
 </style>
+
 <div id="popup"></div>
 <div id="map"></div>
 
@@ -501,18 +506,58 @@
 
     // Overlay selection should be based on radio buttons or tickboxes
     //Major Overlays
-    boroughOverlay();
-    districtOverlay();
+    d3.select("#Borough").on("change", function(){
+        if(d3.select("#Borough").property("checked")){
+            boroughOverlay();
+        } else {
+            g.selectAll("path").attr("class", "boroughOverlay").remove();
+        }
+    });
+    
+    d3.select("#District").on("change", function(){
+        if(d3.select("#District").property("checked")){
+            districtOverlay();
+        } else {
+            g.selectAll("path").attr("class", "districtOverlay").remove();
+        }
+    });
+    
     //
     // // Minor Overlays
-    policePrecintOverlay();
-    fireBattalionOverlay();
-    schoolDistrictOverlay();
+    d3.select("#Precint").on("change", function(){
+        if(d3.select("#Precint").property("checked")){
+            policePrecintOverlay();
+        } else {
+            g.selectAll("path").attr("class", "policePrecintOverlay").remove();
+        }
+    });
+
+    d3.select("#Battalion").on("change", function(){
+        if(d3.select("#Battalion").property("checked")){
+            fireBattalionOverlay();
+        } else {
+            g.selectAll("path").attr("class", "fireBattalionOverlay").remove();
+        }
+    });
+
+    d3.select("#School").on("change", function(){
+        if(d3.select("#School").property("checked")){
+            schoolDistrictOverlay();
+        } else {
+            g.selectAll("path").attr("class", "schoolDistrictOverlay").remove();
+        }
+    });
 
     // Markers
-    subwayEntranceMarker();
+    d3.select("#Subway").on("change", function(){
+        if(d3.select("#Subway").property("checked")){
+            subwayEntranceMarker();
+        } else {
+            map.removeLayer(pruneCluster);
+        }
+    });
 
-    function boroughOverlay(){
+    function boroughOverlay(){  
         d3.json("data/NYC-Overlays/boroughs.geojson", function(error, collection) {
             if (error) throw error;
 
@@ -1280,7 +1325,10 @@
     }
 
 
-
+    //uncheck all boxes on Mozilla browser refresh
+    function uncheck() {
+        $(':checkbox:checked').prop('checked',false);
+    }
 
 
 </script>

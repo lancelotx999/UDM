@@ -12,7 +12,7 @@
 */
 
 // Routes for public access of maps and charts
-Route::get('/', 'HeatmapController@heatmapMap');
+Route::get('/', 'LeafletController@mainMap');
 Route::get('/map/swinburne', 'SecurityController@securityMap');
 Route::get('/map', 'LeafletController@mainMap');
 
