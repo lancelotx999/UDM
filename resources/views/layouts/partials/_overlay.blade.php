@@ -4,8 +4,8 @@
         <h3 style="color:#fff; margin-bottom: 5px;"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Overlays</h3>
         <hr />
         <ul class="nav">
-            @if (\Request::is('/'))
-            <li>            
+            
+            <!-- <li>            
             	<input type="checkbox" id="Heatmap" class="example">
             	<label for="check_heatmap"><span id="cb_span">Heatmap</span></label>
             </li>
@@ -18,10 +18,9 @@
             <li>
                 <input type="checkbox" id="Electric" class="example">
                 <label for="check_electric"><span id="cb_span">Electrical Foorprint</span></label>
-            </li> 
-            @endif
+            </li>  -->
 
-            @if (\Request::is('map'))
+            @if (\Request::is('/') || \Request::is('map'))
             <li>            
                 <input type="checkbox" id="Borough" class="example">
                 <label for="check_borough"><span id="cb_span">Borough</span></label>
@@ -49,7 +48,7 @@
 
             <li>
                 <input type="checkbox" id="Subway" class="example">
-                <label for="check_subway"><span id="cb_span">Subway Entrances</span></label>
+                <label for="check_subway"><span id="cb_span">Subway Entry</span></label>
             </li> 
             @endif
         </ul>

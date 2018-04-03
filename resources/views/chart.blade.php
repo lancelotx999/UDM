@@ -86,7 +86,7 @@
 			</div>
 			<div class="col-xs-8 col-sm-8">
 				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-line-chart" aria-hidden="true"></i>&nbsp;Security Log</h1>
+				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-line-chart" aria-hidden="true"></i>&nbsp;Water Consumption in New York City</h1>
 				<hr />
 				<div id='securityChart'></div>
 			</div>
