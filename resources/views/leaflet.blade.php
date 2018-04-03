@@ -515,7 +515,8 @@
     // Markers
     // subwayEntranceMarker();
     // collegesUniversitiesMarker();
-    busStopMarker();
+    // busStopMarker();
+    vehicleCollisionMarker();
 
     // educationModule();
 
@@ -1912,6 +1913,22 @@
 
         });
 
+    }
+
+    function vehicleCollisionMarker(){
+        var collisionData = [];
+        
+        d3.csv("data/NYC-bigData/NYPD_Motor_Vehicle_Collisions.csv", function (data){
+            console.log("---------- data ----------");
+            console.log(data);
+            console.log("---------- data ----------");
+
+            data.forEach(function(d){
+
+            })
+
+
+        })
     }
 
     function educationModule(){
