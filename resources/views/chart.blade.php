@@ -127,7 +127,8 @@
 		dateMin = null,
 		dateMax = null;
 
-	createPopulationChart(populationData, new Date("01/01/2000"), new Date("01/01/2040"));
+	// createPopulationChart(populationData, null, null);
+	createPopulationChart(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
 
 	// new Date("01/01/2015"), new Date("12/31/2015")
 	// createSecurityChart(securityLogs, new Date("01/01/2016"), new Date("12/31/2016"), 'All', 'All');
@@ -968,9 +969,9 @@
 
 			populationData.sort(function(a, b) { return b.population - a.population; });
 
-			// console.log("---------- populationData ----------");
-			// console.log(populationData);
-			// console.log("---------- populationData ----------");
+			console.log("---------- populationData ----------");
+			console.log(populationData);
+			console.log("---------- populationData ----------");
 			// console.log("---------- boroughs ----------");
 			// console.log(boroughs);
 			// console.log("---------- boroughs ----------");
@@ -988,7 +989,7 @@
 			y.domain([0, d3.max(populationData, function(d) { return d.population})]).nice();
 			z.domain(boroughs);
 
-			// Scale the range of the securityLogs
+			// // Scale the range of the securityLogs
 			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
 				populationData = populationData.filter(function (d){
 					return d.date >= dateMin;
@@ -997,11 +998,21 @@
 				populationData = populationData.filter(function (d){
 					return d.date <= dateMax;
 				})
-				x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
 			}
 			else {
-				x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
 			}
+
+			// console.log("---------- d3.map(populationData, function(d) { return d.date.getFullYear(); }) ----------");
+			// console.log(d3.map(populationData, function(d) { return d.date.getFullYear(); }));
+			// console.log("---------- d3.map(populationData, function(d) { return d.date.getFullYear(); }) ----------");
+
+			console.log("---------- x.domain() ----------");
+			console.log(x.domain());
+			console.log("---------- x.domain() ----------");
 
 			// append the rectangles for the bar chart
 			svg.selectAll(".bar")
@@ -1060,8 +1071,8 @@
 				.attr("text-anchor", "start")
 				.text("Population");
 
-			createPopulationFilter(populationData, new Date("01/01/1980"), new Date("01/01/2040"));
-			createPopulationApplyButton(populationData, new Date("01/01/1980"), new Date("01/01/2040"));
+			createPopulationFilter(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
+			createPopulationApplyButton(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
 		})
 
 
