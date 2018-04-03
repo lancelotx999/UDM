@@ -5,7 +5,8 @@
         <hr />
         <ul class="nav">
             
-            <!-- <li>            
+            @if (\Request::is('/map/swinburne'))
+            <li>            
             	<input type="checkbox" id="Heatmap" class="example">
             	<label for="check_heatmap"><span id="cb_span">Heatmap</span></label>
             </li>
@@ -18,7 +19,8 @@
             <li>
                 <input type="checkbox" id="Electric" class="example">
                 <label for="check_electric"><span id="cb_span">Electrical Foorprint</span></label>
-            </li>  -->
+            </li> 
+            @endif
 
             @if (\Request::is('/') || \Request::is('map'))
             <li>            
@@ -49,6 +51,16 @@
             <li>
                 <input type="checkbox" id="Subway" class="example">
                 <label for="check_subway"><span id="cb_span">Subway Entry</span></label>
+            </li> 
+
+            <li>
+                <input type="checkbox" id="Busstop" class="example">
+                <label for="check_subway"><span id="cb_span">Bus Stop</span></label>
+            </li> 
+
+            <li>
+                <input type="checkbox" id="CollegeUni" class="example">
+                <label for="check_subway"><span id="cb_span">Universities</span></label>
             </li> 
             @endif
         </ul>

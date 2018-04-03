@@ -563,6 +563,22 @@
         }
     });
 
+    d3.select("#Busstop").on("change", function(){
+        if(d3.select("#Busstop").property("checked")){
+            busStopMarker();
+        } else {
+            map.removeLayer(pruneCluster);
+        }
+    });
+
+    d3.select("#CollegeUni").on("change", function(){
+        if(d3.select("#CollegeUni").property("checked")){
+            collegesUniversitiesMarker();
+        } else {
+            map.removeLayer(pruneCluster);
+        }
+    });
+
     function boroughOverlay(){  
         d3.json("data/NYC-Overlays/boroughs.geojson", function(error, collection) {
             if (error) throw error;
@@ -798,7 +814,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                    popup.html("<p>Police Precint: " + d.properties.Precint + "</p>")
+                    popup.html("<p>Police Precinct: " + d.properties.Precinct + "</p>")
                         .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                         // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -998,7 +1014,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                   popup.html("<p>School District: " + d.properties.schoolDist + "</p>")
+                   popup.html("<p>School District: " + d.properties.SchoolDist + "</p>")
                     .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                     // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1707,9 +1723,9 @@
                 })
             );
 
-            // console.log("---------- data ----------");
-            // console.log(data);
-            // console.log("---------- data ----------");
+            console.log("---------- data ----------");
+            console.log(data);
+            console.log("---------- data ----------");
 
             // console.log("---------- marker ----------");
             // console.log(marker);
