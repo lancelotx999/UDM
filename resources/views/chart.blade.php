@@ -69,6 +69,31 @@
 	</div>
 	<div class="col-xs-12 col-sm-12">
 		<div class="row">
+			<div class="col-sm-3 col-xs-3 chart-filter">
+				<div class="row">
+					<div class="col-sm-12 col-xs-12">
+						<hr />
+						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
+						<hr />
+						<div id='populationByCommunityChartFilters'></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 col-xs-12">
+						<div id='populationByCommunityChartApplyButton'></div>
+					</div>
+				</div>
+			</div>
+			<div class=" col-sm-8 col-xs-8">
+				<hr />
+				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Population Statistics by Community District in a Borough</h1>
+				<hr />
+				<div id='populationByCommunityChart'></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-12">
+		<div class="row">
 			<div class="col-xs-3 col-sm-3 chart-filter">
 				<div class="row">
 					<div class="col-sm-12 col-xs-12">
@@ -129,7 +154,7 @@
 
 	// createPopulationByBoroughChart(populationData, null, null);
 	createPopulationByBoroughChart(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
-	createPopulationByCommunityChart(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
+	createPopulationByCommunityChart(populationData, new Date("01/01/1950"), new Date("01/01/2040"), "Manhattan");
 
 	// new Date("01/01/2015"), new Date("12/31/2015")
 	// createSecurityChart(securityLogs, new Date("01/01/2016"), new Date("12/31/2016"), 'All', 'All');
@@ -346,7 +371,7 @@
 	// 	dateSlider += "<div id='dateSlider-securityChart' style='width:85%;margin: auto;'></div></br>";
     //
 	// 	var floorSelector = "";
-	// 	floorSelector += "<p class='white-text'>Floor For Security Chart:</p><p><select id='selectFloor-securityChart' size='1' style='width: 202px;'>";4
+	// 	floorSelector += "<p class='white-text'>Floor For Security Chart:</p><p><select id='selectFloor-securityChart' size='1' style='width: 202px;'>";
 	// 	floorSelector += "<option value=All>All</option>";
 	// 	floorSelector += "<option value=G>G</option>";
 	// 	floorSelector += "<option value=1>1</option>";
@@ -944,7 +969,7 @@
 
 			data.forEach(function (d){
 				if (boroughs.indexOf(d.Borough) == -1) {
-					boroughs.push(d.Borough)
+					boroughs.push(d.Borough);
 				}
 				// console.log("---------- d ----------");
 				// console.log(d);
@@ -971,9 +996,9 @@
 			populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
 			// populationData.sort(function(a, b) { return b.population - a.population; });
 
-			console.log("---------- populationData ----------");
-			console.log(populationData);
-			console.log("---------- populationData ----------");
+			// console.log("---------- populationData ----------");
+			// console.log(populationData);
+			// console.log("---------- populationData ----------");
 			// console.log("---------- boroughs ----------");
 			// console.log(boroughs);
 			// console.log("---------- boroughs ----------");
@@ -988,10 +1013,10 @@
 
 			// Scale the range of the data
 			// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			y.domain([0, d3.max(populationData, function(d) { return d.population})]).nice();
+			y.domain([0, Math.max.apply(Math, populationData.map(function(d) { return d.population; }))]).nice();
 			z.domain(boroughs);
 
-			// // Scale the range of the securityLogs
+			// // Scale the range of the date
 			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
 				populationData = populationData.filter(function (d){
 					return d.date >= dateMin;
@@ -1012,9 +1037,9 @@
 			// console.log(d3.map(populationData, function(d) { return d.date.getFullYear(); }));
 			// console.log("---------- d3.map(populationData, function(d) { return d.date.getFullYear(); }) ----------");
 
-			console.log("---------- x.domain() ----------");
-			console.log(x.domain());
-			console.log("---------- x.domain() ----------");
+			// console.log("---------- x.domain() ----------");
+			// console.log(x.domain());
+			// console.log("---------- x.domain() ----------");
 
 			// append the rectangles for the bar chart
 			svg.selectAll(".bar")
@@ -1176,14 +1201,14 @@
 		});
 	}
 
-	function createPopulationByCommunityChart(populationData, dateMin, dateMax){
+	function createPopulationByCommunityChart(populationData, dateMin, dateMax, selectedBorough){
 		// Set the dimensions of the canvas / graph
 		var margin = {top: 30, right: 80, bottom: 70, left: 80},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
 
 		// Adds the svg canvas
-		var svg = d3.select("#populationByBoroughChart")
+		var svg = d3.select("#populationByCommunityChart")
 			.append("svg")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
@@ -1191,7 +1216,7 @@
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 		// Define the div for the tooltip
-		var tooltip = d3.select("#populationByBoroughChart").append("div")
+		var tooltip = d3.select("#populationByCommunityChart").append("div")
 			.attr("class", "tooltip")
 			.style("opacity", 0);
 
@@ -1199,15 +1224,287 @@
 		var boroughs = [];
 		var communityDistricts = [];
 
+		// var selectedBorough = "Bronx";
+
 		d3.csv("data/NYC-bigData/New_York_City_Population_By_Community_Districts.csv", function (data){
 			console.log("---------- data ----------");
 			console.log(data);
 			console.log("---------- data ----------");
+
+			data.forEach(function (d){
+				if (boroughs.indexOf(d.Borough) == -1) {
+					boroughs.push(d.Borough);
+				}
+
+				if (communityDistricts.indexOf(d.CDName) == -1) {
+					communityDistricts.push(d.CDName);
+				}
+
+				// if (communityDistricts.map(function(e) { return e.id; }).indexOf(d.CDNumber) == -1) {
+				// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
+				// }
+
+				// if ((communityDistricts.findIndex(x => x.id == d.CDNumber) == -1) && (d.Borough == selectedBorough)) {
+				// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
+				// }
+
+				if (d.Borough == selectedBorough) {
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1970"), population: d.Population1970});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1980"), population: d.Population1980});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1990"), population: d.Population1990});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2000"), population: d.Population2000});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2010"), population: d.Population2010});
+					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2020"), population: d.population2020});
+					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2030"), population: d.population2030});
+					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2040"), population: d.population2040});
+				}
+			})
+
+			populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
+
+			// console.log("---------- boroughs ----------");
+			// console.log(boroughs);
+			// console.log("---------- boroughs ----------");
+            //
+			// console.log("---------- communityDistricts ----------");
+			// console.log(communityDistricts);
+			// console.log("---------- communityDistricts ----------");
+
+			console.log("---------- populationData ----------");
+			console.log(populationData);
+			console.log("---------- populationData ----------");
+
+			// Set the ranges
+			var x = d3.scaleBand().rangeRound([0, width]),
+				y = d3.scaleLinear().rangeRound([height, 0]),
+				z = d3.scaleOrdinal(d3.schemeCategory20);
+
+			// Scale the range of the data
+			// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+			y.domain([0, Math.max.apply(Math, populationData.map(function(d) { return d.population; }))]).nice();
+			z.domain(communityDistricts);
+
+
+
+			// console.log("---------- d3.max(populationData, function(d) { return d.population}) ----------");
+			// console.log(d3.max(populationData, function(d) { return d.population}));
+			// console.log("---------- d3.max(populationData, function(d) { return d.population}) ----------");
+            //
+			// console.log("---------- Math.max.apply(Math, populationData.map(function(d) { return d.population; })) ----------");
+			// console.log(Math.max.apply(Math, populationData.map(function(d) { return d.population; })));
+			// console.log("---------- Math.max.apply(Math, populationData.map(function(d) { return d.population; })) ----------");
+            //
+			// console.log("---------- y.domain() ----------");
+			// console.log(y.domain());
+			// console.log("---------- y.domain() ----------");
+            //
+			// console.log("---------- z.domain() ----------");
+			// console.log(z.domain());
+			// console.log("---------- z.domain() ----------");
+
+			// // Scale the range of the date
+			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+				populationData = populationData.filter(function (d){
+					return d.date >= dateMin;
+				})
+
+				populationData = populationData.filter(function (d){
+					return d.date <= dateMax;
+				})
+				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+			}
+			else {
+				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+			}
+
+			// append the rectangles for the bar chart
+			svg.selectAll(".bar")
+				.data(populationData)
+				.enter().append("rect")
+				.attr("class", "bar")
+				.attr("fill", function(d) { return z(d.CDName); })
+				.attr("x", function(d) { return x(d.date.getFullYear()); })
+				.attr("width", x.bandwidth())
+				.attr("y", function(d) { return y(d.population); })
+				.attr("height", function(d) { return height - y(d.population); })
+				.on("mouseover", function(d) {
+					// console.log("---------- d ----------");
+					// console.log(d);
+					// console.log("---------- d ----------");
+					tooltip.transition()
+						.duration(200)
+						.style("opacity", .9);
+
+					tooltip.html(
+						"Borough: " + d.boroughName + "<br/>" + "<br/>" +
+						"Community District: " + d.CDName + "<br/>" + "<br/>" +
+						"Date: " + d.date.getFullYear() + "<br/>" + "<br/>" +
+						"Population: " + d.population + "<br/>" + "<br/>"
+					)
+						.style("left", (d3.event.pageX / 1.5) + "px")
+						.style("top", (d3.event.pageY / 10) + "px");
+				})
+				.on("mouseout", function(d) {
+					tooltip.transition()
+						.duration(500)
+						.style("opacity", 0);
+				});
+
+			// add the x Axis
+			svg.append("g")
+				.attr("transform", "translate(0," + height + ")")
+				.call(d3.axisBottom(x))
+				.append("text")
+				.attr("x", -10)
+				.attr("y", 15)
+				.attr("dy", "0.32em")
+				.attr("fill", "#000")
+				.attr("font-weight", "bold")
+				.attr("text-anchor", "start")
+				.text("Year");
+
+			// add the y Axis
+			svg.append("g")
+				.call(d3.axisLeft(y))
+				.append("text")
+				.attr("x", 2)
+				.attr("y", y(y.ticks().pop()) + 0.5)
+				.attr("dy", "0.32em")
+				.attr("fill", "#000")
+				.attr("font-weight", "bold")
+				.attr("text-anchor", "start")
+				.text("Population");
+
+			createPopulationByCommunityFilter(populationData, boroughs, new Date("01/01/1950"), new Date("01/01/2040"));
+			createPopulationByCommunityApplyButton(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
 		})
-
-
-
 	}
+
+	function createPopulationByCommunityFilter(populationData, boroughs, dateMin, dateMax){
+		console.log("---------- createPopulationByCommunityFilter ----------");
+		console.log("---------- populationData ----------");
+		console.log(populationData);
+		console.log("---------- populationData ----------");
+		console.log("---------- boroughs ----------");
+		console.log(boroughs);
+		console.log("---------- boroughs ----------");
+
+		var dateSlider = "";
+
+		dateSlider += "<p class='white-text'>Date Range for Population By Community Chart:&nbsp;</p>";
+		dateSlider += "<p><input type='date-' id='date-populationByCommunityChart'></p>";
+		dateSlider += "<div id='dateSlider-populationByCommunityChart' style='width:85%;margin: auto;'></div></br>";
+
+		var boroughSelector = "";
+
+		boroughSelector += "<p class='white-text'>Floor For Security Chart:</p><p><select id='selectBorough-populationByCommunityChart' size='1' style='width: 202px;'>";
+		boroughs.forEach(function (d){
+			boroughSelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		boroughSelector += "</select></p><hr />";
+
+		// boroughSelector += "<div class='dropdown'>";
+		// boroughSelector += "<button class='btn btn-primary dropdown-toggle' id='borough-populationByCommunityChart' type='button' data-toggle='dropdown'>Borough Selector";
+		// boroughSelector += "<span class='caret'></span></button>";
+		// boroughSelector += "<ul class='dropdown-menu' role='menu' aria-labelledby='menu1'>";
+        //
+		// boroughs.forEach(function (d){
+		// 	boroughSelector += "<li role='presentation'><a role='menuitem' tabindex='-1' href='#'>"+ d +"</a></li>"
+		// })
+		// boroughSelector += "</ul>";
+		// boroughSelector += "</div><br>";
+
+		document.getElementById('populationByCommunityChartFilters').innerHTML = dateSlider + boroughSelector;
+
+		// parse the date / time
+		var parseTime = d3.timeParse("%Y-%m-%d");
+
+		tempData = [];
+
+		populationData.forEach(function (d){
+			tempData.push(d.date.getTime());
+		});
+
+		console.log("---------- tempData ----------");
+		console.log(tempData);
+		console.log("---------- tempData ----------");
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			$(function (){
+				$("#dateSlider-populationByCommunityChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [dateMin.getTime(), dateMax.getTime() ],
+					slide: function( event, ui ) {
+						dateMin = new Date(ui.values[0]);
+						dateMax = new Date(ui.values[1]);
+
+						// console.log(dateMin);
+						// console.log(dateMax);
+
+
+						$( "#date-populationByCommunityChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+		else {
+			$(function (){
+				$("#dateSlider-populationByCommunityChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [Math.min.apply(null, tempData), Math.max.apply(null, tempData) ],
+					slide: function( event, ui ) {
+						var dateMin = new Date(ui.values[0]);
+						var dateMax = new Date(ui.values[1]);
+
+						// console.log(dateMin);
+						// console.log(dateMax);
+
+						$( "#date-populationByCommunityChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+	}
+
+	function createPopulationByCommunityApplyButton(populationData, dateMin, dateMax){
+		document.getElementById("populationByCommunityChartApplyButton").innerHTML = "";
+
+		var populationByCommunityChartApplyButton = document.createElement("populationByCommunityChartApplyButton");
+
+		populationByCommunityChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+
+		document.getElementById("populationByCommunityChartApplyButton").appendChild(populationByCommunityChartApplyButton);
+
+		populationByCommunityChartApplyButton.addEventListener ("click", function() {
+			console.log("---------- Submit Button Clicked ----------");
+			console.log($("#dateSlider-populationByCommunityChart").val());
+			console.log($("#selectBorough-populationByCommunityChart").val());
+
+			var min = new Date($("#dateSlider-populationByCommunityChart").slider( "values", 0 )),
+				max = new Date($("#dateSlider-populationByCommunityChart").slider( "values", 1 )),
+				selectedBorough = $("#selectBorough-populationByCommunityChart").val();
+
+			console.log("---------- min ----------");
+			console.log(min);
+			console.log("---------- min ----------");
+			console.log("---------- max ----------");
+			console.log(max);
+			console.log("---------- max ----------");
+
+
+			document.getElementById("populationByCommunityChart").innerHTML = "";
+
+			createPopulationByCommunityChart(populationData, min, max, selectedBorough);
+		});
+	}
+
 
 
 </script>
