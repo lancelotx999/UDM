@@ -86,9 +86,34 @@
 			</div>
 			<div class=" col-sm-8 col-xs-8">
 				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Population Statistics by Community District in a Borough</h1>
+				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Population Statistics by Community District In A Borough</h1>
 				<hr />
 				<div id='populationByCommunityChart'></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-12">
+		<div class="row">
+			<div class="col-sm-3 col-xs-3 chart-filter">
+				<div class="row">
+					<div class="col-sm-12 col-xs-12">
+						<hr />
+						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
+						<hr />
+						<div id='waterConsumptionChartFilters'></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 col-xs-12">
+						<div id='waterConsumptionChartApplyButton'></div>
+					</div>
+				</div>
+			</div>
+			<div class=" col-sm-8 col-xs-8">
+				<hr />
+				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Water Consumption Statistics Of New York City</h1>
+				<hr />
+				<div id='waterConsumptionChart'></div>
 			</div>
 		</div>
 	</div>
@@ -155,6 +180,7 @@
 	// createPopulationByBoroughChart(populationData, null, null);
 	createPopulationByBoroughChart(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
 	createPopulationByCommunityChart(populationData, new Date("01/01/1950"), new Date("01/01/2040"), "Manhattan");
+	createWaterConsumptionChart();
 
 	// new Date("01/01/2015"), new Date("12/31/2015")
 	// createSecurityChart(securityLogs, new Date("01/01/2016"), new Date("12/31/2016"), 'All', 'All');
@@ -239,7 +265,7 @@
 	// 	// Adds the svg canvas
 	// 	var svg = d3.select("#securityChart")
 	// 	    .append("svg")
-	//         .attr("width", width + margin.left + margin.right)
+	//		   .attr("width", width + margin.left + margin.right)
 	//         .attr("height", (height) + margin.top + margin.bottom)
 	//     	.append("g")
 	//         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -1106,9 +1132,9 @@
 	}
 
 	function createPopulationByBoroughFilter(populationData, dateMin, dateMax){
-		console.log("---------- populationData ----------");
-		console.log(populationData);
-		console.log("---------- populationData ----------");
+		// console.log("---------- populationData ----------");
+		// console.log(populationData);
+		// console.log("---------- populationData ----------");
 		var dateSlider = "";
 
 		dateSlider += "<p class='white-text'>Date Range for Population By Borough Chart:&nbsp;</p>";
@@ -1126,9 +1152,9 @@
 			tempData.push(d.date.getTime());
 		});
 
-		console.log("---------- tempData ----------");
-		console.log(tempData);
-		console.log("---------- tempData ----------");
+		// console.log("---------- tempData ----------");
+		// console.log(tempData);
+		// console.log("---------- tempData ----------");
 
 		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
 			$(function (){
@@ -1181,19 +1207,18 @@
 		document.getElementById("populationByBoroughChartApplyButton").appendChild(populationByBoroughChartApplyButton);
 
 		populationByBoroughChartApplyButton.addEventListener ("click", function() {
-			console.log("---------- Submit Button Clicked ----------");
-			console.log($("#dateSlider-populationByBoroughChart").val());
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-populationByBoroughChart").val());
 
 			var min = new Date($("#dateSlider-populationByBoroughChart").slider( "values", 0 )),
 				max = new Date($("#dateSlider-populationByBoroughChart").slider( "values", 1 ));
 
-			console.log("---------- min ----------");
-			console.log(min);
-			console.log("---------- min ----------");
-			console.log("---------- max ----------");
-			console.log(max);
-			console.log("---------- max ----------");
-
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
 
 			document.getElementById("populationByBoroughChart").innerHTML = "";
 
@@ -1227,9 +1252,9 @@
 		// var selectedBorough = "Bronx";
 
 		d3.csv("data/NYC-bigData/New_York_City_Population_By_Community_Districts.csv", function (data){
-			console.log("---------- data ----------");
-			console.log(data);
-			console.log("---------- data ----------");
+			// console.log("---------- data ----------");
+			// console.log(data);
+			// console.log("---------- data ----------");
 
 			data.forEach(function (d){
 				if (boroughs.indexOf(d.Borough) == -1) {
@@ -1271,9 +1296,9 @@
 			// console.log(communityDistricts);
 			// console.log("---------- communityDistricts ----------");
 
-			console.log("---------- populationData ----------");
-			console.log(populationData);
-			console.log("---------- populationData ----------");
+			// console.log("---------- populationData ----------");
+			// console.log(populationData);
+			// console.log("---------- populationData ----------");
 
 			// Set the ranges
 			var x = d3.scaleBand().rangeRound([0, width]),
@@ -1284,8 +1309,6 @@
 			// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
 			y.domain([0, Math.max.apply(Math, populationData.map(function(d) { return d.population; }))]).nice();
 			z.domain(communityDistricts);
-
-
 
 			// console.log("---------- d3.max(populationData, function(d) { return d.population}) ----------");
 			// console.log(d3.max(populationData, function(d) { return d.population}));
@@ -1384,13 +1407,13 @@
 	}
 
 	function createPopulationByCommunityFilter(populationData, boroughs, dateMin, dateMax){
-		console.log("---------- createPopulationByCommunityFilter ----------");
-		console.log("---------- populationData ----------");
-		console.log(populationData);
-		console.log("---------- populationData ----------");
-		console.log("---------- boroughs ----------");
-		console.log(boroughs);
-		console.log("---------- boroughs ----------");
+		// console.log("---------- createPopulationByCommunityFilter ----------");
+		// console.log("---------- populationData ----------");
+		// console.log(populationData);
+		// console.log("---------- populationData ----------");
+		// console.log("---------- boroughs ----------");
+		// console.log(boroughs);
+		// console.log("---------- boroughs ----------");
 
 		var dateSlider = "";
 
@@ -1428,9 +1451,9 @@
 			tempData.push(d.date.getTime());
 		});
 
-		console.log("---------- tempData ----------");
-		console.log(tempData);
-		console.log("---------- tempData ----------");
+		// console.log("---------- tempData ----------");
+		// console.log(tempData);
+		// console.log("---------- tempData ----------");
 
 		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
 			$(function (){
@@ -1483,20 +1506,20 @@
 		document.getElementById("populationByCommunityChartApplyButton").appendChild(populationByCommunityChartApplyButton);
 
 		populationByCommunityChartApplyButton.addEventListener ("click", function() {
-			console.log("---------- Submit Button Clicked ----------");
-			console.log($("#dateSlider-populationByCommunityChart").val());
-			console.log($("#selectBorough-populationByCommunityChart").val());
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-populationByCommunityChart").val());
+			// console.log($("#selectBorough-populationByCommunityChart").val());
 
 			var min = new Date($("#dateSlider-populationByCommunityChart").slider( "values", 0 )),
 				max = new Date($("#dateSlider-populationByCommunityChart").slider( "values", 1 )),
 				selectedBorough = $("#selectBorough-populationByCommunityChart").val();
 
-			console.log("---------- min ----------");
-			console.log(min);
-			console.log("---------- min ----------");
-			console.log("---------- max ----------");
-			console.log(max);
-			console.log("---------- max ----------");
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
 
 
 			document.getElementById("populationByCommunityChart").innerHTML = "";
@@ -1505,6 +1528,249 @@
 		});
 	}
 
+	function createWaterConsumptionChart(){
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom;
+
+		// Adds the svg canvas
+		var svg = d3.select("#waterConsumptionChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the div for the tooltip
+		var tooltip = d3.select("#waterConsumptionChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var waterConsumptionData = [];
+
+		d3.csv("data/NYC-bigData/Water_Consumption_In_The_New_York_City.csv", function (data){
+			console.log("------------ data ------------");
+			console.log(data);
+			console.log("------------ data ------------");
+
+			data.forEach(function(d){
+				waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
+			})
+
+			waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
+
+			console.log("------------ waterConsumptionData ------------");
+			console.log(waterConsumptionData);
+			console.log("------------ waterConsumptionData ------------");
+
+
+			// Set the ranges
+			var x = d3.scaleBand().rangeRound([0, width]),
+				yPopulation = d3.scaleLinear().rangeRound([height, 0]),
+				yConsumption = d3.scaleLinear().rangeRound([height, 0]),
+				yConsumptionPerCapita = d3.scaleLinear().rangeRound([height, 0]);
+				// z = d3.scaleOrdinal(d3.schemeCategory20);
+
+			// Scale the range of the data
+			// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+			yPopulation.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.population; }))]).nice();
+			yConsumption.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumption; }))]).nice();
+			yConsumptionPerCapita.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumptionPerCapita; }))]).nice();
+
+			// // Scale the range of the date
+			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+				waterConsumptionData = waterConsumptionData.filter(function (d){
+					return d.date >= dateMin;
+				})
+
+				waterConsumptionData = waterConsumptionData.filter(function (d){
+					return d.date <= dateMax;
+				})
+				// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date.getFullYear(); }));
+				x.domain(waterConsumptionData.map(function(d) { return d.date.getFullYear(); }));
+			}
+			else {
+				// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date.getFullYear(); }));
+				x.domain(waterConsumptionData.map(function(d) { return d.date.getFullYear(); }));
+			}
+
+			// console.log("------------ yPopulation.domain() ------------");
+			// console.log(yPopulation.domain());
+			// console.log("------------ yPopulation.domain() ------------");
+            //
+			// console.log("------------ yConsumption.domain() ------------");
+			// console.log(yConsumption.domain());
+			// console.log("------------ yConsumption.domain() ------------");
+            //
+			// console.log("------------ yConsumptionPerCapita.domain() ------------");
+			// console.log(yConsumptionPerCapita.domain());
+			// console.log("------------ yConsumptionPerCapita.domain() ------------");
+            //
+			// console.log("------------ x.domain() ------------");
+			// console.log(x.domain());
+			// console.log("------------ x.domain() ------------");
+
+			// define the population line
+			var populationLine = d3.line()
+				.x(function(d) { console.log(d);return x(d.date.getFullYear()); })
+				.y(function(d) { return yPopulation(d.population); });
+
+			// define the consumption (Million of gallons perday) line
+			var consumptionLine = d3.line()
+				.x(function(d) { return x(d.date.getFullYear()); })
+				.y(function(d) { return yConsumption(d.consumption); });
+
+			// define the per capita consumption (Gallons per person per day) line
+			var consumptionPerCapitaLine = d3.line()
+				.x(function(d) { return x(d.date.getFullYear()); })
+				.y(function(d) { return yConsumptionPerCapita(d.consumptionPerCapita); });
+
+			// Add the populationLine path.
+			svg.append("path")
+				.data([waterConsumptionData])
+				.attr("class", "populationLine")
+				.style("stroke", "FireBrick")
+				.style("fill", "none")
+				.style("stroke-width", "2px")
+				.attr("d", populationLine)
+				.on("mouseover", function(d){
+					console.log("------------ d ------------");
+					console.log(d);
+					console.log("------------ d ------------");
+				})
+				.on("mouseout", function(d){
+					console.log("------------ d ------------");
+					console.log(d);
+					console.log("------------ d ------------");
+				});
+
+			// Add the consumptionLine path.
+			svg.append("path")
+				.data([waterConsumptionData])
+				.attr("class", "consumptionLine")
+				.style("stroke", "DodgerBlue")
+				.style("fill", "none")
+				.style("stroke-width", "2px")
+				.attr("d", consumptionLine)
+				.on("mouseover", function(d){
+					console.log("------------ d ------------");
+					console.log(d);
+					console.log("------------ d ------------");
+				})
+				.on("mouseout", function(d){
+					console.log("------------ d ------------");
+					console.log(d);
+					console.log("------------ d ------------");
+				});
+
+			// Add the consumptionPerCapitaLine path.
+			svg.append("path")
+				.data([waterConsumptionData])
+				.attr("class", "consumptionPerCapitaLine")
+				.style("stroke", "CornflowerBlue")
+				.style("fill", "none")
+				.style("stroke-width", "2px")
+				.attr("d", consumptionPerCapitaLine)
+				.on("mouseover", function(d){
+					console.log("------------ d ------------");
+					console.log(d);
+					console.log("------------ d ------------");
+				})
+				.on("mouseout", function(d){
+					console.log("------------ d ------------");
+					console.log(d);
+					console.log("------------ d ------------");
+				});
+
+			// Add the X Axis
+			svg.append("g")
+				.attr("transform", "translate(0," + height + ")")
+				.call(d3.axisBottom(x))
+				.selectAll("text")
+				.style("text-anchor", "end")
+				.attr("dx", "-.8em")
+				.attr("dy", ".15em")
+				.attr("transform", "rotate(-65)")
+				.append("text")
+				.attr("x", -10)
+				.attr("y", 15)
+				.attr("dy", "0.32em")
+				.attr("fill", "#000")
+				.attr("font-weight", "bold")
+				.attr("text-anchor", "start")
+				.text("Year");
+
+			// Add the yConsumption Axis
+			svg.append("g")
+				.attr("class", "axis-yConsumption")
+				.style("stroke", "DodgerBlue")
+				.call(d3.axisLeft(yConsumption));
+
+			// Add the yPopulation Axis
+			svg.append("g")
+				.attr("class", "axis-yPopulation")
+				.style("stroke", "FireBrick")
+				.attr("transform", "translate( " + width + ", 0 )")
+				.call(d3.axisRight(yPopulation));
+				// .append("text")
+				// .attr("x", 2)
+				// .attr("y", y(y.ticks().pop()) + 0.5)
+				// .attr("dy", "0.32em")
+				// .attr("fill", "#000")
+				// .attr("font-weight", "bold")
+				// .attr("text-anchor", "start")
+				// .text("Population");
+
+			// Add the yConsumptionPerCapita Axis
+			svg.append("g")
+				.attr("class", "axis-yConsumptionPerCapita")
+				.style("stroke", "CornflowerBlue")
+				.attr("transform", "translate( " + width + ", 0 )")
+				.call(d3.axisLeft(yConsumptionPerCapita));
+
+			var focus = svg.append("g")
+				.style("display", "none");
+
+			// append the circle at the intersection
+			focus.append("circle")
+				.attr("class", "y")
+				.style("fill", "none")
+				.style("stroke", "blue")
+				.attr("r", 4);
+
+			// append the rectangle to capture mouse
+			svg.append("rect")
+				.attr("width", width)
+				.attr("height", height)
+				.style("fill", "none")
+				.style("pointer-events", "all")
+				.on("mouseover", function() { focus.style("display", null); })
+				.on("mouseout", function() { focus.style("display", "none"); })
+				.on("mousemove", mousemove);
+
+				function mousemove() {
+					var x0 = x.invert(d3.mouse(this)[0]),
+						i = bisectDate(data, x0, 1),
+						d0 = data[i - 1],
+						d1 = data[i],
+						d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+
+					focus.select("circle.y")
+						.attr("transform",
+						"translate(" + x(d.date.getFullYear) + "," +
+						yPopulation(d.population) + ")");
+				}
+
+		})
+
+
+
+
+
+
+
+	}
 
 
 </script>
