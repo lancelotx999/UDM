@@ -71,21 +71,39 @@ class FileUploadController extends Controller implements IReadFilter
 
     		$reader->setSheetIndex($sheet);
     		$reader->loadIntoExisting($filepath, $spreadsheet);
-    		$spreadsheet->getActiveSheet()->setTitle('Death #' . (++$sheet));
+    		$spreadsheet->getActiveSheet()->setTitle('Sheet #' . (++$sheet));
 		}
 
-	$loadedSheetNames = $spreadsheet->getSheetNames();
-	foreach ($loadedSheetNames as $sheetIndex => $loadedSheetName) {
-    	$spreadsheet->setActiveSheetIndexByName($loadedSheetName);
-    	$sheetData = $spreadsheet->getActiveSheet()->toArray(null, false, false, true);
-    	dd($sheetData);
-}
+		$loadedSheetNames = $spreadsheet->getSheetNames();
+
+		
+		foreach ($loadedSheetNames as $sheetIndex => $loadedSheetName) 
+		{
+    		$spreadsheet->setActiveSheetIndexByName($loadedSheetName);
+    		$sheetData = $spreadsheet->getActiveSheet()->toArray(null, false, false, true);
+
+    		if ($sheetIndex == 0)
+    		{
+    			$headers = array_values($sheetData)[0];
+
+    			foreach($headers as $header)
+    			{
+    				var_dump($header);
+    			}
+    		}
+
+		}
 
     }
 
     public function readXLSX($filepath)
     {
     	dd("swag3");
+    }
+
+    public function store($data)
+    {
+
     }
 
 }

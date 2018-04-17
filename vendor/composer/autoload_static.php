@@ -98,7 +98,6 @@ class ComposerStaticInitb5ed4aa8395e876391124a8b6cdc8d25
         'C' => 
         array (
             'Cron\\' => 5,
-            'Carbon\\' => 7,
         ),
         'A' => 
         array (
@@ -261,14 +260,14 @@ class ComposerStaticInitb5ed4aa8395e876391124a8b6cdc8d25
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
-        'Carbon\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
-        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+    );
+
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/..' . '/nesbot/carbon/src',
     );
 
     public static $prefixesPsr0 = array (
@@ -1756,6 +1755,7 @@ class ComposerStaticInitb5ed4aa8395e876391124a8b6cdc8d25
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
+        'JsonSerializable' => __DIR__ . '/..' . '/nesbot/carbon/src/JsonSerializable.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',
@@ -3835,6 +3835,7 @@ class ComposerStaticInitb5ed4aa8395e876391124a8b6cdc8d25
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitb5ed4aa8395e876391124a8b6cdc8d25::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitb5ed4aa8395e876391124a8b6cdc8d25::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitb5ed4aa8395e876391124a8b6cdc8d25::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitb5ed4aa8395e876391124a8b6cdc8d25::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitb5ed4aa8395e876391124a8b6cdc8d25::$classMap;
 
