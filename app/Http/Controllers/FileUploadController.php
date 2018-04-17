@@ -9,6 +9,10 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+
+
 class FileUploadController extends Controller implements IReadFilter 
 {
 	private $startRow = 0;
@@ -86,10 +90,23 @@ class FileUploadController extends Controller implements IReadFilter
     		{
     			$headers = array_values($sheetData)[0];
 
-    			foreach($headers as $header)
+    			if (Schema::hasTable($filepath)) 
     			{
-    				var_dump($header);
-    			}
+
+				}
+				else
+				{
+    				Schema::create($filepath, function (Blueprint $table) 
+    				{
+    				    foreach($headers as $header)
+    					{
+    						// var_dump($header);
+    						$table->increments($header);
+    					}
+    				
+					});
+				}
+
     		}
 
 		}
@@ -101,10 +118,6 @@ class FileUploadController extends Controller implements IReadFilter
     	dd("swag3");
     }
 
-    public function store($data)
-    {
-
-    }
 
 }
  
