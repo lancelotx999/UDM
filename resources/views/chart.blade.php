@@ -1566,7 +1566,7 @@
 
 
 			// Set the ranges
-			var x = d3.scaleBand().rangeRound([0, width]),
+			var x = d3.scaleTime().rangeRound([0, width]),
 				yPopulation = d3.scaleLinear().rangeRound([height, 0]),
 				yConsumption = d3.scaleLinear().rangeRound([height, 0]),
 				yConsumptionPerCapita = d3.scaleLinear().rangeRound([height, 0]);
@@ -1588,11 +1588,13 @@
 					return d.date <= dateMax;
 				})
 				// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date.getFullYear(); }));
-				x.domain(waterConsumptionData.map(function(d) { return d.date.getFullYear(); }));
+				// x.domain(waterConsumptionData.map(function(d) { return d.date; }));
+				x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
 			}
 			else {
-				// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date.getFullYear(); }));
-				x.domain(waterConsumptionData.map(function(d) { return d.date.getFullYear(); }));
+				// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
+				// x.domain(waterConsumptionData.map(function(d) { return d.date; }));
+				x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
 			}
 
 			// console.log("------------ yPopulation.domain() ------------");
@@ -1613,17 +1615,17 @@
 
 			// define the population line
 			var populationLine = d3.line()
-				.x(function(d) { console.log(d);return x(d.date.getFullYear()); })
+				.x(function(d) { return x(d.date); })
 				.y(function(d) { return yPopulation(d.population); });
 
 			// define the consumption (Million of gallons perday) line
 			var consumptionLine = d3.line()
-				.x(function(d) { return x(d.date.getFullYear()); })
+				.x(function(d) { return x(d.date); })
 				.y(function(d) { return yConsumption(d.consumption); });
 
 			// define the per capita consumption (Gallons per person per day) line
 			var consumptionPerCapitaLine = d3.line()
-				.x(function(d) { return x(d.date.getFullYear()); })
+				.x(function(d) { return x(d.date); })
 				.y(function(d) { return yConsumptionPerCapita(d.consumptionPerCapita); });
 
 			// Add the populationLine path.
@@ -1704,15 +1706,15 @@
 			// Add the yConsumption Axis
 			svg.append("g")
 				.attr("class", "axis-yConsumption")
-				.style("stroke", "DodgerBlue")
-				.call(d3.axisLeft(yConsumption));
+				.style("stroke", "FireBrick")
+				.call(d3.axisLeft(yPopulation));
 
 			// Add the yPopulation Axis
 			svg.append("g")
 				.attr("class", "axis-yPopulation")
-				.style("stroke", "FireBrick")
+				.style("stroke", "DodgerBlue")
 				.attr("transform", "translate( " + width + ", 0 )")
-				.call(d3.axisRight(yPopulation));
+				.call(d3.axisRight(yConsumption));
 				// .append("text")
 				// .attr("x", 2)
 				// .attr("y", y(y.ticks().pop()) + 0.5)
@@ -1729,15 +1731,44 @@
 				.attr("transform", "translate( " + width + ", 0 )")
 				.call(d3.axisLeft(yConsumptionPerCapita));
 
-			var focus = svg.append("g")
+			var focusPopulation = svg.append("g")
+				.attr("class", "focus")
+				.style("display", "none");
+
+			var focusConsumption = svg.append("g")
+				.attr("class", "focus")
+				.style("display", "none");
+
+			var focusConsumptionPerCapita = svg.append("g")
+				.attr("class", "focus")
 				.style("display", "none");
 
 			// append the circle at the intersection
-			focus.append("circle")
-				.attr("class", "y")
+			focusPopulation.append("circle")
+				.attr("class", "population")
 				.style("fill", "none")
 				.style("stroke", "blue")
 				.attr("r", 4);
+
+			focusPopulation.append("text");
+
+			// append the circle at the intersection
+			focusConsumption.append("circle")
+				.attr("class", "consumption")
+				.style("fill", "none")
+				.style("stroke", "blue")
+				.attr("r", 4);
+
+			focusConsumption.append("text");
+
+			// append the circle at the intersection
+			focusConsumptionPerCapita.append("circle")
+				.attr("class", "consumptionPerCapita")
+				.style("fill", "none")
+				.style("stroke", "blue")
+				.attr("r", 4);
+
+			focusConsumptionPerCapita.append("text");
 
 			// append the rectangle to capture mouse
 			svg.append("rect")
@@ -1745,21 +1776,40 @@
 				.attr("height", height)
 				.style("fill", "none")
 				.style("pointer-events", "all")
-				.on("mouseover", function() { focus.style("display", null); })
-				.on("mouseout", function() { focus.style("display", "none"); })
+				.on("mouseover", function() { focusPopulation.style("display", null); focusConsumption.style("display", null); focusConsumptionPerCapita.style("display", null); })
+				.on("mouseout", function() { focusPopulation.style("display", "none"); focusConsumption.style("display", "none"); focusConsumptionPerCapita.style("display", "none"); })
 				.on("mousemove", mousemove);
 
 				function mousemove() {
 					var x0 = x.invert(d3.mouse(this)[0]),
-						i = bisectDate(data, x0, 1),
-						d0 = data[i - 1],
-						d1 = data[i],
+						bisectDate = d3.bisector(function(d) { return d.date; }).left;
+						i = bisectDate(waterConsumptionData, x0, 1),
+						d0 = waterConsumptionData[i - 1],
+						d1 = waterConsumptionData[i],
 						d = x0 - d0.date > d1.date - x0 ? d1 : d0;
 
-					focus.select("circle.y")
-						.attr("transform",
-						"translate(" + x(d.date.getFullYear) + "," +
-						yPopulation(d.population) + ")");
+					// focusPopulation.select("circle.population")
+					// 	.attr("transform", "translate(" + x(d.date) + "," + yPopulation(d.population) + ")");
+                    //
+					// focusConsumption.select("circle.consumption")
+					// 	.attr("transform", "translate(" + x(d.date) + "," + yConsumption(d.consumption) + ")");
+                    //
+					// focusConsumptionPerCapita.select("circle.consumptionPerCapita")
+					// 	.attr("transform", "translate(" + x(d.date) + "," + yConsumptionPerCapita(d.consumptionPerCapita) + ")");
+
+					focusPopulation.attr("transform", "translate(" + x(d.date) + "," + yPopulation(d.population) + ")");
+					focusConsumption.attr("transform", "translate(" + x(d.date) + "," + yConsumption(d.consumption) + ")");
+					focusConsumptionPerCapita.attr("transform", "translate(" + x(d.date) + "," + yConsumptionPerCapita(d.consumptionPerCapita) + ")");
+
+					focusPopulation.select("text").text("");
+					focusConsumption.select("text").text("");
+					focusConsumptionPerCapita.select("text").text("");
+
+					focusPopulation.select("text").text(d.population);
+					focusConsumption.select("text").text(d.consumption);
+					focusConsumptionPerCapita.select("text").text(d.consumptionPerCapita);
+
+
 				}
 
 		})
