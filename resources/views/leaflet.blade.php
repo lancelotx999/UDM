@@ -519,7 +519,7 @@
             g.selectAll("path").attr("class", "boroughOverlay").remove();
         }
     });
-    
+
     d3.select("#District").on("change", function(){
         if(d3.select("#District").property("checked")){
             districtOverlay();
@@ -527,7 +527,7 @@
             g.selectAll("path").attr("class", "districtOverlay").remove();
         }
     });
-    
+
     //
     // // Minor Overlays
     d3.select("#Precint").on("change", function(){
@@ -557,9 +557,13 @@
     // Markers
     d3.select("#Subway").on("change", function(){
         if(d3.select("#Subway").property("checked")){
-            subwayEntranceMarker();
+            subwayModule();
         } else {
-            map.removeLayer(pruneCluster);
+            g.selectAll("path").attr("class", "subwayLineOverlay").remove();
+            // map.removeLayer(pruneCluster);
+            pruneCluster.Cluster._markers = [];
+            pruneCluster.ProcessView();
+            // console.log(pruneCluster);
         }
     });
 
@@ -567,7 +571,9 @@
         if(d3.select("#Busstop").property("checked")){
             busStopMarker();
         } else {
-            map.removeLayer(pruneCluster);
+            // map.removeLayer(pruneCluster);
+            pruneCluster.Cluster._markers = [];
+            pruneCluster.ProcessView();
         }
     });
 
@@ -575,11 +581,13 @@
         if(d3.select("#CollegeUni").property("checked")){
             collegesUniversitiesMarker();
         } else {
-            map.removeLayer(pruneCluster);
+            // map.removeLayer(pruneCluster);
+            pruneCluster.Cluster._markers = [];
+            pruneCluster.ProcessView();
         }
     });
 
-    function boroughOverlay(){  
+    function boroughOverlay(){
         d3.json("data/NYC-Overlays/boroughs.geojson", function(error, collection) {
             if (error) throw error;
 
@@ -1076,12 +1084,28 @@
     }
 
     function subwayLineOverlay(){
+
         d3.json("data/NYC-Overlays/subway_lines.geojson", function(error, collection) {
             if (error) throw error;
 
             console.log("---------- collection ----------");
             console.log(collection);
             console.log("---------- collection ----------");
+
+            // var z = d3.scaleOrdinal(d3.schemeCategory20);
+            var z = d3.scale.category20();
+            var subwayLines = [];
+
+            collection.features.forEach(function(d){
+                if (subwayLines.indexOf(d.properties.name) == -1) {
+                    subwayLines.push(d.properties.name);
+                }
+            })
+
+            console.log("---------- subwayLines ----------");
+            console.log(subwayLines);
+            console.log("---------- subwayLines ----------");
+
 
             var transform = d3.geo.transform({point: projectPoint}),
                 path = d3.geo.path().projection(transform);
@@ -1092,51 +1116,52 @@
             // var transform = d3.geo.path(),
             //     path = d3.geo.path().projection(transform);
 
-            // var feature = g.selectAll("path")
-            //     .attr("class", "subwayLineOverlay")
-            //     .data(collection.features)
-            //     .enter()
-            //     .append("path")
-            //     .style("fill", "red")
-            //     .style("fill-opacity", 1)
-            //     .style("stroke", "#fff")
-            //     .style("stroke-width", 0.5 +"px")
-            //     .on("mouseover", function(d){
-            //         console.log("---------- d ----------");
-            //         console.log(d);
-            //         console.log("---------- d ----------");
-            //         console.log("---------- this ----------");
-            //         console.log(this);
-            //         console.log("---------- this ----------");
-            //
-            //         d3.select(this)
-            //             .style("fill", "red")
-            //             .style("fill-opacity", .7);
-            //
-            //         // this.style("fill", "brown")
-            //         //     .style("fill-opacity", .7);
-            //
-            //         popup.transition()
-            //            .duration(200)
-            //            .style("opacity", .9);
-            //
-            //        popup.html("District")
-            //         .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
-            //         // .attr("style", "top: 58%; left: 0px; position: absolute;");
-            //     })
-            //     .on("mouseout", function(d) {
-            //
-            //         d3.select(this)
-            //             .style("fill", "#000")
-            //             .style("fill-opacity", .2);
-            //
-            //         // this.style("fill", "#000")
-            //         //     .style("fill-opacity", .2);
-            //
-            //         popup.transition()
-            //            .duration(500)
-            //            .style("opacity", 0);
-            //     });
+            var feature = g.selectAll("path")
+                .attr("class", "subwayLineOverlay")
+                .data(collection.features)
+                .enter()
+                .append("path")
+                .style("fill", "red")
+                .style("fill-opacity", 0)
+                .style("stroke", function(d){
+                    return z(d.properties.name);
+                })
+                .style("stroke-width", 2 +"px")
+                .on("mouseover", function(d){
+                    console.log("---------- d ----------");
+                    console.log(d);
+                    console.log("---------- d ----------");
+                    console.log("---------- this ----------");
+                    console.log(this);
+                    console.log("---------- this ----------");
+
+                    d3.select(this)
+                        .style("stroke-width", 4 +"px");
+
+                    // this.style("fill", "brown")
+                    //     .style("fill-opacity", .7);
+
+                    popup.transition()
+                       .duration(200)
+                       .style("opacity", .9);
+
+                   popup.html("<p>Line: " + d.properties.name + "</p>" )
+                    .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
+                    // .attr("style", "top: 58%; left: 0px; position: absolute;");
+                })
+                .on("mouseout", function(d) {
+
+                    d3.select(this)
+                        .style("stroke-width", 2 +"px");
+
+
+                    // this.style("fill", "#000")
+                    //     .style("fill-opacity", .2);
+
+                    popup.transition()
+                       .duration(500)
+                       .style("opacity", 0);
+                });
 
             // var lineFeatures = g.selectAll("path")
             //     .data(collection.features)
@@ -1258,9 +1283,9 @@
 
                 var m = new PruneCluster.Marker(d.geometry.coordinates[1], d.geometry.coordinates[0]);
 
-                console.log("---------- m ----------");
-                console.log(m);
-                console.log("---------- m ----------");
+                // console.log("---------- m ----------");
+                // console.log(m);
+                // console.log("---------- m ----------");
 
                 m.data = d.properties;
 
@@ -1275,6 +1300,8 @@
             })
 
             map.addLayer(pruneCluster);
+            pruneCluster.ProcessView();
+            
 
             // svg.selectAll("image").remove();
             //
@@ -1450,6 +1477,11 @@
 
     }
 
+    function subwayModule(){
+        subwayLineOverlay();
+        subwayEntranceMarker();
+    }
+
     function busStopMarker(){
         var marker_img = "data:image/png;base64,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"
 
@@ -1536,6 +1568,8 @@
             })
 
             map.addLayer(pruneCluster);
+            pruneCluster.ProcessView();
+            
 
             // svg.selectAll("image").remove();
             //
@@ -1797,6 +1831,8 @@
             })
 
             map.addLayer(pruneCluster);
+            pruneCluster.ProcessView();
+            
 
             // svg.selectAll("image").remove();
             //
