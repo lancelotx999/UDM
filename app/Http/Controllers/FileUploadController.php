@@ -29,6 +29,8 @@ class FileUploadController extends Controller implements IReadFilter
 
     	$file = $request->file('file');
         $filepath = $file->getPathName();
+        $filename = $file->getClientOriginalName();
+
 
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
 		$filemime = finfo_file($finfo,$filepath);
@@ -89,26 +91,23 @@ class FileUploadController extends Controller implements IReadFilter
     		if ($sheetIndex == 0)
     		{
     			$headers = array_values($sheetData)[0];
-
-    			if (Schema::hasTable($filepath)) 
-    			{
-
-				}
-				else
-				{
-    				Schema::create($filepath, function (Blueprint $table) 
-    				{
-    				    foreach($headers as $header)
-    					{
-    						// var_dump($header);
-    						$table->increments($header);
-    					}
-    				
-					});
-				}
-
     		}
 
+		}
+
+		if (Schema::hasTable($filepath)) 
+    	{
+    		dd("swag1");
+		}
+		else
+		{
+    		Schema::create($filepath, function (Blueprint $table) use ($headers)
+    		{
+    			foreach ($headers as $header)
+    			{
+    				$table->string($header);
+    			}
+			});
 		}
 
     }
