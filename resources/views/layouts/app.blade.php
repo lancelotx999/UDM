@@ -27,26 +27,22 @@
         @include('layouts.partials._header')
 
         <div class="container-fluid" >
-            <div class="row is-flex row-offcanvas row-offcanvas-left" >
+            <div class="row" >
+                <div class="col-xs-12 col-sm-9" id="main-content">
 
-                @if (\Request::is('map') || \Request::is('/') || \Request::is('map/swinburne'))
+                <!-- @if (\Request::is('map') || \Request::is('/') || \Request::is('map/swinburne'))
                     @include('layouts/partials._overlay')
-                    <div class="col-xs-12 col-sm-9" id="main-content" style="padding: 0px">
-                @endif
-                @if (\Request::is('chart') || \Request::is('/chart'))
-                    <div class="col-xs-12 col-sm-9" id="main-content-chart" style="padding: 0px">
-                @endif
-                
+                @endif -->
                         
-                    @yield('content')
+                @yield('content')
                     
                 </div>
             </div>
-        
-        
-            
         </div>
-<a class="beta-notice" href="https://github.com/lancelotx999/UDM">A beta project of Urban Development Maps. Swinburne University of Technology. UDM &copy; 2017-2018</a>
+        
+        <a class="beta-notice" href="https://github.com/lancelotx999/UDM">
+            A beta project of Urban Development Maps. Swinburne University of Technology. UDM &copy; 2017-2018
+        </a>
         
     </body>
     

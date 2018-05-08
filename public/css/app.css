@@ -11423,7 +11423,9 @@ button.close {
 
 html,
 body {
-  height: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -11533,9 +11535,9 @@ a:active {
 }
 
 #main-content {
-  width: 85%;
+  width: 100%;
+  padding: 0;
   background: url("/images/concrete_seamless.gif");
-  height: 100%;
 }
 
 #main-content-chart {
@@ -11544,8 +11546,10 @@ a:active {
   padding: 20px;
 }
 
+/* CSS3 calc() function to perform calculations */
+
 #map {
-  height: 100vh;
+  height: calc(100vh - 50px);
 }
 
 /*zoom to bounding box */

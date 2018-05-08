@@ -14,10 +14,6 @@
 <script src="{{URL::asset('js/PruneCluster.js')}}"></script>
 <style type="text/css">
 
-    /* #main-content {
-        width: 85%;
-    } */
-
     div.tooltip {
         position: absolute;
         padding: 2px;
@@ -27,38 +23,86 @@
         border-radius: 8px;
         pointer-events: none;
     }
-/*
-    #map {
-        width: 100%;
-        height: 100vh;
-    }
 
-    #main-content {
-        width: 85%;
-    }
-*/
-
-    #map{
-        width:100%;
-    }
     svg {
       position: relative;
     }
 
-    /* path {
-      fill: #000;
-      fill-opacity: .2;
-      stroke: #fff;
-      stroke-width: 1.5px;
-    }
-
-    path:hover {
-      fill: brown;
-      fill-opacity: .7;
-    } */
-
-
 </style>
+
+<!-- <div class="col-xs-6 col-sm-3 sidebar-offcanvas toggle-show" id="sidebar-wrapper" role="navigation" >
+    <div class="sidebar-nav">
+
+        <h3 style="color:#fff; margin-bottom: 5px;"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Overlays</h3>
+        <hr />
+        <ul class="nav">
+            
+            @if (\Request::is('/map/swinburne'))
+            <li>            
+                <input type="checkbox" id="Heatmap" class="example">
+                <label for="check_heatmap"><span id="cb_span">Heatmap</span></label>
+            </li>
+                
+            <li>
+                <input type="checkbox" id="Security" class="example">
+                <label for="check_security"><span id="cb_span">Security</span></label>
+            </li>               
+
+            <li>
+                <input type="checkbox" id="Electric" class="example">
+                <label for="check_electric"><span id="cb_span">Electrical Foorprint</span></label>
+            </li> 
+            @endif
+
+            @if (\Request::is('/') || \Request::is('map'))
+            <li>            
+                <input type="checkbox" id="Borough" class="example">
+                <label for="check_borough"><span id="cb_span">Borough</span></label>
+            </li>
+                
+            <li>
+                <input type="checkbox" id="District" class="example">
+                <label for="check_district"><span id="cb_span">District</span></label>
+            </li>               
+
+            <li>
+                <input type="checkbox" id="Precint" class="example">
+                <label for="check_precint"><span id="cb_span">Police Precint</span></label>
+            </li> 
+
+            <li>
+                <input type="checkbox" id="Battalion" class="example">
+                <label for="check_battalion"><span id="cb_span">Fire Battalion</span></label>
+            </li> 
+
+            <li>
+                <input type="checkbox" id="School" class="example">
+                <label for="check_school"><span id="cb_span">School District</span></label>
+            </li> 
+
+            <li>
+                <input type="checkbox" id="Subway" class="example">
+                <label for="check_subway"><span id="cb_span">Subway Entry</span></label>
+            </li> 
+
+            <li>
+                <input type="checkbox" id="Busstop" class="example">
+                <label for="check_subway"><span id="cb_span">Bus Stop</span></label>
+            </li> 
+
+            <li>
+                <input type="checkbox" id="CollegeUni" class="example">
+                <label for="check_subway"><span id="cb_span">Universities</span></label>
+            </li> 
+            @endif
+        </ul>
+
+        <div id="overlay-filters">
+            <div id='MapFilters'></div>
+        </div>
+
+    </div>
+</div> -->
 
 <div id="popup"></div>
 <div id="map"></div>
@@ -66,10 +110,13 @@
 <!-- <img src="{{URL::asset('images/swinlogo.png')}}" alt="profile Pic" height="200" width="200"> -->
 <script>
 
-    var map = L.map('map')
+    var map = L.map('map', { zoomControl: false })
         // .setView([0, 0], 0)
         .setView(new L.LatLng(40, -74), 10) //NYC Location
         .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+
+    //add zoom control with your options
+    L.control.zoom({ position:'topright' }).addTo(map);
 
     map.options.minZoom = 2;
 
