@@ -54,8 +54,11 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-12 col-xs-12">
+					<div class="col-sm-6 col-xs-6">
 						<div id='populationByBoroughChartApplyButton'></div>
+					</div>
+					<div class="col-sm-6 col-xs-6">
+						<div id='populationByBoroughChartResetButton'></div>
 					</div>
 				</div>
 			</div>
@@ -79,8 +82,11 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-12 col-xs-12">
+					<div class="col-sm-6 col-xs-6">
 						<div id='populationByCommunityChartApplyButton'></div>
+					</div>
+					<div class="col-sm-6 col-xs-6">
+						<div id='populationByCommunityChartResetButton'></div>
 					</div>
 				</div>
 			</div>
@@ -104,8 +110,11 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-12 col-xs-12">
+					<div class="col-sm-6 col-xs-6">
 						<div id='waterConsumptionChartApplyButton'></div>
+					</div>
+					<div class="col-sm-6 col-xs-6">
+						<div id='waterConsumptionChartResetButton'></div>
 					</div>
 				</div>
 			</div>
@@ -1124,8 +1133,9 @@
 				.attr("text-anchor", "start")
 				.text("Population");
 
-			createPopulationByBoroughFilter(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
-			createPopulationByBoroughApplyButton(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
+			createPopulationByBoroughFilter(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
+			createPopulationByBoroughApplyButton(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
+			createPopulationByBoroughResetButton();
 		})
 
 
@@ -1224,6 +1234,48 @@
 
 			createPopulationByBoroughChart(populationData, min, max);
 		});
+	}
+
+	function createPopulationByBoroughResetButton(){
+		document.getElementById("populationByBoroughChartResetButton").innerHTML = "";
+
+		var populationByBoroughChartResetButton = document.createElement("populationByBoroughChartResetButton");
+
+		populationByBoroughChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+
+		document.getElementById("populationByBoroughChartResetButton").appendChild(populationByBoroughChartResetButton);
+
+		populationByBoroughChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/New_York_City_Population_by_Borough__1950_-_2040.csv", function (data){
+				populationData = [];
+
+				data.forEach(function (d){
+					populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
+					populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
+					populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
+					populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
+					populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
+					populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
+					populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
+					populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
+				})
+
+				populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
+				console.log("---------- populationData ----------");
+				console.log(populationData);
+				console.log("---------- populationData ----------");
+
+				document.getElementById("populationByBoroughChart").innerHTML = "";
+
+				createPopulationByBoroughChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
+
+
+			});
+
+		});
+
+
 	}
 
 	function createPopulationByCommunityChart(populationData, dateMin, dateMax, selectedBorough){
@@ -1403,6 +1455,7 @@
 
 			createPopulationByCommunityFilter(populationData, boroughs, new Date("01/01/1950"), new Date("01/01/2040"));
 			createPopulationByCommunityApplyButton(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
+			createPopulationByCommunityResetButton();
 		})
 	}
 
@@ -1526,6 +1579,45 @@
 
 			createPopulationByCommunityChart(populationData, min, max, selectedBorough);
 		});
+	}
+
+	function createPopulationByCommunityResetButton(){
+		document.getElementById("populationByCommunityChartResetButton").innerHTML = "";
+
+		var populationByCommunityChartResetButton = document.createElement("populationByCommunityChartResetButton");
+
+		populationByCommunityChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+
+		document.getElementById("populationByCommunityChartResetButton").appendChild(populationByCommunityChartResetButton);
+
+		populationByCommunityChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/New_York_City_Population_By_Community_Districts.csv", function (data){
+				populationData = [];
+
+				data.forEach(function (d){
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1970"), population: d.Population1970});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1980"), population: d.Population1980});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1990"), population: d.Population1990});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2000"), population: d.Population2000});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2010"), population: d.Population2010});
+				})
+
+				populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
+				// console.log("---------- populationData ----------");
+				// console.log(populationData);
+				// console.log("---------- populationData ----------");
+
+				document.getElementById("populationByCommunityChart").innerHTML = "";
+
+				createPopulationByCommunityChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1], "Manhattan");
+
+
+			});
+
+		});
+
+
 	}
 
 	function createWaterConsumptionChart(waterConsumptionData, dateMin, dateMax){
@@ -1829,7 +1921,7 @@
 
 			createWaterConsumptionFilter(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1]);
 			createWaterConsumptionApplyButton(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1]);
-
+			createWaterConsumptionResetButton();
 
 		})
 	}
@@ -1948,6 +2040,39 @@
 		});
 	}
 
+	function createWaterConsumptionResetButton(){
+		document.getElementById("waterConsumptionChartResetButton").innerHTML = "";
+
+		var waterConsumptionChartResetButton = document.createElement("waterConsumptionChartResetButton");
+
+		waterConsumptionChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+
+		document.getElementById("waterConsumptionChartResetButton").appendChild(waterConsumptionChartResetButton);
+
+		waterConsumptionChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/Water_Consumption_In_The_New_York_City.csv", function (data){
+				waterConsumptionData = [];
+
+				data.forEach(function(d){
+					waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
+				})
+
+				waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
+				console.log("---------- waterConsumptionData ----------");
+				console.log(waterConsumptionData);
+				console.log("---------- waterConsumptionData ----------");
+
+				document.getElementById("waterConsumptionChart").innerHTML = "";
+
+				createWaterConsumptionChart(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1], "Manhattan");
+
+
+			});
+
+		});
+
+
+	}
 
 </script>
 
