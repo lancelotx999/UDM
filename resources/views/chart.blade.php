@@ -1528,7 +1528,7 @@
 		});
 	}
 
-	function createWaterConsumptionChart(){
+	function createWaterConsumptionChart(waterConsumptionData, dateMin, dateMax){
 		// Set the dimensions of the canvas / graph
 		var margin = {top: 30, right: 80, bottom: 70, left: 80},
 			width = 600 - margin.left - margin.right,
@@ -1550,9 +1550,9 @@
 		var waterConsumptionData = [];
 
 		d3.csv("data/NYC-bigData/Water_Consumption_In_The_New_York_City.csv", function (data){
-			console.log("------------ data ------------");
-			console.log(data);
-			console.log("------------ data ------------");
+			// console.log("------------ data ------------");
+			// console.log(data);
+			// console.log("------------ data ------------");
 
 			data.forEach(function(d){
 				waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
@@ -1579,6 +1579,13 @@
 			yConsumptionPerCapita.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumptionPerCapita; }))]).nice();
 
 			// // Scale the range of the date
+			console.log("---------- dateMin ----------");
+			console.log(dateMin);
+			console.log("---------- dateMin ----------");
+			console.log("---------- dateMax ----------");
+			console.log(dateMax);
+			console.log("---------- dateMax ----------");
+
 			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
 				waterConsumptionData = waterConsumptionData.filter(function (d){
 					return d.date >= dateMin;
@@ -1812,14 +1819,133 @@
 
 				}
 
+			// console.log("---------- d3.extent(waterConsumptionData, function(d) { return d.date; })[0] ----------");
+			// console.log(d3.extent(waterConsumptionData, function(d) { return d.date; })[0]);
+			// console.log("---------- d3.extent(waterConsumptionData, function(d) { return d.date; })[0] ----------");
+			// console.log("---------- dateMax ----------");
+			// console.log(dateMax);
+			// console.log("---------- dateMax ----------");
+
+
+			createWaterConsumptionFilter(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1]);
+			createWaterConsumptionApplyButton(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1]);
+
+
 		})
+	}
+
+	function createWaterConsumptionFilter(waterConsumptionData, dateMin, dateMax){
+		var dateSlider = "";
+
+		console.log("---------- createWaterConsumptionFilter ----------");
+		console.log("---------- dateMax ----------");
+		console.log(dateMax);
+		console.log("---------- dateMax ----------");
+		console.log("---------- dateMin ----------");
+		console.log(dateMin);
+		console.log("---------- dateMin ----------");
+
+		dateSlider += "<p class='white-text'>Date Range for Water Consumption Chart:&nbsp;</p>";
+		dateSlider += "<p><input type='date-' id='date-waterConsumptionChart'></p>";
+		dateSlider += "<div id='dateSlider-waterConsumptionChart' style='width:85%;margin: auto;'></div></br>";
+
+		document.getElementById('waterConsumptionChartFilters').innerHTML = dateSlider;
+
+		// parse the date / time
+		var parseTime = d3.timeParse("%Y-%m-%d");
+
+		tempData = [];
+
+		waterConsumptionData.forEach(function (d){
+			tempData.push(d.date.getTime());
+		});
+
+		console.log("---------- tempData ----------");
+		console.log(tempData);
+		console.log("---------- tempData ----------");
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			$(function (){
+				$("#dateSlider-waterConsumptionChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [dateMin.getTime(), dateMax.getTime() ],
+					slide: function( event, ui ) {
+						dateMin = new Date(ui.values[0]);
+						dateMax = new Date(ui.values[1]);
+
+						console.log("---------- waterConsumptionChartFilters ----------");
+						console.log("---------- dateMin ----------");
+						console.log(dateMin);
+						console.log("---------- dateMin ----------");
+						console.log("---------- dateMax ----------");
+						console.log(dateMax);
+						console.log("---------- dateMax ----------");
 
 
+						$( "#date-waterConsumptionChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+		else {
+			$(function (){
+				$("#dateSlider-waterConsumptionChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [Math.min.apply(null, tempData), Math.max.apply(null, tempData) ],
+					slide: function( event, ui ) {
+						var dateMin = new Date(ui.values[0]);
+						var dateMax = new Date(ui.values[1]);
 
+						// console.log(dateMin);
+						// console.log(dateMax);
 
+						console.log("---------- waterConsumptionChartFilters ----------");
+						console.log("---------- dateMin ----------");
+						console.log(dateMin);
+						console.log("---------- dateMin ----------");
+						console.log("---------- dateMax ----------");
+						console.log(dateMax);
+						console.log("---------- dateMax ----------");
 
+						$( "#date-waterConsumptionChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+	}
 
+	function createWaterConsumptionApplyButton(waterConsumptionData, dateMin, dateMax){
+		document.getElementById("waterConsumptionChartApplyButton").innerHTML = "";
 
+		var waterConsumptionChartApplyButton = document.createElement("waterConsumptionChartApplyButton");
+
+		waterConsumptionChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+
+		document.getElementById("waterConsumptionChartApplyButton").appendChild(waterConsumptionChartApplyButton);
+
+		waterConsumptionChartApplyButton.addEventListener ("click", function() {
+			console.log("---------- Submit Button Clicked ----------");
+			console.log($("#dateSlider-waterConsumptionChart").val());
+
+			var min = new Date($("#dateSlider-waterConsumptionChart").slider( "values", 0 )),
+				max = new Date($("#dateSlider-waterConsumptionChart").slider( "values", 1 ));
+
+			console.log("---------- waterConsumptionChartApplyButton ----------");
+			console.log("---------- min ----------");
+			console.log(min);
+			console.log("---------- min ----------");
+			console.log("---------- max ----------");
+			console.log(max);
+			console.log("---------- max ----------");
+
+			document.getElementById("waterConsumptionChart").innerHTML = "";
+
+			createWaterConsumptionChart(waterConsumptionData, min, max);
+		});
 	}
 
 
