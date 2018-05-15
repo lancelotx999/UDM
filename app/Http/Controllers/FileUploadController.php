@@ -45,11 +45,9 @@ class FileUploadController extends Controller
     		dd("File doesn't exist/ can't be accessed");
     	}
 
-    	//Get Headers
-    	fseek($filehandle,0);
-    	$headers = (fgetcsv($filehandle));
+    	return this->createTable()
 
-    	$offset = 0;
+    	$offset = 1;
     	while(!feof($filehandle))
 		{
     		fseek($filehandle, $offset);
@@ -71,6 +69,29 @@ class FileUploadController extends Controller
 
     }
 
+    public function createTable($filepath,$filename)
+    {
+    	$filehandle = fopen($filepath, "r");
+    	if ($filehandle === FALSE)
+    	{
+    		dd("File doesn't exist/ can't be accessed");
+    	}
+
+    	Schema::dropIfExists($filename);
+
+    	//Get Headers
+    	fseek($filehandle,0);
+    	$headers = (fgetcsv($filehandle));
+
+    	// Use headers to create a table
+    	Schema::create($filename, function (Blueprint $table) use ($headers)
+    	{
+    		foreach ($headers as $header)
+    		{
+    			$table->string($header);
+    		}
+		});
+    }
 
 
 }
