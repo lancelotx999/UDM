@@ -30,79 +30,85 @@
 
 </style>
 
-<!-- <div class="col-xs-6 col-sm-3 sidebar-offcanvas toggle-show" id="sidebar-wrapper" role="navigation" >
-    <div class="sidebar-nav">
+<div id="sidebar" class="collapse in">
+        
+    <br />
 
-        <h3 style="color:#fff; margin-bottom: 5px;"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Overlays</h3>
-        <hr />
+    <hr />
+
+    <h3 class="white-text">
+        <a data-toggle="collapse" href="#overlays_group">
+            <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>&nbsp;Overlays
+        </a>
+    </h3>
+
+    <hr />
+
+    <div id="overlays_group" class="collapse in">
         <ul class="nav">
-            
-            @if (\Request::is('/map/swinburne'))
-            <li>            
-                <input type="checkbox" id="Heatmap" class="example">
-                <label for="check_heatmap"><span id="cb_span">Heatmap</span></label>
-            </li>
-                
-            <li>
-                <input type="checkbox" id="Security" class="example">
-                <label for="check_security"><span id="cb_span">Security</span></label>
-            </li>               
-
-            <li>
-                <input type="checkbox" id="Electric" class="example">
-                <label for="check_electric"><span id="cb_span">Electrical Foorprint</span></label>
-            </li> 
-            @endif
-
-            @if (\Request::is('/') || \Request::is('map'))
             <li>            
                 <input type="checkbox" id="Borough" class="example">
-                <label for="check_borough"><span id="cb_span">Borough</span></label>
+                <label for="check_borough"><span class="white-text">Borough</span></label>
             </li>
                 
             <li>
                 <input type="checkbox" id="District" class="example">
-                <label for="check_district"><span id="cb_span">District</span></label>
+                <label for="check_district"><span class="white-text">District</span></label>
             </li>               
 
             <li>
                 <input type="checkbox" id="Precint" class="example">
-                <label for="check_precint"><span id="cb_span">Police Precint</span></label>
+                <label for="check_precint"><span class="white-text">Police Precint</span></label>
             </li> 
 
             <li>
                 <input type="checkbox" id="Battalion" class="example">
-                <label for="check_battalion"><span id="cb_span">Fire Battalion</span></label>
+                <label for="check_battalion"><span class="white-text">Fire Battalion</span></label>
             </li> 
 
             <li>
                 <input type="checkbox" id="School" class="example">
-                <label for="check_school"><span id="cb_span">School District</span></label>
+                <label for="check_school"><span class="white-text">School District</span></label>
             </li> 
+        </ul>
+    </div>
 
+    <hr />
+
+    <h3 class="white-text">
+        <a data-toggle="collapse" href="#markers_group">
+            <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>&nbsp;Markers
+        </a>
+    </h3>
+
+    <hr />
+
+    <div id="markers_group" class="collapse">
+        <ul class="nav">
             <li>
                 <input type="checkbox" id="Subway" class="example">
-                <label for="check_subway"><span id="cb_span">Subway Entry</span></label>
+                <label for="check_subway"><span class="white-text">Subway Entry</span></label>
             </li> 
 
             <li>
                 <input type="checkbox" id="Busstop" class="example">
-                <label for="check_subway"><span id="cb_span">Bus Stop</span></label>
+                <label for="check_subway"><span class="white-text">Bus Stop</span></label>
             </li> 
 
             <li>
                 <input type="checkbox" id="CollegeUni" class="example">
-                <label for="check_subway"><span id="cb_span">Universities</span></label>
+                <label for="check_subway"><span class="white-text">Universities</span></label>
             </li> 
-            @endif
         </ul>
-
-        <div id="overlay-filters">
-            <div id='MapFilters'></div>
-        </div>
-
     </div>
-</div> -->
+
+    <br /><br />
+
+</div>
+
+<button class="filter" href="#sidebar" data-toggle="collapse">
+    <i class="fa fa-map" aria-hidden="true"></i>&nbsp;Show / Hide Data Filters
+</button>
 
 <div id="popup"></div>
 <div id="map"></div>

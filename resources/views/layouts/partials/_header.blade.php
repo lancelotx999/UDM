@@ -20,86 +20,9 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;Maps</a></li>
+                <li><a href="/"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;Map</a></li>
                 <li><a>&#124;</a></li>
                 <li><a href="/chart"><i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp;Chart</a></li>
-                <!-- <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" data-target="/map" href="/map">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                        &nbsp;Maps
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="/map/swinburne">
-                                <i class="fa fa-university" aria-hidden="true"></i>
-                                &nbsp;Swinburne
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/">
-                                <i class="fa fa-map" aria-hidden="true"></i>
-                                &nbsp;Leaflet
-                            </a>
-                        </li>
-                    </ul>
-                </li> -->
-
-                <!-- <li><a>&#124;</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" role="menu" data-toggle="dropdown" data-target="/chart" href="/chart">
-                        <i class="fa fa-area-chart" aria-hidden="true"></i>
-                        &nbsp;Charts
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a tabindex="-1" href="/chart/security">
-                                <i class="fa fa-line-chart" aria-hidden="true"></i>
-                                &nbsp;Leaflet?
-                            </a>
-                        </li>
-                        
-
-
-                        <li class="dropdown">
-                                                <a class="dropdown-toggle" data-toggle="dropdown" data-target="/chart" href="/chart">
-                                                    <i class="fa fa-university" aria-hidden="true"></i>
-                                                    &nbsp;Swinburne
-                                                    <span class="caret"></span>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a href="/chart/enrollment">
-                                                            <i class="fa fa-bar-chart" aria-hidden="true"></i>
-                                                            &nbsp;Enrolment Statistics
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/chart/security">
-                                                            <i class="fa fa-line-chart" aria-hidden="true"></i>
-                                                            &nbsp;Security Log
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="/chart/clubRecruitment">
-                                                            <i class="fa fa-pie-chart" aria-hidden="true"></i>
-                                                            &nbsp;Club Recruitment Data
-                                                        </a>
-                                                    </li>
-                                                </ul>
-
-
-
-
-
-
-
-                        </li>
-                        
-                    </ul>
-                </li> -->
-
                 
                 @if (Auth::check() and Auth::user()->hasRole('admin'))
                 <li><a>&#124;</a></li>

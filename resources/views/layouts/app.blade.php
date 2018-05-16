@@ -28,11 +28,7 @@
 
         <div class="container-fluid" >
             <div class="row" >
-                <div class="col-xs-12 col-sm-9" id="main-content">
-
-                <!-- @if (\Request::is('map') || \Request::is('/') || \Request::is('map/swinburne'))
-                    @include('layouts/partials._overlay')
-                @endif -->
+                <div class="col-xs-12 col-sm-12" id="wrapper">
                         
                 @yield('content')
                     

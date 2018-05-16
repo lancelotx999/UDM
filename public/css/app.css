@@ -11418,7 +11418,7 @@ button.close {
   left: 0;
   bottom: 0;
   width: 100%;
-  z-index: 1400;
+  z-index: 2001;
 }
 
 html,
@@ -11478,78 +11478,59 @@ a:active {
   text-decoration: none;
 }
 
-.row.is-flex {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-}
-
-.row.is-flex > [class*='col-'] {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  padding-bottom: 1%;
-}
-
-/*Off Canvas*/
-
-@media screen and (max-width: 768px) {
-  .row-offcanvas {
-    position: relative;
-    -webkit-transition: all 0.25s ease-out;
-    transition: all 0.25s ease-out;
-    background: #ecf0f1;
-  }
-
-  .row-offcanvas-left .sidebar-offcanvas {
-    left: -40%;
-  }
-
-  .row-offcanvas-left.active {
-    left: 40%;
-  }
-
-  .sidebar-offcanvas {
-    position: relative;
-    top: 0;
-    width: 40%;
-    margin-left: 12px;
-  }
-}
-
-#sidebar {
-  padding: 20px;
-  background: #161a1d;
-  color: #161a1d;
-  width: 15%;
-}
-
-#cb_span {
-  color: white;
-}
-
-#main-content {
+#wrapper {
   width: 100%;
   padding: 0;
+  position: relative;
   background: url("/images/concrete_seamless.gif");
-}
-
-#main-content-chart {
-  width: 100%;
-  background: url("/images/concrete_seamless.gif");
-  padding: 20px;
 }
 
 /* CSS3 calc() function to perform calculations */
 
 #map {
   height: calc(100vh - 50px);
+}
+
+#sidebar,
+.filter {
+  position: absolute;
+  z-index: 2000;
+}
+
+#sidebar {
+  width: 35vh;
+  min-width: 350px;
+  height: calc(100vh - 50px);
+  padding: 20px;
+  background: #161a1d;
+  color: #161a1d;
+  overflow: auto;
+}
+
+h3 > a,
+a:active,
+a:focus,
+a:hover {
+  text-decoration: none;
+  outline: none;
+}
+
+.filter {
+  margin: 15px 20px 20px;
+  padding: 5px 15px;
+  border: none;
+  color: #161a1d;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+  background-color: #fff;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+}
+
+.filter:hover {
+  background-color: #eeeeee;
+  color: #555;
 }
 
 /*zoom to bounding box */
@@ -11612,6 +11593,10 @@ ul.links {
 
 .active {
   background-color: #fff;
+}
+
+.navbar {
+  z-index: 9999;
 }
 
 .navbar-nav {
