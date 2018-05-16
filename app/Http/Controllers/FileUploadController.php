@@ -23,7 +23,7 @@ class FileUploadController extends Controller
     	$file = $request->file('file');
         $filepath = $file->getPathName();
         $filename = $file->getClientOriginalName();
-
+        $filename = basename($filename, '.csv');
 
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
 		$filemime = finfo_file($finfo,$filepath);
@@ -90,7 +90,7 @@ class FileUploadController extends Controller
 
 
     	// Use headers to create a table
-    	Schema::create($filepath, function (Blueprint $table) use ($headers)
+    	Schema::create($filename, function (Blueprint $table) use ($headers)
     	{
             foreach ($headers as $header)
             {
