@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-
+use Illuminate\Support\Facades\DB;
 
 class FileUploadController extends Controller 
 {
@@ -32,44 +32,16 @@ class FileUploadController extends Controller
 		{
 			return $this->importCSV($filepath,$filename);
 		}
+		else
+		{
+			dd("INVALID FILE FORMAT");
+		}
 
     }
 
     public function importCSV($filepath, $filename)
     {
-    	return $this->createTable($filepath,$filename);
         $chunkSize = 100;
-
-        $filehandle = fopen($filepath, "r");
-        if ($filehandle === FALSE)
-        {
-            dd("File doesn't exist/ can't be accessed");
-        }
-
-    	$offset = 1;
-    	while(!feof($filehandle))
-		{
-    		fseek($filehandle, $offset);
-
-    		$i = 0;
-    			while (($currRow = fgetcsv($filehandle)) !== FALSE)
-    			{
-        			$i++; 
-        			print implode(', ', $currRow)."\n";
-        			if($i >= $chunkSize)
-        			{
-            			$offset = ftell($filehandle);
-            			break;
-        			}
-    			}
-		}
-
-		fclose($filehandle);
-
-    }
-
-    public function createTable($filepath,$filename)
-    {
         Schema::dropIfExists($filename);
 
     	$filehandle = fopen($filepath, "r");
@@ -94,23 +66,20 @@ class FileUploadController extends Controller
     	{
             foreach ($headers as $header)
             {
-                $table->text($header);
+                $table->string($header)->nullable();
             }
 		});
 
-        //Schema::rename($filepath, $filename);
+		while(!feof($filehandle))
+		{
+    		if (($currRow = fgetcsv($filehandle)) !== FALSE)
+    		{
+    			$data = array_combine($headers, $currRow);
+    			DB::table($filename)->insert($data);
+    		}
+		}
 
-
-        // Schema::connection('swinburne')->create($filename, function(Blueprint$table) use ($headers)
-        // {
-        //     foreach ($headers as $header)
-        //     {
-        //         $table->string($header);
-        //     }
-        // });
-
-
-        fclose($filehandle);
+		fclose($filehandle);
     }
 
         
