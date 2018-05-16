@@ -37,15 +37,14 @@ class FileUploadController extends Controller
 
     public function importCSV($filepath, $filename)
     {
-    	$chunkSize = 100;
+    	return $this->createTable($filepath,$filename);
+        $chunkSize = 100;
 
-    	$filehandle = fopen($filepath, "r");
-    	if ($filehandle === FALSE)
-    	{
-    		dd("File doesn't exist/ can't be accessed");
-    	}
-
-    	return this->createTable()
+        $filehandle = fopen($filepath, "r");
+        if ($filehandle === FALSE)
+        {
+            dd("File doesn't exist/ can't be accessed");
+        }
 
     	$offset = 1;
     	while(!feof($filehandle))
@@ -71,28 +70,49 @@ class FileUploadController extends Controller
 
     public function createTable($filepath,$filename)
     {
+        Schema::dropIfExists($filename);
+
     	$filehandle = fopen($filepath, "r");
     	if ($filehandle === FALSE)
     	{
     		dd("File doesn't exist/ can't be accessed");
     	}
-
-    	Schema::dropIfExists($filename);
-
+    	
     	//Get Headers
     	fseek($filehandle,0);
     	$headers = (fgetcsv($filehandle));
 
+        foreach ($headers as $header)
+        {
+            $header = str_replace(' ', '', $header);
+        }
+        $headers = array_map('trim',$headers);
+
+
     	// Use headers to create a table
-    	Schema::create($filename, function (Blueprint $table) use ($headers)
+    	Schema::create($filepath, function (Blueprint $table) use ($headers)
     	{
-    		foreach ($headers as $header)
-    		{
-    			$table->string($header);
-    		}
+            foreach ($headers as $header)
+            {
+                $table->text($header);
+            }
 		});
+
+        //Schema::rename($filepath, $filename);
+
+
+        // Schema::connection('swinburne')->create($filename, function(Blueprint$table) use ($headers)
+        // {
+        //     foreach ($headers as $header)
+        //     {
+        //         $table->string($header);
+        //     }
+        // });
+
+
+        fclose($filehandle);
     }
 
-
+        
 }
  
