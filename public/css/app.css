@@ -11409,7 +11409,7 @@ button.close {
   display: block;
   font-size: 12px;
   font-weight: 700;
-  line-height: 21px;
+  line-height: 20px;
   text-align: center;
   -webkit-box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.1);
           box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.1);
@@ -11444,12 +11444,6 @@ a:active {
 
 .bottom-space {
   padding-bottom: 50vh;
-}
-
-#securityChart svg,
-#enrollmentChart svg,
-#clubRecruitmentChart svg {
-  background: url("/images/concrete_seamless.gif");
 }
 
 .navbar-default .navbar-brand,
