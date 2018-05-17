@@ -13,7 +13,7 @@
     	{!! csrf_field() !!}
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
     	<p>Choose File:</p>
-        <p><input id="file" name="file" type="file"></p><hr />
+        <p><input id="file" name="file" type="file" files="true"></p><hr />
     	<p><input type="submit" /></p>
     </form>
 
