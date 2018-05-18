@@ -11424,8 +11424,6 @@ button.close {
 html,
 body {
   height: 100vh;
-  margin: 0;
-  padding: 0;
 }
 
 body {
@@ -11470,13 +11468,6 @@ a:active {
 
 .breadcrumb a {
   text-decoration: none;
-}
-
-#wrapper {
-  width: 100%;
-  padding: 0;
-  position: relative;
-  background: url("/images/concrete_seamless.gif");
 }
 
 /* CSS3 calc() function to perform calculations */

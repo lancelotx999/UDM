@@ -2,10 +2,6 @@
 
 @section('content')
 
-<!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css"> -->
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
@@ -30,88 +26,90 @@
 
 </style>
 
-<div id="sidebar" class="collapse in">
-        
-    <br />
+<div class="row">
+    <div id="sidebar" class="collapse in">
+            
+        <br />
 
-    <hr />
+        <hr />
 
-    <h3 class="white-text">
-        <a data-toggle="collapse" href="#overlays_group">
-            <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>&nbsp;Overlays
-        </a>
-    </h3>
+        <h3 class="white-text">
+            <a data-toggle="collapse" href="#overlays_group">
+                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>&nbsp;Overlays
+            </a>
+        </h3>
 
-    <hr />
+        <hr />
 
-    <div id="overlays_group" class="collapse in">
-        <ul class="nav">
-            <li>            
-                <input type="checkbox" id="Borough" class="example">
-                <label for="check_borough"><span class="white-text">Borough</span></label>
-            </li>
-                
-            <li>
-                <input type="checkbox" id="District" class="example">
-                <label for="check_district"><span class="white-text">District</span></label>
-            </li>               
+        <div id="overlays_group" class="collapse in">
+            <ul class="nav">
+                <li>            
+                    <input type="checkbox" id="Borough" class="example">
+                    <label for="check_borough"><span class="white-text">Borough</span></label>
+                </li>
+                    
+                <li>
+                    <input type="checkbox" id="District" class="example">
+                    <label for="check_district"><span class="white-text">District</span></label>
+                </li>               
 
-            <li>
-                <input type="checkbox" id="Precint" class="example">
-                <label for="check_precint"><span class="white-text">Police Precint</span></label>
-            </li> 
+                <li>
+                    <input type="checkbox" id="Precint" class="example">
+                    <label for="check_precint"><span class="white-text">Police Precint</span></label>
+                </li> 
 
-            <li>
-                <input type="checkbox" id="Battalion" class="example">
-                <label for="check_battalion"><span class="white-text">Fire Battalion</span></label>
-            </li> 
+                <li>
+                    <input type="checkbox" id="Battalion" class="example">
+                    <label for="check_battalion"><span class="white-text">Fire Battalion</span></label>
+                </li> 
 
-            <li>
-                <input type="checkbox" id="School" class="example">
-                <label for="check_school"><span class="white-text">School District</span></label>
-            </li> 
-        </ul>
+                <li>
+                    <input type="checkbox" id="School" class="example">
+                    <label for="check_school"><span class="white-text">School District</span></label>
+                </li> 
+            </ul>
+        </div>
+
+        <hr />
+
+        <h3 class="white-text">
+            <a data-toggle="collapse" href="#markers_group">
+                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>&nbsp;Markers
+            </a>
+        </h3>
+
+        <hr />
+
+        <div id="markers_group" class="collapse">
+            <ul class="nav">
+                <li>
+                    <input type="checkbox" id="Subway" class="example">
+                    <label for="check_subway"><span class="white-text">Subway Entry</span></label>
+                </li> 
+
+                <li>
+                    <input type="checkbox" id="Busstop" class="example">
+                    <label for="check_subway"><span class="white-text">Bus Stop</span></label>
+                </li> 
+
+                <li>
+                    <input type="checkbox" id="CollegeUni" class="example">
+                    <label for="check_subway"><span class="white-text">Universities</span></label>
+                </li> 
+            </ul>
+        </div>
+
+        <br /><br />
+
     </div>
 
-    <hr />
+    <button class="filter" href="#sidebar" data-toggle="collapse">
+        <i class="fa fa-map" aria-hidden="true"></i>&nbsp;Show / Hide Data Filters
+    </button>
 
-    <h3 class="white-text">
-        <a data-toggle="collapse" href="#markers_group">
-            <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>&nbsp;Markers
-        </a>
-    </h3>
-
-    <hr />
-
-    <div id="markers_group" class="collapse">
-        <ul class="nav">
-            <li>
-                <input type="checkbox" id="Subway" class="example">
-                <label for="check_subway"><span class="white-text">Subway Entry</span></label>
-            </li> 
-
-            <li>
-                <input type="checkbox" id="Busstop" class="example">
-                <label for="check_subway"><span class="white-text">Bus Stop</span></label>
-            </li> 
-
-            <li>
-                <input type="checkbox" id="CollegeUni" class="example">
-                <label for="check_subway"><span class="white-text">Universities</span></label>
-            </li> 
-        </ul>
-    </div>
-
-    <br /><br />
-
+    <div id="popup"></div>
+    <div id="map"></div>
 </div>
-
-<button class="filter" href="#sidebar" data-toggle="collapse">
-    <i class="fa fa-map" aria-hidden="true"></i>&nbsp;Show / Hide Data Filters
-</button>
-
-<div id="popup"></div>
-<div id="map"></div>
 
 <!-- <img src="{{URL::asset('images/swinlogo.png')}}" alt="profile Pic" height="200" width="200"> -->
 <script>

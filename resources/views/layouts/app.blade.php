@@ -26,9 +26,9 @@
 
         @include('layouts.partials._header')
 
-        <div class="container-fluid" >
+        <div class="container-fluid wrapper">
             <div class="row" >
-                <div class="col-xs-12 col-sm-12" id="wrapper">
+                <div class="col-xs-12 col-sm-12">
                         
                 @yield('content')
                     

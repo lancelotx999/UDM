@@ -1,6 +1,8 @@
 
 window.d3 = require('d3');
 
+window.$ = window.jQuery = require('jquery');
+
 window._ = require('lodash');
 
 /**

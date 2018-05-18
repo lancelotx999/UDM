@@ -80,8 +80,7 @@ class FileUploadController extends Controller
 		}
 
 		fclose($filehandle);
+        return view('dbManager/UploadDB');
     }
-
-        
 }
  
