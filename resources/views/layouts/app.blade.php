@@ -12,7 +12,8 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/leaflet.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/leaflet/leaflet.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/leaflet-draw/leaflet.draw.css') }}" rel="stylesheet">
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}">
@@ -21,7 +22,8 @@
             ]) !!};
         </script>
 
-        <script src="{{ asset('js/PruneCluster.js') }}"></script>
+        <script src="{{ asset('js/prunecluster/PruneCluster.js') }}"></script>
+        <script src="{{ asset('js/leaflet-draw/leaflet.draw.js') }}"></script>
 
     </head>
 

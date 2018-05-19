@@ -2,31 +2,36 @@
 
 @section('content')
 
-<style type="text/css">
-
-	.hide {
-		visibility: hidden;
-	}
-
-</style>
-
 <div class="row">
-    <div class="col-xs-12 col-sm-12">
-    	<div class="embed-responsive embed-responsive-16by9">
-			<iframe class="embed-responsive-item" src="{{ url('/svg-edit/svg-editor.html') }}"></iframe>
-		</div>
-	</div>
+	<div id="map"></div>
 </div>
 
-<div class="hide">
+<script>
+    var map = L.map('map').setView([-41.2858, 174.78682], 14);
+    mapLink = 
+        '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+    L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; ' + mapLink + ' Contributors',
+        maxZoom: 18,
+        }).addTo(map);
 
-@foreach (new DirectoryIterator(public_path('assets')) as $fileInfo)
-    @php
-    if ($fileInfo->isDot()) continue;
-    @endphp
-    <a href="/assets/{{ $fileInfo->getFilename() }}">{{ $fileInfo->getFilename() }}</a>
-@endforeach
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
 
-</div>
+    var drawControl = new L.Control.Draw({
+        edit: {
+            featureGroup: drawnItems
+        }
+    });
+    map.addControl(drawControl);
+
+    map.on('draw:created', function (e) {
+        var type = e.layerType,
+            layer = e.layer;
+        drawnItems.addLayer(layer);
+    });
+
+</script>
 
 @endsection
