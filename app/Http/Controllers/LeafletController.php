@@ -14,23 +14,7 @@ class LeafletController extends Controller
 
      public function mainMap()
      {
-         // $securityLogs = Security::all();
-
-         $filename = "states.geojson";
-
          $data = [];
-
-         $path = storage_path() . "/data/${filename}"; // ie: /var/www/laravel/app/storage/json/filename.json
-         // if (!File::exists($path)) {
-         //     throw new Exception("Invalid File");
-         // }
-         //
-         // $file = File::get($path); // string
-         //
-         // $data['securityLogs'] = $securityLogs;
-         // $data['test'] = $file;
-         $data['test2'] = $path;
-
 
          return view('/leaflet',$data);
      }

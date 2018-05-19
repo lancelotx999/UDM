@@ -4,11 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Security;
-use App\Enrollment;
-use App\ClubRecruitment;
-
-
 class ChartController extends Controller
 {
     /**
@@ -18,47 +13,47 @@ class ChartController extends Controller
      */
      public function chartPage()
      {
-         $securityLogs = Security::all();
-         $enrollmentData = Enrollment::all();
-         $clubRecruitmentData = ClubRecruitment::all();
+         // $securityLogs = Security::all();
+         // $enrollmentData = Enrollment::all();
+         // $clubRecruitmentData = ClubRecruitment::all();
          $data = [];
 
-         $data['securityLogs'] = $securityLogs;
-         $data['enrollmentData'] = $enrollmentData;
-         $data['clubRecruitmentData'] = $clubRecruitmentData;
+         // $data['securityLogs'] = $securityLogs;
+         // $data['enrollmentData'] = $enrollmentData;
+         // $data['clubRecruitmentData'] = $clubRecruitmentData;
 
          return view('/chart',$data);
      }
 
-     public function securityChartPage()
-     {
-         $securityLogs = Security::all();
-         $data = [];
-
-         $data['securityLogs'] = $securityLogs;
-
-         return view('/charts/securityChart',$data);
-     }
-
-     public function enrollmentChartPage()
-     {
-         $enrollmentData = Enrollment::all();
-         $data = [];
-
-         $data['enrollmentData'] = $enrollmentData;
-
-         return view('/charts/enrollmentChart',$data);
-     }
-
-     public function clubRecruitmentChartPage()
-     {
-         $clubRecruitmentData = ClubRecruitment::all();
-         $data = [];
-
-         $data['clubRecruitmentData'] = $clubRecruitmentData;
-
-         return view('/charts/clubRecruitmentChart',$data);
-     }
+     // public function securityChartPage()
+     // {
+     //     $securityLogs = Security::all();
+     //     $data = [];
+     //
+     //     $data['securityLogs'] = $securityLogs;
+     //
+     //     return view('/charts/securityChart',$data);
+     // }
+     //
+     // public function enrollmentChartPage()
+     // {
+     //     $enrollmentData = Enrollment::all();
+     //     $data = [];
+     //
+     //     $data['enrollmentData'] = $enrollmentData;
+     //
+     //     return view('/charts/enrollmentChart',$data);
+     // }
+     //
+     // public function clubRecruitmentChartPage()
+     // {
+     //     $clubRecruitmentData = ClubRecruitment::all();
+     //     $data = [];
+     //
+     //     $data['clubRecruitmentData'] = $clubRecruitmentData;
+     //
+     //     return view('/charts/clubRecruitmentChart',$data);
+     // }
 
 
     /**

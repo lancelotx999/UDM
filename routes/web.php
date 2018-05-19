@@ -13,13 +13,13 @@
 
 // Routes for public access of maps and charts
 Route::get('/', 'LeafletController@mainMap');
-Route::get('/map/swinburne', 'HeatmapController@heatmapMap');
+// Route::get('/map/swinburne', 'HeatmapController@heatmapMap');
 Route::get('/map', 'LeafletController@mainMap');
 
 Route::get('/chart', 'ChartController@chartPage');
-Route::get('/chart/security', 'ChartController@securityChartPage');
-Route::get('/chart/enrollment', 'ChartController@enrollmentChartPage');
-Route::get('/chart/clubRecruitment', 'ChartController@clubRecruitmentChartPage');
+// Route::get('/chart/security', 'ChartController@securityChartPage');
+// Route::get('/chart/enrollment', 'ChartController@enrollmentChartPage');
+// Route::get('/chart/clubRecruitment', 'ChartController@clubRecruitmentChartPage');
 
 // Routes for Admin use only
 Route::get('/editor', function () {
