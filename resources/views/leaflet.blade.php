@@ -2,31 +2,8 @@
 
 @section('content')
 
-<!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
-<!-- <script src="PruneCluster/dist/PruneCluster.js"></script> -->
-<script src="{{URL::asset('js/PruneCluster.js')}}"></script>
-<style type="text/css">
-
-    div.tooltip {
-        position: absolute;
-        padding: 2px;
-        font: 12px sans-serif;
-        background: lightsteelblue;
-        border: 1px;
-        border-radius: 8px;
-        pointer-events: none;
-    }
-
-    svg {
-      position: relative;
-    }
-
-</style>
-
 <div class="row">
+    
     <div id="sidebar" class="collapse in">
             
         <br />
@@ -2085,12 +2062,6 @@
         schoolDistrictOverlay();
         collegesUniversitiesMarker();
     }
-
-    //uncheck all boxes on Mozilla browser refresh
-    function uncheck() {
-        $(':checkbox:checked').prop('checked',false);
-    }
-
 
 </script>
 

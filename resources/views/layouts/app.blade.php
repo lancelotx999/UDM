@@ -12,6 +12,7 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/leaflet.css') }}" rel="stylesheet">
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}">
@@ -19,6 +20,8 @@
                 'csrfToken' => csrf_token(),
             ]) !!};
         </script>
+
+        <script src="{{ asset('js/PruneCluster.js') }}"></script>
 
     </head>
 
@@ -39,6 +42,13 @@
         <a class="beta-notice" href="https://github.com/lancelotx999/UDM">
             A beta project of Urban Development Maps. Swinburne University of Technology. UDM &copy; 2017-2018
         </a>
+
+        <script type="text/javascript">
+
+            //uncheck all boxes on Mozilla browser refresh
+            function uncheck() { $(':checkbox:checked').prop('checked',false); }
+
+        </script>
         
     </body>
     
