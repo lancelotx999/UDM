@@ -128,68 +128,76 @@
 	</div>
 	<div class="col-xs-12 col-sm-12">
 		<div class="row">
-			<div class="col-xs-3 col-sm-3 chart-filter">
+			<div class="col-sm-3 col-xs-3 chart-filter">
 				<div class="row">
 					<div class="col-sm-12 col-xs-12">
 						<hr />
 						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
 						<hr />
-						<div id='securityChartFilters'></div>
+						<div id='birthsByGenderChartFilters'></div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<div id='securityChartApplyButton'></div>
+					<div class="col-sm-6 col-xs-6">
+						<div id='birthsByGenderChartApplyButton'></div>
+					</div>
+					<div class="col-sm-6 col-xs-6">
+						<div id='birthsByGenderChartResetButton'></div>
 					</div>
 				</div>
 			</div>
-			<div class="col-xs-8 col-sm-8">
+			<div class=" col-sm-8 col-xs-8">
 				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-line-chart" aria-hidden="true"></i>&nbsp;Water Consumption in New York City</h1>
+				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Births By Gender Of New York City</h1>
 				<hr />
-				<div id='securityChart'></div>
+				<div id='birthsByGenderChart'></div>
 			</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-sm-12">
 		<div class="row">
-			<div class="col-xs-3 col-sm-3 chart-filter">
+			<div class="col-sm-3 col-xs-3 chart-filter">
 				<div class="row">
 					<div class="col-sm-12 col-xs-12">
 						<hr />
 						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
 						<hr />
-						<div id='clubRecruitmentChartFilters'></div>
+						<div id='birthsByRaceChartFilters'></div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<div id='clubRecruitmentChartApplyButton'></div>
+					<div class="col-sm-6 col-xs-6">
+						<div id='birthsByRaceChartApplyButton'></div>
+					</div>
+					<div class="col-sm-6 col-xs-6">
+						<div id='birthsByRaceChartResetButton'></div>
 					</div>
 				</div>
 			</div>
-			<div class="col-xs-8 col-sm-8">
+			<div class=" col-sm-8 col-xs-8">
 				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-pie-chart" aria-hidden="true"></i>&nbsp;Club Recruitment Data</h1>
+				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Births By Race Of New York City</h1>
 				<hr />
-				<div id='clubRecruitmentChart'></div>
+				<div id='birthsByRaceChart'></div>
 			</div>
 		</div>
 	</div>
 </div>
 
 <script>
-	var securityLogs = null,
-		enrollmentData = null,
-		clubRecruitmentData = null,
-		populationData = null;
-		dateMin = null,
-		dateMax = null;
+	// var securityLogs = null,
+	// 	enrollmentData = null,
+	// 	clubRecruitmentData = null,
+	// 	populationData = null;
+	// 	dateMin = null,
+	// 	dateMax = null;
 
 	// createPopulationByBoroughChart(populationData, null, null);
-	createPopulationByBoroughChart(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
-	createPopulationByCommunityChart(populationData, new Date("01/01/1950"), new Date("01/01/2040"), "Manhattan");
+	createPopulationByBoroughChart(null, new Date("01/01/1950"), new Date("01/01/2040"));
+	createPopulationByCommunityChart(null, new Date("01/01/1950"), new Date("01/01/2040"), "Manhattan");
 	createWaterConsumptionChart();
+	createBirthsByGenderChart();
+	createBirthsByRaceChart();
 
 	// new Date("01/01/2015"), new Date("12/31/2015")
 	// createSecurityChart(securityLogs, new Date("01/01/2016"), new Date("12/31/2016"), 'All', 'All');
@@ -972,10 +980,6 @@
 	// }
 
 	function createPopulationByBoroughChart(populationData, dateMin, dateMax){
-		// console.log("---------- createVehicleCollisionChart ----------");
-		// console.log(createVehicleCollisionChart);
-		// console.log("---------- createVehicleCollisionChart ----------");
-
 		// Set the dimensions of the canvas / graph
 		var margin = {top: 30, right: 80, bottom: 70, left: 80},
 			width = 600 - margin.left - margin.right,
@@ -1652,9 +1656,9 @@
 
 			waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
 
-			console.log("------------ waterConsumptionData ------------");
-			console.log(waterConsumptionData);
-			console.log("------------ waterConsumptionData ------------");
+			// console.log("------------ waterConsumptionData ------------");
+			// console.log(waterConsumptionData);
+			// console.log("------------ waterConsumptionData ------------");
 
 
 			// Set the ranges
@@ -1671,12 +1675,12 @@
 			yConsumptionPerCapita.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumptionPerCapita; }))]).nice();
 
 			// // Scale the range of the date
-			console.log("---------- dateMin ----------");
-			console.log(dateMin);
-			console.log("---------- dateMin ----------");
-			console.log("---------- dateMax ----------");
-			console.log(dateMax);
-			console.log("---------- dateMax ----------");
+			// console.log("---------- dateMin ----------");
+			// console.log(dateMin);
+			// console.log("---------- dateMin ----------");
+			// console.log("---------- dateMax ----------");
+			// console.log(dateMax);
+			// console.log("---------- dateMax ----------");
 
 			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
 				waterConsumptionData = waterConsumptionData.filter(function (d){
@@ -1736,14 +1740,14 @@
 				.style("stroke-width", "2px")
 				.attr("d", populationLine)
 				.on("mouseover", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
+					// console.log("------------ d ------------");
+					// console.log(d);
+					// console.log("------------ d ------------");
 				})
 				.on("mouseout", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
+					// console.log("------------ d ------------");
+					// console.log(d);
+					// console.log("------------ d ------------");
 				});
 
 			// Add the consumptionLine path.
@@ -1755,14 +1759,14 @@
 				.style("stroke-width", "2px")
 				.attr("d", consumptionLine)
 				.on("mouseover", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
+					// console.log("------------ d ------------");
+					// console.log(d);
+					// console.log("------------ d ------------");
 				})
 				.on("mouseout", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
+					// console.log("------------ d ------------");
+					// console.log(d);
+					// console.log("------------ d ------------");
 				});
 
 			// Add the consumptionPerCapitaLine path.
@@ -1774,14 +1778,14 @@
 				.style("stroke-width", "2px")
 				.attr("d", consumptionPerCapitaLine)
 				.on("mouseover", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
+					// console.log("------------ d ------------");
+					// console.log(d);
+					// console.log("------------ d ------------");
 				})
 				.on("mouseout", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
+					// console.log("------------ d ------------");
+					// console.log(d);
+					// console.log("------------ d ------------");
 				});
 
 			// Add the X Axis
@@ -1929,13 +1933,13 @@
 	function createWaterConsumptionFilter(waterConsumptionData, dateMin, dateMax){
 		var dateSlider = "";
 
-		console.log("---------- createWaterConsumptionFilter ----------");
-		console.log("---------- dateMax ----------");
-		console.log(dateMax);
-		console.log("---------- dateMax ----------");
-		console.log("---------- dateMin ----------");
-		console.log(dateMin);
-		console.log("---------- dateMin ----------");
+		// console.log("---------- createWaterConsumptionFilter ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
 
 		dateSlider += "<p class='white-text'>Date Range for Water Consumption Chart:&nbsp;</p>";
 		dateSlider += "<p><input type='date-' id='date-waterConsumptionChart'></p>";
@@ -1952,9 +1956,9 @@
 			tempData.push(d.date.getTime());
 		});
 
-		console.log("---------- tempData ----------");
-		console.log(tempData);
-		console.log("---------- tempData ----------");
+		// console.log("---------- tempData ----------");
+		// console.log(tempData);
+		// console.log("---------- tempData ----------");
 
 		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
 			$(function (){
@@ -1967,13 +1971,13 @@
 						dateMin = new Date(ui.values[0]);
 						dateMax = new Date(ui.values[1]);
 
-						console.log("---------- waterConsumptionChartFilters ----------");
-						console.log("---------- dateMin ----------");
-						console.log(dateMin);
-						console.log("---------- dateMin ----------");
-						console.log("---------- dateMax ----------");
-						console.log(dateMax);
-						console.log("---------- dateMax ----------");
+						// console.log("---------- waterConsumptionChartFilters ----------");
+						// console.log("---------- dateMin ----------");
+						// console.log(dateMin);
+						// console.log("---------- dateMin ----------");
+						// console.log("---------- dateMax ----------");
+						// console.log(dateMax);
+						// console.log("---------- dateMax ----------");
 
 
 						$( "#date-waterConsumptionChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
@@ -1995,13 +1999,13 @@
 						// console.log(dateMin);
 						// console.log(dateMax);
 
-						console.log("---------- waterConsumptionChartFilters ----------");
-						console.log("---------- dateMin ----------");
-						console.log(dateMin);
-						console.log("---------- dateMin ----------");
-						console.log("---------- dateMax ----------");
-						console.log(dateMax);
-						console.log("---------- dateMax ----------");
+						// console.log("---------- waterConsumptionChartFilters ----------");
+						// console.log("---------- dateMin ----------");
+						// console.log(dateMin);
+						// console.log("---------- dateMin ----------");
+						// console.log("---------- dateMax ----------");
+						// console.log(dateMax);
+						// console.log("---------- dateMax ----------");
 
 						$( "#date-waterConsumptionChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
 					}
@@ -2020,19 +2024,19 @@
 		document.getElementById("waterConsumptionChartApplyButton").appendChild(waterConsumptionChartApplyButton);
 
 		waterConsumptionChartApplyButton.addEventListener ("click", function() {
-			console.log("---------- Submit Button Clicked ----------");
-			console.log($("#dateSlider-waterConsumptionChart").val());
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-waterConsumptionChart").val());
 
 			var min = new Date($("#dateSlider-waterConsumptionChart").slider( "values", 0 )),
 				max = new Date($("#dateSlider-waterConsumptionChart").slider( "values", 1 ));
 
-			console.log("---------- waterConsumptionChartApplyButton ----------");
-			console.log("---------- min ----------");
-			console.log(min);
-			console.log("---------- min ----------");
-			console.log("---------- max ----------");
-			console.log(max);
-			console.log("---------- max ----------");
+			// console.log("---------- waterConsumptionChartApplyButton ----------");
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
 
 			document.getElementById("waterConsumptionChart").innerHTML = "";
 
@@ -2058,9 +2062,9 @@
 				})
 
 				waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
-				console.log("---------- waterConsumptionData ----------");
-				console.log(waterConsumptionData);
-				console.log("---------- waterConsumptionData ----------");
+				// console.log("---------- waterConsumptionData ----------");
+				// console.log(waterConsumptionData);
+				// console.log("---------- waterConsumptionData ----------");
 
 				document.getElementById("waterConsumptionChart").innerHTML = "";
 
@@ -2072,6 +2076,562 @@
 		});
 
 
+	}
+
+	function createBirthsByGenderChart(birthData, selectedDate){
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom
+			radius = Math.min(width, height) / 2;
+
+		var arc = d3.arc()
+			.outerRadius(radius - 10)
+			.innerRadius(0);
+
+		var labelArc = d3.arc()
+			.outerRadius(radius - 40)
+			.innerRadius(radius - 40);
+
+		var pie = d3.pie()
+			.sort(null)
+			.value(function(d) { return d.value.total; });
+
+		// Adds the svg canvas
+		var svg = d3.select("#birthsByGenderChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the div for the tooltip
+		var tooltip = d3.select("#birthsByGenderChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+
+		d3.csv("data/NYC-bigData/Natality.csv", function (data){
+			birthData = [];
+			data.forEach(function(d){
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+
+				birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
+			})
+
+			birthData.sort(function(a, b) { return a.date - b.date; });
+
+			console.log("---------- birthData ----------");
+			console.log(birthData);
+			console.log("---------- birthData ----------");
+
+
+			// if (selectedDate != null && selectedDate != undefined) {
+			// 	selectedDate = selectedDate;
+			// }
+			// else {
+			// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+			// }
+
+			// console.log("---------- selectedDate-pre ----------");
+			// console.log(selectedDate);
+			// console.log("---------- selectedDate-pre ----------");
+
+			if (selectedDate == null && selectedDate == undefined) {
+				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+				// selectedDate = new Date(selectedDate.toString());
+			}
+			else {
+				selectedDate = new Date(selectedDate.toString());
+			}
+
+			// console.log("---------- selectedDate-post ----------");
+			// console.log(selectedDate);
+			// console.log("---------- selectedDate-post ----------");
+            //
+			// console.log("---------- new Date ----------");
+			// console.log(new Date("2015"));
+			// console.log("---------- new Date ----------");
+
+			filteredBirthData = [];
+
+			// console.log("---------- selectedDate ----------");
+			// console.log(selectedDate);
+			// console.log("---------- selectedDate ----------");
+
+			birthData.forEach(function(d){
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				if (d.date.getFullYear() == selectedDate.getFullYear()) {
+					// console.log("---------- d ----------");
+					// console.log(d);
+					// console.log("---------- d ----------");
+					filteredBirthData.push(d);
+				}
+			})
+
+			// console.log("---------- filteredBirthData ----------");
+			// console.log(filteredBirthData);
+			// console.log("---------- filteredBirthData ----------");
+
+			var nestedBirthData = d3.nest()
+				.key(function(d) { return d.sex; })
+				.rollup(function(v) { return {
+					total: d3.sum(v, function(d) { return d.births; }),
+					avg: d3.mean(v, function(d) { return d.births; })
+				}; })
+				.entries(filteredBirthData);
+
+			// console.log("---------- nestedBirthData ----------");
+			// console.log(nestedBirthData);
+			// console.log("---------- nestedBirthData ----------");
+
+			// birthData = birthData.filter(function(d){return d.date == selectedDate;})
+
+			var g = svg.selectAll(".arc")
+				.data(pie(nestedBirthData))
+				.enter().append("g")
+				.attr("class", "arc")
+				.on("mouseover", function(d) {
+					console.log("---------- d ----------");
+					console.log(d);
+					console.log("---------- d ----------");
+					tooltip.transition()
+						.duration(200)
+						.style("opacity", .9);
+
+					tooltip.html(
+						"Year: " + selectedDate.getFullYear() + "<br/>" + "<br/>" +
+						"Gender: " + d.data.key + "<br/>" + "<br/>" +
+						"Total Births: " + d.data.value.avg + "<br/>" + "<br/>"
+					)
+						.style("left", (d3.event.pageX / 1.5) + "px")
+						.style("top", (d3.event.pageY / 10) + "px");
+				})
+				.on("mouseout", function(d) {
+					tooltip.transition()
+						.duration(500)
+						.style("opacity", 0);
+				});
+
+			g.append("path")
+				.attr("d", arc)
+				.style("fill", function(d) { return color(d.data.key); });
+
+			g.append("text")
+				.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+				.attr("dy", ".35em")
+				.text(function(d) { return d.data.value.total; });
+
+			createBirthsByGenderFilter(birthData);
+			createBirthsByGenderApplyButton(birthData);
+			createBirthsByGenderResetButton(birthData);
+
+		})
+	}
+
+	function createBirthsByGenderFilter(birthData){
+		var dateSelector = "";
+
+		// console.log("---------- createWaterConsumptionFilter ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+
+		// dateSelector += "<p class='white-text'>Select Year for Birth By Gender Chart:&nbsp;</p>";
+		// dateSelector += "<p><input type='text' id='datepicker-birthsByGenderChart'></p>";
+		// dateSelector += "<div id='datepicker-birthsByGenderChart' style='width:85%;margin: auto;'></div></br>";
+
+		var years = [];
+
+		birthData.forEach(function(d){
+			if (years.includes(d.date.getFullYear()) != true) {
+				years.push(d.date.getFullYear());
+			}
+		})
+
+		// console.log("---------- years ----------");
+		// console.log(years);
+		// console.log("---------- years ----------");
+
+
+		dateSelector += "<p class='white-text'>Select Year for Birth By Gender Chart:</p><p><select id='selectYear-birthsByGenderChart' size='1' style='width: 202px;'>";
+		years.forEach(function (d){
+			dateSelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		dateSelector += "</select></p><hr />";
+
+		document.getElementById('birthsByGenderChartFilters').innerHTML = dateSelector;
+
+
+
+		// $(function (){
+		// 	$("#datepicker-birthsByGenderChart").datepicker({
+		// 		dateFormat: 'yy',
+		// 		changeYear: true,
+		// 		changeMonth: false
+		// 	});
+		// })
+
+
+	}
+
+	function createBirthsByGenderApplyButton(birthData){
+		document.getElementById("birthsByGenderChartApplyButton").innerHTML = "";
+
+		var birthsByGenderChartApplyButton = document.createElement("birthsByGenderChartApplyButton");
+
+		birthsByGenderChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+
+		document.getElementById("birthsByGenderChartApplyButton").appendChild(birthsByGenderChartApplyButton);
+
+		birthsByGenderChartApplyButton.addEventListener ("click", function() {
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-birthsByGenderChart").val());
+			// console.log($("#selectBorough-birthsByGenderChart").val());
+
+			var selectedYear = $("#selectYear-birthsByGenderChart").val();
+
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
+			console.log("---------- selectedYear ----------");
+			console.log(selectedYear);
+			console.log("---------- selectedYear ----------");
+
+
+			document.getElementById("birthsByGenderChart").innerHTML = "";
+
+			createBirthsByGenderChart(birthData, selectedYear);
+		});
+	}
+
+	function createBirthsByGenderResetButton(birthdata){
+		document.getElementById("birthsByGenderChartResetButton").innerHTML = "";
+
+		var birthsByGenderChartResetButton = document.createElement("birthsByGenderChartResetButton");
+
+		birthsByGenderChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+
+		document.getElementById("birthsByGenderChartResetButton").appendChild(birthsByGenderChartResetButton);
+
+		birthsByGenderChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/Natality.csv", function (data){
+				birthData = [];
+				data.forEach(function(d){
+					// console.log("---------- d ----------");
+					// console.log(d);
+					// console.log("---------- d ----------");
+
+					birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
+				})
+
+				birthData.sort(function(a, b) { return a.date - b.date; });
+
+				console.log("---------- birthData ----------");
+				console.log(birthData);
+				console.log("---------- birthData ----------");
+
+				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+
+				document.getElementById("birthsByGenderChart").innerHTML = "";
+
+				createBirthsByGenderChart(birthData,selectedDate);
+
+
+			});
+
+		});
+	}
+
+	function createBirthsByRaceChart(birthData, selectedDate){
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom
+			radius = Math.min(width, height) / 2;
+
+		var arc = d3.arc()
+			.outerRadius(radius - 10)
+			.innerRadius(0);
+
+		var labelArc = d3.arc()
+			.outerRadius(radius - 40)
+			.innerRadius(radius - 40);
+
+		var pie = d3.pie()
+			.sort(null)
+			.value(function(d) { return d.value.total; });
+
+		// Adds the svg canvas
+		var svg = d3.select("#birthsByRaceChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the div for the tooltip
+		var tooltip = d3.select("#birthsByRaceChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+
+		d3.csv("data/NYC-bigData/Natality.csv", function (data){
+			birthData = [];
+			data.forEach(function(d){
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+
+				birthData.push({date: new Date(d.date), race: d.race, births: Number(d.births)});
+			})
+
+			birthData.sort(function(a, b) { return a.date - b.date; });
+
+			console.log("---------- birthData ----------");
+			console.log(birthData);
+			console.log("---------- birthData ----------");
+
+
+			// if (selectedDate != null && selectedDate != undefined) {
+			// 	selectedDate = selectedDate;
+			// }
+			// else {
+			// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+			// }
+
+			// console.log("---------- selectedDate-pre ----------");
+			// console.log(selectedDate);
+			// console.log("---------- selectedDate-pre ----------");
+
+			if (selectedDate == null && selectedDate == undefined) {
+				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+				// selectedDate = new Date(selectedDate.toString());
+			}
+			else {
+				selectedDate = new Date(selectedDate.toString());
+			}
+
+			// console.log("---------- selectedDate-post ----------");
+			// console.log(selectedDate);
+			// console.log("---------- selectedDate-post ----------");
+			//
+			// console.log("---------- new Date ----------");
+			// console.log(new Date("2015"));
+			// console.log("---------- new Date ----------");
+
+			filteredBirthData = [];
+
+			// console.log("---------- selectedDate ----------");
+			// console.log(selectedDate);
+			// console.log("---------- selectedDate ----------");
+
+			birthData.forEach(function(d){
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				if (d.date.getFullYear() == selectedDate.getFullYear()) {
+					// console.log("---------- d ----------");
+					// console.log(d);
+					// console.log("---------- d ----------");
+					filteredBirthData.push(d);
+				}
+			})
+
+			// console.log("---------- filteredBirthData ----------");
+			// console.log(filteredBirthData);
+			// console.log("---------- filteredBirthData ----------");
+
+			var nestedBirthData = d3.nest()
+				.key(function(d) { return d.race; })
+				.rollup(function(v) { return {
+					total: d3.sum(v, function(d) { return d.births; }),
+					avg: d3.mean(v, function(d) { return d.births; })
+				}; })
+				.entries(filteredBirthData);
+
+			// console.log("---------- nestedBirthData ----------");
+			// console.log(nestedBirthData);
+			// console.log("---------- nestedBirthData ----------");
+
+			// birthData = birthData.filter(function(d){return d.date == selectedDate;})
+
+			var g = svg.selectAll(".arc")
+				.data(pie(nestedBirthData))
+				.enter().append("g")
+				.attr("class", "arc")
+				.on("mouseover", function(d) {
+					console.log("---------- d ----------");
+					console.log(d);
+					console.log("---------- d ----------");
+					tooltip.transition()
+						.duration(200)
+						.style("opacity", .9);
+
+					tooltip.html(
+						"Year: " + selectedDate.getFullYear() + "<br/>" + "<br/>" +
+						"Race: " + d.data.key + "<br/>" + "<br/>" +
+						"Total Births: " + d.data.value.avg + "<br/>" + "<br/>"
+					)
+						.style("left", (d3.event.pageX / 1.5) + "px")
+						.style("top", (d3.event.pageY / 10) + "px");
+				})
+				.on("mouseout", function(d) {
+					tooltip.transition()
+						.duration(500)
+						.style("opacity", 0);
+				});
+
+			g.append("path")
+				.attr("d", arc)
+				.style("fill", function(d) { return color(d.data.key); });
+
+			g.append("text")
+				.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+				.attr("dy", ".35em")
+				.text(function(d) { return d.data.value.total; });
+
+			createBirthsByRaceFilter(birthData);
+			createBirthsByRaceApplyButton(birthData);
+			createBirthsByRaceResetButton(birthData);
+
+		})
+	}
+
+	function createBirthsByRaceFilter(birthData){
+		var dateSelector = "";
+
+		// console.log("---------- createWaterConsumptionFilter ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+
+		// dateSelector += "<p class='white-text'>Select Year for Birth By Race Chart:&nbsp;</p>";
+		// dateSelector += "<p><input type='text' id='datepicker-birthsByRaceChart'></p>";
+		// dateSelector += "<div id='datepicker-birthsByRaceChart' style='width:85%;margin: auto;'></div></br>";
+
+		var years = [];
+
+		birthData.forEach(function(d){
+			if (years.includes(d.date.getFullYear()) != true) {
+				years.push(d.date.getFullYear());
+			}
+		})
+
+		// console.log("---------- years ----------");
+		// console.log(years);
+		// console.log("---------- years ----------");
+
+
+		dateSelector += "<p class='white-text'>Select Year for Birth By Race Chart:</p><p><select id='selectYear-birthsByRaceChart' size='1' style='width: 202px;'>";
+		years.forEach(function (d){
+			dateSelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		dateSelector += "</select></p><hr />";
+
+		document.getElementById('birthsByRaceChartFilters').innerHTML = dateSelector;
+
+
+
+		// $(function (){
+		// 	$("#datepicker-birthsByRaceChart").datepicker({
+		// 		dateFormat: 'yy',
+		// 		changeYear: true,
+		// 		changeMonth: false
+		// 	});
+		// })
+
+
+	}
+
+	function createBirthsByRaceApplyButton(birthData){
+		document.getElementById("birthsByRaceChartApplyButton").innerHTML = "";
+
+		var birthsByRaceChartApplyButton = document.createElement("birthsByRaceChartApplyButton");
+
+		birthsByRaceChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+
+		document.getElementById("birthsByRaceChartApplyButton").appendChild(birthsByRaceChartApplyButton);
+
+		birthsByRaceChartApplyButton.addEventListener ("click", function() {
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-birthsByRaceChart").val());
+			// console.log($("#selectBorough-birthsByRaceChart").val());
+
+			var selectedYear = $("#selectYear-birthsByRaceChart").val();
+
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
+			console.log("---------- selectedYear ----------");
+			console.log(selectedYear);
+			console.log("---------- selectedYear ----------");
+
+
+			document.getElementById("birthsByRaceChart").innerHTML = "";
+
+			createBirthsByRaceChart(birthData, selectedYear);
+		});
+	}
+
+	function createBirthsByRaceResetButton(birthdata){
+		document.getElementById("birthsByRaceChartResetButton").innerHTML = "";
+
+		var birthsByRaceChartResetButton = document.createElement("birthsByRaceChartResetButton");
+
+		birthsByRaceChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+
+		document.getElementById("birthsByRaceChartResetButton").appendChild(birthsByRaceChartResetButton);
+
+		birthsByRaceChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/Natality.csv", function (data){
+				birthData = [];
+				data.forEach(function(d){
+					// console.log("---------- d ----------");
+					// console.log(d);
+					// console.log("---------- d ----------");
+
+					birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
+				})
+
+				birthData.sort(function(a, b) { return a.date - b.date; });
+
+				console.log("---------- birthData ----------");
+				console.log(birthData);
+				console.log("---------- birthData ----------");
+
+				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+
+				document.getElementById("birthsByRaceChart").innerHTML = "";
+
+				createBirthsByRaceChart(birthData,selectedDate);
+
+
+			});
+
+		});
 	}
 
 </script>
