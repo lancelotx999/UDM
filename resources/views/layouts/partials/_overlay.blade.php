@@ -49,6 +49,11 @@
             </li>
 
             <li>
+                <input type="checkbox" id="Evacuation" class="example">
+                <label for="check_evac"><span id="cb_span">Disaster Evacuation Areas</span></label>
+            </li> 
+
+            <li>
                 <input type="checkbox" id="Subway" class="example">
                 <label for="check_subway"><span id="cb_span">Subway Entry & Routes</span></label>
             </li>
@@ -61,7 +66,16 @@
             <li>
                 <input type="checkbox" id="CollegeUni" class="example">
                 <label for="check_subway"><span id="cb_span">Universities</span></label>
+<<<<<<< HEAD
+            </li> 
+
+            <li>
+                <input type="checkbox" id="Facilities" class="example">
+                <label for="check_subway"><span id="cb_span">Faciltiies</span></label>
+            </li> 
+=======
             </li>
+>>>>>>> origin/leaflet-gui
             @endif
         </ul>
 
