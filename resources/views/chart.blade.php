@@ -194,6 +194,7 @@
 	createBirthsByRaceChart();
 
 
+
 	function createPopulationByBoroughChart(populationData, dateMin, dateMax){
 		// Set the dimensions of the canvas / graph
 		var margin = {top: 30, right: 80, bottom: 70, left: 80},
@@ -216,146 +217,149 @@
 		var populationData = [];
 		var boroughs = [];
 
-		d3.csv("data/NYC-bigData/New_York_City_Population_by_Borough__1950_-_2040.csv", function (data){
-			// console.log("---------- data ----------");
-			// console.log(data);
-			// console.log("---------- data ----------");
+		var populationByBorough = {!! json_encode($populationByBorough->toArray()) !!};
 
-			data.forEach(function (d){
-				if (boroughs.indexOf(d.Borough) == -1) {
-					boroughs.push(d.Borough);
-				}
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
+		// console.log("---------- populationByBorough ----------");
+		// console.log(populationByBorough);
+		// console.log("---------- populationByBorough ----------");
 
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
+		populationByBorough.forEach(function (d){
+			if (boroughs.indexOf(d.Borough) == -1) {
+				boroughs.push(d.Borough);
+			}
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
 
-				populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
-				populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
-				populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
-				populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
-				populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
-				populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
-				populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
-				populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
-				// populationData.push()
-				// Borough,CDNumber,CDName,1970Population,1980Population,1990Population,2000Population,2010Population
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+
+			populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
+			populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
+			populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
+			populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
+			populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
+			populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
+			populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
+			populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
+			// populationData.push()
+			// Borough,CDNumber,CDName,1970Population,1980Population,1990Population,2000Population,2010Population
 
 
+		})
+
+		populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+		// populationData.sort(function(a, b) { return b.population - a.population; });
+
+		// console.log("---------- populationData ----------");
+		// console.log(populationData);
+		// console.log("---------- populationData ----------");
+		// console.log("---------- boroughs ----------");
+		// console.log(boroughs);
+		// console.log("---------- boroughs ----------");
+
+		// Set the ranges
+		// var x = d3.scaleTime().range([0, width]);
+		var x = d3.scaleBand().rangeRound([0, width]),
+			y = d3.scaleLinear().rangeRound([height, 0]),
+			z = d3.scaleOrdinal(d3.schemeCategory10);
+
+		// var keys = data.columns.slice(3);
+
+		// Scale the range of the data
+		// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		y.domain([0, Math.max.apply(Math, populationData.map(function(d) { return d.population; }))]).nice();
+		z.domain(boroughs);
+
+		// // Scale the range of the date
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			populationData = populationData.filter(function (d){
+				return d.date >= dateMin;
 			})
 
-			populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
-			// populationData.sort(function(a, b) { return b.population - a.population; });
+			populationData = populationData.filter(function (d){
+				return d.date <= dateMax;
+			})
+			// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+			x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		}
+		else {
+			// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+			x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		}
 
-			// console.log("---------- populationData ----------");
-			// console.log(populationData);
-			// console.log("---------- populationData ----------");
-			// console.log("---------- boroughs ----------");
-			// console.log(boroughs);
-			// console.log("---------- boroughs ----------");
+		// console.log("---------- d3.map(populationData, function(d) { return d.date.getFullYear(); }) ----------");
+		// console.log(d3.map(populationData, function(d) { return d.date.getFullYear(); }));
+		// console.log("---------- d3.map(populationData, function(d) { return d.date.getFullYear(); }) ----------");
 
-			// Set the ranges
-			// var x = d3.scaleTime().range([0, width]);
-			var x = d3.scaleBand().rangeRound([0, width]),
-				y = d3.scaleLinear().rangeRound([height, 0]),
-				z = d3.scaleOrdinal(d3.schemeCategory10);
+		// console.log("---------- x.domain() ----------");
+		// console.log(x.domain());
+		// console.log("---------- x.domain() ----------");
 
-			// var keys = data.columns.slice(3);
+		// append the rectangles for the bar chart
+		svg.selectAll(".bar")
+			.data(populationData)
+			.enter().append("rect")
+			.attr("class", "bar")
+			.attr("fill", function(d) { return z(d.boroughName); })
+			.attr("x", function(d) { return x(d.date.getFullYear()); })
+			.attr("width", x.bandwidth())
+			.attr("y", function(d) { return y(d.population); })
+			.attr("height", function(d) { return height - y(d.population); })
+			.on("mouseover", function(d) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", .9);
 
-			// Scale the range of the data
-			// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			y.domain([0, Math.max.apply(Math, populationData.map(function(d) { return d.population; }))]).nice();
-			z.domain(boroughs);
+				tooltip.html(
+					"Borough: " + d.boroughName + "<br/>" + "<br/>" +
+					"Date: " + d.date.getFullYear() + "<br/>" + "<br/>" +
+					"Population: " + d.population + "<br/>" + "<br/>"
+				)
+					.style("left", (d3.event.pageX / 1.5) + "px")
+					.style("top", (d3.event.pageY / 10) + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
 
-			// // Scale the range of the date
-			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
-				populationData = populationData.filter(function (d){
-					return d.date >= dateMin;
-				})
+		// add the x Axis
+		svg.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+			.append("text")
+			.attr("x", -10)
+			.attr("y", 15)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Year");
 
-				populationData = populationData.filter(function (d){
-					return d.date <= dateMax;
-				})
-				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
-				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			}
-			else {
-				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
-				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			}
+		// add the y Axis
+		svg.append("g")
+			.call(d3.axisLeft(y))
+			.append("text")
+			.attr("x", 2)
+			.attr("y", y(y.ticks().pop()) + 0.5)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Population");
 
-			// console.log("---------- d3.map(populationData, function(d) { return d.date.getFullYear(); }) ----------");
-			// console.log(d3.map(populationData, function(d) { return d.date.getFullYear(); }));
-			// console.log("---------- d3.map(populationData, function(d) { return d.date.getFullYear(); }) ----------");
+		createPopulationByBoroughFilter(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
+		createPopulationByBoroughApplyButton(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
+		createPopulationByBoroughResetButton();
 
-			// console.log("---------- x.domain() ----------");
-			// console.log(x.domain());
-			// console.log("---------- x.domain() ----------");
 
-			// append the rectangles for the bar chart
-			svg.selectAll(".bar")
-				.data(populationData)
-				.enter().append("rect")
-				.attr("class", "bar")
-				.attr("fill", function(d) { return z(d.boroughName); })
-				.attr("x", function(d) { return x(d.date.getFullYear()); })
-				.attr("width", x.bandwidth())
-				.attr("y", function(d) { return y(d.population); })
-				.attr("height", function(d) { return height - y(d.population); })
-				.on("mouseover", function(d) {
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
-					tooltip.transition()
-						.duration(200)
-						.style("opacity", .9);
 
-					tooltip.html(
-						"Borough: " + d.boroughName + "<br/>" + "<br/>" +
-						"Date: " + d.date.getFullYear() + "<br/>" + "<br/>" +
-						"Population: " + d.population + "<br/>" + "<br/>"
-					)
-						.style("left", (d3.event.pageX / 1.5) + "px")
-						.style("top", (d3.event.pageY / 10) + "px");
-				})
-				.on("mouseout", function(d) {
-					tooltip.transition()
-						.duration(500)
-						.style("opacity", 0);
-				});
-
-			// add the x Axis
-			svg.append("g")
-				.attr("transform", "translate(0," + height + ")")
-				.call(d3.axisBottom(x))
-				.append("text")
-				.attr("x", -10)
-				.attr("y", 15)
-				.attr("dy", "0.32em")
-				.attr("fill", "#000")
-				.attr("font-weight", "bold")
-				.attr("text-anchor", "start")
-				.text("Year");
-
-			// add the y Axis
-			svg.append("g")
-				.call(d3.axisLeft(y))
-				.append("text")
-				.attr("x", 2)
-				.attr("y", y(y.ticks().pop()) + 0.5)
-				.attr("dy", "0.32em")
-				.attr("fill", "#000")
-				.attr("font-weight", "bold")
-				.attr("text-anchor", "start")
-				.text("Population");
-
-			createPopulationByBoroughFilter(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
-			createPopulationByBoroughApplyButton(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
-			createPopulationByBoroughResetButton();
-		})
 
 
 	}
@@ -520,162 +524,162 @@
 		var boroughs = [];
 		var communityDistricts = [];
 
+		var populationByCommunityDistricts = {!! json_encode($populationByCommunityDistricts->toArray()) !!};
+
+		// console.log("---------- populationByCommunityDistricts ----------");
+		// console.log(populationByCommunityDistricts);
+		// console.log("---------- populationByCommunityDistricts ----------");
 		// var selectedBorough = "Bronx";
 
-		d3.csv("data/NYC-bigData/New_York_City_Population_By_Community_Districts.csv", function (data){
-			// console.log("---------- data ----------");
-			// console.log(data);
-			// console.log("---------- data ----------");
+		populationByCommunityDistricts.forEach(function (d){
+			if (boroughs.indexOf(d.Borough) == -1) {
+				boroughs.push(d.Borough);
+			}
 
-			data.forEach(function (d){
-				if (boroughs.indexOf(d.Borough) == -1) {
-					boroughs.push(d.Borough);
-				}
+			if (communityDistricts.indexOf(d.CDName) == -1) {
+				communityDistricts.push(d.CDName);
+			}
 
-				if (communityDistricts.indexOf(d.CDName) == -1) {
-					communityDistricts.push(d.CDName);
-				}
+			// if (communityDistricts.map(function(e) { return e.id; }).indexOf(d.CDNumber) == -1) {
+			// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
+			// }
 
-				// if (communityDistricts.map(function(e) { return e.id; }).indexOf(d.CDNumber) == -1) {
-				// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
-				// }
+			// if ((communityDistricts.findIndex(x => x.id == d.CDNumber) == -1) && (d.Borough == selectedBorough)) {
+			// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
+			// }
 
-				// if ((communityDistricts.findIndex(x => x.id == d.CDNumber) == -1) && (d.Borough == selectedBorough)) {
-				// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
-				// }
+			if (d.Borough == selectedBorough) {
+				populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1970"), population: d.Population1970});
+				populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1980"), population: d.Population1980});
+				populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1990"), population: d.Population1990});
+				populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2000"), population: d.Population2000});
+				populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2010"), population: d.Population2010});
+				// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2020"), population: d.population2020});
+				// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2030"), population: d.population2030});
+				// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2040"), population: d.population2040});
+			}
+		})
 
-				if (d.Borough == selectedBorough) {
-					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1970"), population: d.Population1970});
-					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1980"), population: d.Population1980});
-					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1990"), population: d.Population1990});
-					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2000"), population: d.Population2000});
-					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2010"), population: d.Population2010});
-					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2020"), population: d.population2020});
-					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2030"), population: d.population2030});
-					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2040"), population: d.population2040});
-				}
+		populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
+
+		// console.log("---------- boroughs ----------");
+		// console.log(boroughs);
+		// console.log("---------- boroughs ----------");
+		//
+		// console.log("---------- communityDistricts ----------");
+		// console.log(communityDistricts);
+		// console.log("---------- communityDistricts ----------");
+
+		// console.log("---------- populationData ----------");
+		// console.log(populationData);
+		// console.log("---------- populationData ----------");
+
+		// Set the ranges
+		var x = d3.scaleBand().rangeRound([0, width]),
+			y = d3.scaleLinear().rangeRound([height, 0]),
+			z = d3.scaleOrdinal(d3.schemeCategory20);
+
+		// Scale the range of the data
+		// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		y.domain([0, Math.max.apply(Math, populationData.map(function(d) { return d.population; }))]).nice();
+		z.domain(communityDistricts);
+
+		// console.log("---------- d3.max(populationData, function(d) { return d.population}) ----------");
+		// console.log(d3.max(populationData, function(d) { return d.population}));
+		// console.log("---------- d3.max(populationData, function(d) { return d.population}) ----------");
+		//
+		// console.log("---------- Math.max.apply(Math, populationData.map(function(d) { return d.population; })) ----------");
+		// console.log(Math.max.apply(Math, populationData.map(function(d) { return d.population; })));
+		// console.log("---------- Math.max.apply(Math, populationData.map(function(d) { return d.population; })) ----------");
+		//
+		// console.log("---------- y.domain() ----------");
+		// console.log(y.domain());
+		// console.log("---------- y.domain() ----------");
+		//
+		// console.log("---------- z.domain() ----------");
+		// console.log(z.domain());
+		// console.log("---------- z.domain() ----------");
+
+		// // Scale the range of the date
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			populationData = populationData.filter(function (d){
+				return d.date >= dateMin;
 			})
 
-			populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+			populationData = populationData.filter(function (d){
+				return d.date <= dateMax;
+			})
+			// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+			x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		}
+		else {
+			// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+			x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		}
 
+		// append the rectangles for the bar chart
+		svg.selectAll(".bar")
+			.data(populationData)
+			.enter().append("rect")
+			.attr("class", "bar")
+			.attr("fill", function(d) { return z(d.CDName); })
+			.attr("x", function(d) { return x(d.date.getFullYear()); })
+			.attr("width", x.bandwidth())
+			.attr("y", function(d) { return y(d.population); })
+			.attr("height", function(d) { return height - y(d.population); })
+			.on("mouseover", function(d) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", .9);
 
-			// console.log("---------- boroughs ----------");
-			// console.log(boroughs);
-			// console.log("---------- boroughs ----------");
-            //
-			// console.log("---------- communityDistricts ----------");
-			// console.log(communityDistricts);
-			// console.log("---------- communityDistricts ----------");
+				tooltip.html(
+					"Borough: " + d.boroughName + "<br/>" + "<br/>" +
+					"Community District: " + d.CDName + "<br/>" + "<br/>" +
+					"Date: " + d.date.getFullYear() + "<br/>" + "<br/>" +
+					"Population: " + d.population + "<br/>" + "<br/>"
+				)
+					.style("left", (d3.event.pageX / 1.5) + "px")
+					.style("top", (d3.event.pageY / 10) + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
 
-			// console.log("---------- populationData ----------");
-			// console.log(populationData);
-			// console.log("---------- populationData ----------");
+		// add the x Axis
+		svg.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+			.append("text")
+			.attr("x", -10)
+			.attr("y", 15)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Year");
 
-			// Set the ranges
-			var x = d3.scaleBand().rangeRound([0, width]),
-				y = d3.scaleLinear().rangeRound([height, 0]),
-				z = d3.scaleOrdinal(d3.schemeCategory20);
+		// add the y Axis
+		svg.append("g")
+			.call(d3.axisLeft(y))
+			.append("text")
+			.attr("x", 2)
+			.attr("y", y(y.ticks().pop()) + 0.5)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Population");
 
-			// Scale the range of the data
-			// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			y.domain([0, Math.max.apply(Math, populationData.map(function(d) { return d.population; }))]).nice();
-			z.domain(communityDistricts);
+		createPopulationByCommunityFilter(populationData, boroughs, new Date("01/01/1950"), new Date("01/01/2040"));
+		createPopulationByCommunityApplyButton(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
+		createPopulationByCommunityResetButton();
 
-			// console.log("---------- d3.max(populationData, function(d) { return d.population}) ----------");
-			// console.log(d3.max(populationData, function(d) { return d.population}));
-			// console.log("---------- d3.max(populationData, function(d) { return d.population}) ----------");
-            //
-			// console.log("---------- Math.max.apply(Math, populationData.map(function(d) { return d.population; })) ----------");
-			// console.log(Math.max.apply(Math, populationData.map(function(d) { return d.population; })));
-			// console.log("---------- Math.max.apply(Math, populationData.map(function(d) { return d.population; })) ----------");
-            //
-			// console.log("---------- y.domain() ----------");
-			// console.log(y.domain());
-			// console.log("---------- y.domain() ----------");
-            //
-			// console.log("---------- z.domain() ----------");
-			// console.log(z.domain());
-			// console.log("---------- z.domain() ----------");
-
-			// // Scale the range of the date
-			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
-				populationData = populationData.filter(function (d){
-					return d.date >= dateMin;
-				})
-
-				populationData = populationData.filter(function (d){
-					return d.date <= dateMax;
-				})
-				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
-				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			}
-			else {
-				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
-				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			}
-
-			// append the rectangles for the bar chart
-			svg.selectAll(".bar")
-				.data(populationData)
-				.enter().append("rect")
-				.attr("class", "bar")
-				.attr("fill", function(d) { return z(d.CDName); })
-				.attr("x", function(d) { return x(d.date.getFullYear()); })
-				.attr("width", x.bandwidth())
-				.attr("y", function(d) { return y(d.population); })
-				.attr("height", function(d) { return height - y(d.population); })
-				.on("mouseover", function(d) {
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
-					tooltip.transition()
-						.duration(200)
-						.style("opacity", .9);
-
-					tooltip.html(
-						"Borough: " + d.boroughName + "<br/>" + "<br/>" +
-						"Community District: " + d.CDName + "<br/>" + "<br/>" +
-						"Date: " + d.date.getFullYear() + "<br/>" + "<br/>" +
-						"Population: " + d.population + "<br/>" + "<br/>"
-					)
-						.style("left", (d3.event.pageX / 1.5) + "px")
-						.style("top", (d3.event.pageY / 10) + "px");
-				})
-				.on("mouseout", function(d) {
-					tooltip.transition()
-						.duration(500)
-						.style("opacity", 0);
-				});
-
-			// add the x Axis
-			svg.append("g")
-				.attr("transform", "translate(0," + height + ")")
-				.call(d3.axisBottom(x))
-				.append("text")
-				.attr("x", -10)
-				.attr("y", 15)
-				.attr("dy", "0.32em")
-				.attr("fill", "#000")
-				.attr("font-weight", "bold")
-				.attr("text-anchor", "start")
-				.text("Year");
-
-			// add the y Axis
-			svg.append("g")
-				.call(d3.axisLeft(y))
-				.append("text")
-				.attr("x", 2)
-				.attr("y", y(y.ticks().pop()) + 0.5)
-				.attr("dy", "0.32em")
-				.attr("fill", "#000")
-				.attr("font-weight", "bold")
-				.attr("text-anchor", "start")
-				.text("Population");
-
-			createPopulationByCommunityFilter(populationData, boroughs, new Date("01/01/1950"), new Date("01/01/2040"));
-			createPopulationByCommunityApplyButton(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
-			createPopulationByCommunityResetButton();
-		})
 	}
 
 	function createPopulationByCommunityFilter(populationData, boroughs, dateMin, dateMax){
@@ -858,291 +862,291 @@
 			.attr("class", "tooltip")
 			.style("opacity", 0);
 
+		var waterConsumption = {!! json_encode($waterConsumption->toArray()) !!};
+
+		// console.log("---------- waterConsumption ----------");
+		// console.log(waterConsumption);
+		// console.log("---------- waterConsumption ----------");
+
 		var waterConsumptionData = [];
 
-		d3.csv("data/NYC-bigData/Water_Consumption_In_The_New_York_City.csv", function (data){
-			// console.log("------------ data ------------");
-			// console.log(data);
-			// console.log("------------ data ------------");
+		waterConsumption.forEach(function(d){
+			waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
+		})
 
-			data.forEach(function(d){
-				waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
+		waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
+
+		// console.log("------------ waterConsumptionData ------------");
+		// console.log(waterConsumptionData);
+		// console.log("------------ waterConsumptionData ------------");
+
+
+		// Set the ranges
+		var x = d3.scaleTime().rangeRound([0, width]),
+			yPopulation = d3.scaleLinear().rangeRound([height, 0]),
+			yConsumption = d3.scaleLinear().rangeRound([height, 0]),
+			yConsumptionPerCapita = d3.scaleLinear().rangeRound([height, 0]);
+			// z = d3.scaleOrdinal(d3.schemeCategory20);
+
+		// Scale the range of the data
+		// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		yPopulation.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.population; }))]).nice();
+		yConsumption.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumption; }))]).nice();
+		yConsumptionPerCapita.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumptionPerCapita; }))]).nice();
+
+		// // Scale the range of the date
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			waterConsumptionData = waterConsumptionData.filter(function (d){
+				return d.date >= dateMin;
 			})
 
-			waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
+			waterConsumptionData = waterConsumptionData.filter(function (d){
+				return d.date <= dateMax;
+			})
+			// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date.getFullYear(); }));
+			// x.domain(waterConsumptionData.map(function(d) { return d.date; }));
+			x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
+		}
+		else {
+			// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
+			// x.domain(waterConsumptionData.map(function(d) { return d.date; }));
+			x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
+		}
 
-			// console.log("------------ waterConsumptionData ------------");
-			// console.log(waterConsumptionData);
-			// console.log("------------ waterConsumptionData ------------");
+		// console.log("------------ yPopulation.domain() ------------");
+		// console.log(yPopulation.domain());
+		// console.log("------------ yPopulation.domain() ------------");
+		//
+		// console.log("------------ yConsumption.domain() ------------");
+		// console.log(yConsumption.domain());
+		// console.log("------------ yConsumption.domain() ------------");
+		//
+		// console.log("------------ yConsumptionPerCapita.domain() ------------");
+		// console.log(yConsumptionPerCapita.domain());
+		// console.log("------------ yConsumptionPerCapita.domain() ------------");
+		//
+		// console.log("------------ x.domain() ------------");
+		// console.log(x.domain());
+		// console.log("------------ x.domain() ------------");
+
+		// define the population line
+		var populationLine = d3.line()
+			.x(function(d) { return x(d.date); })
+			.y(function(d) { return yPopulation(d.population); });
+
+		// define the consumption (Million of gallons perday) line
+		var consumptionLine = d3.line()
+			.x(function(d) { return x(d.date); })
+			.y(function(d) { return yConsumption(d.consumption); });
+
+		// define the per capita consumption (Gallons per person per day) line
+		var consumptionPerCapitaLine = d3.line()
+			.x(function(d) { return x(d.date); })
+			.y(function(d) { return yConsumptionPerCapita(d.consumptionPerCapita); });
+
+		// Add the populationLine path.
+		svg.append("path")
+			.data([waterConsumptionData])
+			.attr("class", "populationLine")
+			.style("stroke", "FireBrick")
+			.style("fill", "none")
+			.style("stroke-width", "2px")
+			.attr("d", populationLine)
+			.on("mouseover", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			})
+			.on("mouseout", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			});
+
+		// Add the consumptionLine path.
+		svg.append("path")
+			.data([waterConsumptionData])
+			.attr("class", "consumptionLine")
+			.style("stroke", "DodgerBlue")
+			.style("fill", "none")
+			.style("stroke-width", "2px")
+			.attr("d", consumptionLine)
+			.on("mouseover", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			})
+			.on("mouseout", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			});
+
+		// Add the consumptionPerCapitaLine path.
+		svg.append("path")
+			.data([waterConsumptionData])
+			.attr("class", "consumptionPerCapitaLine")
+			.style("stroke", "CornflowerBlue")
+			.style("fill", "none")
+			.style("stroke-width", "2px")
+			.attr("d", consumptionPerCapitaLine)
+			.on("mouseover", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			})
+			.on("mouseout", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			});
+
+		// Add the X Axis
+		svg.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+			.selectAll("text")
+			.style("text-anchor", "end")
+			.attr("dx", "-.8em")
+			.attr("dy", ".15em")
+			.attr("transform", "rotate(-65)")
+			.append("text")
+			.attr("x", -10)
+			.attr("y", 15)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Year");
+
+		// Add the yConsumption Axis
+		svg.append("g")
+			.attr("class", "axis-yConsumption")
+			.style("stroke", "FireBrick")
+			.call(d3.axisLeft(yPopulation));
+
+		// Add the yPopulation Axis
+		svg.append("g")
+			.attr("class", "axis-yPopulation")
+			.style("stroke", "DodgerBlue")
+			.attr("transform", "translate( " + width + ", 0 )")
+			.call(d3.axisRight(yConsumption));
+			// .append("text")
+			// .attr("x", 2)
+			// .attr("y", y(y.ticks().pop()) + 0.5)
+			// .attr("dy", "0.32em")
+			// .attr("fill", "#000")
+			// .attr("font-weight", "bold")
+			// .attr("text-anchor", "start")
+			// .text("Population");
+
+		// Add the yConsumptionPerCapita Axis
+		svg.append("g")
+			.attr("class", "axis-yConsumptionPerCapita")
+			.style("stroke", "CornflowerBlue")
+			.attr("transform", "translate( " + width + ", 0 )")
+			.call(d3.axisLeft(yConsumptionPerCapita));
+
+		var focusPopulation = svg.append("g")
+			.attr("class", "focus")
+			.style("display", "none");
+
+		var focusConsumption = svg.append("g")
+			.attr("class", "focus")
+			.style("display", "none");
+
+		var focusConsumptionPerCapita = svg.append("g")
+			.attr("class", "focus")
+			.style("display", "none");
+
+		// append the circle at the intersection
+		focusPopulation.append("circle")
+			.attr("class", "population")
+			.style("fill", "none")
+			.style("stroke", "blue")
+			.attr("r", 4);
+
+		focusPopulation.append("text");
+
+		// append the circle at the intersection
+		focusConsumption.append("circle")
+			.attr("class", "consumption")
+			.style("fill", "none")
+			.style("stroke", "blue")
+			.attr("r", 4);
+
+		focusConsumption.append("text");
+
+		// append the circle at the intersection
+		focusConsumptionPerCapita.append("circle")
+			.attr("class", "consumptionPerCapita")
+			.style("fill", "none")
+			.style("stroke", "blue")
+			.attr("r", 4);
+
+		focusConsumptionPerCapita.append("text");
+
+		// append the rectangle to capture mouse
+		svg.append("rect")
+			.attr("width", width)
+			.attr("height", height)
+			.style("fill", "none")
+			.style("pointer-events", "all")
+			.on("mouseover", function() { focusPopulation.style("display", null); focusConsumption.style("display", null); focusConsumptionPerCapita.style("display", null); })
+			.on("mouseout", function() { focusPopulation.style("display", "none"); focusConsumption.style("display", "none"); focusConsumptionPerCapita.style("display", "none"); })
+			.on("mousemove", mousemove);
+
+			function mousemove() {
+				var x0 = x.invert(d3.mouse(this)[0]),
+					bisectDate = d3.bisector(function(d) { return d.date; }).left;
+					i = bisectDate(waterConsumptionData, x0, 1),
+					d0 = waterConsumptionData[i - 1],
+					d1 = waterConsumptionData[i],
+					d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+
+				// focusPopulation.select("circle.population")
+				// 	.attr("transform", "translate(" + x(d.date) + "," + yPopulation(d.population) + ")");
+				//
+				// focusConsumption.select("circle.consumption")
+				// 	.attr("transform", "translate(" + x(d.date) + "," + yConsumption(d.consumption) + ")");
+				//
+				// focusConsumptionPerCapita.select("circle.consumptionPerCapita")
+				// 	.attr("transform", "translate(" + x(d.date) + "," + yConsumptionPerCapita(d.consumptionPerCapita) + ")");
+
+				focusPopulation.attr("transform", "translate(" + x(d.date) + "," + yPopulation(d.population) + ")");
+				focusConsumption.attr("transform", "translate(" + x(d.date) + "," + yConsumption(d.consumption) + ")");
+				focusConsumptionPerCapita.attr("transform", "translate(" + x(d.date) + "," + yConsumptionPerCapita(d.consumptionPerCapita) + ")");
+
+				focusPopulation.select("text").text("");
+				focusConsumption.select("text").text("");
+				focusConsumptionPerCapita.select("text").text("");
+
+				focusPopulation.select("text").text(d.population);
+				focusConsumption.select("text").text(d.consumption);
+				focusConsumptionPerCapita.select("text").text(d.consumptionPerCapita);
 
 
-			// Set the ranges
-			var x = d3.scaleTime().rangeRound([0, width]),
-				yPopulation = d3.scaleLinear().rangeRound([height, 0]),
-				yConsumption = d3.scaleLinear().rangeRound([height, 0]),
-				yConsumptionPerCapita = d3.scaleLinear().rangeRound([height, 0]);
-				// z = d3.scaleOrdinal(d3.schemeCategory20);
-
-			// Scale the range of the data
-			// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			yPopulation.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.population; }))]).nice();
-			yConsumption.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumption; }))]).nice();
-			yConsumptionPerCapita.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumptionPerCapita; }))]).nice();
-
-			// // Scale the range of the date
-			// console.log("---------- dateMin ----------");
-			// console.log(dateMin);
-			// console.log("---------- dateMin ----------");
-			// console.log("---------- dateMax ----------");
-			// console.log(dateMax);
-			// console.log("---------- dateMax ----------");
-
-			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
-				waterConsumptionData = waterConsumptionData.filter(function (d){
-					return d.date >= dateMin;
-				})
-
-				waterConsumptionData = waterConsumptionData.filter(function (d){
-					return d.date <= dateMax;
-				})
-				// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date.getFullYear(); }));
-				// x.domain(waterConsumptionData.map(function(d) { return d.date; }));
-				x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
 			}
-			else {
-				// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
-				// x.domain(waterConsumptionData.map(function(d) { return d.date; }));
-				x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
-			}
 
-			// console.log("------------ yPopulation.domain() ------------");
-			// console.log(yPopulation.domain());
-			// console.log("------------ yPopulation.domain() ------------");
-            //
-			// console.log("------------ yConsumption.domain() ------------");
-			// console.log(yConsumption.domain());
-			// console.log("------------ yConsumption.domain() ------------");
-            //
-			// console.log("------------ yConsumptionPerCapita.domain() ------------");
-			// console.log(yConsumptionPerCapita.domain());
-			// console.log("------------ yConsumptionPerCapita.domain() ------------");
-            //
-			// console.log("------------ x.domain() ------------");
-			// console.log(x.domain());
-			// console.log("------------ x.domain() ------------");
-
-			// define the population line
-			var populationLine = d3.line()
-				.x(function(d) { return x(d.date); })
-				.y(function(d) { return yPopulation(d.population); });
-
-			// define the consumption (Million of gallons perday) line
-			var consumptionLine = d3.line()
-				.x(function(d) { return x(d.date); })
-				.y(function(d) { return yConsumption(d.consumption); });
-
-			// define the per capita consumption (Gallons per person per day) line
-			var consumptionPerCapitaLine = d3.line()
-				.x(function(d) { return x(d.date); })
-				.y(function(d) { return yConsumptionPerCapita(d.consumptionPerCapita); });
-
-			// Add the populationLine path.
-			svg.append("path")
-				.data([waterConsumptionData])
-				.attr("class", "populationLine")
-				.style("stroke", "FireBrick")
-				.style("fill", "none")
-				.style("stroke-width", "2px")
-				.attr("d", populationLine)
-				.on("mouseover", function(d){
-					// console.log("------------ d ------------");
-					// console.log(d);
-					// console.log("------------ d ------------");
-				})
-				.on("mouseout", function(d){
-					// console.log("------------ d ------------");
-					// console.log(d);
-					// console.log("------------ d ------------");
-				});
-
-			// Add the consumptionLine path.
-			svg.append("path")
-				.data([waterConsumptionData])
-				.attr("class", "consumptionLine")
-				.style("stroke", "DodgerBlue")
-				.style("fill", "none")
-				.style("stroke-width", "2px")
-				.attr("d", consumptionLine)
-				.on("mouseover", function(d){
-					// console.log("------------ d ------------");
-					// console.log(d);
-					// console.log("------------ d ------------");
-				})
-				.on("mouseout", function(d){
-					// console.log("------------ d ------------");
-					// console.log(d);
-					// console.log("------------ d ------------");
-				});
-
-			// Add the consumptionPerCapitaLine path.
-			svg.append("path")
-				.data([waterConsumptionData])
-				.attr("class", "consumptionPerCapitaLine")
-				.style("stroke", "CornflowerBlue")
-				.style("fill", "none")
-				.style("stroke-width", "2px")
-				.attr("d", consumptionPerCapitaLine)
-				.on("mouseover", function(d){
-					// console.log("------------ d ------------");
-					// console.log(d);
-					// console.log("------------ d ------------");
-				})
-				.on("mouseout", function(d){
-					// console.log("------------ d ------------");
-					// console.log(d);
-					// console.log("------------ d ------------");
-				});
-
-			// Add the X Axis
-			svg.append("g")
-				.attr("transform", "translate(0," + height + ")")
-				.call(d3.axisBottom(x))
-				.selectAll("text")
-				.style("text-anchor", "end")
-				.attr("dx", "-.8em")
-				.attr("dy", ".15em")
-				.attr("transform", "rotate(-65)")
-				.append("text")
-				.attr("x", -10)
-				.attr("y", 15)
-				.attr("dy", "0.32em")
-				.attr("fill", "#000")
-				.attr("font-weight", "bold")
-				.attr("text-anchor", "start")
-				.text("Year");
-
-			// Add the yConsumption Axis
-			svg.append("g")
-				.attr("class", "axis-yConsumption")
-				.style("stroke", "FireBrick")
-				.call(d3.axisLeft(yPopulation));
-
-			// Add the yPopulation Axis
-			svg.append("g")
-				.attr("class", "axis-yPopulation")
-				.style("stroke", "DodgerBlue")
-				.attr("transform", "translate( " + width + ", 0 )")
-				.call(d3.axisRight(yConsumption));
-				// .append("text")
-				// .attr("x", 2)
-				// .attr("y", y(y.ticks().pop()) + 0.5)
-				// .attr("dy", "0.32em")
-				// .attr("fill", "#000")
-				// .attr("font-weight", "bold")
-				// .attr("text-anchor", "start")
-				// .text("Population");
-
-			// Add the yConsumptionPerCapita Axis
-			svg.append("g")
-				.attr("class", "axis-yConsumptionPerCapita")
-				.style("stroke", "CornflowerBlue")
-				.attr("transform", "translate( " + width + ", 0 )")
-				.call(d3.axisLeft(yConsumptionPerCapita));
-
-			var focusPopulation = svg.append("g")
-				.attr("class", "focus")
-				.style("display", "none");
-
-			var focusConsumption = svg.append("g")
-				.attr("class", "focus")
-				.style("display", "none");
-
-			var focusConsumptionPerCapita = svg.append("g")
-				.attr("class", "focus")
-				.style("display", "none");
-
-			// append the circle at the intersection
-			focusPopulation.append("circle")
-				.attr("class", "population")
-				.style("fill", "none")
-				.style("stroke", "blue")
-				.attr("r", 4);
-
-			focusPopulation.append("text");
-
-			// append the circle at the intersection
-			focusConsumption.append("circle")
-				.attr("class", "consumption")
-				.style("fill", "none")
-				.style("stroke", "blue")
-				.attr("r", 4);
-
-			focusConsumption.append("text");
-
-			// append the circle at the intersection
-			focusConsumptionPerCapita.append("circle")
-				.attr("class", "consumptionPerCapita")
-				.style("fill", "none")
-				.style("stroke", "blue")
-				.attr("r", 4);
-
-			focusConsumptionPerCapita.append("text");
-
-			// append the rectangle to capture mouse
-			svg.append("rect")
-				.attr("width", width)
-				.attr("height", height)
-				.style("fill", "none")
-				.style("pointer-events", "all")
-				.on("mouseover", function() { focusPopulation.style("display", null); focusConsumption.style("display", null); focusConsumptionPerCapita.style("display", null); })
-				.on("mouseout", function() { focusPopulation.style("display", "none"); focusConsumption.style("display", "none"); focusConsumptionPerCapita.style("display", "none"); })
-				.on("mousemove", mousemove);
-
-				function mousemove() {
-					var x0 = x.invert(d3.mouse(this)[0]),
-						bisectDate = d3.bisector(function(d) { return d.date; }).left;
-						i = bisectDate(waterConsumptionData, x0, 1),
-						d0 = waterConsumptionData[i - 1],
-						d1 = waterConsumptionData[i],
-						d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-
-					// focusPopulation.select("circle.population")
-					// 	.attr("transform", "translate(" + x(d.date) + "," + yPopulation(d.population) + ")");
-                    //
-					// focusConsumption.select("circle.consumption")
-					// 	.attr("transform", "translate(" + x(d.date) + "," + yConsumption(d.consumption) + ")");
-                    //
-					// focusConsumptionPerCapita.select("circle.consumptionPerCapita")
-					// 	.attr("transform", "translate(" + x(d.date) + "," + yConsumptionPerCapita(d.consumptionPerCapita) + ")");
-
-					focusPopulation.attr("transform", "translate(" + x(d.date) + "," + yPopulation(d.population) + ")");
-					focusConsumption.attr("transform", "translate(" + x(d.date) + "," + yConsumption(d.consumption) + ")");
-					focusConsumptionPerCapita.attr("transform", "translate(" + x(d.date) + "," + yConsumptionPerCapita(d.consumptionPerCapita) + ")");
-
-					focusPopulation.select("text").text("");
-					focusConsumption.select("text").text("");
-					focusConsumptionPerCapita.select("text").text("");
-
-					focusPopulation.select("text").text(d.population);
-					focusConsumption.select("text").text(d.consumption);
-					focusConsumptionPerCapita.select("text").text(d.consumptionPerCapita);
+		// console.log("---------- d3.extent(waterConsumptionData, function(d) { return d.date; })[0] ----------");
+		// console.log(d3.extent(waterConsumptionData, function(d) { return d.date; })[0]);
+		// console.log("---------- d3.extent(waterConsumptionData, function(d) { return d.date; })[0] ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
 
 
-				}
+		createWaterConsumptionFilter(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1]);
+		createWaterConsumptionApplyButton(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1]);
+		createWaterConsumptionResetButton();
 
-			// console.log("---------- d3.extent(waterConsumptionData, function(d) { return d.date; })[0] ----------");
-			// console.log(d3.extent(waterConsumptionData, function(d) { return d.date; })[0]);
-			// console.log("---------- d3.extent(waterConsumptionData, function(d) { return d.date; })[0] ----------");
-			// console.log("---------- dateMax ----------");
-			// console.log(dateMax);
-			// console.log("---------- dateMax ----------");
-
-
-			createWaterConsumptionFilter(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1]);
-			createWaterConsumptionApplyButton(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1]);
-			createWaterConsumptionResetButton();
-
-		})
 	}
 
 	function createWaterConsumptionFilter(waterConsumptionData, dateMin, dateMax){
@@ -1328,127 +1332,136 @@
 
 		var color = d3.scaleOrdinal(d3.schemeCategory10);
 
+		var natality = {!! json_encode($natality->toArray()) !!};
+
+		// console.log("---------- natality ----------");
+		// console.log(natality);
+		// console.log("---------- natality ----------");
+
+		natality.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			d.date = new Date(d.date)
+		})
+
+		birthData = natality;
+
+		birthData.sort(function(a, b) { return a.date - b.date; });
+
+		// console.log("---------- birthData ----------");
+		// console.log(birthData);
+		// console.log("---------- birthData ----------");
+
+
+		// if (selectedDate != null && selectedDate != undefined) {
+		// 	selectedDate = selectedDate;
+		// }
+		// else {
+		// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+		// }
+
+		// console.log("---------- selectedDate-pre ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-pre ----------");
+
+		if (selectedDate == null && selectedDate == undefined) {
+			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+			// selectedDate = new Date(selectedDate.toString());
+		}
+		else {
+			selectedDate = new Date(selectedDate.toString());
+		}
+
+		// console.log("---------- selectedDate-post ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-post ----------");
+		//
+		// console.log("---------- new Date ----------");
+		// console.log(new Date("2015"));
+		// console.log("---------- new Date ----------");
+
+		filteredBirthData = [];
+
+		// console.log("---------- selectedDate ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate ----------");
+
+		birthData.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			if (d.date.getFullYear() == selectedDate.getFullYear()) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				filteredBirthData.push(d);
+			}
+		})
+
+		// console.log("---------- filteredBirthData ----------");
+		// console.log(filteredBirthData);
+		// console.log("---------- filteredBirthData ----------");
+
+		var nestedBirthData = d3.nest()
+			.key(function(d) { return d.sex; })
+			.rollup(function(v) { return {
+				total: d3.sum(v, function(d) { return d.births; }),
+				avg: d3.mean(v, function(d) { return d.births; })
+			}; })
+			.entries(filteredBirthData);
+
+		// console.log("---------- nestedBirthData ----------");
+		// console.log(nestedBirthData);
+		// console.log("---------- nestedBirthData ----------");
+
+		// birthData = birthData.filter(function(d){return d.date == selectedDate;})
+
+		var g = svg.selectAll(".arc")
+			.data(pie(nestedBirthData))
+			.enter().append("g")
+			.attr("class", "arc")
+			.on("mouseover", function(d) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", .9);
+
+				tooltip.html(
+					"Year: " + selectedDate.getFullYear() + "<br/>" + "<br/>" +
+					"Gender: " + d.data.key + "<br/>" + "<br/>" +
+					"Total Births: " + d.data.value.avg + "<br/>" + "<br/>"
+				)
+					.style("left", (d3.event.pageX / 1.5) + "px")
+					.style("top", (d3.event.pageY / 10) + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		g.append("path")
+			.attr("d", arc)
+			.style("fill", function(d) { return color(d.data.key); });
+
+		g.append("text")
+			.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+			.attr("dy", ".35em")
+			.text(function(d) { return d.data.value.total; });
+
+		createBirthsByGenderFilter(birthData);
+		createBirthsByGenderApplyButton(birthData);
+		createBirthsByGenderResetButton(birthData);
+
+
 
 		d3.csv("data/NYC-bigData/Natality.csv", function (data){
-			birthData = [];
-			data.forEach(function(d){
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
-
-				birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
-			})
-
-			birthData.sort(function(a, b) { return a.date - b.date; });
-
-			// console.log("---------- birthData ----------");
-			// console.log(birthData);
-			// console.log("---------- birthData ----------");
-
-
-			// if (selectedDate != null && selectedDate != undefined) {
-			// 	selectedDate = selectedDate;
-			// }
-			// else {
-			// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
-			// }
-
-			// console.log("---------- selectedDate-pre ----------");
-			// console.log(selectedDate);
-			// console.log("---------- selectedDate-pre ----------");
-
-			if (selectedDate == null && selectedDate == undefined) {
-				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
-				// selectedDate = new Date(selectedDate.toString());
-			}
-			else {
-				selectedDate = new Date(selectedDate.toString());
-			}
-
-			// console.log("---------- selectedDate-post ----------");
-			// console.log(selectedDate);
-			// console.log("---------- selectedDate-post ----------");
-            //
-			// console.log("---------- new Date ----------");
-			// console.log(new Date("2015"));
-			// console.log("---------- new Date ----------");
-
-			filteredBirthData = [];
-
-			// console.log("---------- selectedDate ----------");
-			// console.log(selectedDate);
-			// console.log("---------- selectedDate ----------");
-
-			birthData.forEach(function(d){
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
-				if (d.date.getFullYear() == selectedDate.getFullYear()) {
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
-					filteredBirthData.push(d);
-				}
-			})
-
-			// console.log("---------- filteredBirthData ----------");
-			// console.log(filteredBirthData);
-			// console.log("---------- filteredBirthData ----------");
-
-			var nestedBirthData = d3.nest()
-				.key(function(d) { return d.sex; })
-				.rollup(function(v) { return {
-					total: d3.sum(v, function(d) { return d.births; }),
-					avg: d3.mean(v, function(d) { return d.births; })
-				}; })
-				.entries(filteredBirthData);
-
-			// console.log("---------- nestedBirthData ----------");
-			// console.log(nestedBirthData);
-			// console.log("---------- nestedBirthData ----------");
-
-			// birthData = birthData.filter(function(d){return d.date == selectedDate;})
-
-			var g = svg.selectAll(".arc")
-				.data(pie(nestedBirthData))
-				.enter().append("g")
-				.attr("class", "arc")
-				.on("mouseover", function(d) {
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
-					tooltip.transition()
-						.duration(200)
-						.style("opacity", .9);
-
-					tooltip.html(
-						"Year: " + selectedDate.getFullYear() + "<br/>" + "<br/>" +
-						"Gender: " + d.data.key + "<br/>" + "<br/>" +
-						"Total Births: " + d.data.value.avg + "<br/>" + "<br/>"
-					)
-						.style("left", (d3.event.pageX / 1.5) + "px")
-						.style("top", (d3.event.pageY / 10) + "px");
-				})
-				.on("mouseout", function(d) {
-					tooltip.transition()
-						.duration(500)
-						.style("opacity", 0);
-				});
-
-			g.append("path")
-				.attr("d", arc)
-				.style("fill", function(d) { return color(d.data.key); });
-
-			g.append("text")
-				.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
-				.attr("dy", ".35em")
-				.text(function(d) { return d.data.value.total; });
-
-			createBirthsByGenderFilter(birthData);
-			createBirthsByGenderApplyButton(birthData);
-			createBirthsByGenderResetButton(birthData);
 
 		})
+		//here
 	}
 
 	function createBirthsByGenderFilter(birthData){
@@ -1606,127 +1619,131 @@
 
 		var color = d3.scaleOrdinal(d3.schemeCategory10);
 
+		var natality = {!! json_encode($natality->toArray()) !!};
 
-		d3.csv("data/NYC-bigData/Natality.csv", function (data){
-			birthData = [];
-			data.forEach(function(d){
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
+		// console.log("---------- natality ----------");
+		// console.log(natality);
+		// console.log("---------- natality ----------");
 
-				birthData.push({date: new Date(d.date), race: d.race, births: Number(d.births)});
-			})
-
-			birthData.sort(function(a, b) { return a.date - b.date; });
-
-			// console.log("---------- birthData ----------");
-			// console.log(birthData);
-			// console.log("---------- birthData ----------");
-
-
-			// if (selectedDate != null && selectedDate != undefined) {
-			// 	selectedDate = selectedDate;
-			// }
-			// else {
-			// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
-			// }
-
-			// console.log("---------- selectedDate-pre ----------");
-			// console.log(selectedDate);
-			// console.log("---------- selectedDate-pre ----------");
-
-			if (selectedDate == null && selectedDate == undefined) {
-				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
-				// selectedDate = new Date(selectedDate.toString());
-			}
-			else {
-				selectedDate = new Date(selectedDate.toString());
-			}
-
-			// console.log("---------- selectedDate-post ----------");
-			// console.log(selectedDate);
-			// console.log("---------- selectedDate-post ----------");
-			//
-			// console.log("---------- new Date ----------");
-			// console.log(new Date("2015"));
-			// console.log("---------- new Date ----------");
-
-			filteredBirthData = [];
-
-			// console.log("---------- selectedDate ----------");
-			// console.log(selectedDate);
-			// console.log("---------- selectedDate ----------");
-
-			birthData.forEach(function(d){
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
-				if (d.date.getFullYear() == selectedDate.getFullYear()) {
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
-					filteredBirthData.push(d);
-				}
-			})
-
-			// console.log("---------- filteredBirthData ----------");
-			// console.log(filteredBirthData);
-			// console.log("---------- filteredBirthData ----------");
-
-			var nestedBirthData = d3.nest()
-				.key(function(d) { return d.race; })
-				.rollup(function(v) { return {
-					total: d3.sum(v, function(d) { return d.births; }),
-					avg: d3.mean(v, function(d) { return d.births; })
-				}; })
-				.entries(filteredBirthData);
-
-			// console.log("---------- nestedBirthData ----------");
-			// console.log(nestedBirthData);
-			// console.log("---------- nestedBirthData ----------");
-
-			// birthData = birthData.filter(function(d){return d.date == selectedDate;})
-
-			var g = svg.selectAll(".arc")
-				.data(pie(nestedBirthData))
-				.enter().append("g")
-				.attr("class", "arc")
-				.on("mouseover", function(d) {
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
-					tooltip.transition()
-						.duration(200)
-						.style("opacity", .9);
-
-					tooltip.html(
-						"Year: " + selectedDate.getFullYear() + "<br/>" + "<br/>" +
-						"Race: " + d.data.key + "<br/>" + "<br/>" +
-						"Total Births: " + d.data.value.avg + "<br/>" + "<br/>"
-					)
-						.style("left", (d3.event.pageX / 1.5) + "px")
-						.style("top", (d3.event.pageY / 10) + "px");
-				})
-				.on("mouseout", function(d) {
-					tooltip.transition()
-						.duration(500)
-						.style("opacity", 0);
-				});
-
-			g.append("path")
-				.attr("d", arc)
-				.style("fill", function(d) { return color(d.data.key); });
-
-			g.append("text")
-				.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
-				.attr("dy", ".35em")
-				.text(function(d) { return d.data.value.total; });
-
-			createBirthsByRaceFilter(birthData);
-			createBirthsByRaceApplyButton(birthData);
-			createBirthsByRaceResetButton(birthData);
-
+		natality.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			d.date = new Date(d.date)
 		})
+
+		birthData = natality;
+
+		birthData.sort(function(a, b) { return a.date - b.date; });
+
+		// console.log("---------- birthData ----------");
+		// console.log(birthData);
+		// console.log("---------- birthData ----------");
+
+
+		// if (selectedDate != null && selectedDate != undefined) {
+		// 	selectedDate = selectedDate;
+		// }
+		// else {
+		// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+		// }
+
+		// console.log("---------- selectedDate-pre ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-pre ----------");
+
+		if (selectedDate == null && selectedDate == undefined) {
+			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+			// selectedDate = new Date(selectedDate.toString());
+		}
+		else {
+			selectedDate = new Date(selectedDate.toString());
+		}
+
+		// console.log("---------- selectedDate-post ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-post ----------");
+		//
+		// console.log("---------- new Date ----------");
+		// console.log(new Date("2015"));
+		// console.log("---------- new Date ----------");
+
+		filteredBirthData = [];
+
+		// console.log("---------- selectedDate ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate ----------");
+
+		birthData.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			if (d.date.getFullYear() == selectedDate.getFullYear()) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				filteredBirthData.push(d);
+			}
+		})
+
+		// console.log("---------- filteredBirthData ----------");
+		// console.log(filteredBirthData);
+		// console.log("---------- filteredBirthData ----------");
+
+		var nestedBirthData = d3.nest()
+			.key(function(d) { return d.race; })
+			.rollup(function(v) { return {
+				total: d3.sum(v, function(d) { return d.births; }),
+				avg: d3.mean(v, function(d) { return d.births; })
+			}; })
+			.entries(filteredBirthData);
+
+		// console.log("---------- nestedBirthData ----------");
+		// console.log(nestedBirthData);
+		// console.log("---------- nestedBirthData ----------");
+
+		// birthData = birthData.filter(function(d){return d.date == selectedDate;})
+
+		var g = svg.selectAll(".arc")
+			.data(pie(nestedBirthData))
+			.enter().append("g")
+			.attr("class", "arc")
+			.on("mouseover", function(d) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", .9);
+
+				tooltip.html(
+					"Year: " + selectedDate.getFullYear() + "<br/>" + "<br/>" +
+					"Race: " + d.data.key + "<br/>" + "<br/>" +
+					"Total Births: " + d.data.value.avg + "<br/>" + "<br/>"
+				)
+					.style("left", (d3.event.pageX / 1.5) + "px")
+					.style("top", (d3.event.pageY / 10) + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		g.append("path")
+			.attr("d", arc)
+			.style("fill", function(d) { return color(d.data.key); });
+
+		g.append("text")
+			.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+			.attr("dy", ".35em")
+			.text(function(d) { return d.data.value.total; });
+
+		createBirthsByRaceFilter(birthData);
+		createBirthsByRaceApplyButton(birthData);
+		createBirthsByRaceResetButton(birthData);
+
+
 	}
 
 	function createBirthsByRaceFilter(birthData){

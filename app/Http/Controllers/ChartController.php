@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Natality;
+use App\PopulationByBorough;
+use App\PopulationByCommunityDistricts;
+use App\WaterConsumption;
+
 class ChartController extends Controller
 {
     /**
@@ -16,11 +21,19 @@ class ChartController extends Controller
          // $securityLogs = Security::all();
          // $enrollmentData = Enrollment::all();
          // $clubRecruitmentData = ClubRecruitment::all();
+         $natality = Natality::all();
+         $populationByBorough = PopulationByBorough::all();
+         $populationByCommunityDistricts = PopulationByCommunityDistricts::all();
+         $waterConsumption = WaterConsumption::all();
          $data = [];
 
          // $data['securityLogs'] = $securityLogs;
          // $data['enrollmentData'] = $enrollmentData;
          // $data['clubRecruitmentData'] = $clubRecruitmentData;
+         $data['populationByBorough'] = $populationByBorough;
+         $data['populationByCommunityDistricts'] = $populationByCommunityDistricts;
+         $data['waterConsumption'] = $waterConsumption;
+         $data['natality'] = $natality;
 
          return view('/chart',$data);
      }
