@@ -562,6 +562,13 @@
         }
     });
     
+    d3.select("#Housing").on("change", function(){
+        if(d3.select("#Housing").property("checked")){
+            housingProgramOverlay();
+        } else {
+            g.selectAll("path").attr("class", "housingProgramOverlay").remove();
+        }
+    });
 
 
     // Markers
@@ -597,7 +604,14 @@
         }
     });
 
-<<<<<<< HEAD
+    d3.select("#Neighbourhoods").on("change", function(){
+        if(d3.select("#Neighbourhoods").property("checked")){
+            neighbourhoodsMarker();
+        } else {
+            map.removeLayer(pruneCluster);
+        }
+    });
+
     d3.select("#Facilities").on("change", function(){
         if(d3.select("#Facilities").property("checked")){
             facilitiesMarker();
@@ -608,9 +622,6 @@
 
 
     function boroughOverlay(){  
-=======
-    function boroughOverlay(){
->>>>>>> origin/leaflet-gui
         d3.json("data/NYC-Overlays/boroughs.geojson", function(error, collection) {
             if (error) throw error;
 
@@ -1289,6 +1300,106 @@
                     d3.select(this)
                         .style("fill", "#000")
                         .style("fill-opacity", .2);
+
+                    // this.style("fill", "#000")
+                    //     .style("fill-opacity", .2);
+
+                    popup.transition()
+                       .duration(500)
+                       .style("opacity", 0);
+                });
+
+            // console.log("---------- feature ----------");
+            // console.log(feature);
+            // console.log("---------- feature ----------");
+            // console.log("---------- transform ----------");
+            // console.log(transform);
+            // console.log("---------- transform ----------");
+            // console.log("---------- path ----------");
+            // console.log(path);
+            // console.log("---------- path ----------");
+            // console.log("---------- collection ----------");
+            // console.log(collection);
+            // console.log("---------- collection ----------");
+            // console.log("---------- collection.features ----------");
+            // console.log(collection.features);
+            // console.log("---------- collection.features ----------");
+
+            map.on("moveend", reset);
+            reset();
+
+            // Reposition the SVG to cover the features.
+            function reset() {
+                var bounds = path.bounds(collection),
+                    topLeft = bounds[0],
+                    bottomRight = bounds[1];
+
+                svg.attr("width", bottomRight[0] - topLeft[0])
+                    .attr("height", bottomRight[1] - topLeft[1])
+                    .style("left", topLeft[0] + "px")
+                    .style("top", topLeft[1] + "px");
+
+                g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+                feature.attr("d", path);
+            }
+
+            // Use Leaflet to implement a D3 geometric transformation.
+            function projectPoint(x, y) {
+                var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+                this.stream.point(point.x, point.y);
+            }
+        });
+    }
+
+    function housingProgramOverlay(){
+        d3.json("data/NYC-Overlays/MIH_affordable_housing.geojson", function(error, collection) {
+            if (error) throw error;
+
+            console.log("---------- collection ----------");
+            console.log(collection);
+            console.log("---------- collection ----------");
+
+            var transform = d3.geo.transform({point: projectPoint}),
+                path = d3.geo.path().projection(transform);
+
+            var feature = g.selectAll("path")
+                .attr("class", "housingProgramOverlay")
+                .data(collection.features)
+                .enter()
+                .append("path")
+                .style("fill", "#000")
+                .style("fill-opacity", .2)
+                .style("stroke", "#000")
+                .style("stroke-width", 1.5 +"px")
+                .on("mouseover", function(d){
+                    console.log("---------- d ----------");
+                    console.log(d);
+                    console.log("---------- d ----------");
+                    console.log("---------- this ----------");
+                    console.log(this);
+                    console.log("---------- this ----------");
+
+                    d3.select(this)
+                        .style("fill", "blue")
+                        .style("fill-opacity", .7);
+
+                    // this.style("fill", "brown")
+                    //     .style("fill-opacity", .7);
+
+                    popup.transition()
+                       .duration(200)
+                       .style("opacity", .9);
+
+                    popup.html("<p>Project Name: " + d.properties.ProjectNam + "</p>")
+                        .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
+                        // .attr("style", "top: 58%; left: 0px; position: absolute;");
+                })
+                .on("mouseout", function(d) {
+
+                    d3.select(this)
+                        .style("fill", "#000")
+                        .style("fill-opacity", .6);
 
                     // this.style("fill", "#000")
                     //     .style("fill-opacity", .2);
@@ -2189,6 +2300,88 @@
         };
 
         d3.json("data/NYC-Markers/facilities.geojson", function(error, collection) {
+            if (error) throw error;
+
+
+            collection.features.forEach(function(d){
+
+                var m = new PruneCluster.Marker(d.geometry.coordinates[1], d.geometry.coordinates[0]);
+
+                console.log("---------- m ----------");
+                console.log(m);
+                console.log("---------- m ----------");
+
+                m.data = d.properties;
+
+                pruneCluster.RegisterMarker(m);
+
+                
+            })
+
+            map.addLayer(pruneCluster);
+
+            
+
+        });
+
+    }
+
+    function neighbourhoodsMarker(){
+        var marker_img = "data:image/png;base64,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";
+
+        pruneCluster.PrepareLeafletMarker = function (marker, data, category) {
+            marker.setIcon(
+                L.icon({
+                    iconUrl: marker_img,
+                    iconSize: [24, 24],
+                    data: data
+                })
+            );
+
+            console.log("---------- data ----------");
+            console.log(data);
+            console.log("---------- data ----------");
+
+            // console.log("---------- marker ----------");
+            // console.log(marker);
+            // console.log("---------- marker ----------");
+
+            if (marker.getPopup()) {
+                marker.setPopupContent(
+                    "<P>Name: " + data.Name + "</P>" +
+                    "<P>Borough: " + data.Borough + "</P>"
+                );
+                // marker.setPopupContent(
+                //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
+                // );
+            }
+            else {
+                marker.bindPopup(
+                    "<P>Name: " + data.Name + "</P>" +
+                    "<P>Borough: " + data.Borough + "</P>"
+                );
+
+                // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
+            }
+
+            marker._popup.options.closeOnClick = false;
+            marker._popup.options.autoPan = false;
+
+            marker._popup.setLatLng(marker._latlng);
+
+            map.addLayer(marker._popup);
+
+            var pos = map.latLngToLayerPoint(marker._latlng);
+
+            L.DomUtil.setPosition(marker._popup._wrapper.parentNode, pos);
+
+            var draggable = new L.Draggable(marker._popup._container, marker._popup._wrapper);
+            draggable.enable();
+
+            map.closePopup(marker._popup);
+        };
+
+        d3.json("data/NYC-Markers/neighbourhood_names.geojson", function(error, collection) {
             if (error) throw error;
 
 
