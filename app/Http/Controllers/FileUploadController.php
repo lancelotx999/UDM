@@ -15,33 +15,38 @@ class FileUploadController extends Controller
     {
     	if ($request->file('file')->isValid())
     	{
-  			$request->validate([
-    			'file' => 'required|mimes:csv,txt,xlsx'
-    		]);
+	    	$file = $request->file('file');
+	        $filepath = $file->getPathName();
+	        $filename = $file->getClientOriginalName();
+
+	        $fileinfo = pathinfo($filename);
+	        $fileext = $fileinfo['extension'];
+	        
+			if ($fileext == "csv")
+			{
+				$filename = basename($filename, ".csv");
+				return $this->importCSV($filepath,$filename);
+			}
+			else if ($fileext = "geojson")
+			{
+				$filename = basename($filename, ".geojson");
+				return $this->importGEOJSON($filepath,$filename);
+			}
+			else
+			{
+				dd("INVALID FILE FORMAT");
+			}
+    	}
+    	else
+    	{
+    		dd("INVALID FILE");
     	}
 
-    	$file = $request->file('file');
-        $filepath = $file->getPathName();
-        $filename = $file->getClientOriginalName();
-        $filename = basename($filename, '.csv');
-
-		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		$filemime = finfo_file($finfo,$filepath);
-
-		if (($filemime == "text/plain" ) || ($filemime == "text/csv"))
-		{
-			return $this->importCSV($filepath,$filename);
-		}
-		else
-		{
-			dd("INVALID FILE FORMAT");
-		}
 
     }
 
     public function importCSV($filepath, $filename)
     {
-        $chunkSize = 100;
         Schema::dropIfExists($filename);
 
     	$filehandle = fopen($filepath, "r");
@@ -81,6 +86,14 @@ class FileUploadController extends Controller
 
 		fclose($filehandle);
         return view('dbManager/UploadDB');
+    }
+
+    public function importGEOJSON($filepath, $filename)
+    {
+    	Schema::dropIfExists($filename);
+
+    	$decoded = json_decode($filepath,true);
+    	dd($decoded);
     }
 }
  
