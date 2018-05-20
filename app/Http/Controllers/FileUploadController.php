@@ -92,7 +92,9 @@ class FileUploadController extends Controller
     {
     	Schema::dropIfExists($filename);
 
-    	$decoded = json_decode($filepath,true);
+    	$data = file_get_contents($filepath);
+
+    	$decoded = json_decode($data,true);
     	dd($decoded);
     }
 }
