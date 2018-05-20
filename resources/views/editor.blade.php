@@ -2,8 +2,34 @@
 
 @section('content')
 
+<style type="text/css">
+
+	#export {
+        position: absolute;
+        top: 280px;
+        left: -8px;
+        margin: 15px 20px 20px;
+  		padding: 5px 15px;
+  		border: none;
+  		color: #161a1d;
+  		box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  		background-color: #fff;
+  		transition-duration: 0.4s;
+  		-webkit-transition-duration: 0.4s; /* Safari */
+    }
+
+	#export:hover {
+		background-color: #eeeeee;
+		color: #555;
+	}
+
+</style>
+
 <div class="row">
+
 	<div id="map"></div>
+	<button class="filter" id='export'>Save Notes</button>
+
 </div>
 
 <script>
@@ -30,6 +56,7 @@
     map.setView(new L.LatLng(40.7, -73.8), 10) //NYC Location
 
     var drawnItems = new L.FeatureGroup();
+
     map.addLayer(drawnItems);
 
     var drawControl = new L.Control.Draw({
@@ -37,6 +64,7 @@
             featureGroup: drawnItems
         }
     });
+
     map.addControl(drawControl);
 
     map.on('draw:created', function (e) {
@@ -44,6 +72,34 @@
             layer = e.layer;
         drawnItems.addLayer(layer);
     });
+
+    $.ajaxSetup({
+  		headers: {
+    		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  		}
+	});
+
+    // get json
+	document.getElementById('export').onclick = function(e) {
+        // Extract GeoJson from featureGroup
+        var data = drawnItems.toGeoJSON();
+
+        // Stringify the GeoJson
+        var convertedData = JSON.stringify(data);
+
+        console.log(convertedData);
+
+        // Create export
+        $.ajax({
+  			type: "POST",
+  			url: "{{ action('EditorController@saveFile') }}", //url of receiver file on server
+  			data: convertedData, //your data
+  			success: console.log('success'), //callback when ajax request finishes
+  			contentType: "application/json; charset=utf-8",
+    		dataType: "json",
+    		processData: false
+		});
+    }
 
 </script>
 

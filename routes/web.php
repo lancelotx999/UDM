@@ -13,10 +13,11 @@
 
 // Routes for public access of maps and charts
 Route::get('/', 'LeafletController@mainMap');
-// Route::get('/map/swinburne', 'HeatmapController@heatmapMap');
 Route::get('/map', 'LeafletController@mainMap');
-
 Route::get('/chart', 'ChartController@chartPage');
+Route::get('/home', 'HomeController@index')->name('home');
+
+// Route::get('/map/swinburne', 'HeatmapController@heatmapMap');
 // Route::get('/chart/security', 'ChartController@securityChartPage');
 // Route::get('/chart/enrollment', 'ChartController@enrollmentChartPage');
 // Route::get('/chart/clubRecruitment', 'ChartController@clubRecruitmentChartPage');
@@ -31,9 +32,8 @@ Route::get('/upload', function() {
 })->middleware('auth');;
 
 // Routes for adding data into server
-Route::post('UploadDB','FileUploadController@UploadtoServer');
+Route::post('Editor', 'EditorController@saveFile');
+Route::post('UploadDB', 'FileUploadController@UploadtoServer');
 
 // Routes for authentication
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
