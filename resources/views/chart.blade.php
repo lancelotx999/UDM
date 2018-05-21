@@ -875,7 +875,7 @@
 
 			var min = new Date($("#dateSlider-populationByCommunityChart").slider( "values", 0 )),
 				max = new Date($("#dateSlider-populationByCommunityChart").slider( "values", 1 )),
-				selectedBorough = $("#selectBorough-populationByCommunityChart").val();
+				selectedBorough = $("#selectBorough-populationByCommunityChart option:selected").text();
 
 			// console.log("---------- min ----------");
 			// console.log(min);
@@ -2551,7 +2551,7 @@
 		actualRevenuesChartApplyButton.addEventListener ("click", function() {
 			var dateMin = new Date($("#dateSlider-actualRevenuesChart").slider( "values", 0 )),
 				dateMax = new Date($("#dateSlider-actualRevenuesChart").slider( "values", 1 )),
-				category = $("#selectCategory-actualRevenuesChart").val();
+				category = $("#selectCategory-actualRevenuesChart option:selected").text();
 
 			document.getElementById("actualRevenuesChart").innerHTML = "";
 
