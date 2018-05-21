@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Natality;
+use App\PopulationByBorough;
+use App\PopulationByCommunityDistricts;
+use App\WaterConsumption;
+use App\JuvenileInvestigation;
+use App\JuvenileIntakes;
+use App\ActualRevenues;
+
 class ChartController extends Controller
 {
     /**
@@ -16,11 +24,25 @@ class ChartController extends Controller
          // $securityLogs = Security::all();
          // $enrollmentData = Enrollment::all();
          // $clubRecruitmentData = ClubRecruitment::all();
+         $natality = Natality::all();
+         $populationByBorough = PopulationByBorough::all();
+         $populationByCommunityDistricts = PopulationByCommunityDistricts::all();
+         $waterConsumption = WaterConsumption::all();
+         $juvenileInvestigation = JuvenileInvestigation::all();
+         $juvenileIntakes = JuvenileIntakes::all();
+         $actualRevenues = ActualRevenues::all();
          $data = [];
 
          // $data['securityLogs'] = $securityLogs;
          // $data['enrollmentData'] = $enrollmentData;
          // $data['clubRecruitmentData'] = $clubRecruitmentData;
+         $data['populationByBorough'] = $populationByBorough;
+         $data['populationByCommunityDistricts'] = $populationByCommunityDistricts;
+         $data['waterConsumption'] = $waterConsumption;
+         $data['natality'] = $natality;
+         $data['juvenileInvestigation'] = $juvenileInvestigation;
+         $data['juvenileIntakes'] = $juvenileIntakes;
+         $data['actualRevenues'] = $actualRevenues;
 
          return view('/chart',$data);
      }
