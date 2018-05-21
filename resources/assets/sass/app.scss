@@ -37,6 +37,7 @@
 
 html, body {
   height: 100vh;
+  background-color: #fcfcfc;
 }
 
 body {
@@ -65,13 +66,11 @@ a:active{
 }
 
 .chart-filter {
-  background-color: #252b31;
-  padding: 0.5vh 2% 22% 2%;
-  margin-left: -1%;
+  background-color: #fff;
 }
 
 .white-text {
-  color: #f6f6f6;
+  color: #fcfcfc;
 }
 
 .breadcrumb {
@@ -346,7 +345,7 @@ ul.links {
 }
 
 div.tooltip {
-  position: absolute;
+  position: fixed;
   padding: 2px;
   font: 12px sans-serif;
   background: lightsteelblue;

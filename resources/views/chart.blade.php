@@ -2,8 +2,6 @@
 
 @section('content')
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
@@ -15,16 +13,6 @@
 		stroke-width: 2px;
 	}
 
-	div.tooltip {
-		position: absolute;
-		padding: 2px;
-		font: 12px sans-serif;
-		background: lightsteelblue;
-		border: 1px;
-		border-radius: 8px;
-		pointer-events: none;
-	}
-
 	.arc text {
 		font: 10px sans-serif;
 		text-anchor: middle;
@@ -34,238 +22,156 @@
 		stroke: #fff;
 	}
 
-	#securityChart,
-	#enrollmentChart {
-		height: 20vh;
-	}
-
 </style>
 
-<div class="row">
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-sm-3 col-xs-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='populationByBoroughChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 col-xs-6">
-						<div id='populationByBoroughChartApplyButton'></div>
-					</div>
-					<div class="col-sm-6 col-xs-6">
-						<div id='populationByBoroughChartResetButton'></div>
-					</div>
-				</div>
+<div class="container wrapper">
+
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Population Statistics by Boroughs</strong>
+
+			<hr />
+
+			<div id='populationByBoroughChart'></div>
+
+			<div class="row">
+				<span id='populationByBoroughChartFilters'></span>
+				<span id='populationByBoroughChartApplyButton'></span>
+				<span id='populationByBoroughChartResetButton'></span>
 			</div>
-			<div class=" col-sm-8 col-xs-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Population Statistics by Boroughs</h1>
-				<hr />
-				<div id='populationByBoroughChart'></div>
+		</div>
+
+		<div class=" col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Population Statistics by Community District In A Borough</strong>
+
+			<hr />
+
+			<div id='populationByCommunityChart'></div>
+
+			<div class="row">
+				<span id='populationByCommunityChartFilters'></span>
+				<span id='populationByCommunityChartApplyButton'></span>
+				<span id='populationByCommunityChartResetButton'></span>
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-sm-3 col-xs-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='populationByCommunityChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 col-xs-6">
-						<div id='populationByCommunityChartApplyButton'></div>
-					</div>
-					<div class="col-sm-6 col-xs-6">
-						<div id='populationByCommunityChartResetButton'></div>
-					</div>
-				</div>
+
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Water Consumption Statistics Of New York City</strong>
+
+			<hr />
+
+			<div id='waterConsumptionChart'></div>
+
+			<div class="row">
+				<span id='waterConsumptionChartFilters'></span>
+				<span id='waterConsumptionChartApplyButton'></span>
+				<span id='waterConsumptionChartResetButton'></span>
 			</div>
-			<div class=" col-sm-8 col-xs-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Population Statistics by Community District In A Borough</h1>
-				<hr />
-				<div id='populationByCommunityChart'></div>
+		</div>
+
+		<div class=" col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Births By Gender Of New York City</strong>
+
+			<hr />
+
+			<div id='birthsByGenderChart'></div>
+
+			<div class="row">
+				<span id='birthsByGenderChartFilters'></span>
+				<span id='birthsByGenderChartApplyButton'></span>
+				<span id='birthsByGenderChartResetButton'></span>
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-sm-3 col-xs-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='waterConsumptionChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 col-xs-6">
-						<div id='waterConsumptionChartApplyButton'></div>
-					</div>
-					<div class="col-sm-6 col-xs-6">
-						<div id='waterConsumptionChartResetButton'></div>
-					</div>
-				</div>
+
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Births By Race Of New York City</strong>
+
+			<hr />
+
+			<div id='birthsByRaceChart'></div>
+
+			<div class="row">
+				<span id='birthsByRaceChartFilters'></span>
+				<span id='birthsByRaceChartApplyButton'></span>
+				<span id='birthsByRaceChartResetButton'></span>
 			</div>
-			<div class=" col-sm-8 col-xs-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Water Consumption Statistics Of New York City</h1>
-				<hr />
-				<div id='waterConsumptionChart'></div>
+		</div>
+
+		<div class=" col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Juvenile Investigations in New York City</strong>
+
+			<hr />
+
+			<div id='juvenileInvestigationChart'></div>
+
+			<div class="row">
+				<span id='juvenileInvestigationChartFilters'></span>
+				<span id='juvenileInvestigationChartApplyButton'></span>
+				<span id='juvenileInvestigationChartResetButton'></span>
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-sm-3 col-xs-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='birthsByGenderChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 col-xs-6">
-						<div id='birthsByGenderChartApplyButton'></div>
-					</div>
-					<div class="col-sm-6 col-xs-6">
-						<div id='birthsByGenderChartResetButton'></div>
-					</div>
-				</div>
+
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Juvenile Arrested in New York City</strong>
+
+			<hr />
+
+			<div id='juvenileIntakesChart'></div>
+
+			<div class="row">
+				<span id='juvenileIntakesChartFilters'></span>
+				<span id='juvenileIntakesChartApplyButton'></span>
+				<span id='juvenileIntakesChartResetButton'></span>
 			</div>
-			<div class=" col-sm-8 col-xs-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Births By Gender Of New York City</h1>
-				<hr />
-				<div id='birthsByGenderChart'></div>
+		</div>
+
+		<div class=" col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>NYC Actual Revenues</strong>
+
+			<hr />
+
+			<div id='actualRevenuesChart'></div>
+
+			<div class="row">
+				<span id='actualRevenuesChartFilters'></span>
+				<span id='actualRevenuesChartApplyButton'></span>
+				<span id='actualRevenuesChartResetButton'></span>
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-sm-3 col-xs-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='birthsByRaceChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 col-xs-6">
-						<div id='birthsByRaceChartApplyButton'></div>
-					</div>
-					<div class="col-sm-6 col-xs-6">
-						<div id='birthsByRaceChartResetButton'></div>
-					</div>
-				</div>
-			</div>
-			<div class=" col-sm-8 col-xs-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Births By Race Of New York City</h1>
-				<hr />
-				<div id='birthsByRaceChart'></div>
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-sm-3 col-xs-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='juvenileInvestigationChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 col-xs-6">
-						<div id='juvenileInvestigationChartApplyButton'></div>
-					</div>
-					<div class="col-sm-6 col-xs-6">
-						<div id='juvenileInvestigationChartResetButton'></div>
-					</div>
-				</div>
-			</div>
-			<div class=" col-sm-8 col-xs-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Juvenile Investigations in New York City</h1>
-				<hr />
-				<div id='juvenileInvestigationChart'></div>
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-sm-3 col-xs-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='juvenileIntakesChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 col-xs-6">
-						<div id='juvenileIntakesChartApplyButton'></div>
-					</div>
-					<div class="col-sm-6 col-xs-6">
-						<div id='juvenileIntakesChartResetButton'></div>
-					</div>
-				</div>
-			</div>
-			<div class=" col-sm-8 col-xs-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Juvenile Arrested in New York City</h1>
-				<hr />
-				<div id='juvenileIntakesChart'></div>
-			</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-sm-3 col-xs-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='actualRevenuesChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-6 col-xs-6">
-						<div id='actualRevenuesChartApplyButton'></div>
-					</div>
-					<div class="col-sm-6 col-xs-6">
-						<div id='actualRevenuesChartResetButton'></div>
-					</div>
-				</div>
-			</div>
-			<div class=" col-sm-8 col-xs-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;NYC Actual Revenues</h1>
-				<hr />
-				<div id='actualRevenuesChart'></div>
-			</div>
-		</div>
-	</div>
+
+	<br /><br /><br />
+
 </div>
 
 <script>
@@ -284,7 +190,7 @@
 
 	function createPopulationByBoroughChart(populationData, dateMin, dateMax){
 		// Set the dimensions of the canvas / graph
-		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
 
@@ -457,9 +363,9 @@
 		// console.log("---------- populationData ----------");
 		var dateSlider = "";
 
-		dateSlider += "<p class='white-text'>Date Range for Population By Borough Chart:&nbsp;</p>";
+		dateSlider += "<p>Date Range for Population By Borough Chart:&nbsp;</p>";
 		dateSlider += "<p><input type='date-' id='date-populationByBoroughChart'></p>";
-		dateSlider += "<div id='dateSlider-populationByBoroughChart' style='width:85%;margin: auto;'></div></br>";
+		dateSlider += "<div id='dateSlider-populationByBoroughChart' style='width:92%; left: 0;'></div></br>";
 
 		document.getElementById('populationByBoroughChartFilters').innerHTML = dateSlider;
 
@@ -522,7 +428,7 @@
 
 		var populationByBoroughChartApplyButton = document.createElement("populationByBoroughChartApplyButton");
 
-		populationByBoroughChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+		populationByBoroughChartApplyButton.innerHTML = "<button>Apply Filter</button>";
 
 		document.getElementById("populationByBoroughChartApplyButton").appendChild(populationByBoroughChartApplyButton);
 
@@ -551,7 +457,7 @@
 
 		var populationByBoroughChartResetButton = document.createElement("populationByBoroughChartResetButton");
 
-		populationByBoroughChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+		populationByBoroughChartResetButton.innerHTML = "<button>Reset Filter</button>";
 
 		document.getElementById("populationByBoroughChartResetButton").appendChild(populationByBoroughChartResetButton);
 
@@ -590,7 +496,7 @@
 
 	function createPopulationByCommunityChart(populationData, dateMin, dateMax, selectedBorough){
 		// Set the dimensions of the canvas / graph
-		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
 
@@ -780,17 +686,17 @@
 
 		var dateSlider = "";
 
-		dateSlider += "<p class='white-text'>Date Range for Population By Community Chart:&nbsp;</p>";
+		dateSlider += "<p>Date Range for Population By Community Chart:&nbsp;</p>";
 		dateSlider += "<p><input type='date-' id='date-populationByCommunityChart'></p>";
-		dateSlider += "<div id='dateSlider-populationByCommunityChart' style='width:85%;margin: auto;'></div></br>";
+		dateSlider += "<div id='dateSlider-populationByCommunityChart' style='width:92%; left: 0;'></div></br>";
 
 		var boroughSelector = "";
 
-		boroughSelector += "<p class='white-text'>Floor For Security Chart:</p><p><select id='selectBorough-populationByCommunityChart' size='1' style='width: 202px;'>";
+		boroughSelector += "<p>Floor For Security Chart:</p><p><select id='selectBorough-populationByCommunityChart' size='1' style='width: 202px;'>";
 		boroughs.forEach(function (d){
 			boroughSelector += "<option value=" + d + ">" + d + "</option>";
 		})
-		boroughSelector += "</select></p><hr />";
+		boroughSelector += "</select><p/>";
 
 		// boroughSelector += "<div class='dropdown'>";
 		// boroughSelector += "<button class='btn btn-primary dropdown-toggle' id='borough-populationByCommunityChart' type='button' data-toggle='dropdown'>Borough Selector";
@@ -864,7 +770,7 @@
 
 		var populationByCommunityChartApplyButton = document.createElement("populationByCommunityChartApplyButton");
 
-		populationByCommunityChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+		populationByCommunityChartApplyButton.innerHTML = "<button>Apply Filter</button>";
 
 		document.getElementById("populationByCommunityChartApplyButton").appendChild(populationByCommunityChartApplyButton);
 
@@ -896,7 +802,7 @@
 
 		var populationByCommunityChartResetButton = document.createElement("populationByCommunityChartResetButton");
 
-		populationByCommunityChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+		populationByCommunityChartResetButton.innerHTML = "<button>Reset Filter</button>";
 
 		document.getElementById("populationByCommunityChartResetButton").appendChild(populationByCommunityChartResetButton);
 
@@ -932,7 +838,7 @@
 
 	function createWaterConsumptionChart(waterConsumptionData, dateMin, dateMax){
 		// Set the dimensions of the canvas / graph
-		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
 
@@ -1247,9 +1153,9 @@
 		// console.log(dateMin);
 		// console.log("---------- dateMin ----------");
 
-		dateSlider += "<p class='white-text'>Date Range for Water Consumption Chart:&nbsp;</p>";
+		dateSlider += "<p>Date Range for Water Consumption Chart:&nbsp;</p>";
 		dateSlider += "<p><input type='date-' id='date-waterConsumptionChart'></p>";
-		dateSlider += "<div id='dateSlider-waterConsumptionChart' style='width:85%;margin: auto;'></div></br>";
+		dateSlider += "<div id='dateSlider-waterConsumptionChart' style='width:92%; left: 0;'></div></br>";
 
 		document.getElementById('waterConsumptionChartFilters').innerHTML = dateSlider;
 
@@ -1325,7 +1231,7 @@
 
 		var waterConsumptionChartApplyButton = document.createElement("waterConsumptionChartApplyButton");
 
-		waterConsumptionChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+		waterConsumptionChartApplyButton.innerHTML = "<button>Apply Filter</button>";
 
 		document.getElementById("waterConsumptionChartApplyButton").appendChild(waterConsumptionChartApplyButton);
 
@@ -1355,7 +1261,7 @@
 
 		var waterConsumptionChartResetButton = document.createElement("waterConsumptionChartResetButton");
 
-		waterConsumptionChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+		waterConsumptionChartResetButton.innerHTML = "<button>Reset Filter</button>";
 
 		document.getElementById("waterConsumptionChartResetButton").appendChild(waterConsumptionChartResetButton);
 
@@ -1386,7 +1292,7 @@
 
 	function createBirthsByGenderChart(birthData, selectedDate){
 		// Set the dimensions of the canvas / graph
-		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom
 			radius = Math.min(width, height) / 2;
@@ -1562,9 +1468,9 @@
 		// console.log(dateMin);
 		// console.log("---------- dateMin ----------");
 
-		// dateSelector += "<p class='white-text'>Select Year for Birth By Gender Chart:&nbsp;</p>";
+		// dateSelector += "<p>Select Year for Birth By Gender Chart:&nbsp;</p>";
 		// dateSelector += "<p><input type='text' id='datepicker-birthsByGenderChart'></p>";
-		// dateSelector += "<div id='datepicker-birthsByGenderChart' style='width:85%;margin: auto;'></div></br>";
+		// dateSelector += "<div id='datepicker-birthsByGenderChart' style='width:92%; left: 0;'></div></br>";
 
 		var years = [];
 
@@ -1579,11 +1485,11 @@
 		// console.log("---------- years ----------");
 
 
-		dateSelector += "<p class='white-text'>Select Year for Birth By Gender Chart:</p><p><select id='selectYear-birthsByGenderChart' size='1' style='width: 202px;'>";
+		dateSelector += "<p>Select Year for Birth By Gender Chart:</p><p><select id='selectYear-birthsByGenderChart' size='1' style='width: 202px;'>";
 		years.forEach(function (d){
 			dateSelector += "<option value=" + d + ">" + d + "</option>";
 		})
-		dateSelector += "</select></p><hr />";
+		dateSelector += "</select></p>";
 
 		document.getElementById('birthsByGenderChartFilters').innerHTML = dateSelector;
 
@@ -1605,7 +1511,7 @@
 
 		var birthsByGenderChartApplyButton = document.createElement("birthsByGenderChartApplyButton");
 
-		birthsByGenderChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+		birthsByGenderChartApplyButton.innerHTML = "<button>Apply Filter</button>";
 
 		document.getElementById("birthsByGenderChartApplyButton").appendChild(birthsByGenderChartApplyButton);
 
@@ -1638,7 +1544,7 @@
 
 		var birthsByGenderChartResetButton = document.createElement("birthsByGenderChartResetButton");
 
-		birthsByGenderChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+		birthsByGenderChartResetButton.innerHTML = "<button>Reset Filter</button>";
 
 		document.getElementById("birthsByGenderChartResetButton").appendChild(birthsByGenderChartResetButton);
 
@@ -1673,7 +1579,7 @@
 
 	function createBirthsByRaceChart(birthData, selectedDate){
 		// Set the dimensions of the canvas / graph
-		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom
 			radius = Math.min(width, height) / 2;
@@ -1844,9 +1750,9 @@
 		// console.log(dateMin);
 		// console.log("---------- dateMin ----------");
 
-		// dateSelector += "<p class='white-text'>Select Year for Birth By Race Chart:&nbsp;</p>";
+		// dateSelector += "<p>Select Year for Birth By Race Chart:&nbsp;</p>";
 		// dateSelector += "<p><input type='text' id='datepicker-birthsByRaceChart'></p>";
-		// dateSelector += "<div id='datepicker-birthsByRaceChart' style='width:85%;margin: auto;'></div></br>";
+		// dateSelector += "<div id='datepicker-birthsByRaceChart' style='width:92%; left: 0;'></div></br>";
 
 		var years = [];
 
@@ -1861,11 +1767,11 @@
 		// console.log("---------- years ----------");
 
 
-		dateSelector += "<p class='white-text'>Select Year for Birth By Race Chart:</p><p><select id='selectYear-birthsByRaceChart' size='1' style='width: 202px;'>";
+		dateSelector += "<p>Select Year for Birth By Race Chart:</p><p><select id='selectYear-birthsByRaceChart' size='1' style='width: 202px;'>";
 		years.forEach(function (d){
 			dateSelector += "<option value=" + d + ">" + d + "</option>";
 		})
-		dateSelector += "</select></p><hr />";
+		dateSelector += "</select></p>";
 
 		document.getElementById('birthsByRaceChartFilters').innerHTML = dateSelector;
 
@@ -1887,7 +1793,7 @@
 
 		var birthsByRaceChartApplyButton = document.createElement("birthsByRaceChartApplyButton");
 
-		birthsByRaceChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+		birthsByRaceChartApplyButton.innerHTML = "<button>Apply Filter</button>";
 
 		document.getElementById("birthsByRaceChartApplyButton").appendChild(birthsByRaceChartApplyButton);
 
@@ -1920,7 +1826,7 @@
 
 		var birthsByRaceChartResetButton = document.createElement("birthsByRaceChartResetButton");
 
-		birthsByRaceChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+		birthsByRaceChartResetButton.innerHTML = "<button>Reset Filter</button>";
 
 		document.getElementById("birthsByRaceChartResetButton").appendChild(birthsByRaceChartResetButton);
 
@@ -1954,7 +1860,7 @@
 	}
 
 	function createJuvenileInvestigationChart(investigationCount, dateMin, dateMax){
-		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
 
@@ -2062,9 +1968,9 @@
 	function createJuvenileInvestigationFilter(investigationCount, dateMin, dateMax){
 		var dateSlider = "";
 
-		dateSlider += "<p class='white-text'>Date Range for Juvenile Investigation:&nbsp;</p>";
+		dateSlider += "<p>Date Range for Juvenile Investigation:&nbsp;</p>";
 		dateSlider += "<p><input type='date-' id='date-juvenileInvestigationChart'></p>";
-		dateSlider += "<div id='dateSlider-juvenileInvestigationChart' style='width:85%;margin: auto;'></div></br>";
+		dateSlider += "<div id='dateSlider-juvenileInvestigationChart' style='width:92%; left: 0;'></div></br>";
 
 		document.getElementById('juvenileInvestigationChartFilters').innerHTML = dateSlider;
 
@@ -2115,7 +2021,7 @@
 
 		var juvenileInvestigationChartApplyButton = document.createElement("juvenileInvestigationChartApplyButton");
 
-		juvenileInvestigationChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+		juvenileInvestigationChartApplyButton.innerHTML = "<button>Apply Filter</button>";
 
 		document.getElementById("juvenileInvestigationChartApplyButton").appendChild(juvenileInvestigationChartApplyButton);
 
@@ -2136,7 +2042,7 @@
 
 		var juvenileInvestigationChartResetButton = document.createElement("juvenileInvestigationChartResetButton");
 
-		juvenileInvestigationChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+		juvenileInvestigationChartResetButton.innerHTML = "<button>Reset Filter</button>";
 
 		document.getElementById("juvenileInvestigationChartResetButton").appendChild(juvenileInvestigationChartResetButton);
 
@@ -2158,7 +2064,7 @@
 	}
 
 	function createJuvenileIntakesChart(intakesCount, dateMin, dateMax){
-		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
 
@@ -2266,9 +2172,9 @@
 	function createJuvenileIntakesFilter(intakesCount, dateMin, dateMax){
 		var dateSlider = "";
 
-		dateSlider += "<p class='white-text'>Date Range for Juvenile Intakes:&nbsp;</p>";
+		dateSlider += "<p>Date Range for Juvenile Intakes:&nbsp;</p>";
 		dateSlider += "<p><input type='date-' id='date-juvenileIntakesChart'></p>";
-		dateSlider += "<div id='dateSlider-juvenileIntakesChart' style='width:85%;margin: auto;'></div></br>";
+		dateSlider += "<div id='dateSlider-juvenileIntakesChart' style='width:92%; left: 0;'></div></br>";
 
 		document.getElementById('juvenileIntakesChartFilters').innerHTML = dateSlider;
 
@@ -2319,7 +2225,7 @@
 
 		var juvenileIntakesChartApplyButton = document.createElement("juvenileIntakesChartApplyButton");
 
-		juvenileIntakesChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+		juvenileIntakesChartApplyButton.innerHTML = "<button>Apply Filter</button>";
 
 		document.getElementById("juvenileIntakesChartApplyButton").appendChild(juvenileIntakesChartApplyButton);
 
@@ -2340,7 +2246,7 @@
 
 		var juvenileIntakesChartResetButton = document.createElement("juvenileIntakesChartResetButton");
 
-		juvenileIntakesChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+		juvenileIntakesChartResetButton.innerHTML = "<button>Reset Filter</button>";
 
 		document.getElementById("juvenileIntakesChartResetButton").appendChild(juvenileIntakesChartResetButton);
 
@@ -2364,7 +2270,7 @@
 	function createActualRevenuesChart(revenueAmount, selectedCategory, dateMin, dateMax){
 		console.log(revenueAmount, selectedCategory, dateMin, dateMax);
 		
-		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
 
@@ -2485,17 +2391,17 @@
 
 		var dateSlider = "";
 
-		dateSlider += "<p class='white-text'>Date Range for Population By Community Chart:&nbsp;</p>";
+		dateSlider += "<p>Date Range for Population By Community Chart:&nbsp;</p>";
 		dateSlider += "<p><input type='date-' id='date-actualRevenuesChart'></p>";
-		dateSlider += "<div id='dateSlider-actualRevenuesChart' style='width:85%;margin: auto;'></div></br>";
+		dateSlider += "<div id='dateSlider-actualRevenuesChart' style='width:92%; left: 0;'></div></br>";
 
 		var categorySelector = "";
 
-		categorySelector += "<p class='white-text'>Floor For Security Chart:</p><p><select id='selectCategory-actualRevenuesChart' size='1' style='width: 202px;'>";
+		categorySelector += "<p>Revenue type</p><p><select id='selectCategory-actualRevenuesChart' size='1' style='width: 202px;'>";
 		selectedCategory.forEach(function (d){
 			categorySelector += "<option value=" + d + ">" + d + "</option>";
 		})
-		categorySelector += "</select></p><hr />";
+		categorySelector += "</select></p>";
 
 		document.getElementById('actualRevenuesChartFilters').innerHTML = dateSlider + categorySelector;
 
@@ -2544,7 +2450,7 @@
 
 		var actualRevenuesChartApplyButton = document.createElement("actualRevenuesChartApplyButton");
 
-		actualRevenuesChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+		actualRevenuesChartApplyButton.innerHTML = "<button>Apply Filter</button>";
 
 		document.getElementById("actualRevenuesChartApplyButton").appendChild(actualRevenuesChartApplyButton);
 
@@ -2564,7 +2470,7 @@
 
 		var actualRevenuesChartResetButton = document.createElement("actualRevenuesChartResetButton");
 
-		actualRevenuesChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+		actualRevenuesChartResetButton.innerHTML = "<button>Reset Filter</button>";
 
 		document.getElementById("actualRevenuesChartResetButton").appendChild(actualRevenuesChartResetButton);
 
