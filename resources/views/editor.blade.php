@@ -68,12 +68,21 @@
     map.addControl(drawControl);
 
     var idIW = L.popup();
-	var content = '<span><b>Shape Name</b></span><br/><input id="shapeName" type="text"/><br/><br/><span><b>Shape Description<b/></span><br/><textarea id="shapeDesc" cols="25" rows="5"></textarea><br/><br/><input type="button" id="okBtn" value="Save" onclick="saveIdIW()"/>';
 
     map.on('draw:created', function (e) {
         var type = e.layerType,
             layer = e.layer;
+
+        var feature = layer.feature = layer.feature || {}; // Intialize layer.feature   
+
+		feature.type = feature.type || "Feature"; // Intialize feature.type
+    	var props = feature.properties = feature.properties || {}; // Intialize feature.properties
+    		props.title = null;
+    		props.content = null;
+
         drawnItems.addLayer(layer);
+
+		var content = '<span><b>Shape Name</b></span><br/><input id="shapeName" type="text"/><br/><br/><span><b>Shape Description<b/></span><br/><textarea id="shapeDesc" cols="25" rows="5"></textarea><br/><br/><input type="button" id="okBtn" value="Save" onclick="saveIdIW()"/>'; 
 
 		idIW.setContent(content);
 
@@ -92,8 +101,11 @@
 		var sDesc = $('#shapeDesc').val();
 
 		var drawings = drawnItems.getLayers();  //drawnItems is a container for the drawn objects
-		drawings[drawings.length - 1].title = sName;
-		drawings[drawings.length - 1].content = sDesc;
+		drawings[drawings.length - 1].feature.properties.title = sName;
+		drawings[drawings.length - 1].feature.properties.content = sDesc;
+
+		console.log(drawings[drawings.length - 1].feature.properties.title);
+		console.log(drawings[drawings.length - 1].feature.properties.content);
 
 		if (idIW) {
 			map.closePopup();
