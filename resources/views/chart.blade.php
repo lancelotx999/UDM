@@ -182,6 +182,34 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-xs-12 col-sm-12">
+		<div class="row">
+			<div class="col-sm-3 col-xs-3 chart-filter">
+				<div class="row">
+					<div class="col-sm-12 col-xs-12">
+						<hr />
+						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
+						<hr />
+						<div id='juvenileInvestigationChartFilters'></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 col-xs-6">
+						<div id='juvenileInvestigationChartApplyButton'></div>
+					</div>
+					<div class="col-sm-6 col-xs-6">
+						<div id='juvenileInvestigationChartResetButton'></div>
+					</div>
+				</div>
+			</div>
+			<div class=" col-sm-8 col-xs-8">
+				<hr />
+				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Juvenile Investigations in New York City</h1>
+				<hr />
+				<div id='juvenileInvestigationChart'></div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -192,6 +220,7 @@
 	createWaterConsumptionChart();
 	createBirthsByGenderChart();
 	createBirthsByRaceChart();
+	createJuvenileInvestigationChart();
 
 
 
@@ -1866,6 +1895,210 @@
 		});
 	}
 
+	function createJuvenileInvestigationChart(investigationCount, dateMin, dateMax){
+		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom;
+
+		var svg = d3.select("#juvenileInvestigationChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		var tooltip = d3.select("#juvenileInvestigationChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var investigationCount = [];
+		var boroughs = [];
+
+		var juvenileInvestigation = {!! json_encode($juvenileInvestigation->toArray()) !!};
+
+		juvenileInvestigation.forEach(function (d){
+			investigationCount.push({borough: d.borough, date: new Date(d.date), count: Number(d.count) });
+		})
+		// console.log(investigationCount);
+		// console.log(boroughs);
+		investigationCount.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
+		// Set the ranges
+		var x = d3.scaleBand().rangeRound([0, width]),
+			y = d3.scaleLinear().rangeRound([height, 0]),
+			z = d3.scaleOrdinal(d3.schemeCategory20);
+
+		y.domain([0, Math.max.apply(Math, investigationCount.map(function(d) { return d.count; }))]).nice();
+		z.domain(boroughs);
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			investigationCount = investigationCount.filter(function (d){
+				return d.date >= dateMin;
+			})
+
+			investigationCount = investigationCount.filter(function (d){
+				return d.date <= dateMax;
+			})
+			x.domain(investigationCount.map(function(d) { return d.date.getFullYear(); }));
+		}
+		else {
+			x.domain(investigationCount.map(function(d) { return d.date.getFullYear(); }));
+		}
+		svg.selectAll(".bar")
+			.data(investigationCount)
+			.enter().append("rect")
+			.attr("class", "bar")
+			.attr("fill", function(d) { return z(d.borough); })
+			.attr("x", function(d) { return x(d.date.getFullYear()); })
+			.attr("width", x.bandwidth())
+			.attr("y", function(d) { return y(d.count); })
+			.attr("height", function(d) { return height - y(d.count); })
+			.on("mouseover", function(d) {
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", .9);
+
+				tooltip.html(
+					"Borough: " + d.borough + "<br/>" + "<br/>" +
+					"Total Investigations: " + d.count + "<br/>" + "<br/>" +
+					"Year: " + d.date.getFullYear() + "<br/>" + "<br/>" 
+				)
+					.style("left", (d3.event.pageX / 1.5) + "px")
+					.style("top", (d3.event.pageY / 10) + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		svg.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+			.append("text")
+			.attr("x", -10)
+			.attr("y", 15)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Year");
+
+		svg.append("g")
+			.call(d3.axisLeft(y))
+			.append("text")
+			.attr("x", 2)
+			.attr("y", y(y.ticks().pop()) + 0.5)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Investigation Counts");
+
+		createJuvenileInvestigationFilter(investigationCount, d3.extent(investigationCount, function(d) { return d.date; })[0], d3.extent(investigationCount, function(d) { return d.date; })[1]);
+		createJuvenileInvestigationApplyButton(investigationCount, d3.extent(investigationCount, function(d) { return d.date; })[0], d3.extent(investigationCount, function(d) { return d.date; })[1]);
+		createJuvenileInvestigationResetButton();
+
+	}
+
+	function createJuvenileInvestigationFilter(investigationCount, dateMin, dateMax){
+		var dateSlider = "";
+
+		dateSlider += "<p class='white-text'>Date Range for Water Consumption Chart:&nbsp;</p>";
+		dateSlider += "<p><input type='date-' id='date-juvenileInvestigationChart'></p>";
+		dateSlider += "<div id='dateSlider-juvenileInvestigationChart' style='width:85%;margin: auto;'></div></br>";
+
+		document.getElementById('juvenileInvestigationChartFilters').innerHTML = dateSlider;
+
+		var parseTime = d3.timeParse("%Y-%m-%d");
+
+		tempData = [];
+
+		investigationCount.forEach(function (d){
+			tempData.push(d.date.getTime());
+		});
+		// console.log(tempData);
+
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			$(function (){
+				$("#dateSlider-juvenileInvestigationChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [dateMin.getTime(), dateMax.getTime() ],
+					slide: function( event, ui ) {
+						dateMin = new Date(ui.values[0]);
+						dateMax = new Date(ui.values[1]);
+						$( "#date-juvenileInvestigationChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+		else {
+			$(function (){
+				$("#dateSlider-juvenileInvestigationChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [Math.min.apply(null, tempData), Math.max.apply(null, tempData) ],
+					slide: function( event, ui ) {
+						var dateMin = new Date(ui.values[0]);
+						var dateMax = new Date(ui.values[1]);
+						$( "#date-juvenileInvestigationChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+	}
+
+	function createJuvenileInvestigationApplyButton(investigationCount, dateMin, dateMax){
+		document.getElementById("juvenileInvestigationChartApplyButton").innerHTML = "";
+
+		var juvenileInvestigationChartApplyButton = document.createElement("juvenileInvestigationChartApplyButton");
+
+		juvenileInvestigationChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+
+		document.getElementById("juvenileInvestigationChartApplyButton").appendChild(juvenileInvestigationChartApplyButton);
+
+		juvenileInvestigationChartApplyButton.addEventListener ("click", function() {
+			// console.log($("#dateSlider-waterConsumptionChart").val());
+
+			var min = new Date($("#dateSlider-juvenileInvestigationChart").slider( "values", 0 )),
+				max = new Date($("#dateSlider-juvenileInvestigationChart").slider( "values", 1 ));
+
+			document.getElementById("juvenileInvestigationChart").innerHTML = "";
+
+			createJuvenileInvestigationChart(investigationCount, min, max);
+		});
+	}
+
+	function createJuvenileInvestigationResetButton(){
+		document.getElementById("juvenileInvestigationChartResetButton").innerHTML = "";
+
+		var juvenileInvestigationChartResetButton = document.createElement("juvenileInvestigationChartResetButton");
+
+		juvenileInvestigationChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+
+		document.getElementById("juvenileInvestigationChartResetButton").appendChild(juvenileInvestigationChartResetButton);
+
+		juvenileInvestigationChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/DOP_Juvenile_Investigations_by_Calendar_Year.csv", function (data){
+				investigationCount = [];
+
+				data.forEach(function(d){
+					investigationCount.push({borough: d.borough, date: new Date(d.date), count: Number(d.count) });
+				})
+
+				investigationCount.sort(function(a, b) { return a.date - b.date; });
+
+				document.getElementById("juvenileInvestigationChart").innerHTML = "";
+
+				createJuvenileInvestigationChart(investigationCount, d3.extent(investigationCount, function(d) { return d.date; })[0], d3.extent(investigationCount, function(d) { return d.date; })[1]);
+			});
+		});
+	}
+	
 </script>
 
 @endsection

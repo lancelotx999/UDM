@@ -8,6 +8,7 @@ use App\Natality;
 use App\PopulationByBorough;
 use App\PopulationByCommunityDistricts;
 use App\WaterConsumption;
+use App\JuvenileInvestigation;
 
 class ChartController extends Controller
 {
@@ -25,6 +26,7 @@ class ChartController extends Controller
          $populationByBorough = PopulationByBorough::all();
          $populationByCommunityDistricts = PopulationByCommunityDistricts::all();
          $waterConsumption = WaterConsumption::all();
+         $juvenileInvestigation = JuvenileInvestigation::all();
          $data = [];
 
          // $data['securityLogs'] = $securityLogs;
@@ -34,6 +36,7 @@ class ChartController extends Controller
          $data['populationByCommunityDistricts'] = $populationByCommunityDistricts;
          $data['waterConsumption'] = $waterConsumption;
          $data['natality'] = $natality;
+         $data['juvenileInvestigation'] = $juvenileInvestigation;
 
          return view('/chart',$data);
      }
