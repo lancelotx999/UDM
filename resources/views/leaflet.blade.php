@@ -2529,7 +2529,7 @@
         })
     }
 
-    function educationModule(){
+    function educationModule() {
         schoolDistrictOverlay();
         collegesUniversitiesMarker();
     }

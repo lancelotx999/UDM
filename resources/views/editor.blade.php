@@ -2,30 +2,6 @@
 
 @section('content')
 
-<style type="text/css">
-
-	#export {
-        position: absolute;
-        top: 120px;
-        left: -8.5px;
-        margin: 15px 20px 20px;
-  		padding: 7px 9px;
-  		border: none;
-  		border-radius: 2px;
-  		color: #555;
-  		box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-  		background-color: #eeeeee;
-  		transition-duration: 0.4s;
-  		-webkit-transition-duration: 0.4s; /* Safari */
-    }
-
-	#export:hover {
-		background-color: #161a1d;
-		color: #f6f6f6;
-	}
-
-</style>
-
 <div class="row">
 
 	<div id="map"></div>

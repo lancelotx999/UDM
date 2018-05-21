@@ -41,7 +41,7 @@
         </div>
         
         <a class="beta-notice" href="https://github.com/lancelotx999/UDM">
-            A beta project of Urban Development Maps. Swinburne University of Technology. UDM &copy; 2017-2018
+            Urban Development Maps Project. Swinburne University of Technology. UDM &copy; 2017-2018
         </a>
 
         <script type="text/javascript">

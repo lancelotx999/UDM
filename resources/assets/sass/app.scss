@@ -130,6 +130,26 @@ h3 > a, a:active, a:focus, a:hover {
   color: #555;
 }
 
+#export {
+  position: absolute;
+  top: 120px;
+  left: -8.5px;
+  margin: 15px 20px 20px;
+  padding: 7px 9px;
+  border: none;
+  border-radius: 2px;
+  color: #555;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  background-color: #eeeeee;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s; /* Safari */
+}
+
+#export:hover {
+  background-color: #161a1d;
+  color: #f6f6f6;
+}
+
 /*zoom to bounding box */
 .background {
 	fill: none;
@@ -288,7 +308,11 @@ ul.links {
 
 /* If you don't want the footer to be responsive, remove these media queries */
 
-@media (max-width: 600px) {
+@media (max-width: 380px) {
+
+  #sidebar {
+    width: 100%;
+  }
 
   .footer-basic-centered{
     padding: 35px;
@@ -315,6 +339,7 @@ ul.links {
     line-height: 1.8;
   }
 }
+
 // cheap fix for pointer event
 .leaflet-marker-shadow, .leaflet-image-layer, .leaflet-pane > svg path, .leaflet-tile-container {
     pointer-events: all !important;
