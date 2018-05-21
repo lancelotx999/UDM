@@ -148,6 +148,19 @@
 
     var geoJSONEditor = L.geoJSON(geojsonLayer);
 
+    geoJSONEditor.eachLayer(function (layer) {
+        layer.bindPopup(
+            "<h5>" + layer.feature.properties.title + "</h5>" + 
+            "<p>" + layer.feature.properties.content + "</p>"
+        );
+    });
+    geoJSONEditor.on('mouseover', function (e) {
+        this.openPopup();
+    });
+    geoJSONEditor.on('mouseout', function (e) {
+        this.closePopup();
+    });
+
     $('#Editor').click(function() {
     
         if (this.checked) {

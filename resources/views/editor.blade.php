@@ -6,21 +6,22 @@
 
 	#export {
         position: absolute;
-        top: 280px;
-        left: -8px;
+        top: 120px;
+        left: -8.5px;
         margin: 15px 20px 20px;
-  		padding: 5px 15px;
+  		padding: 7px 9px;
   		border: none;
-  		color: #161a1d;
+  		border-radius: 2px;
+  		color: #555;
   		box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-  		background-color: #fff;
+  		background-color: #eeeeee;
   		transition-duration: 0.4s;
   		-webkit-transition-duration: 0.4s; /* Safari */
     }
 
 	#export:hover {
-		background-color: #eeeeee;
-		color: #555;
+		background-color: #161a1d;
+		color: #f6f6f6;
 	}
 
 </style>
@@ -28,7 +29,9 @@
 <div class="row">
 
 	<div id="map"></div>
-	<button class="filter" id='export'>Save Notes</button>
+	<button class="filter" id='export'>
+		<i class="fa fa-floppy-o" aria-hidden="true"></i>
+	</button>
 
 </div>
 
@@ -60,6 +63,13 @@
     map.addLayer(drawnItems);
 
     var drawControl = new L.Control.Draw({
+    	draw: {
+             polygon: false,
+             circle: false,
+             rectangle: false,
+             polyline: false,
+             circlemarker: false
+         },
         edit: {
             featureGroup: drawnItems
         }
@@ -110,7 +120,7 @@
 		if (idIW) {
 			map.closePopup();
 		}
-	}    
+	}
 
     $.ajaxSetup({
   		headers: {
