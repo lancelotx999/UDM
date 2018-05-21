@@ -22,32 +22,33 @@
             <ul class="nav">
                 <li>            
                     <input type="checkbox" id="Borough" class="example">
-                    <label for="check_borough"><span class="white-text">Borough</span></label>
+                    <label for="Borough"><span class="white-text">Borough</span></label>
                 </li>
                     
                 <li>
                     <input type="checkbox" id="District" class="example">
-                    <label for="check_district"><span class="white-text">District</span></label>
+                    <label for="District"><span class="white-text">District</span></label>
                 </li>               
 
                 <li>
                     <input type="checkbox" id="Precint" class="example">
-                    <label for="check_precint"><span class="white-text">Police Precint</span></label>
+                    <label for="Precint"><span class="white-text">Police Precint</span></label>
                 </li> 
 
                 <li>
                     <input type="checkbox" id="Battalion" class="example">
-                    <label for="check_battalion"><span class="white-text">Fire Battalion</span></label>
+                    <label for="Battalion"><span class="white-text">Fire Battalion</span></label>
                 </li> 
 
                 <li>
                     <input type="checkbox" id="School" class="example">
-                    <label for="check_school"><span class="white-text">School District</span></label>
+                    <label for="School"><span class="white-text">School District</span></label>
                 </li> 
             </ul>
-        </div>
 
-        <hr />
+            <hr />
+
+        </div>
 
         <h3 class="white-text">
             <a data-toggle="collapse" href="#markers_group">
@@ -61,20 +62,34 @@
             <ul class="nav">
                 <li>
                     <input type="checkbox" id="Subway" class="example">
-                    <label for="check_subway"><span class="white-text">Subway Entry</span></label>
+                    <label for="Subway"><span class="white-text">Subway Entry</span></label>
                 </li> 
 
                 <li>
                     <input type="checkbox" id="Busstop" class="example">
-                    <label for="check_subway"><span class="white-text">Bus Stop</span></label>
+                    <label for="Busstop"><span class="white-text">Bus Stop</span></label>
                 </li> 
 
                 <li>
                     <input type="checkbox" id="CollegeUni" class="example">
-                    <label for="check_subway"><span class="white-text">Universities</span></label>
+                    <label for="CollegeUni"><span class="white-text">Universities</span></label>
                 </li> 
             </ul>
+
+            <hr /> 
+
         </div>
+
+        @if (Auth::check() and Auth::user()->hasRole('admin'))
+        <ul class="nav">
+            <li>
+                <input type="checkbox" id="Editor" class="example">
+                <label for="Editor"><span class="white-text">Editor's Note</span></label>
+            </li> 
+        </ul>
+
+        <hr />
+        @endif
 
         <br /><br />
 
@@ -118,7 +133,9 @@
     PruneCluster.Cluster.ENABLE_MARKERS_LIST = true;
     pruneCluster.Cluster.Size = 2;
 
+    // Editor's Note
     var geojsonLayer = '';
+
     $.get({
         type: 'GET',
         url: "{{ asset('storage/data.geojson') }}",
@@ -128,11 +145,18 @@
             geojsonLayer = $.parseJSON(text.replace(/^[^\{]+/, ''));
         }
     });
+
+    var geoJSONEditor = L.geoJSON(geojsonLayer);
+
+    $('#Editor').click(function() {
     
-    console.log(geojsonLayer);   
-
-    L.geoJSON(geojsonLayer).addTo(map);
-
+        if (this.checked) {
+            geoJSONEditor.addTo(map);   
+        } else { 
+            geoJSONEditor.removeFrom(map);   
+        }
+    }); 
+        
     //overrides for pruneCluster
     pruneCluster.spiderfier.onAdd = function(map){
         this._map = map;

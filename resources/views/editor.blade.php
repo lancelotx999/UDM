@@ -67,11 +67,38 @@
 
     map.addControl(drawControl);
 
+    var idIW = L.popup();
+	var content = '<span><b>Shape Name</b></span><br/><input id="shapeName" type="text"/><br/><br/><span><b>Shape Description<b/></span><br/><textarea id="shapeDesc" cols="25" rows="5"></textarea><br/><br/><input type="button" id="okBtn" value="Save" onclick="saveIdIW()"/>';
+
     map.on('draw:created', function (e) {
         var type = e.layerType,
             layer = e.layer;
         drawnItems.addLayer(layer);
+
+		idIW.setContent(content);
+
+		//calculated based on the e.layertype
+		if (type === "circle" || type ===  "marker" || type === "circlemarker") {
+			idIW.setLatLng(layer.getLatLng()); 
+		} else {
+			idIW.setLatLng(layer.getCenter());
+		}
+
+		idIW.openOn(map);
     });
+
+	function saveIdIW() {
+		var sName = $('#shapeName').val();
+		var sDesc = $('#shapeDesc').val();
+
+		var drawings = drawnItems.getLayers();  //drawnItems is a container for the drawn objects
+		drawings[drawings.length - 1].title = sName;
+		drawings[drawings.length - 1].content = sDesc;
+
+		if (idIW) {
+			map.closePopup();
+		}
+	}    
 
     $.ajaxSetup({
   		headers: {
