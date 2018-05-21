@@ -232,7 +232,7 @@
 			</div>
 			<div class=" col-sm-8 col-xs-8">
 				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Juvenile Intakes in New York City</h1>
+				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Juvenile Arrested in New York City</h1>
 				<hr />
 				<div id='juvenileIntakesChart'></div>
 			</div>
@@ -260,7 +260,7 @@
 			</div>
 			<div class=" col-sm-8 col-xs-8">
 				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Revenues in New York City</h1>
+				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;NYC Actual Revenues</h1>
 				<hr />
 				<div id='actualRevenuesChart'></div>
 			</div>
@@ -278,7 +278,7 @@
 	createBirthsByRaceChart();
 	createJuvenileInvestigationChart();
 	createJuvenileIntakesChart();
-	createActualRevenuesChart();
+	createActualRevenuesChart(null, "Taxes", null, null);
 
 
 
@@ -2222,7 +2222,7 @@
 
 				tooltip.html(
 					"Borough: " + d.borough + "<br/>" + "<br/>" +
-					"Total Intakess: " + d.count + "<br/>" + "<br/>" +
+					"Total Intakes: " + d.count + "<br/>" + "<br/>" +
 					"Year: " + d.date.getFullYear() + "<br/>" + "<br/>" 
 				)
 					.style("left", (d3.event.pageX / 1.5) + "px")
@@ -2362,15 +2362,230 @@
 	}
 	
 	function createActualRevenuesChart(revenueAmount, selectedCategory, dateMin, dateMax){
+		console.log(revenueAmount, selectedCategory, dateMin, dateMax);
+		
+		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom;
+
+		var svg = d3.select("#actualRevenuesChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		var tooltip = d3.select("#actualRevenuesChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var revenueAmount = [];
+		var revenue_category = [];
+		var revenue_class = [];
+
+		var actualRevenues = {!! json_encode($actualRevenues->toArray()) !!};
+
+		actualRevenues.forEach(function (d){
+			if (revenue_category.indexOf(d.revenueCategory) == -1) {
+				revenue_category.push(d.revenueCategory);
+			}
+
+			if (revenue_class.indexOf(d.revenueClass) == -1) {
+				revenue_class.push(d.revenueClass);
+			}
+
+			if (d.revenueCategory == selectedCategory) {
+				revenueAmount.push({revenueCategory: d.revenueCategory, revenueClass: d.revenueClass, date: new Date(d.date), amount: d.amount});
+			}
+		})
+
+		revenueAmount.sort(function(a, b) { return b.date - a.date || b.amount - a.amount ; });
+
+		// Set the ranges
+		var x = d3.scaleBand().rangeRound([0, width]),
+			y = d3.scaleLinear().rangeRound([height, 0]),
+			z = d3.scaleOrdinal(d3.schemeCategory20);
+
+		
+		y.domain([0, Math.max.apply(Math, revenueAmount.map(function(d) { return d.amount; }))]).nice();
+		z.domain(revenue_class);
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			revenueAmount = revenueAmount.filter(function (d){
+				return d.date >= dateMin;
+			})
+
+			revenueAmount = revenueAmount.filter(function (d){
+				return d.date <= dateMax;
+			})
+			x.domain(revenueAmount.map(function(d) { return d.date.getFullYear(); }));
+		}
+		else {
+			x.domain(revenueAmount.map(function(d) { return d.date.getFullYear(); }));
+		}
+
+		svg.selectAll(".bar")
+			.data(revenueAmount)
+			.enter().append("rect")
+			.attr("class", "bar")
+			.attr("fill", function(d) { return z(d.revenueClass); })
+			.attr("x", function(d) { return x(d.date.getFullYear()); })
+			.attr("width", x.bandwidth())
+			.attr("y", function(d) { return y(d.amount); })
+			.attr("height", function(d) { return height - y(d.amount); })
+			.on("mouseover", function(d) {
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", .9);
+
+				tooltip.html(
+					"Category: " + d.revenueCategory + "<br/>" + "<br/>" +
+					"Class: " + d.revenueClass + "<br/>" + "<br/>" +
+					"Year: " + d.date.getFullYear() + "<br/>" + "<br/>" +
+					"Actual Revenue: " + d.amount + "<br/>" + "<br/>"
+				)
+					.style("left", (d3.event.pageX / 1.5) + "px")
+					.style("top", (d3.event.pageY / 10) + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		svg.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+			.append("text")
+			.attr("x", -10)
+			.attr("y", 15)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Year");
+
+		svg.append("g")
+			.call(d3.axisLeft(y))
+			.append("text")
+			.attr("x", 2)
+			.attr("y", y(y.ticks().pop()) + 0.5)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Actual Revenue");
+
+		createActualRevenuesFilter(revenueAmount, revenue_category, d3.extent(revenueAmount, function(d) { return d.date; })[0], d3.extent(revenueAmount, function(d) { return d.date; })[1]);
+		createActualRevenuesApplyButton(revenueAmount, d3.extent(revenueAmount, function(d) { return d.date; })[0], d3.extent(revenueAmount, function(d) { return d.date; })[1]);
+		createActualRevenuesResetButton();
 	}
 
-	function createActualRevenuesFilter(revenueAmount, category, dateMin, dateMax){
+	function createActualRevenuesFilter(revenueAmount, selectedCategory, dateMin, dateMax){
+
+		var dateSlider = "";
+
+		dateSlider += "<p class='white-text'>Date Range for Population By Community Chart:&nbsp;</p>";
+		dateSlider += "<p><input type='date-' id='date-actualRevenuesChart'></p>";
+		dateSlider += "<div id='dateSlider-actualRevenuesChart' style='width:85%;margin: auto;'></div></br>";
+
+		var categorySelector = "";
+
+		categorySelector += "<p class='white-text'>Floor For Security Chart:</p><p><select id='selectCategory-actualRevenuesChart' size='1' style='width: 202px;'>";
+		selectedCategory.forEach(function (d){
+			categorySelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		categorySelector += "</select></p><hr />";
+
+		document.getElementById('actualRevenuesChartFilters').innerHTML = dateSlider + categorySelector;
+
+		var parseTime = d3.timeParse("%Y-%m-%d");
+
+		tempData = [];
+
+		revenueAmount.forEach(function (d){
+			tempData.push(d.date.getTime());
+		});
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			$(function (){
+				$("#dateSlider-actualRevenuesChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [dateMin.getTime(), dateMax.getTime() ],
+					slide: function( event, ui ) {
+						dateMin = new Date(ui.values[0]);
+						dateMax = new Date(ui.values[1]);
+						$( "#date-actualRevenuesChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+		else {
+			$(function (){
+				$("#dateSlider-actualRevenuesChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [Math.min.apply(null, tempData), Math.max.apply(null, tempData) ],
+					slide: function( event, ui ) {
+						var dateMin = new Date(ui.values[0]);
+						var dateMax = new Date(ui.values[1]);
+						$( "#date-actualRevenuesChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
 	}
 
 	function createActualRevenuesApplyButton(revenueAmount, dateMin, dateMax){
+		document.getElementById("actualRevenuesChartApplyButton").innerHTML = "";
+
+		var actualRevenuesChartApplyButton = document.createElement("actualRevenuesChartApplyButton");
+
+		actualRevenuesChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+
+		document.getElementById("actualRevenuesChartApplyButton").appendChild(actualRevenuesChartApplyButton);
+
+		actualRevenuesChartApplyButton.addEventListener ("click", function() {
+			var dateMin = new Date($("#dateSlider-actualRevenuesChart").slider( "values", 0 )),
+				dateMax = new Date($("#dateSlider-actualRevenuesChart").slider( "values", 1 )),
+				category = $("#selectCategory-actualRevenuesChart").val();
+
+			document.getElementById("actualRevenuesChart").innerHTML = "";
+
+			createActualRevenuesChart(revenueAmount, category, dateMin, dateMax);
+		});		
 	}
 
-	function createActualRevenuesReset(){
+	function createActualRevenuesResetButton(){
+		document.getElementById("actualRevenuesChartResetButton").innerHTML = "";
+
+		var actualRevenuesChartResetButton = document.createElement("actualRevenuesChartResetButton");
+
+		actualRevenuesChartResetButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Reset Filter</button>";
+
+		document.getElementById("actualRevenuesChartResetButton").appendChild(actualRevenuesChartResetButton);
+
+		actualRevenuesChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/Revenue_Actuals.csv", function (data){
+				revenueAmount = [];
+
+				data.forEach(function (d){
+					revenueAmount.push({revenueCategory: d.revenueCategory, revenueClass: d.revenueClass, date: new Date(d.date), amount: d.amount});
+				})
+
+				revenueAmount.sort(function(a, b) { return b.date - a.date || b.amount - a.amount ; });
+
+				document.getElementById("actualRevenuesChart").innerHTML = "";
+
+				createActualRevenuesChart(revenueAmount, "Taxes", d3.extent(revenueAmount, function(d) { return d.date; })[0], d3.extent(revenueAmount, function(d) { return d.date; })[1]);
+
+
+			});
+
+		});
 	}
 </script>
 
