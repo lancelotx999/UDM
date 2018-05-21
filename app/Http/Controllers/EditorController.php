@@ -13,7 +13,7 @@ class EditorController extends Controller
     	{
             if ($request->ajax()) 
             {
-        		Storage::disk('local')->put('data.geojson', $request);
+        		Storage::disk('local')->put('/public/data.geojson', $request);
 	        }
         } 
         catch (Exception $e) 

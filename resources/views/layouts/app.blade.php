@@ -21,7 +21,6 @@
                 'csrfToken' => csrf_token(),
             ]) !!};
         </script>
-
         <script src="{{ asset('js/prunecluster/PruneCluster.js') }}"></script>
         <script src="{{ asset('js/leaflet-draw/leaflet.draw.js') }}"></script>
 

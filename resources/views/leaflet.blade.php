@@ -118,6 +118,20 @@
     PruneCluster.Cluster.ENABLE_MARKERS_LIST = true;
     pruneCluster.Cluster.Size = 2;
 
+    var geojsonLayer = '';
+    $.get({
+        type: 'GET',
+        url: "{{ asset('storage/data.geojson') }}",
+        async: false,
+        success : function(text)
+        {
+            geojsonLayer = $.parseJSON(text.replace(/^[^\{]+/, ''));
+        }
+    });
+    
+    console.log(geojsonLayer);   
+
+    L.geoJSON(geojsonLayer).addTo(map);
 
     //overrides for pruneCluster
     pruneCluster.spiderfier.onAdd = function(map){

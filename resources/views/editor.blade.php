@@ -90,15 +90,7 @@
         console.log(convertedData);
 
         // Create export
-        $.ajax({
-  			type: "POST",
-  			url: "{{ action('EditorController@saveFile') }}", //url of receiver file on server
-  			data: convertedData, //your data
-  			success: console.log('success'), //callback when ajax request finishes
-  			contentType: "application/json; charset=utf-8",
-    		dataType: "json",
-    		processData: false
-		});
+        $.post("{{ action('EditorController@saveFile') }}", convertedData, console.log('success'));
     }
 
 </script>
