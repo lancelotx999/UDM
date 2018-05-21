@@ -44,6 +44,16 @@
                     <input type="checkbox" id="School" class="example">
                     <label for="School"><span class="white-text">School District</span></label>
                 </li> 
+
+                <li>
+                    <input type="checkbox" id="Evacuation" class="example">
+                    <label for="Evacuation"><span class="white-text">Disaster Evacuation Areas</span></label>
+                </li> 
+
+                <li>
+                    <input type="checkbox" id="Housing" class="example">
+                    <label for="Housing"><span class="white-text">2018 Housing Program</span></label>
+                </li>
             </ul>
 
             <hr />
@@ -62,7 +72,7 @@
             <ul class="nav">
                 <li>
                     <input type="checkbox" id="Subway" class="example">
-                    <label for="Subway"><span class="white-text">Subway Entry</span></label>
+                    <label for="Subway"><span class="white-text">Subway Entry & Routes</span></label>
                 </li> 
 
                 <li>
@@ -73,6 +83,16 @@
                 <li>
                     <input type="checkbox" id="CollegeUni" class="example">
                     <label for="CollegeUni"><span class="white-text">Universities</span></label>
+                </li> 
+
+                <li>
+                    <input type="checkbox" id="Neighbourhoods" class="example">
+                    <label for="Neighbourhoods"><span class="white-text">Neighbourhoods</span></label>
+                </li> 
+
+                <li>
+                    <input type="checkbox" id="Facilities" class="example">
+                    <label for="Facilities"><span class="white-text">Faciltiies (All)</span></label>
                 </li> 
             </ul>
 
