@@ -22,19 +22,19 @@
                 <ul class="list-group">
                     <a href="/" class="list-group-item">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
-                        &nbsp;Maps
+                        &nbsp;Map
                     </a>
                     <a href="/chart" class="list-group-item">
                         <i class="fa fa-area-chart" aria-hidden="true"></i>
-                        &nbsp;Charts
+                        &nbsp;Chart
                     </a>
                     <a href="/editor" class="list-group-item">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
-                        &nbsp;Map Editor
+                        &nbsp;Editor
                     </a>
                     <a href="/upload" class="list-group-item">
                         <i class="fa fa-upload" aria-hidden="true"></i>
-                        &nbsp;CSV Upload
+                        &nbsp;Upload
                     </a>
                 </ul>
 

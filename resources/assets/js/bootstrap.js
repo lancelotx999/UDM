@@ -1,5 +1,7 @@
 
-window.d3 = require('d3');
+window.L = require('leaflet'); // Leaflet.js
+
+window.d3 = require('d3'); // D3.js
 
 window._ = require('lodash');
 

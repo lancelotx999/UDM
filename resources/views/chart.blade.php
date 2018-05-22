@@ -2,8 +2,6 @@
 
 @section('content')
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
@@ -15,16 +13,6 @@
 		stroke-width: 2px;
 	}
 
-	div.tooltip {
-		position: absolute;
-		padding: 2px;
-		font: 12px sans-serif;
-		background: lightsteelblue;
-		border: 1px;
-		border-radius: 8px;
-		pointer-events: none;
-	}
-
 	.arc text {
 		font: 10px sans-serif;
 		text-anchor: middle;
@@ -34,941 +22,172 @@
 		stroke: #fff;
 	}
 
-	#securityChart,
-	#enrollmentChart {
-		height: 20vh;
-	}
-
 </style>
 
-<div class="row">
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-sm-3 col-xs-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='populationByBoroughChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<div id='populationByBoroughChartApplyButton'></div>
-					</div>
-				</div>
+<div class="container wrapper">
+
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Population Statistics by Boroughs</strong>
+
+			<hr />
+
+			<div id='populationByBoroughChart'></div>
+
+			<div class="row">
+				<span id='populationByBoroughChartFilters'></span>
+				<span id='populationByBoroughChartApplyButton'></span>
+				<span id='populationByBoroughChartResetButton'></span>
 			</div>
-			<div class=" col-sm-8 col-xs-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Population Statistics by Boroughs</h1>
-				<hr />
-				<div id='populationByBoroughChart'></div>
+		</div>
+
+		<div class=" col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Population Statistics by Community District In A Borough</strong>
+
+			<hr />
+
+			<div id='populationByCommunityChart'></div>
+
+			<div class="row">
+				<span id='populationByCommunityChartFilters'></span>
+				<span id='populationByCommunityChartApplyButton'></span>
+				<span id='populationByCommunityChartResetButton'></span>
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-sm-3 col-xs-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='populationByCommunityChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<div id='populationByCommunityChartApplyButton'></div>
-					</div>
-				</div>
+
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Births By Race Of New York City</strong>
+
+			<hr />
+
+			<div id='birthsByRaceChart'></div>
+
+			<div class="row">
+				<span id='birthsByRaceChartFilters'></span>
+				<span id='birthsByRaceChartApplyButton'></span>
+				<span id='birthsByRaceChartResetButton'></span>
 			</div>
-			<div class=" col-sm-8 col-xs-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Population Statistics by Community District In A Borough</h1>
-				<hr />
-				<div id='populationByCommunityChart'></div>
+		</div>
+
+		<div class=" col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Births By Gender Of New York City</strong>
+
+			<hr />
+
+			<div id='birthsByGenderChart'></div>
+
+			<div class="row">
+				<span id='birthsByGenderChartFilters'></span>
+				<span id='birthsByGenderChartApplyButton'></span>
+				<span id='birthsByGenderChartResetButton'></span>
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-sm-3 col-xs-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='waterConsumptionChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<div id='waterConsumptionChartApplyButton'></div>
-					</div>
-				</div>
+
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Water Consumption Statistics Of New York City</strong>
+
+			<hr />
+
+			<div id='waterConsumptionChart'></div>
+
+			<div class="row">
+				<span id='waterConsumptionChartFilters'></span>
+				<span id='waterConsumptionChartApplyButton'></span>
+				<span id='waterConsumptionChartResetButton'></span>
 			</div>
-			<div class=" col-sm-8 col-xs-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Water Consumption Statistics Of New York City</h1>
-				<hr />
-				<div id='waterConsumptionChart'></div>
+		</div>
+
+		<div class=" col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Juvenile Investigations in New York City</strong>
+
+			<hr />
+
+			<div id='juvenileInvestigationChart'></div>
+
+			<div class="row">
+				<span id='juvenileInvestigationChartFilters'></span>
+				<span id='juvenileInvestigationChartApplyButton'></span>
+				<span id='juvenileInvestigationChartResetButton'></span>
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-xs-3 col-sm-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='securityChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<div id='securityChartApplyButton'></div>
-					</div>
-				</div>
+
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>Juvenile Arrested in New York City</strong>
+
+			<hr />
+
+			<div id='juvenileIntakesChart'></div>
+
+			<div class="row">
+				<span id='juvenileIntakesChartFilters'></span>
+				<span id='juvenileIntakesChartApplyButton'></span>
+				<span id='juvenileIntakesChartResetButton'></span>
 			</div>
-			<div class="col-xs-8 col-sm-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-line-chart" aria-hidden="true"></i>&nbsp;Water Consumption in New York City</h1>
-				<hr />
-				<div id='securityChart'></div>
+		</div>
+
+		<div class=" col-sm-6 col-xs-12">
+
+			<hr />
+
+			<strong>NYC Actual Revenues</strong>
+
+			<hr />
+
+			<div id='actualRevenuesChart'></div>
+
+			<div class="row">
+				<span id='actualRevenuesChartFilters'></span>
+				<span id='actualRevenuesChartApplyButton'></span>
+				<span id='actualRevenuesChartResetButton'></span>
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12">
-		<div class="row">
-			<div class="col-xs-3 col-sm-3 chart-filter">
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<hr />
-						<h4 class="white-text"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Filter Options:</h4>
-						<hr />
-						<div id='clubRecruitmentChartFilters'></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12 col-xs-12">
-						<div id='clubRecruitmentChartApplyButton'></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-8 col-sm-8">
-				<hr />
-				<h1>&nbsp;&nbsp;&nbsp;<i class="fa fa-pie-chart" aria-hidden="true"></i>&nbsp;Club Recruitment Data</h1>
-				<hr />
-				<div id='clubRecruitmentChart'></div>
-			</div>
-		</div>
-	</div>
+
+	<br /><br /><br />
+
 </div>
 
 <script>
-	var securityLogs = null,
-		enrollmentData = null,
-		clubRecruitmentData = null,
-		populationData = null;
-		dateMin = null,
-		dateMax = null;
 
-	// createPopulationByBoroughChart(populationData, null, null);
-	createPopulationByBoroughChart(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
-	createPopulationByCommunityChart(populationData, new Date("01/01/1950"), new Date("01/01/2040"), "Manhattan");
+	createPopulationByBoroughChart(null, new Date("01/01/1950"), new Date("01/01/2040"));
+	createPopulationByCommunityChart(null, new Date("01/01/1950"), new Date("01/01/2040"), "Manhattan");
 	createWaterConsumptionChart();
-
-	// new Date("01/01/2015"), new Date("12/31/2015")
-	// createSecurityChart(securityLogs, new Date("01/01/2016"), new Date("12/31/2016"), 'All', 'All');
-    //
-	// createEnrollmentChart(enrollmentData, ['2016'], ['All']);
-    //
-	// createClubRecruitmentChart(clubRecruitmentData, "2016", "2");
-
-	// function createSecurityChart(securityLogs, dateMin, dateMax, floor, block){
-	// 	var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
-    //
-	// 	// parse the date / time
-	// 	var parseTime = d3.timeParse("%Y-%m-%d");
-    //
-	// 	// format the securityLogs
-	// 	securityLogs.forEach(function(d) {
-	// 		if (floor.toUpperCase() == 'ALL' && block.toUpperCase() == 'ALL') {
-	// 			d.roomId = d.roomId;
-	// 			d.block = d.roomId[0].toUpperCase();
-	// 			d.floor = d.roomId[1];
-	// 			d.transactionQuantity = +d.transactionQuantity;
-    //
-	// 			if (d.date instanceof Date) {
-	// 				d.date = d.date;
-	// 			}
-	// 			else {
-	// 				d.date = parseTime(d.date);
-	// 			}
-	// 		}
-	// 		if (floor.toUpperCase() == d.roomId[1] && block.toUpperCase() == 'ALL') {
-	// 			d.roomId = d.roomId;
-	// 			d.block = d.roomId[0].toUpperCase();
-	// 			d.floor = d.roomId[1];
-	// 			d.transactionQuantity = +d.transactionQuantity;
-    //
-	// 			if (d.date instanceof Date) {
-	// 				d.date = d.date;
-	// 			}
-	// 			else {
-	// 				d.date = parseTime(d.date);
-	// 			}
-	// 		}
-	// 		if (floor.toUpperCase() == 'ALL' && block.toUpperCase() == d.roomId[0].toUpperCase()) {
-	// 			d.roomId = d.roomId;
-	// 			d.block = d.roomId[0].toUpperCase();
-	// 			d.floor = d.roomId[1];
-	// 			d.transactionQuantity = +d.transactionQuantity;
-    //
-	// 			if (d.date instanceof Date) {
-	// 				d.date = d.date;
-	// 			}
-	// 			else {
-	// 				d.date = parseTime(d.date);
-	// 			}
-	// 		}
-	// 		else if(floor.toUpperCase() == d.roomId[1] && block.toUpperCase() == d.roomId[0].toUpperCase()){
-	// 			d.roomId = d.roomId;
-	// 			d.block = d.roomId[0].toUpperCase();
-	// 			d.floor = d.roomId[1];
-	// 			d.transactionQuantity = +d.transactionQuantity;
-    //
-	// 			if (d.date instanceof Date) {
-	// 				d.date = d.date;
-	// 			}
-	// 			else {
-	// 				d.date = parseTime(d.date);
-	// 			}
-	// 		}
-    //
-	// 	});
-    //
-	// 	// Set the dimensions of the canvas / graph
-	// 	var margin = {top: 30, right: 20, bottom: 70, left: 50},
-	// 	    width = 600 - margin.left - margin.right,
-	// 	    height = 300 - margin.top - margin.bottom;
-    //
-	// 	// Set the ranges
-	// 	var x = d3.scaleTime().rangeRound([0, width]),
-	// 		y = d3.scaleLinear().rangeRound([height, 0]),
-	// 	    z = d3.scaleOrdinal(d3.schemeCategory10);
-    //
-	// 	// Adds the svg canvas
-	// 	var svg = d3.select("#securityChart")
-	// 	    .append("svg")
-	//		   .attr("width", width + margin.left + margin.right)
-	//         .attr("height", (height) + margin.top + margin.bottom)
-	//     	.append("g")
-	//         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    //
-	// 	// Define the div for the tooltip
-	// 	var tooltip = d3.select("#securityChart").append("div")
-	// 		.attr("class", "tooltip")
-	// 		.style("opacity", 0);
-    //
-	// 	// Define the line
-	// 	var line = d3.line()
-	// 		.x(function(d) { return x(d.date); })
-	// 		.y(function(d) { return y(d.transactionQuantity); });
-    //
-	// 	// Scale the range of the securityLogs
-	// 	if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
-	// 		securityLogs = securityLogs.filter(function (d){
-	// 			return d.date >= dateMin;
-	// 		})
-    //
-	// 		securityLogs = securityLogs.filter(function (d){
-	// 			return d.date <= dateMax;
-	// 		})
-	// 		x.domain(d3.extent(securityLogs, function(d) { return d.date; }));
-	// 	}
-	// 	else {
-	// 		x.domain(d3.extent(securityLogs, function(d) { return d.date; }));
-	// 	}
-    //
-	//     y.domain([0, d3.max(securityLogs, function(d) { return d.transactionQuantity; })]);
-    //
-	// 	// console.log(securityLogs);
-    //
-	//     // Nest the entries by symbol
-	//     var securityLogsNest = d3.nest()
-	//         .key(function(d) {return d.roomId;})
-	//         .entries(securityLogs);
-    //
-	//     legendSpace = width/securityLogsNest.length; // spacing for the legend
-    //
-	// 	// Loop through each symbol / key
-	//     securityLogsNest.forEach(function(d,i) {
-	//         svg.append("path")
-	//             .attr("class", "line")
-	//             .style("stroke", function() { // Add the colours dynamically
-	//                 return d.z = z(d.key); })
-	//             .attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign an ID
-	//             .attr("d", line(d.values));
-    //
-	// 		d.values.forEach(function(d2){
-	// 			svg.append("circle")
-	// 				.attr("r", 4)
-	// 				.data(d.values)
-	// 				.attr("cx", function() { return x(d2.date); })
-	// 				.attr("cy", function() { return y(d2.transactionQuantity); })
-	// 				.attr("id", 'circle'+d.key.replace(/\s+/g, '')) // assign an ID
-	// 				.style("fill", function() { // Add the colours dynamically
-	// 	                return d.z = z(d.key); })
-	// 				.on("mouseover", function() {
-	// 					tooltip.transition()
-	// 						.duration(200)
-	// 						.style("opacity", .9);
-    //
-	// 					tooltip.html("Room: " + d.key + "<br/>" + "<br/>" + "Date: " + getFormattedDate(d2.date) + "<br/>" + "<br/>" + "Entries: " + d2.transactionQuantity)
-	// 						.style("left", (d3.event.pageX / 1.5) + "px")
-	// 						.style("top", (d3.event.pageY / 10) + "px");
-	// 				})
-	// 				.on("mouseout", function(d) {
-	// 					tooltip.transition()
-	// 						.duration(500)
-	// 						.style("opacity", 0);
-	// 				});
-	// 		})
-    //
-	//         // Add the Legend
-	//         svg.append("text")
-	//             .attr("x", (legendSpace/2)+i*legendSpace)  // space legend
-	// 			.attr("y", (height*1.25) + (margin.bottom/2)+ 5)
-	//             .attr("class", "legend")    // style the legend
-	//             .style("fill", function() { // Add the colours dynamically
-	//                 return d.z = z(d.key); })
-	//             .on("click", function(){
-	//                 // Determine if current line is visible
-	//                 var active   = d.active ? false : true,
-	//                 newOpacity = active ? 0 : 1;
-	//                 // Hide or show the elements based on the ID
-	// 				d3.select("#tag"+d.key.replace(/\s+/g, ''))
-	//                     .transition().duration(100)
-	//                     .style("opacity", newOpacity);
-    //
-	// 				d3.selectAll("#circle"+d.key.replace(/\s+/g, ''))
-	//                     .transition().duration(100)
-	// 					.style("opacity", newOpacity)
-	//                 // Update whether or not the elements are active
-	//                 d.active = active;
-	//                 })
-	//             .text(d.key);
-	//     });
-    //
-    //
-	// 	// Add the X Axis
-	// 	svg.append("g")
-	// 			.attr("class", "axis")
-	// 			.attr("transform", "translate(0," + height + ")")
-	// 			.call(d3.axisBottom(x)
-	// 				.tickFormat(d3.timeFormat("%d/%m/%Y")))
-	// 			.selectAll("text")
-	// 			.style("text-anchor", "end")
-	// 			.attr("dx", "-.8em")
-	// 			.attr("dy", ".15em")
-	// 			.attr("transform", "rotate(-65)");
-    //
-	// 	// Add the Y Axis
-	// 	svg.append("g")
-	// 	  .attr("class", "axis")
-	// 	  .call(d3.axisLeft(y));
-    //
-	// 	createSecurityChartFilters(securityLogs, dateMin, dateMax, 'All', 'All');
-	// 	createSecurityApplyButton(securityLogs);
-    //
-	// }
-
-	// function createSecurityChartFilters(securityLogs, dateMin, dateMax, floor, block){
-	// 	var dateSlider = "";
-    //
-	// 	dateSlider += "<p class='white-text'>Date Range for Security Chart:&nbsp;</p>";
-	// 	dateSlider += "<p><input type='date-' id='date-securityChart'>";
-	// 	dateSlider += "</p>";
-	// 	dateSlider += "<div id='dateSlider-securityChart' style='width:85%;margin: auto;'></div></br>";
-    //
-	// 	var floorSelector = "";
-	// 	floorSelector += "<p class='white-text'>Floor For Security Chart:</p><p><select id='selectFloor-securityChart' size='1' style='width: 202px;'>";
-	// 	floorSelector += "<option value=All>All</option>";
-	// 	floorSelector += "<option value=G>G</option>";
-	// 	floorSelector += "<option value=1>1</option>";
-	// 	floorSelector += "<option value=2>2</option>";
-	// 	floorSelector += "<option value=3>3</option>";
-	// 	floorSelector += "<option value=4>4</option>";
-	// 	floorSelector += "<option value=5>5</option>";
-	// 	floorSelector += "<option value=6>6</option>";
-	// 	floorSelector += "<option value=7>7</option>";
-	// 	floorSelector += "<option value=8>8</option>";
-	// 	floorSelector += "<option value=9>9</option>";
-	// 	floorSelector += "</select></p><hr />";
-	// 	var blockSelector = "";
-	// 	blockSelector += "<p class='white-text'>Buildings For Security Chart:</p><p><select id='selectBlock-securityChart' size='1' style='width: 202px;'>";4
-	// 	blockSelector += "<option value=All>All</option>";
-	// 	blockSelector += "<option value=A>A</option>";
-	// 	blockSelector += "<option value=B>B</option>";
-	// 	blockSelector += "<option value=E>E</option>";
-	// 	blockSelector += "<option value=G>G</option>";
-	// 	blockSelector += "<option value=L>L</option>";
-	// 	blockSelector += "</select></p><hr />";
-    //
-	// 	document.getElementById('securityChartFilters').innerHTML = dateSlider + floorSelector + blockSelector;
-    //
-	// 	tempData = [];
-    //
-	// 	var securityLogs = {!! json_encode($securityLogs->toArray()) !!};
-    //
-	// 	// parse the date / time
-	// 	var parseTime = d3.timeParse("%Y-%m-%d");
-    //
-	// 	// format the securityLogs
-	// 	securityLogs.forEach(function(d) {
-	// 		d.roomId = d.roomId;
-	// 		d.block = d.roomId[0].toUpperCase();
-	// 		d.floor = d.roomId[1];
-	// 		d.transactionQuantity = +d.transactionQuantity;
-    //
-	// 		if (d.date instanceof Date) {
-	// 			d.date = d.date;
-	// 		}
-	// 		else {
-	// 			d.date = parseTime(d.date);
-	// 		}
-	// 	});
-    //
-	// 	securityLogs.forEach(function (d){
-	// 		tempData.push(d.date.getTime());
-	// 	});
-    //
-	// 	if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
-	// 		$(function (){
-	// 			$("#dateSlider-securityChart").slider({
-	// 				range: true,
-	// 				min: Math.min.apply(null, tempData),
-	// 				max: Math.max.apply(null, tempData),
-	// 				values: [dateMin.getTime(), dateMax.getTime() ],
-	// 				slide: function( event, ui ) {
-	// 					dateMin = new Date(ui.values[0]);
-	// 					dateMax = new Date(ui.values[1]);
-    //
-    //
-	// 					$( "#date-securityChart").val(getFormattedDate(dateMin) + " - " + getFormattedDate(dateMax) );
-	// 				}
-	// 			});
-	// 		})
-	// 	}
-	// 	else {
-	// 		$(function (){
-	// 			$("#dateSlider-securityChart").slider({
-	// 				range: true,
-	// 				min: Math.min.apply(null, tempData),
-	// 				max: Math.max.apply(null, tempData),
-	// 				values: [Math.min.apply(null, tempData), Math.max.apply(null, tempData) ],
-	// 				slide: function( event, ui ) {
-	// 					var dateMin = new Date(ui.values[0]);
-	// 					var dateMax = new Date(ui.values[1]);
-    //
-	// 					$( "#date-securityChart").val(getFormattedDate(dateMin) + " - " + getFormattedDate(dateMax) );
-	// 				}
-	// 			});
-	// 		})
-	// 	}
-	// }
-
-	// function createSecurityApplyButton(securityLogs){
-    //
-	// 	document.getElementById("securityChartApplyButton").innerHTML = "";
-    //
-	// 	var securityChartApplyButton = document.createElement("securityChartApplyButton");
-    //
-	// 	securityChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
-    //
-	// 	document.getElementById("securityChartApplyButton").appendChild(securityChartApplyButton);
-    //
-	// 	securityChartApplyButton.addEventListener ("click", function() {
-	// 		console.log("---------- Submit Button Clicked ----------");
-	// 		console.log($("#dateSlider-securityChart").val());
-	// 		console.log($("#selectFloor-securityChart").val());
-	// 		console.log($("#selectBlock-securityChart").val());
-    //
-	// 		var min = new Date($("#dateSlider-securityChart").slider( "values", 0 )),
-	// 			max = new Date($("#dateSlider-securityChart").slider( "values", 1 )),
-	// 			floor = $("#selectFloor-securityChart").val(),
-	// 			block = $("#selectBlock-securityChart").val();
-    //
-	// 		document.getElementById("securityChart").innerHTML = "";
-    //
-	// 		createSecurityChart(securityLogs, min, max, floor, block)
-	// 	});
-	// }
-
-	// function createEnrollmentChart(enrollmentData, year, semester){
-	// 	var enrollmentData = {!! json_encode($enrollmentData->toArray()) !!};
-	// 	var faculty = ["business", "engineering", "design", "computing"];
-    //
-	// 	// format the enrollmentData
-	// 	enrollmentData.forEach(function(d){
-	// 		d.found = false;
-	// 		d.year = d.year;
-	// 		d.semester = d.semester;
-	// 		d.computing = +d.computing;
-	// 		d.design = +d.design;
-	// 		d.business = +d.business;
-	// 		d.engineering = +d.engineering;
-	// 		d.total = d.computing + d.engineering + d.design + d.business;
-	// 		d.data = {computing: +d.computing, design: +d.design, business: +d.business, engineering: +d.engineering};
-    //
-	// 	})
-    //
-	// 	// Prepare the data for filtering
-	// 	enrollmentData.forEach(function(d){
-	// 		if (year.includes("All") && semester.includes("All")) {
-	// 			d.found = true;
-	// 		}
-	// 		else if (semester.includes("All")) {
-	// 			year.forEach(function(x){
-	// 				if (d.year == x) {
-	// 					d.found = true;
-    //
-	// 				}
-	// 			})
-	// 		}
-	// 		else if (year.includes("All")) {
-	// 			semester.forEach(function(x){
-	// 				if (d.semester == x) {
-	// 					d.found = true;
-    //
-	// 				}
-	// 			})
-	// 		}
-	// 		else {
-	// 			year.forEach(function(x){
-	// 				semester.forEach(function(y){
-	// 					if (d.year == x && d.semester == y) {
-	// 						d.found = true;
-	// 					}
-	// 				})
-	// 			})
-	// 		}
-	// 	})
-    //
-	// 	// enrollmentData.sort(function(a, b) { return b.total - a.total; })
-    //
-	// 	// Set the dimensions of the canvas / graph
-	// 	var margin = {top: 30, right: 20, bottom: 70, left: 50},
-	// 	    width = 600 - margin.left - margin.right,
-	// 	    height = 300 - margin.top - margin.bottom;
-    //
-	// 	// Set the ranges
-	// 	// var x = d3.scaleTime().range([0, width]);
-	// 	var x = d3.scaleBand().rangeRound([0, width]),
-	// 		y = d3.scaleLinear().rangeRound([height, 0]),
-	// 		z = d3.scaleOrdinal(d3.schemeCategory10);
-    //
-	// 	// Adds the svg canvas
-	// 	var svg = d3.select("#enrollmentChart")
-	// 	    .append("svg")
-	//         .attr("width", width + margin.left + margin.right)
-	//         .attr("height", height + margin.top + margin.bottom)
-	//     	.append("g")
-	//         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    //
-	// 	// Define the div for the tooltip
-	// 	var tooltip = d3.select("#enrollmentChart").append("div")
-	// 		.attr("class", "tooltip")
-	// 		.style("opacity", 0);
-    //
-	// 	// Define the stack
-	// 	var stack = d3.stack()
-	// 		.keys(faculty);
-	// 		// .order(d3.stackOrderNone)
-	// 		// .offset(d3.stackOffsetNone);
-    //
-	// 	var preparedEnrollmentData = [];
-    //
-	// 	enrollmentData.forEach(function(d){
-	// 		preparedEnrollmentData.push({computing: d.computing, business: d.business, design: d.design, engineering: d.engineering, key: d.year + " " + d.semester});
-	// 	})
-    //
-	// 	var stackData = stack(preparedEnrollmentData);
-    //
-	// 	//Filter the data
-	// 	enrollmentData = enrollmentData.filter(function (d){
-	// 		return d.found;
-	// 	})
-    //
-	// 	// Scale the range of the securityLogs
-	// 	x.domain(enrollmentData.map(function(d) { return d.year + " " + d.semester; }));
-	// 	y.domain([0, d3.max(enrollmentData, function(d) { return d.total})]).nice();
-	// 	z.domain(faculty);
-    //
-	// 	svg.selectAll(".serie")
-	// 		.data(stackData)
-	// 		.enter().append("g")
-	// 		.attr("class", "serie")
-	// 		.attr("fill", function(d) { return z(d.key.toLowerCase()); })
-	// 		.selectAll("rect")
-	// 		.data(function(d){return d;})
-	// 		.enter().append("rect")
-	// 		.attr("x", function(d) { return x(d.data.key); })
-	// 		.attr("y", function(d) {return y(d[1])})
-	// 		.attr("height", function(d) { return y(d[0]) - y(d[1]); })
-	// 		.on("mouseover", function(d) {
-	// 			tooltip.transition()
-	// 				.duration(200)
-	// 				.style("opacity", .9);
-    //
-	// 			tooltip.html(
-	// 				"Semester: " + d.data.key + "<br/>" + "<br/>" +
-	// 				"Computing: " + d.data.computing + "<br/>" + "<br/>" +
-	// 				"Engineering: " + d.data.engineering + "<br/>" + "<br/>" +
-	// 				"Design: " + d.data.design + "<br/>" + "<br/>" +
-	// 				"Business: " + d.data.business + "<br/>" + "<br/>" +
-	// 				"Total: " + (d.data.computing + d.data.engineering + d.data.design + d.data.business) + "<br/>" + "<br/>"
-	// 			)
-	// 				.style("left", (d3.event.pageX / 1.5) + "px")
-	// 				.style("top", (d3.event.pageY / 10) + "px");
-	// 		})
-	// 		.on("mouseout", function(d) {
-	// 			tooltip.transition()
-	// 				.duration(500)
-	// 				.style("opacity", 0);
-	// 		})
-	// 		.attr("width", x.bandwidth());
-    //
-    //
-	// 	svg.append("g")
-	// 		.attr("class", "axis axis--x")
-	// 		.attr("transform", "translate(0," + height + ")")
-	// 		.call(d3.axisBottom(x))
-	// 		.selectAll("text")
-	// 		.style("text-anchor", "end")
-	// 		.attr("dx", "-.8em")
-	// 		.attr("dy", ".15em")
-	// 		.attr("transform", "rotate(-65)");
-    //
-	// 	svg.append("g")
-	// 		.attr("class", "axis axis--y")
-	// 		.call(d3.axisLeft(y).ticks(null, "s"))
-	// 		.append("text")
-	// 		.attr("x", 2)
-	// 		.attr("y", y(y.ticks(10).pop()))
-	// 		.attr("dy", "0.35em")
-	// 		.attr("text-anchor", "start")
-	// 		.attr("fill", "#000")
-	// 		.text("Students");
-    //
-	// 	var legend = svg.selectAll(".legend")
-	// 		.data(faculty.reverse())
-	// 		.enter().append("g")
-	// 		.attr("class", "legend")
-	// 		.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; })
-	// 		.style("font", "10px sans-serif");
-    //
-	// 	legend.append("rect")
-	// 		.attr("x", width + 18)
-	// 		.attr("width", 18)
-	// 		.attr("height", 18)
-	// 		.attr("fill", z);
-    //
-	// 	legend.append("text")
-	// 		.attr("x", width + 44)
-	// 		.attr("y", 9)
-	// 		.attr("dy", ".35em")
-	// 		.attr("text-anchor", "start")
-	// 		.text(function(d) { return d; });
-    //
-	// 	createEnrollmentChartFilters(enrollmentData, 'All', 'All');
-    //
-	// 	createEnrollmentApplyButton(enrollmentData);
-    //
-	// }
-
-	// function createEnrollmentChartFilters(enrollmentData, year, semester){
-	// 	var yearSelector = "";
-	// 	yearSelector += "<p class='white-text'>Year For Enrollment Chart:</p><p><select id='selectYear-enrollmentChart' multiple size='5' style='width: 202px;'>";4
-	// 	yearSelector += "<option value=All selected>All</option>";
-	// 	yearSelector += "<option value=2016>2016</option>";
-	// 	yearSelector += "<option value=2015>2015</option>";
-	// 	yearSelector += "<option value=2014>2014</option>";
-	// 	yearSelector += "<option value=2013>2013</option>";
-	// 	yearSelector += "<option value=2012>2012</option>";
-	// 	yearSelector += "<option value=2011>2011</option>";
-	// 	yearSelector += "<option value=2010>2010</option>";
-	// 	yearSelector += "<option value=2009>2009</option>";
-	// 	yearSelector += "<option value=2008>2008</option>";
-	// 	yearSelector += "<option value=2007>2007</option>";
-	// 	yearSelector += "<option value=2006>2006</option>";
-	// 	yearSelector += "<option value=2005>2005</option>";
-	// 	yearSelector += "<option value=2004>2004</option>";
-	// 	yearSelector += "<option value=2003>2003</option>";
-	// 	yearSelector += "<option value=2002>2002</option>";
-	// 	yearSelector += "<option value=2001>2001</option>";
-	// 	yearSelector += "<option value=2000>2000</option>";
-	// 	yearSelector += "</select></p><hr />";
-    //
-	// 	var semesterSelector = "";
-	// 	semesterSelector += "<p class='white-text'>Semester For Enrollment Chart:</p><p><select id='selectSemester-enrollmentChart' multiple size='5' style='width: 202px;'>";4
-	// 	semesterSelector += "<option value=All selected>All</option>";
-	// 	semesterSelector += "<option value=1>1</option>";
-	// 	semesterSelector += "<option value=2>2</option>";
-	// 	semesterSelector += "<option value=Winter>Winter</option>";
-	// 	semesterSelector += "<option value=Summer>Summer</option>";
-	// 	semesterSelector += "</select></p><hr />";
-    //
-	// 	document.getElementById('enrollmentChartFilters').innerHTML = yearSelector + semesterSelector;
-    //
-	// }
-
-	// function createEnrollmentApplyButton(enrollmentData){
-	// 	document.getElementById("enrollmentChartApplyButton").innerHTML = "";
-    //
-	// 	var enrollmentChartApplyButton = document.createElement("enrollmentChartApplyButton");
-    //
-	// 	enrollmentChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
-    //
-	// 	document.getElementById("enrollmentChartApplyButton").appendChild(enrollmentChartApplyButton);
-    //
-	// 	enrollmentChartApplyButton.addEventListener ("click", function() {
-	// 		console.log("---------- Submit Button Clicked ----------");
-	// 		console.log($("#selectYear-enrollmentChart").val());
-	// 		console.log($("#selectSemester-enrollmentChart").val());
-    //
-	// 		var year = $("#selectYear-enrollmentChart").val(),
-	// 			semester = $("#selectSemester-enrollmentChart").val();
-    //
-	// 		document.getElementById("enrollmentChart").innerHTML = "";
-    //
-	// 		createEnrollmentChart(enrollmentData, year, semester);
-	// 	});
-    //
-	// }
-
-	// function createClubRecruitmentChart(clubRecruitmentData, year, semester){
-	// 	var clubRecruitmentData = {!! json_encode($clubRecruitmentData->toArray()) !!};
-    //
-	// 	// parse the date / time
-	// 	var parseTime = d3.timeParse("%Y-%m-%d");
-    //
-	// 	// Set the dimensions of the canvas / graph
-	// 	var margin = {top: 30, right: 20, bottom: 70, left: 50},
-	// 	    width = 600 - margin.left - margin.right,
-	// 	    height = 600 - margin.top - margin.bottom,
-	// 		radius = Math.min(width, height) / 2;
-    //
-	// 	// Adds the svg canvas
-	// 	var svg = d3.select("#clubRecruitmentChart")
-	// 	    .append("svg")
-	//         .attr("width", width + margin.left + margin.right)
-	//         .attr("height", (height) + margin.top + margin.bottom)
-	//     	.append("g")
-	//         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-    //
-	// 	// Define the div for the tooltip
-	// 	var tooltip = d3.select("#clubRecruitmentChart").append("div")
-	// 		.attr("class", "tooltip")
-	// 		.style("opacity", 0);
-    //
-	// 	var color = d3.scaleOrdinal(d3.schemeCategory20);
-    //
-	// 	var arc = d3.arc()
-	// 		.outerRadius(radius - 10)
-	// 		.innerRadius(0);
-    //
-	// 	var labelArc = d3.arc()
-	// 		.outerRadius(radius - 40)
-	// 		.innerRadius(radius - 40);
-    //
-	// 	var pie = d3.pie()
-	// 	    .sort(null)
-	// 	    .value(function(d) { return d.numberOfMembers; });
-    //
-	// 	var keys = [];
-    //
-	// 	clubRecruitmentData.forEach(function(d, i){
-	// 		// console.log("--------------------------");
-	// 		// console.log(d.year);
-	// 		// console.log(d.semester);
-	// 		// console.log(d.clubName);
-	// 		// console.log(d.numberOfMembers);
-	// 		d.year = +d.year;
-	// 		d.semester = +d.semester;
-	// 		d.clubName = d.clubName;
-	// 		d.numberOfMembers = +d.numberOfMembers;
-	// 		d.key = d.year + " " + d.semester;
-    //
-	// 		// if (i > 0) {
-	// 		// 	if(d.key == clubRecruitmentData[i-1].key){
-	// 		// 		tempTotal = tempTotal + d.numberOfMembers;
-	// 		// 	}
-	// 		// 	else if(d.key != clubRecruitmentData[i-1].key)
-	// 		// 	{
-	// 		// 		sumTotal.push({key:clubRecruitmentData[i-1].key, total: tempTotal});
-	// 		// 		tempTotal = +d.numberOfMembers;
-	// 		// 	}
-	// 		// }
-	// 		// else {
-	// 		// 	tempTotal = +d.numberOfMembers;
-	// 		// }
-	// 		if (!keys.includes(d.key)) {
-	// 			keys.push(d.key)
-	// 		}
-    //
-    //
-    //
-	// 	})
-    //
-	// 	var filteredData = [];
-    //
-	// 	clubRecruitmentData.forEach(function(d){
-	// 		if (d.year == year && d.semester == semester) {
-	// 			filteredData.push({year: d.year,semester: d.semester,clubName: d.clubName,numberOfMembers: +d.numberOfMembers,key: d.year + " " + d.semester});
-    //
-	// 		}
-	// 	})
-    //
-	// 	g = svg.selectAll(".arc")
-	// 		.data(pie(filteredData))
-	// 		.enter().append("g")
-	// 		.attr("class", "arc");
-    //
-	// 	g.append("path")
-	// 		.attr("d", arc)
-	// 		.style("fill", function(d) { return color(d.data.clubName); })
-	// 		.on("mouseover", function(d) {
-	// 			tooltip.transition()
-	// 				.duration(200)
-	// 				.style("opacity", .9);
-    //
-	// 			tooltip.html(
-	// 				"Club Name: " + d.data.clubName + "<br/>" + "<br/>" +
-	// 				"Number of Members: " + d.data.numberOfMembers + "<br/>" + "<br/>" +
-	// 				"Year: " + d.data.year + "<br/>" + "<br/>" +
-	// 				"Semester: " + d.data.semester + "<br/>" + "<br/>"
-	// 			)
-	// 				.style("left", (d3.event.pageX / 1.5) + "px")
-	// 				.style("top", (d3.event.pageY / 10) + "px");
-	// 		})
-	// 		.on("mouseout", function(d) {
-	// 			tooltip.transition()
-	// 				.duration(500)
-	// 				.style("opacity", 0);
-	// 		});
-    //
-	// 	g.append("text")
-	// 		.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
-	// 		.attr("dy", ".35em")
-	// 		.text(function(d) { return d.data.numberOfMembers; });
-    //
-	// 	var legend = svg.selectAll(".legend")
-	// 		.data(pie(filteredData))
-	// 		.enter().append("g")
-	// 		.attr("class", "legend")
-	// 		.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; })
-	// 		.style("font", "10px sans-serif");
-    //
-	// 	legend.append("rect")
-	// 		.attr("x", (width/2)+10)
-	// 		.attr("y", (-height/2))
-	// 		.attr("width", 18)
-	// 		.attr("height", 18)
-	// 		.attr("fill", function(d){ return color(d.data.clubName)});
-    //
-	// 	legend.append("text")
-	// 		.attr("x", width/1.75)
-	// 		.attr("y", (-height/2)+9)
-	// 		.attr("dy", ".35em")
-	// 		.attr("text-anchor", "start")
-	// 		.text(function(d) { return d.data.clubName; });
-    //
-	// 	createClubRecruitmentFilters(clubRecruitmentData, 'All', 'All');
-    //
-	// 	createClubRecruitmentApplyButton(clubRecruitmentData);
-    //
-	// }
-
-	// function createClubRecruitmentFilters(clubRecruitmentData, year, semester) {
-	// 	var yearSelector = "";
-	// 	yearSelector += "<p class='white-text'>Year For Enrollment Chart:</p><p><select id='selectYear-clubRecruitmentChart' style='width: 202px;'>";4
-	// 	yearSelector += "<option value=2016>2016</option>";
-	// 	yearSelector += "<option value=2015>2015</option>";
-	// 	yearSelector += "<option value=2014>2014</option>";
-	// 	yearSelector += "<option value=2013>2013</option>";
-	// 	yearSelector += "<option value=2012>2012</option>";
-	// 	yearSelector += "<option value=2011>2011</option>";
-	// 	yearSelector += "<option value=2010>2010</option>";
-	// 	yearSelector += "<option value=2009>2009</option>";
-	// 	yearSelector += "<option value=2008>2008</option>";
-	// 	yearSelector += "<option value=2007>2007</option>";
-	// 	yearSelector += "<option value=2006>2006</option>";
-	// 	yearSelector += "<option value=2005>2005</option>";
-	// 	yearSelector += "<option value=2004>2004</option>";
-	// 	yearSelector += "<option value=2003>2003</option>";
-	// 	yearSelector += "<option value=2002>2002</option>";
-	// 	yearSelector += "<option value=2001>2001</option>";
-	// 	yearSelector += "<option value=2000>2000</option>";
-	// 	yearSelector += "</select></p><hr />";
-    //
-	// 	var semesterSelector = "";
-	// 	semesterSelector += "<p class='white-text'>Semester For Enrollment Chart:</p><p><select id='selectSemester-clubRecruitmentChart' style='width: 202px;'>";4
-	// 	semesterSelector += "<option value=1>1</option>";
-	// 	semesterSelector += "<option value=2>2</option>";
-	// 	semesterSelector += "</select></p><hr />";
-    //
-	// 	document.getElementById('clubRecruitmentChartFilters').innerHTML = yearSelector + semesterSelector;
-	// }
-
-	// function createClubRecruitmentApplyButton(clubRecruitmentData){
-	// 	document.getElementById("clubRecruitmentChartApplyButton").innerHTML = "";
-    //
-	// 	var clubRecruitmentChartApplyButton = document.createElement("clubRecruitmentChartApplyButton");
-    //
-	// 	clubRecruitmentChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
-    //
-	// 	document.getElementById("clubRecruitmentChartApplyButton").appendChild(clubRecruitmentChartApplyButton);
-    //
-	// 	clubRecruitmentChartApplyButton.addEventListener ("click", function() {
-	// 		console.log("---------- Submit Button Clicked ----------");
-	// 		console.log($("#selectYear-clubRecruitmentChart").val());
-	// 		console.log($("#selectSemester-clubRecruitmentChart").val());
-    //
-	// 		var year = $("#selectYear-clubRecruitmentChart").val(),
-	// 			semester = $("#selectSemester-clubRecruitmentChart").val();
-    //
-	// 		document.getElementById("clubRecruitmentChart").innerHTML = "";
-    //
-	// 		createClubRecruitmentChart(clubRecruitmentData, year, semester);
-	// 	});
-    //
-	// }
-
-	// function getFormattedDate(date) {
-	// 	var year = date.getFullYear();
-    //
-	// 	var month = (1 + date.getMonth()).toString();
-	// 	month = month.length > 1 ? month : '0' + month;
-    //
-	// 	var day = date.getDate().toString();
-	// 	day = day.length > 1 ? day : '0' + day;
-    //
-	// 	return day + '/' + month + '/' + year;
-	// }
+	createBirthsByGenderChart();
+	createBirthsByRaceChart();
+	createJuvenileInvestigationChart();
+	createJuvenileIntakesChart();
+	createActualRevenuesChart(null, "Taxes", null, null);
 
 	function createPopulationByBoroughChart(populationData, dateMin, dateMax){
-		// console.log("---------- createVehicleCollisionChart ----------");
-		// console.log(createVehicleCollisionChart);
-		// console.log("---------- createVehicleCollisionChart ----------");
-
 		// Set the dimensions of the canvas / graph
-		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
 
@@ -988,145 +207,147 @@
 		var populationData = [];
 		var boroughs = [];
 
-		d3.csv("data/NYC-bigData/New_York_City_Population_by_Borough__1950_-_2040.csv", function (data){
-			// console.log("---------- data ----------");
-			// console.log(data);
-			// console.log("---------- data ----------");
+		var populationByBorough = {!! json_encode($populationByBorough->toArray()) !!};
 
-			data.forEach(function (d){
-				if (boroughs.indexOf(d.Borough) == -1) {
-					boroughs.push(d.Borough);
-				}
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
+		// console.log("---------- populationByBorough ----------");
+		// console.log(populationByBorough);
+		// console.log("---------- populationByBorough ----------");
 
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
+		populationByBorough.forEach(function (d){
+			if (boroughs.indexOf(d.Borough) == -1) {
+				boroughs.push(d.Borough);
+			}
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
 
-				populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
-				populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
-				populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
-				populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
-				populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
-				populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
-				populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
-				populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
-				// populationData.push()
-				// Borough,CDNumber,CDName,1970Population,1980Population,1990Population,2000Population,2010Population
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+
+			populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
+			populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
+			populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
+			populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
+			populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
+			populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
+			populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
+			populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
+			// populationData.push()
+			// Borough,CDNumber,CDName,1970Population,1980Population,1990Population,2000Population,2010Population
 
 
+		})
+
+		populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+		// populationData.sort(function(a, b) { return b.population - a.population; });
+
+		// console.log("---------- populationData ----------");
+		// console.log(populationData);
+		// console.log("---------- populationData ----------");
+		// console.log("---------- boroughs ----------");
+		// console.log(boroughs);
+		// console.log("---------- boroughs ----------");
+
+		// Set the ranges
+		// var x = d3.scaleTime().range([0, width]);
+		var x = d3.scaleBand().rangeRound([0, width]),
+			y = d3.scaleLinear().rangeRound([height, 0]),
+			z = d3.scaleOrdinal(d3.schemeCategory10);
+
+		// var keys = data.columns.slice(3);
+
+		// Scale the range of the data
+		// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		y.domain([0, Math.max.apply(Math, populationData.map(function(d) { return d.population; }))]).nice();
+		z.domain(boroughs);
+
+		// // Scale the range of the date
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			populationData = populationData.filter(function (d){
+				return d.date >= dateMin;
 			})
 
-			populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
-			// populationData.sort(function(a, b) { return b.population - a.population; });
+			populationData = populationData.filter(function (d){
+				return d.date <= dateMax;
+			})
+			// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+			x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		}
+		else {
+			// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+			x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		}
 
-			// console.log("---------- populationData ----------");
-			// console.log(populationData);
-			// console.log("---------- populationData ----------");
-			// console.log("---------- boroughs ----------");
-			// console.log(boroughs);
-			// console.log("---------- boroughs ----------");
+		// console.log("---------- d3.map(populationData, function(d) { return d.date.getFullYear(); }) ----------");
+		// console.log(d3.map(populationData, function(d) { return d.date.getFullYear(); }));
+		// console.log("---------- d3.map(populationData, function(d) { return d.date.getFullYear(); }) ----------");
 
-			// Set the ranges
-			// var x = d3.scaleTime().range([0, width]);
-			var x = d3.scaleBand().rangeRound([0, width]),
-				y = d3.scaleLinear().rangeRound([height, 0]),
-				z = d3.scaleOrdinal(d3.schemeCategory10);
+		// console.log("---------- x.domain() ----------");
+		// console.log(x.domain());
+		// console.log("---------- x.domain() ----------");
 
-			// var keys = data.columns.slice(3);
+		// append the rectangles for the bar chart
+		svg.selectAll(".bar")
+			.data(populationData)
+			.enter().append("rect")
+			.attr("class", "bar")
+			.attr("fill", function(d) { return z(d.boroughName); })
+			.attr("x", function(d) { return x(d.date.getFullYear()); })
+			.attr("width", x.bandwidth())
+			.attr("y", function(d) { return y(d.population); })
+			.attr("height", function(d) { return height - y(d.population); })
+			.on("mouseover", function(d) {
 
-			// Scale the range of the data
-			// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			y.domain([0, Math.max.apply(Math, populationData.map(function(d) { return d.population; }))]).nice();
-			z.domain(boroughs);
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
 
-			// // Scale the range of the date
-			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
-				populationData = populationData.filter(function (d){
-					return d.date >= dateMin;
-				})
+				tooltip.html(
+					"<p><strong>Borough:</strong> " + d.boroughName + "</p>" +
+					"<p><strong>Date:</strong> " + d.date.getFullYear() + "</p>" +
+					"<p><strong>Population:</strong> " + d.population + "</p>"
+				)
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
 
-				populationData = populationData.filter(function (d){
-					return d.date <= dateMax;
-				})
-				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
-				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			}
-			else {
-				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
-				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			}
+		// add the x Axis
+		svg.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+			.append("text")
+			.attr("x", -10)
+			.attr("y", 15)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Year");
 
-			// console.log("---------- d3.map(populationData, function(d) { return d.date.getFullYear(); }) ----------");
-			// console.log(d3.map(populationData, function(d) { return d.date.getFullYear(); }));
-			// console.log("---------- d3.map(populationData, function(d) { return d.date.getFullYear(); }) ----------");
+		// add the y Axis
+		svg.append("g")
+			.call(d3.axisLeft(y))
+			.append("text")
+			.attr("x", 2)
+			.attr("y", y(y.ticks().pop()) + 0.5)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Population");
 
-			// console.log("---------- x.domain() ----------");
-			// console.log(x.domain());
-			// console.log("---------- x.domain() ----------");
+		createPopulationByBoroughFilter(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
+		createPopulationByBoroughApplyButton(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
+		createPopulationByBoroughResetButton();
 
-			// append the rectangles for the bar chart
-			svg.selectAll(".bar")
-				.data(populationData)
-				.enter().append("rect")
-				.attr("class", "bar")
-				.attr("fill", function(d) { return z(d.boroughName); })
-				.attr("x", function(d) { return x(d.date.getFullYear()); })
-				.attr("width", x.bandwidth())
-				.attr("y", function(d) { return y(d.population); })
-				.attr("height", function(d) { return height - y(d.population); })
-				.on("mouseover", function(d) {
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
-					tooltip.transition()
-						.duration(200)
-						.style("opacity", .9);
 
-					tooltip.html(
-						"Borough: " + d.boroughName + "<br/>" + "<br/>" +
-						"Date: " + d.date.getFullYear() + "<br/>" + "<br/>" +
-						"Population: " + d.population + "<br/>" + "<br/>"
-					)
-						.style("left", (d3.event.pageX / 1.5) + "px")
-						.style("top", (d3.event.pageY / 10) + "px");
-				})
-				.on("mouseout", function(d) {
-					tooltip.transition()
-						.duration(500)
-						.style("opacity", 0);
-				});
 
-			// add the x Axis
-			svg.append("g")
-				.attr("transform", "translate(0," + height + ")")
-				.call(d3.axisBottom(x))
-				.append("text")
-				.attr("x", -10)
-				.attr("y", 15)
-				.attr("dy", "0.32em")
-				.attr("fill", "#000")
-				.attr("font-weight", "bold")
-				.attr("text-anchor", "start")
-				.text("Year");
-
-			// add the y Axis
-			svg.append("g")
-				.call(d3.axisLeft(y))
-				.append("text")
-				.attr("x", 2)
-				.attr("y", y(y.ticks().pop()) + 0.5)
-				.attr("dy", "0.32em")
-				.attr("fill", "#000")
-				.attr("font-weight", "bold")
-				.attr("text-anchor", "start")
-				.text("Population");
-
-			createPopulationByBoroughFilter(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
-			createPopulationByBoroughApplyButton(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
-		})
 
 
 	}
@@ -1137,9 +358,9 @@
 		// console.log("---------- populationData ----------");
 		var dateSlider = "";
 
-		dateSlider += "<p class='white-text'>Date Range for Population By Borough Chart:&nbsp;</p>";
+		dateSlider += "<p>Date Range for Population By Borough Chart:&nbsp;</p>";
 		dateSlider += "<p><input type='date-' id='date-populationByBoroughChart'></p>";
-		dateSlider += "<div id='dateSlider-populationByBoroughChart' style='width:85%;margin: auto;'></div></br>";
+		dateSlider += "<div id='dateSlider-populationByBoroughChart' style='width:92%; left: 0;'></div></br>";
 
 		document.getElementById('populationByBoroughChartFilters').innerHTML = dateSlider;
 
@@ -1202,7 +423,7 @@
 
 		var populationByBoroughChartApplyButton = document.createElement("populationByBoroughChartApplyButton");
 
-		populationByBoroughChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+		populationByBoroughChartApplyButton.innerHTML = "<button>Apply Filter</button>";
 
 		document.getElementById("populationByBoroughChartApplyButton").appendChild(populationByBoroughChartApplyButton);
 
@@ -1226,9 +447,51 @@
 		});
 	}
 
+	function createPopulationByBoroughResetButton(){
+		document.getElementById("populationByBoroughChartResetButton").innerHTML = "";
+
+		var populationByBoroughChartResetButton = document.createElement("populationByBoroughChartResetButton");
+
+		populationByBoroughChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("populationByBoroughChartResetButton").appendChild(populationByBoroughChartResetButton);
+
+		populationByBoroughChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/New_York_City_Population_by_Borough__1950_-_2040.csv", function (data){
+				populationData = [];
+
+				data.forEach(function (d){
+					populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
+					populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
+					populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
+					populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
+					populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
+					populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
+					populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
+					populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
+				})
+
+				populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
+				console.log("---------- populationData ----------");
+				console.log(populationData);
+				console.log("---------- populationData ----------");
+
+				document.getElementById("populationByBoroughChart").innerHTML = "";
+
+				createPopulationByBoroughChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
+
+
+			});
+
+		});
+
+
+	}
+
 	function createPopulationByCommunityChart(populationData, dateMin, dateMax, selectedBorough){
 		// Set the dimensions of the canvas / graph
-		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
 
@@ -1249,161 +512,160 @@
 		var boroughs = [];
 		var communityDistricts = [];
 
+		var populationByCommunityDistricts = {!! json_encode($populationByCommunityDistricts->toArray()) !!};
+
+		// console.log("---------- populationByCommunityDistricts ----------");
+		// console.log(populationByCommunityDistricts);
+		// console.log("---------- populationByCommunityDistricts ----------");
 		// var selectedBorough = "Bronx";
 
-		d3.csv("data/NYC-bigData/New_York_City_Population_By_Community_Districts.csv", function (data){
-			// console.log("---------- data ----------");
-			// console.log(data);
-			// console.log("---------- data ----------");
+		populationByCommunityDistricts.forEach(function (d){
+			if (boroughs.indexOf(d.Borough) == -1) {
+				boroughs.push(d.Borough);
+			}
 
-			data.forEach(function (d){
-				if (boroughs.indexOf(d.Borough) == -1) {
-					boroughs.push(d.Borough);
-				}
+			if (communityDistricts.indexOf(d.CDName) == -1) {
+				communityDistricts.push(d.CDName);
+			}
 
-				if (communityDistricts.indexOf(d.CDName) == -1) {
-					communityDistricts.push(d.CDName);
-				}
+			// if (communityDistricts.map(function(e) { return e.id; }).indexOf(d.CDNumber) == -1) {
+			// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
+			// }
 
-				// if (communityDistricts.map(function(e) { return e.id; }).indexOf(d.CDNumber) == -1) {
-				// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
-				// }
+			// if ((communityDistricts.findIndex(x => x.id == d.CDNumber) == -1) && (d.Borough == selectedBorough)) {
+			// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
+			// }
 
-				// if ((communityDistricts.findIndex(x => x.id == d.CDNumber) == -1) && (d.Borough == selectedBorough)) {
-				// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
-				// }
+			if (d.Borough == selectedBorough) {
+				populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1970"), population: d.Population1970});
+				populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1980"), population: d.Population1980});
+				populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1990"), population: d.Population1990});
+				populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2000"), population: d.Population2000});
+				populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2010"), population: d.Population2010});
+				// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2020"), population: d.population2020});
+				// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2030"), population: d.population2030});
+				// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2040"), population: d.population2040});
+			}
+		})
 
-				if (d.Borough == selectedBorough) {
-					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1970"), population: d.Population1970});
-					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1980"), population: d.Population1980});
-					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1990"), population: d.Population1990});
-					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2000"), population: d.Population2000});
-					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2010"), population: d.Population2010});
-					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2020"), population: d.population2020});
-					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2030"), population: d.population2030});
-					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2040"), population: d.population2040});
-				}
+		populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
+
+		// console.log("---------- boroughs ----------");
+		// console.log(boroughs);
+		// console.log("---------- boroughs ----------");
+		//
+		// console.log("---------- communityDistricts ----------");
+		// console.log(communityDistricts);
+		// console.log("---------- communityDistricts ----------");
+
+		// console.log("---------- populationData ----------");
+		// console.log(populationData);
+		// console.log("---------- populationData ----------");
+
+		// Set the ranges
+		var x = d3.scaleBand().rangeRound([0, width]),
+			y = d3.scaleLinear().rangeRound([height, 0]),
+			z = d3.scaleOrdinal(d3.schemeCategory20);
+
+		// Scale the range of the data
+		// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		y.domain([0, Math.max.apply(Math, populationData.map(function(d) { return d.population; }))]).nice();
+		z.domain(communityDistricts);
+
+		// console.log("---------- d3.max(populationData, function(d) { return d.population}) ----------");
+		// console.log(d3.max(populationData, function(d) { return d.population}));
+		// console.log("---------- d3.max(populationData, function(d) { return d.population}) ----------");
+		//
+		// console.log("---------- Math.max.apply(Math, populationData.map(function(d) { return d.population; })) ----------");
+		// console.log(Math.max.apply(Math, populationData.map(function(d) { return d.population; })));
+		// console.log("---------- Math.max.apply(Math, populationData.map(function(d) { return d.population; })) ----------");
+		//
+		// console.log("---------- y.domain() ----------");
+		// console.log(y.domain());
+		// console.log("---------- y.domain() ----------");
+		//
+		// console.log("---------- z.domain() ----------");
+		// console.log(z.domain());
+		// console.log("---------- z.domain() ----------");
+
+		// // Scale the range of the date
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			populationData = populationData.filter(function (d){
+				return d.date >= dateMin;
 			})
 
-			populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+			populationData = populationData.filter(function (d){
+				return d.date <= dateMax;
+			})
+			// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+			x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		}
+		else {
+			// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
+			x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		}
 
+		// append the rectangles for the bar chart
+		svg.selectAll(".bar")
+			.data(populationData)
+			.enter().append("rect")
+			.attr("class", "bar")
+			.attr("fill", function(d) { return z(d.CDName); })
+			.attr("x", function(d) { return x(d.date.getFullYear()); })
+			.attr("width", x.bandwidth())
+			.attr("y", function(d) { return y(d.population); })
+			.attr("height", function(d) { return height - y(d.population); })
+			.on("mouseover", function(d) {
 
-			// console.log("---------- boroughs ----------");
-			// console.log(boroughs);
-			// console.log("---------- boroughs ----------");
-            //
-			// console.log("---------- communityDistricts ----------");
-			// console.log(communityDistricts);
-			// console.log("---------- communityDistricts ----------");
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
 
-			// console.log("---------- populationData ----------");
-			// console.log(populationData);
-			// console.log("---------- populationData ----------");
+				tooltip.html(
+					"<p><strong>Borough:</strong> " + d.boroughName + "</p>" +
+					"<p><strong>Community District:</strong> " + d.CDName + "</p>" +
+					"<p><strong>Date:</strong> " + d.date.getFullYear() + "</p>" +
+					"<p><strong>Population:</strong> " + d.population + "</p>"
+				)
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
 
-			// Set the ranges
-			var x = d3.scaleBand().rangeRound([0, width]),
-				y = d3.scaleLinear().rangeRound([height, 0]),
-				z = d3.scaleOrdinal(d3.schemeCategory20);
+		// add the x Axis
+		svg.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+			.append("text")
+			.attr("x", -10)
+			.attr("y", 15)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Year");
 
-			// Scale the range of the data
-			// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			y.domain([0, Math.max.apply(Math, populationData.map(function(d) { return d.population; }))]).nice();
-			z.domain(communityDistricts);
+		// add the y Axis
+		svg.append("g")
+			.call(d3.axisLeft(y))
+			.append("text")
+			.attr("x", 2)
+			.attr("y", y(y.ticks().pop()) + 0.5)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Population");
 
-			// console.log("---------- d3.max(populationData, function(d) { return d.population}) ----------");
-			// console.log(d3.max(populationData, function(d) { return d.population}));
-			// console.log("---------- d3.max(populationData, function(d) { return d.population}) ----------");
-            //
-			// console.log("---------- Math.max.apply(Math, populationData.map(function(d) { return d.population; })) ----------");
-			// console.log(Math.max.apply(Math, populationData.map(function(d) { return d.population; })));
-			// console.log("---------- Math.max.apply(Math, populationData.map(function(d) { return d.population; })) ----------");
-            //
-			// console.log("---------- y.domain() ----------");
-			// console.log(y.domain());
-			// console.log("---------- y.domain() ----------");
-            //
-			// console.log("---------- z.domain() ----------");
-			// console.log(z.domain());
-			// console.log("---------- z.domain() ----------");
+		createPopulationByCommunityFilter(populationData, boroughs, new Date("01/01/1950"), new Date("01/01/2040"));
+		createPopulationByCommunityApplyButton(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
+		createPopulationByCommunityResetButton();
 
-			// // Scale the range of the date
-			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
-				populationData = populationData.filter(function (d){
-					return d.date >= dateMin;
-				})
-
-				populationData = populationData.filter(function (d){
-					return d.date <= dateMax;
-				})
-				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
-				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			}
-			else {
-				// x.domain(d3.extent(populationData, function(d) { return d.date.getFullYear(); }));
-				x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			}
-
-			// append the rectangles for the bar chart
-			svg.selectAll(".bar")
-				.data(populationData)
-				.enter().append("rect")
-				.attr("class", "bar")
-				.attr("fill", function(d) { return z(d.CDName); })
-				.attr("x", function(d) { return x(d.date.getFullYear()); })
-				.attr("width", x.bandwidth())
-				.attr("y", function(d) { return y(d.population); })
-				.attr("height", function(d) { return height - y(d.population); })
-				.on("mouseover", function(d) {
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
-					tooltip.transition()
-						.duration(200)
-						.style("opacity", .9);
-
-					tooltip.html(
-						"Borough: " + d.boroughName + "<br/>" + "<br/>" +
-						"Community District: " + d.CDName + "<br/>" + "<br/>" +
-						"Date: " + d.date.getFullYear() + "<br/>" + "<br/>" +
-						"Population: " + d.population + "<br/>" + "<br/>"
-					)
-						.style("left", (d3.event.pageX / 1.5) + "px")
-						.style("top", (d3.event.pageY / 10) + "px");
-				})
-				.on("mouseout", function(d) {
-					tooltip.transition()
-						.duration(500)
-						.style("opacity", 0);
-				});
-
-			// add the x Axis
-			svg.append("g")
-				.attr("transform", "translate(0," + height + ")")
-				.call(d3.axisBottom(x))
-				.append("text")
-				.attr("x", -10)
-				.attr("y", 15)
-				.attr("dy", "0.32em")
-				.attr("fill", "#000")
-				.attr("font-weight", "bold")
-				.attr("text-anchor", "start")
-				.text("Year");
-
-			// add the y Axis
-			svg.append("g")
-				.call(d3.axisLeft(y))
-				.append("text")
-				.attr("x", 2)
-				.attr("y", y(y.ticks().pop()) + 0.5)
-				.attr("dy", "0.32em")
-				.attr("fill", "#000")
-				.attr("font-weight", "bold")
-				.attr("text-anchor", "start")
-				.text("Population");
-
-			createPopulationByCommunityFilter(populationData, boroughs, new Date("01/01/1950"), new Date("01/01/2040"));
-			createPopulationByCommunityApplyButton(populationData, new Date("01/01/1950"), new Date("01/01/2040"));
-		})
 	}
 
 	function createPopulationByCommunityFilter(populationData, boroughs, dateMin, dateMax){
@@ -1417,17 +679,17 @@
 
 		var dateSlider = "";
 
-		dateSlider += "<p class='white-text'>Date Range for Population By Community Chart:&nbsp;</p>";
+		dateSlider += "<p>Date Range for Population By Community Chart:&nbsp;</p>";
 		dateSlider += "<p><input type='date-' id='date-populationByCommunityChart'></p>";
-		dateSlider += "<div id='dateSlider-populationByCommunityChart' style='width:85%;margin: auto;'></div></br>";
+		dateSlider += "<div id='dateSlider-populationByCommunityChart' style='width:92%; left: 0;'></div></br>";
 
 		var boroughSelector = "";
 
-		boroughSelector += "<p class='white-text'>Floor For Security Chart:</p><p><select id='selectBorough-populationByCommunityChart' size='1' style='width: 202px;'>";
+		boroughSelector += "<p>Floor For Security Chart:</p><p><select id='selectBorough-populationByCommunityChart' size='1' style='width: 202px;'>";
 		boroughs.forEach(function (d){
 			boroughSelector += "<option value=" + d + ">" + d + "</option>";
 		})
-		boroughSelector += "</select></p><hr />";
+		boroughSelector += "</select><p/>";
 
 		// boroughSelector += "<div class='dropdown'>";
 		// boroughSelector += "<button class='btn btn-primary dropdown-toggle' id='borough-populationByCommunityChart' type='button' data-toggle='dropdown'>Borough Selector";
@@ -1501,7 +763,7 @@
 
 		var populationByCommunityChartApplyButton = document.createElement("populationByCommunityChartApplyButton");
 
-		populationByCommunityChartApplyButton.innerHTML = "<button><i class='fa fa-check' aria-hidden='true'></i>&nbsp;Apply Filter</button>";
+		populationByCommunityChartApplyButton.innerHTML = "<button>Apply Filter</button>";
 
 		document.getElementById("populationByCommunityChartApplyButton").appendChild(populationByCommunityChartApplyButton);
 
@@ -1512,7 +774,7 @@
 
 			var min = new Date($("#dateSlider-populationByCommunityChart").slider( "values", 0 )),
 				max = new Date($("#dateSlider-populationByCommunityChart").slider( "values", 1 )),
-				selectedBorough = $("#selectBorough-populationByCommunityChart").val();
+				selectedBorough = $("#selectBorough-populationByCommunityChart option:selected").text();
 
 			// console.log("---------- min ----------");
 			// console.log(min);
@@ -1528,9 +790,48 @@
 		});
 	}
 
-	function createWaterConsumptionChart(){
+	function createPopulationByCommunityResetButton(){
+		document.getElementById("populationByCommunityChartResetButton").innerHTML = "";
+
+		var populationByCommunityChartResetButton = document.createElement("populationByCommunityChartResetButton");
+
+		populationByCommunityChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("populationByCommunityChartResetButton").appendChild(populationByCommunityChartResetButton);
+
+		populationByCommunityChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/New_York_City_Population_By_Community_Districts.csv", function (data){
+				populationData = [];
+
+				data.forEach(function (d){
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1970"), population: d.Population1970});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1980"), population: d.Population1980});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1990"), population: d.Population1990});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2000"), population: d.Population2000});
+					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2010"), population: d.Population2010});
+				})
+
+				populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
+				// console.log("---------- populationData ----------");
+				// console.log(populationData);
+				// console.log("---------- populationData ----------");
+
+				document.getElementById("populationByCommunityChart").innerHTML = "";
+
+				createPopulationByCommunityChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1], "Manhattan");
+
+
+			});
+
+		});
+
+
+	}
+
+	function createWaterConsumptionChart(waterConsumptionData, dateMin, dateMax){
 		// Set the dimensions of the canvas / graph
-		var margin = {top: 30, right: 80, bottom: 70, left: 80},
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
 
@@ -1547,281 +848,1643 @@
 			.attr("class", "tooltip")
 			.style("opacity", 0);
 
+		var waterConsumption = {!! json_encode($waterConsumption->toArray()) !!};
+
+		// console.log("---------- waterConsumption ----------");
+		// console.log(waterConsumption);
+		// console.log("---------- waterConsumption ----------");
+
 		var waterConsumptionData = [];
 
-		d3.csv("data/NYC-bigData/Water_Consumption_In_The_New_York_City.csv", function (data){
-			console.log("------------ data ------------");
-			console.log(data);
-			console.log("------------ data ------------");
-
-			data.forEach(function(d){
-				waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
-			})
-
-			waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
-
-			console.log("------------ waterConsumptionData ------------");
-			console.log(waterConsumptionData);
-			console.log("------------ waterConsumptionData ------------");
-
-
-			// Set the ranges
-			var x = d3.scaleTime().rangeRound([0, width]),
-				yPopulation = d3.scaleLinear().rangeRound([height, 0]),
-				yConsumption = d3.scaleLinear().rangeRound([height, 0]),
-				yConsumptionPerCapita = d3.scaleLinear().rangeRound([height, 0]);
-				// z = d3.scaleOrdinal(d3.schemeCategory20);
-
-			// Scale the range of the data
-			// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
-			yPopulation.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.population; }))]).nice();
-			yConsumption.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumption; }))]).nice();
-			yConsumptionPerCapita.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumptionPerCapita; }))]).nice();
-
-			// // Scale the range of the date
-			if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
-				waterConsumptionData = waterConsumptionData.filter(function (d){
-					return d.date >= dateMin;
-				})
-
-				waterConsumptionData = waterConsumptionData.filter(function (d){
-					return d.date <= dateMax;
-				})
-				// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date.getFullYear(); }));
-				// x.domain(waterConsumptionData.map(function(d) { return d.date; }));
-				x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
-			}
-			else {
-				// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
-				// x.domain(waterConsumptionData.map(function(d) { return d.date; }));
-				x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
-			}
-
-			// console.log("------------ yPopulation.domain() ------------");
-			// console.log(yPopulation.domain());
-			// console.log("------------ yPopulation.domain() ------------");
-            //
-			// console.log("------------ yConsumption.domain() ------------");
-			// console.log(yConsumption.domain());
-			// console.log("------------ yConsumption.domain() ------------");
-            //
-			// console.log("------------ yConsumptionPerCapita.domain() ------------");
-			// console.log(yConsumptionPerCapita.domain());
-			// console.log("------------ yConsumptionPerCapita.domain() ------------");
-            //
-			// console.log("------------ x.domain() ------------");
-			// console.log(x.domain());
-			// console.log("------------ x.domain() ------------");
-
-			// define the population line
-			var populationLine = d3.line()
-				.x(function(d) { return x(d.date); })
-				.y(function(d) { return yPopulation(d.population); });
-
-			// define the consumption (Million of gallons perday) line
-			var consumptionLine = d3.line()
-				.x(function(d) { return x(d.date); })
-				.y(function(d) { return yConsumption(d.consumption); });
-
-			// define the per capita consumption (Gallons per person per day) line
-			var consumptionPerCapitaLine = d3.line()
-				.x(function(d) { return x(d.date); })
-				.y(function(d) { return yConsumptionPerCapita(d.consumptionPerCapita); });
-
-			// Add the populationLine path.
-			svg.append("path")
-				.data([waterConsumptionData])
-				.attr("class", "populationLine")
-				.style("stroke", "FireBrick")
-				.style("fill", "none")
-				.style("stroke-width", "2px")
-				.attr("d", populationLine)
-				.on("mouseover", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
-				})
-				.on("mouseout", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
-				});
-
-			// Add the consumptionLine path.
-			svg.append("path")
-				.data([waterConsumptionData])
-				.attr("class", "consumptionLine")
-				.style("stroke", "DodgerBlue")
-				.style("fill", "none")
-				.style("stroke-width", "2px")
-				.attr("d", consumptionLine)
-				.on("mouseover", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
-				})
-				.on("mouseout", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
-				});
-
-			// Add the consumptionPerCapitaLine path.
-			svg.append("path")
-				.data([waterConsumptionData])
-				.attr("class", "consumptionPerCapitaLine")
-				.style("stroke", "CornflowerBlue")
-				.style("fill", "none")
-				.style("stroke-width", "2px")
-				.attr("d", consumptionPerCapitaLine)
-				.on("mouseover", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
-				})
-				.on("mouseout", function(d){
-					console.log("------------ d ------------");
-					console.log(d);
-					console.log("------------ d ------------");
-				});
-
-			// Add the X Axis
-			svg.append("g")
-				.attr("transform", "translate(0," + height + ")")
-				.call(d3.axisBottom(x))
-				.selectAll("text")
-				.style("text-anchor", "end")
-				.attr("dx", "-.8em")
-				.attr("dy", ".15em")
-				.attr("transform", "rotate(-65)")
-				.append("text")
-				.attr("x", -10)
-				.attr("y", 15)
-				.attr("dy", "0.32em")
-				.attr("fill", "#000")
-				.attr("font-weight", "bold")
-				.attr("text-anchor", "start")
-				.text("Year");
-
-			// Add the yConsumption Axis
-			svg.append("g")
-				.attr("class", "axis-yConsumption")
-				.style("stroke", "FireBrick")
-				.call(d3.axisLeft(yPopulation));
-
-			// Add the yPopulation Axis
-			svg.append("g")
-				.attr("class", "axis-yPopulation")
-				.style("stroke", "DodgerBlue")
-				.attr("transform", "translate( " + width + ", 0 )")
-				.call(d3.axisRight(yConsumption));
-				// .append("text")
-				// .attr("x", 2)
-				// .attr("y", y(y.ticks().pop()) + 0.5)
-				// .attr("dy", "0.32em")
-				// .attr("fill", "#000")
-				// .attr("font-weight", "bold")
-				// .attr("text-anchor", "start")
-				// .text("Population");
-
-			// Add the yConsumptionPerCapita Axis
-			svg.append("g")
-				.attr("class", "axis-yConsumptionPerCapita")
-				.style("stroke", "CornflowerBlue")
-				.attr("transform", "translate( " + width + ", 0 )")
-				.call(d3.axisLeft(yConsumptionPerCapita));
-
-			var focusPopulation = svg.append("g")
-				.attr("class", "focus")
-				.style("display", "none");
-
-			var focusConsumption = svg.append("g")
-				.attr("class", "focus")
-				.style("display", "none");
-
-			var focusConsumptionPerCapita = svg.append("g")
-				.attr("class", "focus")
-				.style("display", "none");
-
-			// append the circle at the intersection
-			focusPopulation.append("circle")
-				.attr("class", "population")
-				.style("fill", "none")
-				.style("stroke", "blue")
-				.attr("r", 4);
-
-			focusPopulation.append("text");
-
-			// append the circle at the intersection
-			focusConsumption.append("circle")
-				.attr("class", "consumption")
-				.style("fill", "none")
-				.style("stroke", "blue")
-				.attr("r", 4);
-
-			focusConsumption.append("text");
-
-			// append the circle at the intersection
-			focusConsumptionPerCapita.append("circle")
-				.attr("class", "consumptionPerCapita")
-				.style("fill", "none")
-				.style("stroke", "blue")
-				.attr("r", 4);
-
-			focusConsumptionPerCapita.append("text");
-
-			// append the rectangle to capture mouse
-			svg.append("rect")
-				.attr("width", width)
-				.attr("height", height)
-				.style("fill", "none")
-				.style("pointer-events", "all")
-				.on("mouseover", function() { focusPopulation.style("display", null); focusConsumption.style("display", null); focusConsumptionPerCapita.style("display", null); })
-				.on("mouseout", function() { focusPopulation.style("display", "none"); focusConsumption.style("display", "none"); focusConsumptionPerCapita.style("display", "none"); })
-				.on("mousemove", mousemove);
-
-				function mousemove() {
-					var x0 = x.invert(d3.mouse(this)[0]),
-						bisectDate = d3.bisector(function(d) { return d.date; }).left;
-						i = bisectDate(waterConsumptionData, x0, 1),
-						d0 = waterConsumptionData[i - 1],
-						d1 = waterConsumptionData[i],
-						d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-
-					// focusPopulation.select("circle.population")
-					// 	.attr("transform", "translate(" + x(d.date) + "," + yPopulation(d.population) + ")");
-                    //
-					// focusConsumption.select("circle.consumption")
-					// 	.attr("transform", "translate(" + x(d.date) + "," + yConsumption(d.consumption) + ")");
-                    //
-					// focusConsumptionPerCapita.select("circle.consumptionPerCapita")
-					// 	.attr("transform", "translate(" + x(d.date) + "," + yConsumptionPerCapita(d.consumptionPerCapita) + ")");
-
-					focusPopulation.attr("transform", "translate(" + x(d.date) + "," + yPopulation(d.population) + ")");
-					focusConsumption.attr("transform", "translate(" + x(d.date) + "," + yConsumption(d.consumption) + ")");
-					focusConsumptionPerCapita.attr("transform", "translate(" + x(d.date) + "," + yConsumptionPerCapita(d.consumptionPerCapita) + ")");
-
-					focusPopulation.select("text").text("");
-					focusConsumption.select("text").text("");
-					focusConsumptionPerCapita.select("text").text("");
-
-					focusPopulation.select("text").text(d.population);
-					focusConsumption.select("text").text(d.consumption);
-					focusConsumptionPerCapita.select("text").text(d.consumptionPerCapita);
-
-
-				}
-
+		waterConsumption.forEach(function(d){
+			waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
 		})
 
+		waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
+
+		// console.log("------------ waterConsumptionData ------------");
+		// console.log(waterConsumptionData);
+		// console.log("------------ waterConsumptionData ------------");
 
 
+		// Set the ranges
+		var x = d3.scaleTime().rangeRound([0, width]),
+			yPopulation = d3.scaleLinear().rangeRound([height, 0]),
+			yConsumption = d3.scaleLinear().rangeRound([height, 0]),
+			yConsumptionPerCapita = d3.scaleLinear().rangeRound([height, 0]);
+			// z = d3.scaleOrdinal(d3.schemeCategory20);
+
+		// Scale the range of the data
+		// x.domain(populationData.map(function(d) { return d.date.getFullYear(); }));
+		yPopulation.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.population; }))]).nice();
+		yConsumption.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumption; }))]).nice();
+		yConsumptionPerCapita.domain([0, Math.max.apply(Math, waterConsumptionData.map(function(d) { return d.consumptionPerCapita; }))]).nice();
+
+		// // Scale the range of the date
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			waterConsumptionData = waterConsumptionData.filter(function (d){
+				return d.date >= dateMin;
+			})
+
+			waterConsumptionData = waterConsumptionData.filter(function (d){
+				return d.date <= dateMax;
+			})
+			// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date.getFullYear(); }));
+			// x.domain(waterConsumptionData.map(function(d) { return d.date; }));
+			x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
+		}
+		else {
+			// x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
+			// x.domain(waterConsumptionData.map(function(d) { return d.date; }));
+			x.domain(d3.extent(waterConsumptionData, function(d) { return d.date; }));
+		}
+
+		// console.log("------------ yPopulation.domain() ------------");
+		// console.log(yPopulation.domain());
+		// console.log("------------ yPopulation.domain() ------------");
+		//
+		// console.log("------------ yConsumption.domain() ------------");
+		// console.log(yConsumption.domain());
+		// console.log("------------ yConsumption.domain() ------------");
+		//
+		// console.log("------------ yConsumptionPerCapita.domain() ------------");
+		// console.log(yConsumptionPerCapita.domain());
+		// console.log("------------ yConsumptionPerCapita.domain() ------------");
+		//
+		// console.log("------------ x.domain() ------------");
+		// console.log(x.domain());
+		// console.log("------------ x.domain() ------------");
+
+		// define the population line
+		var populationLine = d3.line()
+			.x(function(d) { return x(d.date); })
+			.y(function(d) { return yPopulation(d.population); });
+
+		// define the consumption (Million of gallons perday) line
+		var consumptionLine = d3.line()
+			.x(function(d) { return x(d.date); })
+			.y(function(d) { return yConsumption(d.consumption); });
+
+		// define the per capita consumption (Gallons per person per day) line
+		var consumptionPerCapitaLine = d3.line()
+			.x(function(d) { return x(d.date); })
+			.y(function(d) { return yConsumptionPerCapita(d.consumptionPerCapita); });
+
+		// Add the populationLine path.
+		svg.append("path")
+			.data([waterConsumptionData])
+			.attr("class", "populationLine")
+			.style("stroke", "FireBrick")
+			.style("fill", "none")
+			.style("stroke-width", "2px")
+			.attr("d", populationLine)
+			.on("mouseover", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			})
+			.on("mouseout", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			});
+
+		// Add the consumptionLine path.
+		svg.append("path")
+			.data([waterConsumptionData])
+			.attr("class", "consumptionLine")
+			.style("stroke", "DodgerBlue")
+			.style("fill", "none")
+			.style("stroke-width", "2px")
+			.attr("d", consumptionLine)
+			.on("mouseover", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			})
+			.on("mouseout", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			});
+
+		// Add the consumptionPerCapitaLine path.
+		svg.append("path")
+			.data([waterConsumptionData])
+			.attr("class", "consumptionPerCapitaLine")
+			.style("stroke", "CornflowerBlue")
+			.style("fill", "none")
+			.style("stroke-width", "2px")
+			.attr("d", consumptionPerCapitaLine)
+			.on("mouseover", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			})
+			.on("mouseout", function(d){
+				// console.log("------------ d ------------");
+				// console.log(d);
+				// console.log("------------ d ------------");
+			});
+
+		// Add the X Axis
+		svg.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+			.selectAll("text")
+			.style("text-anchor", "end")
+			.attr("dx", "-.8em")
+			.attr("dy", ".15em")
+			.attr("transform", "rotate(-65)")
+			.append("text")
+			.attr("x", -10)
+			.attr("y", 15)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Year");
+
+		// Add the yConsumption Axis
+		svg.append("g")
+			.attr("class", "axis-yConsumption")
+			.style("stroke", "FireBrick")
+			.call(d3.axisLeft(yPopulation));
+
+		// Add the yPopulation Axis
+		svg.append("g")
+			.attr("class", "axis-yPopulation")
+			.style("stroke", "DodgerBlue")
+			.attr("transform", "translate( " + width + ", 0 )")
+			.call(d3.axisRight(yConsumption));
+			// .append("text")
+			// .attr("x", 2)
+			// .attr("y", y(y.ticks().pop()) + 0.5)
+			// .attr("dy", "0.32em")
+			// .attr("fill", "#000")
+			// .attr("font-weight", "bold")
+			// .attr("text-anchor", "start")
+			// .text("Population");
+
+		// Add the yConsumptionPerCapita Axis
+		svg.append("g")
+			.attr("class", "axis-yConsumptionPerCapita")
+			.style("stroke", "CornflowerBlue")
+			.attr("transform", "translate( " + width + ", 0 )")
+			.call(d3.axisLeft(yConsumptionPerCapita));
+
+		var focusPopulation = svg.append("g")
+			.attr("class", "focus")
+			.style("display", "none");
+
+		var focusConsumption = svg.append("g")
+			.attr("class", "focus")
+			.style("display", "none");
+
+		var focusConsumptionPerCapita = svg.append("g")
+			.attr("class", "focus")
+			.style("display", "none");
+
+		// append the circle at the intersection
+		focusPopulation.append("circle")
+			.attr("class", "population")
+			.style("fill", "none")
+			.style("stroke", "blue")
+			.attr("r", 4);
+
+		focusPopulation.append("text");
+
+		// append the circle at the intersection
+		focusConsumption.append("circle")
+			.attr("class", "consumption")
+			.style("fill", "none")
+			.style("stroke", "blue")
+			.attr("r", 4);
+
+		focusConsumption.append("text");
+
+		// append the circle at the intersection
+		focusConsumptionPerCapita.append("circle")
+			.attr("class", "consumptionPerCapita")
+			.style("fill", "none")
+			.style("stroke", "blue")
+			.attr("r", 4);
+
+		focusConsumptionPerCapita.append("text");
+
+		// append the rectangle to capture mouse
+		svg.append("rect")
+			.attr("width", width)
+			.attr("height", height)
+			.style("fill", "none")
+			.style("pointer-events", "all")
+			.on("mouseover", function() { focusPopulation.style("display", null); focusConsumption.style("display", null); focusConsumptionPerCapita.style("display", null); })
+			.on("mouseout", function() { focusPopulation.style("display", "none"); focusConsumption.style("display", "none"); focusConsumptionPerCapita.style("display", "none"); })
+			.on("mousemove", mousemove);
+
+			function mousemove() {
+				var x0 = x.invert(d3.mouse(this)[0]),
+					bisectDate = d3.bisector(function(d) { return d.date; }).left;
+					i = bisectDate(waterConsumptionData, x0, 1),
+					d0 = waterConsumptionData[i - 1],
+					d1 = waterConsumptionData[i],
+					d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+
+				// focusPopulation.select("circle.population")
+				// 	.attr("transform", "translate(" + x(d.date) + "," + yPopulation(d.population) + ")");
+				//
+				// focusConsumption.select("circle.consumption")
+				// 	.attr("transform", "translate(" + x(d.date) + "," + yConsumption(d.consumption) + ")");
+				//
+				// focusConsumptionPerCapita.select("circle.consumptionPerCapita")
+				// 	.attr("transform", "translate(" + x(d.date) + "," + yConsumptionPerCapita(d.consumptionPerCapita) + ")");
+
+				focusPopulation.attr("transform", "translate(" + x(d.date) + "," + yPopulation(d.population) + ")");
+				focusConsumption.attr("transform", "translate(" + x(d.date) + "," + yConsumption(d.consumption) + ")");
+				focusConsumptionPerCapita.attr("transform", "translate(" + x(d.date) + "," + yConsumptionPerCapita(d.consumptionPerCapita) + ")");
+
+				focusPopulation.select("text").text("");
+				focusConsumption.select("text").text("");
+				focusConsumptionPerCapita.select("text").text("");
+
+				focusPopulation.select("text").text(d.population);
+				focusConsumption.select("text").text(d.consumption);
+				focusConsumptionPerCapita.select("text").text(d.consumptionPerCapita);
 
 
+			}
+
+		// console.log("---------- d3.extent(waterConsumptionData, function(d) { return d.date; })[0] ----------");
+		// console.log(d3.extent(waterConsumptionData, function(d) { return d.date; })[0]);
+		// console.log("---------- d3.extent(waterConsumptionData, function(d) { return d.date; })[0] ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+
+
+		createWaterConsumptionFilter(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1]);
+		createWaterConsumptionApplyButton(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1]);
+		createWaterConsumptionResetButton();
+
+	}
+
+	function createWaterConsumptionFilter(waterConsumptionData, dateMin, dateMax){
+		var dateSlider = "";
+
+		// console.log("---------- createWaterConsumptionFilter ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+
+		dateSlider += "<p>Date Range for Water Consumption Chart:&nbsp;</p>";
+		dateSlider += "<p><input type='date-' id='date-waterConsumptionChart'></p>";
+		dateSlider += "<div id='dateSlider-waterConsumptionChart' style='width:92%; left: 0;'></div></br>";
+
+		document.getElementById('waterConsumptionChartFilters').innerHTML = dateSlider;
+
+		// parse the date / time
+		var parseTime = d3.timeParse("%Y-%m-%d");
+
+		tempData = [];
+
+		waterConsumptionData.forEach(function (d){
+			tempData.push(d.date.getTime());
+		});
+
+		// console.log("---------- tempData ----------");
+		// console.log(tempData);
+		// console.log("---------- tempData ----------");
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			$(function (){
+				$("#dateSlider-waterConsumptionChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [dateMin.getTime(), dateMax.getTime() ],
+					slide: function( event, ui ) {
+						dateMin = new Date(ui.values[0]);
+						dateMax = new Date(ui.values[1]);
+
+						// console.log("---------- waterConsumptionChartFilters ----------");
+						// console.log("---------- dateMin ----------");
+						// console.log(dateMin);
+						// console.log("---------- dateMin ----------");
+						// console.log("---------- dateMax ----------");
+						// console.log(dateMax);
+						// console.log("---------- dateMax ----------");
+
+
+						$( "#date-waterConsumptionChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+		else {
+			$(function (){
+				$("#dateSlider-waterConsumptionChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [Math.min.apply(null, tempData), Math.max.apply(null, tempData) ],
+					slide: function( event, ui ) {
+						var dateMin = new Date(ui.values[0]);
+						var dateMax = new Date(ui.values[1]);
+
+						// console.log(dateMin);
+						// console.log(dateMax);
+
+						// console.log("---------- waterConsumptionChartFilters ----------");
+						// console.log("---------- dateMin ----------");
+						// console.log(dateMin);
+						// console.log("---------- dateMin ----------");
+						// console.log("---------- dateMax ----------");
+						// console.log(dateMax);
+						// console.log("---------- dateMax ----------");
+
+						$( "#date-waterConsumptionChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+	}
+
+	function createWaterConsumptionApplyButton(waterConsumptionData, dateMin, dateMax){
+		document.getElementById("waterConsumptionChartApplyButton").innerHTML = "";
+
+		var waterConsumptionChartApplyButton = document.createElement("waterConsumptionChartApplyButton");
+
+		waterConsumptionChartApplyButton.innerHTML = "<button>Apply Filter</button>";
+
+		document.getElementById("waterConsumptionChartApplyButton").appendChild(waterConsumptionChartApplyButton);
+
+		waterConsumptionChartApplyButton.addEventListener ("click", function() {
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-waterConsumptionChart").val());
+
+			var min = new Date($("#dateSlider-waterConsumptionChart").slider( "values", 0 )),
+				max = new Date($("#dateSlider-waterConsumptionChart").slider( "values", 1 ));
+
+			// console.log("---------- waterConsumptionChartApplyButton ----------");
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
+
+			document.getElementById("waterConsumptionChart").innerHTML = "";
+
+			createWaterConsumptionChart(waterConsumptionData, min, max);
+		});
+	}
+
+	function createWaterConsumptionResetButton(){
+		document.getElementById("waterConsumptionChartResetButton").innerHTML = "";
+
+		var waterConsumptionChartResetButton = document.createElement("waterConsumptionChartResetButton");
+
+		waterConsumptionChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("waterConsumptionChartResetButton").appendChild(waterConsumptionChartResetButton);
+
+		waterConsumptionChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/Water_Consumption_In_The_New_York_City.csv", function (data){
+				waterConsumptionData = [];
+
+				data.forEach(function(d){
+					waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
+				})
+
+				waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
+				// console.log("---------- waterConsumptionData ----------");
+				// console.log(waterConsumptionData);
+				// console.log("---------- waterConsumptionData ----------");
+
+				document.getElementById("waterConsumptionChart").innerHTML = "";
+
+				createWaterConsumptionChart(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1], "Manhattan");
+
+
+			});
+
+		});
 
 
 	}
 
+	function createBirthsByGenderChart(birthData, selectedDate){
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom
+			radius = Math.min(width, height) / 2;
+
+		var arc = d3.arc()
+			.outerRadius(radius - 10)
+			.innerRadius(0);
+
+		var labelArc = d3.arc()
+			.outerRadius(radius - 40)
+			.innerRadius(radius - 40);
+
+		var pie = d3.pie()
+			.sort(null)
+			.value(function(d) { return d.value.total; });
+
+		// Adds the svg canvas
+		var svg = d3.select("#birthsByGenderChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the div for the tooltip
+		var tooltip = d3.select("#birthsByGenderChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+		var natality = {!! json_encode($natality->toArray()) !!};
+
+		// console.log("---------- natality ----------");
+		// console.log(natality);
+		// console.log("---------- natality ----------");
+
+		natality.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			d.date = new Date(d.date)
+		})
+
+		birthData = natality;
+
+		birthData.sort(function(a, b) { return a.date - b.date; });
+
+		// console.log("---------- birthData ----------");
+		// console.log(birthData);
+		// console.log("---------- birthData ----------");
+
+
+		// if (selectedDate != null && selectedDate != undefined) {
+		// 	selectedDate = selectedDate;
+		// }
+		// else {
+		// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+		// }
+
+		// console.log("---------- selectedDate-pre ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-pre ----------");
+
+		if (selectedDate == null && selectedDate == undefined) {
+			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+			// selectedDate = new Date(selectedDate.toString());
+		}
+		else {
+			selectedDate = new Date(selectedDate.toString());
+		}
+
+		// console.log("---------- selectedDate-post ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-post ----------");
+		//
+		// console.log("---------- new Date ----------");
+		// console.log(new Date("2015"));
+		// console.log("---------- new Date ----------");
+
+		filteredBirthData = [];
+
+		// console.log("---------- selectedDate ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate ----------");
+
+		birthData.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			if (d.date.getFullYear() == selectedDate.getFullYear()) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				filteredBirthData.push(d);
+			}
+		})
+
+		// console.log("---------- filteredBirthData ----------");
+		// console.log(filteredBirthData);
+		// console.log("---------- filteredBirthData ----------");
+
+		var nestedBirthData = d3.nest()
+			.key(function(d) { return d.sex; })
+			.rollup(function(v) { return {
+				total: d3.sum(v, function(d) { return d.births; }),
+				avg: d3.mean(v, function(d) { return d.births; })
+			}; })
+			.entries(filteredBirthData);
+
+		// console.log("---------- nestedBirthData ----------");
+		// console.log(nestedBirthData);
+		// console.log("---------- nestedBirthData ----------");
+
+		// birthData = birthData.filter(function(d){return d.date == selectedDate;})
+
+		var g = svg.selectAll(".arc")
+			.data(pie(nestedBirthData))
+			.enter().append("g")
+			.attr("class", "arc")
+			.on("mouseover", function(d) {
+
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
+
+				tooltip.html(
+					"<p><strong>Year:</strong> " + selectedDate.getFullYear() + "</p>" +
+					"<p><strong>Gender:</strong> " + d.data.key + "</p>" +
+					"<p><strong>Total Births:</strong> " + d.data.value.avg + "</p>"
+				)
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		g.append("path")
+			.attr("d", arc)
+			.style("fill", function(d) { return color(d.data.key); });
+
+		g.append("text")
+			.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+			.attr("dy", ".35em")
+			.text(function(d) { return d.data.value.total; });
+
+		createBirthsByGenderFilter(birthData);
+		createBirthsByGenderApplyButton(birthData);
+		createBirthsByGenderResetButton(birthData);
+
+
+
+		d3.csv("data/NYC-bigData/Natality.csv", function (data){
+
+		})
+		//here
+	}
+
+	function createBirthsByGenderFilter(birthData){
+		var dateSelector = "";
+
+		// console.log("---------- createWaterConsumptionFilter ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+
+		// dateSelector += "<p>Select Year for Birth By Gender Chart:&nbsp;</p>";
+		// dateSelector += "<p><input type='text' id='datepicker-birthsByGenderChart'></p>";
+		// dateSelector += "<div id='datepicker-birthsByGenderChart' style='width:92%; left: 0;'></div></br>";
+
+		var years = [];
+
+		birthData.forEach(function(d){
+			if (years.includes(d.date.getFullYear()) != true) {
+				years.push(d.date.getFullYear());
+			}
+		})
+
+		// console.log("---------- years ----------");
+		// console.log(years);
+		// console.log("---------- years ----------");
+
+
+		dateSelector += "<p>Select Year for Birth By Gender Chart:</p><p><select id='selectYear-birthsByGenderChart' size='1' style='width: 202px;'>";
+		years.forEach(function (d){
+			dateSelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		dateSelector += "</select></p>";
+
+		document.getElementById('birthsByGenderChartFilters').innerHTML = dateSelector;
+
+
+
+		// $(function (){
+		// 	$("#datepicker-birthsByGenderChart").datepicker({
+		// 		dateFormat: 'yy',
+		// 		changeYear: true,
+		// 		changeMonth: false
+		// 	});
+		// })
+
+
+	}
+
+	function createBirthsByGenderApplyButton(birthData){
+		document.getElementById("birthsByGenderChartApplyButton").innerHTML = "";
+
+		var birthsByGenderChartApplyButton = document.createElement("birthsByGenderChartApplyButton");
+
+		birthsByGenderChartApplyButton.innerHTML = "<button>Apply Filter</button>";
+
+		document.getElementById("birthsByGenderChartApplyButton").appendChild(birthsByGenderChartApplyButton);
+
+		birthsByGenderChartApplyButton.addEventListener ("click", function() {
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-birthsByGenderChart").val());
+			// console.log($("#selectBorough-birthsByGenderChart").val());
+
+			var selectedYear = $("#selectYear-birthsByGenderChart").val();
+
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
+			console.log("---------- selectedYear ----------");
+			console.log(selectedYear);
+			console.log("---------- selectedYear ----------");
+
+
+			document.getElementById("birthsByGenderChart").innerHTML = "";
+
+			createBirthsByGenderChart(birthData, selectedYear);
+		});
+	}
+
+	function createBirthsByGenderResetButton(birthdata){
+		document.getElementById("birthsByGenderChartResetButton").innerHTML = "";
+
+		var birthsByGenderChartResetButton = document.createElement("birthsByGenderChartResetButton");
+
+		birthsByGenderChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("birthsByGenderChartResetButton").appendChild(birthsByGenderChartResetButton);
+
+		birthsByGenderChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/Natality.csv", function (data){
+				birthData = [];
+				data.forEach(function(d){
+					// console.log("---------- d ----------");
+					// console.log(d);
+					// console.log("---------- d ----------");
+
+					birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
+				})
+
+				birthData.sort(function(a, b) { return a.date - b.date; });
+
+				// console.log("---------- birthData ----------");
+				// console.log(birthData);
+				// console.log("---------- birthData ----------");
+
+				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+
+				document.getElementById("birthsByGenderChart").innerHTML = "";
+
+				createBirthsByGenderChart(birthData,selectedDate);
+
+
+			});
+
+		});
+	}
+
+	function createBirthsByRaceChart(birthData, selectedDate){
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom
+			radius = Math.min(width, height) / 2;
+
+		var arc = d3.arc()
+			.outerRadius(radius - 10)
+			.innerRadius(0);
+
+		var labelArc = d3.arc()
+			.outerRadius(radius - 40)
+			.innerRadius(radius - 40);
+
+		var pie = d3.pie()
+			.sort(null)
+			.value(function(d) { return d.value.total; });
+
+		// Adds the svg canvas
+		var svg = d3.select("#birthsByRaceChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the div for the tooltip
+		var tooltip = d3.select("#birthsByRaceChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+		var natality = {!! json_encode($natality->toArray()) !!};
+
+		// console.log("---------- natality ----------");
+		// console.log(natality);
+		// console.log("---------- natality ----------");
+
+		natality.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			d.date = new Date(d.date)
+		})
+
+		birthData = natality;
+
+		birthData.sort(function(a, b) { return a.date - b.date; });
+
+		// console.log("---------- birthData ----------");
+		// console.log(birthData);
+		// console.log("---------- birthData ----------");
+
+
+		// if (selectedDate != null && selectedDate != undefined) {
+		// 	selectedDate = selectedDate;
+		// }
+		// else {
+		// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+		// }
+
+		// console.log("---------- selectedDate-pre ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-pre ----------");
+
+		if (selectedDate == null && selectedDate == undefined) {
+			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+			// selectedDate = new Date(selectedDate.toString());
+		}
+		else {
+			selectedDate = new Date(selectedDate.toString());
+		}
+
+		// console.log("---------- selectedDate-post ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-post ----------");
+		//
+		// console.log("---------- new Date ----------");
+		// console.log(new Date("2015"));
+		// console.log("---------- new Date ----------");
+
+		filteredBirthData = [];
+
+		// console.log("---------- selectedDate ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate ----------");
+
+		birthData.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			if (d.date.getFullYear() == selectedDate.getFullYear()) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				filteredBirthData.push(d);
+			}
+		})
+
+		// console.log("---------- filteredBirthData ----------");
+		// console.log(filteredBirthData);
+		// console.log("---------- filteredBirthData ----------");
+
+		var nestedBirthData = d3.nest()
+			.key(function(d) { return d.race; })
+			.rollup(function(v) { return {
+				total: d3.sum(v, function(d) { return d.births; }),
+				avg: d3.mean(v, function(d) { return d.births; })
+			}; })
+			.entries(filteredBirthData);
+
+		// console.log("---------- nestedBirthData ----------");
+		// console.log(nestedBirthData);
+		// console.log("---------- nestedBirthData ----------");
+
+		// birthData = birthData.filter(function(d){return d.date == selectedDate;})
+
+		var g = svg.selectAll(".arc")
+			.data(pie(nestedBirthData))
+			.enter().append("g")
+			.attr("class", "arc")
+			.on("mouseover", function(d) {
+
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
+
+				tooltip.html(
+					"<p><strong>Year:</strong> " + selectedDate.getFullYear() + "</p>" +
+					"<p><strong>Race:</strong> " + d.data.key + "</p>" +
+					"<p><strong>Total Births:</strong> " + d.data.value.avg + "</p>"
+				)
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		g.append("path")
+			.attr("d", arc)
+			.style("fill", function(d) { return color(d.data.key); });
+
+		g.append("text")
+			.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+			.attr("dy", ".35em")
+			.text(function(d) { return d.data.value.total; });
+
+		createBirthsByRaceFilter(birthData);
+		createBirthsByRaceApplyButton(birthData);
+		createBirthsByRaceResetButton(birthData);
+
+
+	}
+
+	function createBirthsByRaceFilter(birthData){
+		var dateSelector = "";
+
+		// console.log("---------- createWaterConsumptionFilter ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+
+		// dateSelector += "<p>Select Year for Birth By Race Chart:&nbsp;</p>";
+		// dateSelector += "<p><input type='text' id='datepicker-birthsByRaceChart'></p>";
+		// dateSelector += "<div id='datepicker-birthsByRaceChart' style='width:92%; left: 0;'></div></br>";
+
+		var years = [];
+
+		birthData.forEach(function(d){
+			if (years.includes(d.date.getFullYear()) != true) {
+				years.push(d.date.getFullYear());
+			}
+		})
+
+		// console.log("---------- years ----------");
+		// console.log(years);
+		// console.log("---------- years ----------");
+
+
+		dateSelector += "<p>Select Year for Birth By Race Chart:</p><p><select id='selectYear-birthsByRaceChart' size='1' style='width: 202px;'>";
+		years.forEach(function (d){
+			dateSelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		dateSelector += "</select></p>";
+
+		document.getElementById('birthsByRaceChartFilters').innerHTML = dateSelector;
+
+
+
+		// $(function (){
+		// 	$("#datepicker-birthsByRaceChart").datepicker({
+		// 		dateFormat: 'yy',
+		// 		changeYear: true,
+		// 		changeMonth: false
+		// 	});
+		// })
+
+
+	}
+
+	function createBirthsByRaceApplyButton(birthData){
+		document.getElementById("birthsByRaceChartApplyButton").innerHTML = "";
+
+		var birthsByRaceChartApplyButton = document.createElement("birthsByRaceChartApplyButton");
+
+		birthsByRaceChartApplyButton.innerHTML = "<button>Apply Filter</button>";
+
+		document.getElementById("birthsByRaceChartApplyButton").appendChild(birthsByRaceChartApplyButton);
+
+		birthsByRaceChartApplyButton.addEventListener ("click", function() {
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-birthsByRaceChart").val());
+			// console.log($("#selectBorough-birthsByRaceChart").val());
+
+			var selectedYear = $("#selectYear-birthsByRaceChart").val();
+
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
+			// console.log("---------- selectedYear ----------");
+			// console.log(selectedYear);
+			// console.log("---------- selectedYear ----------");
+
+
+			document.getElementById("birthsByRaceChart").innerHTML = "";
+
+			createBirthsByRaceChart(birthData, selectedYear);
+		});
+	}
+
+	function createBirthsByRaceResetButton(birthdata){
+		document.getElementById("birthsByRaceChartResetButton").innerHTML = "";
+
+		var birthsByRaceChartResetButton = document.createElement("birthsByRaceChartResetButton");
+
+		birthsByRaceChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("birthsByRaceChartResetButton").appendChild(birthsByRaceChartResetButton);
+
+		birthsByRaceChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/Natality.csv", function (data){
+				birthData = [];
+				data.forEach(function(d){
+					// console.log("---------- d ----------");
+					// console.log(d);
+					// console.log("---------- d ----------");
+
+					birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
+				})
+
+				birthData.sort(function(a, b) { return a.date - b.date; });
+
+				// console.log("---------- birthData ----------");
+				// console.log(birthData);
+				// console.log("---------- birthData ----------");
+
+				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+
+				document.getElementById("birthsByRaceChart").innerHTML = "";
+
+				createBirthsByRaceChart(birthData,selectedDate);
+
+
+			});
+
+		});
+	}
+
+	function createJuvenileInvestigationChart(investigationCount, dateMin, dateMax){
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom;
+
+		var svg = d3.select("#juvenileInvestigationChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		var tooltip = d3.select("#juvenileInvestigationChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var investigationCount = [];
+		var boroughs = [];
+
+		var juvenileInvestigation = {!! json_encode($juvenileInvestigation->toArray()) !!};
+
+		juvenileInvestigation.forEach(function (d){
+			investigationCount.push({borough: d.borough, date: new Date(d.date), count: Number(d.count) });
+		})
+		// console.log(investigationCount);
+		// console.log(boroughs);
+		investigationCount.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
+		// Set the ranges
+		var x = d3.scaleBand().rangeRound([0, width]),
+			y = d3.scaleLinear().rangeRound([height, 0]),
+			z = d3.scaleOrdinal(d3.schemeCategory20);
+
+		y.domain([0, Math.max.apply(Math, investigationCount.map(function(d) { return d.count; }))]).nice();
+		z.domain(boroughs);
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			investigationCount = investigationCount.filter(function (d){
+				return d.date >= dateMin;
+			})
+
+			investigationCount = investigationCount.filter(function (d){
+				return d.date <= dateMax;
+			})
+			x.domain(investigationCount.map(function(d) { return d.date.getFullYear(); }));
+		}
+		else {
+			x.domain(investigationCount.map(function(d) { return d.date.getFullYear(); }));
+		}
+		svg.selectAll(".bar")
+			.data(investigationCount)
+			.enter().append("rect")
+			.attr("class", "bar")
+			.attr("fill", function(d) { return z(d.borough); })
+			.attr("x", function(d) { return x(d.date.getFullYear()); })
+			.attr("width", x.bandwidth())
+			.attr("y", function(d) { return y(d.count); })
+			.attr("height", function(d) { return height - y(d.count); })
+			.on("mouseover", function(d) {
+
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
+
+				tooltip.html(
+					"<p><strong>Borough:</strong> " + d.borough + "</p>" +
+					"<p><strong>Total Investigations:</strong> " + d.count + "</p>" +
+					"<p><strong>Year:</strong> " + d.date.getFullYear() + "</p>" 
+				)
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		svg.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+			.append("text")
+			.attr("x", -10)
+			.attr("y", 15)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Year");
+
+		svg.append("g")
+			.call(d3.axisLeft(y))
+			.append("text")
+			.attr("x", 2)
+			.attr("y", y(y.ticks().pop()) + 0.5)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Investigation Counts");
+
+		createJuvenileInvestigationFilter(investigationCount, d3.extent(investigationCount, function(d) { return d.date; })[0], d3.extent(investigationCount, function(d) { return d.date; })[1]);
+		createJuvenileInvestigationApplyButton(investigationCount, d3.extent(investigationCount, function(d) { return d.date; })[0], d3.extent(investigationCount, function(d) { return d.date; })[1]);
+		createJuvenileInvestigationResetButton();
+
+	}
+
+	function createJuvenileInvestigationFilter(investigationCount, dateMin, dateMax){
+		var dateSlider = "";
+
+		dateSlider += "<p>Date Range for Juvenile Investigation:&nbsp;</p>";
+		dateSlider += "<p><input type='date-' id='date-juvenileInvestigationChart'></p>";
+		dateSlider += "<div id='dateSlider-juvenileInvestigationChart' style='width:92%; left: 0;'></div></br>";
+
+		document.getElementById('juvenileInvestigationChartFilters').innerHTML = dateSlider;
+
+		var parseTime = d3.timeParse("%Y-%m-%d");
+
+		tempData = [];
+
+		investigationCount.forEach(function (d){
+			tempData.push(d.date.getTime());
+		});
+		// console.log(tempData);
+
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			$(function (){
+				$("#dateSlider-juvenileInvestigationChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [dateMin.getTime(), dateMax.getTime() ],
+					slide: function( event, ui ) {
+						dateMin = new Date(ui.values[0]);
+						dateMax = new Date(ui.values[1]);
+						$( "#date-juvenileInvestigationChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+		else {
+			$(function (){
+				$("#dateSlider-juvenileInvestigationChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [Math.min.apply(null, tempData), Math.max.apply(null, tempData) ],
+					slide: function( event, ui ) {
+						var dateMin = new Date(ui.values[0]);
+						var dateMax = new Date(ui.values[1]);
+						$( "#date-juvenileInvestigationChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+	}
+
+	function createJuvenileInvestigationApplyButton(investigationCount, dateMin, dateMax){
+		document.getElementById("juvenileInvestigationChartApplyButton").innerHTML = "";
+
+		var juvenileInvestigationChartApplyButton = document.createElement("juvenileInvestigationChartApplyButton");
+
+		juvenileInvestigationChartApplyButton.innerHTML = "<button>Apply Filter</button>";
+
+		document.getElementById("juvenileInvestigationChartApplyButton").appendChild(juvenileInvestigationChartApplyButton);
+
+		juvenileInvestigationChartApplyButton.addEventListener ("click", function() {
+			// console.log($("#dateSlider-waterConsumptionChart").val());
+
+			var min = new Date($("#dateSlider-juvenileInvestigationChart").slider( "values", 0 )),
+				max = new Date($("#dateSlider-juvenileInvestigationChart").slider( "values", 1 ));
+
+			document.getElementById("juvenileInvestigationChart").innerHTML = "";
+
+			createJuvenileInvestigationChart(investigationCount, min, max);
+		});
+	}
+
+	function createJuvenileInvestigationResetButton(){
+		document.getElementById("juvenileInvestigationChartResetButton").innerHTML = "";
+
+		var juvenileInvestigationChartResetButton = document.createElement("juvenileInvestigationChartResetButton");
+
+		juvenileInvestigationChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("juvenileInvestigationChartResetButton").appendChild(juvenileInvestigationChartResetButton);
+
+		juvenileInvestigationChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/DOP_Juvenile_Investigations_by_Calendar_Year.csv", function (data){
+				investigationCount = [];
+
+				data.forEach(function(d){
+					investigationCount.push({borough: d.borough, date: new Date(d.date), count: Number(d.count) });
+				})
+
+				investigationCount.sort(function(a, b) { return a.date - b.date; });
+
+				document.getElementById("juvenileInvestigationChart").innerHTML = "";
+
+				createJuvenileInvestigationChart(investigationCount, d3.extent(investigationCount, function(d) { return d.date; })[0], d3.extent(investigationCount, function(d) { return d.date; })[1]);
+			});
+		});
+	}
+
+	function createJuvenileIntakesChart(intakesCount, dateMin, dateMax){
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom;
+
+		var svg = d3.select("#juvenileIntakesChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		var tooltip = d3.select("#juvenileIntakesChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var intakesCount = [];
+		var boroughs = [];
+
+		var juvenileIntakes = {!! json_encode($juvenileIntakes->toArray()) !!};
+
+		juvenileIntakes.forEach(function (d){
+			intakesCount.push({borough: d.borough, date: new Date(d.date), count: Number(d.count) });
+		})
+		// console.log(intakesCount);
+		// console.log(boroughs);
+		intakesCount.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
+		// Set the ranges
+		var x = d3.scaleBand().rangeRound([0, width]),
+			y = d3.scaleLinear().rangeRound([height, 0]),
+			z = d3.scaleOrdinal(d3.schemeCategory20);
+
+		y.domain([0, Math.max.apply(Math, intakesCount.map(function(d) { return d.count; }))]).nice();
+		z.domain(boroughs);
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			intakesCount = intakesCount.filter(function (d){
+				return d.date >= dateMin;
+			})
+
+			intakesCount = intakesCount.filter(function (d){
+				return d.date <= dateMax;
+			})
+			x.domain(intakesCount.map(function(d) { return d.date.getFullYear(); }));
+		}
+		else {
+			x.domain(intakesCount.map(function(d) { return d.date.getFullYear(); }));
+		}
+		svg.selectAll(".bar")
+			.data(intakesCount)
+			.enter().append("rect")
+			.attr("class", "bar")
+			.attr("fill", function(d) { return z(d.borough); })
+			.attr("x", function(d) { return x(d.date.getFullYear()); })
+			.attr("width", x.bandwidth())
+			.attr("y", function(d) { return y(d.count); })
+			.attr("height", function(d) { return height - y(d.count); })
+			.on("mouseover", function(d) {
+
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
+
+				tooltip.html(
+					"<p><strong>Borough:</strong> " + d.borough + "</p>" +
+					"<p><strong>Total Intakes:</strong> " + d.count + "</p>" +
+					"<p><strong>Year:</strong> " + d.date.getFullYear() + "</p>" 
+				)
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		svg.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+			.append("text")
+			.attr("x", -10)
+			.attr("y", 15)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Year");
+
+		svg.append("g")
+			.call(d3.axisLeft(y))
+			.append("text")
+			.attr("x", 2)
+			.attr("y", y(y.ticks().pop()) + 0.5)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Intakes Counts");
+
+		createJuvenileIntakesFilter(intakesCount, d3.extent(intakesCount, function(d) { return d.date; })[0], d3.extent(intakesCount, function(d) { return d.date; })[1]);
+		createJuvenileIntakesApplyButton(intakesCount, d3.extent(intakesCount, function(d) { return d.date; })[0], d3.extent(intakesCount, function(d) { return d.date; })[1]);
+		createJuvenileIntakesResetButton();
+
+	}
+
+	function createJuvenileIntakesFilter(intakesCount, dateMin, dateMax){
+		var dateSlider = "";
+
+		dateSlider += "<p>Date Range for Juvenile Intakes:&nbsp;</p>";
+		dateSlider += "<p><input type='date-' id='date-juvenileIntakesChart'></p>";
+		dateSlider += "<div id='dateSlider-juvenileIntakesChart' style='width:92%; left: 0;'></div></br>";
+
+		document.getElementById('juvenileIntakesChartFilters').innerHTML = dateSlider;
+
+		var parseTime = d3.timeParse("%Y-%m-%d");
+
+		tempData = [];
+
+		intakesCount.forEach(function (d){
+			tempData.push(d.date.getTime());
+		});
+		// console.log(tempData);
+
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			$(function (){
+				$("#dateSlider-juvenileIntakesChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [dateMin.getTime(), dateMax.getTime() ],
+					slide: function( event, ui ) {
+						dateMin = new Date(ui.values[0]);
+						dateMax = new Date(ui.values[1]);
+						$( "#date-juvenileIntakesChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+		else {
+			$(function (){
+				$("#dateSlider-juvenileIntakesChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [Math.min.apply(null, tempData), Math.max.apply(null, tempData) ],
+					slide: function( event, ui ) {
+						var dateMin = new Date(ui.values[0]);
+						var dateMax = new Date(ui.values[1]);
+						$( "#date-juvenileIntakesChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+	}
+
+	function createJuvenileIntakesApplyButton(intakesCount, dateMin, dateMax){
+		document.getElementById("juvenileIntakesChartApplyButton").innerHTML = "";
+
+		var juvenileIntakesChartApplyButton = document.createElement("juvenileIntakesChartApplyButton");
+
+		juvenileIntakesChartApplyButton.innerHTML = "<button>Apply Filter</button>";
+
+		document.getElementById("juvenileIntakesChartApplyButton").appendChild(juvenileIntakesChartApplyButton);
+
+		juvenileIntakesChartApplyButton.addEventListener ("click", function() {
+			// console.log($("#dateSlider-waterConsumptionChart").val());
+
+			var min = new Date($("#dateSlider-juvenileIntakesChart").slider( "values", 0 )),
+				max = new Date($("#dateSlider-juvenileIntakesChart").slider( "values", 1 ));
+
+			document.getElementById("juvenileIntakesChart").innerHTML = "";
+
+			createJuvenileIntakesChart(intakesCount, min, max);
+		});
+	}
+
+	function createJuvenileIntakesResetButton(){
+		document.getElementById("juvenileIntakesChartResetButton").innerHTML = "";
+
+		var juvenileIntakesChartResetButton = document.createElement("juvenileIntakesChartResetButton");
+
+		juvenileIntakesChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("juvenileIntakesChartResetButton").appendChild(juvenileIntakesChartResetButton);
+
+		juvenileIntakesChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/DOP_Juvenile_Intakes_by_Calendar_Year.csv", function (data){
+				intakesCount = [];
+
+				data.forEach(function(d){
+					intakesCount.push({borough: d.borough, date: new Date(d.date), count: Number(d.count) });
+				})
+
+				intakesCount.sort(function(a, b) { return a.date - b.date; });
+
+				document.getElementById("juvenileIntakesChart").innerHTML = "";
+
+				createJuvenileIntakesChart(intakesCount, d3.extent(intakesCount, function(d) { return d.date; })[0], d3.extent(intakesCount, function(d) { return d.date; })[1]);
+			});
+		});
+	}
+	
+	function createActualRevenuesChart(revenueAmount, selectedCategory, dateMin, dateMax){
+		console.log(revenueAmount, selectedCategory, dateMin, dateMax);
+		
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom;
+
+		var svg = d3.select("#actualRevenuesChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		var tooltip = d3.select("#actualRevenuesChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var revenueAmount = [];
+		var revenue_category = [];
+		var revenue_class = [];
+
+		var actualRevenues = {!! json_encode($actualRevenues->toArray()) !!};
+
+		actualRevenues.forEach(function (d){
+			if (revenue_category.indexOf(d.revenueCategory) == -1) {
+				revenue_category.push(d.revenueCategory);
+			}
+
+			if (revenue_class.indexOf(d.revenueClass) == -1) {
+				revenue_class.push(d.revenueClass);
+			}
+
+			if (d.revenueCategory == selectedCategory) {
+				revenueAmount.push({revenueCategory: d.revenueCategory, revenueClass: d.revenueClass, date: new Date(d.date), amount: d.amount});
+			}
+		})
+
+		revenueAmount.sort(function(a, b) { return b.date - a.date || b.amount - a.amount ; });
+
+		// Set the ranges
+		var x = d3.scaleBand().rangeRound([0, width]),
+			y = d3.scaleLinear().rangeRound([height, 0]),
+			z = d3.scaleOrdinal(d3.schemeCategory20);
+
+		
+		y.domain([0, Math.max.apply(Math, revenueAmount.map(function(d) { return d.amount; }))]).nice();
+		z.domain(revenue_class);
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			revenueAmount = revenueAmount.filter(function (d){
+				return d.date >= dateMin;
+			})
+
+			revenueAmount = revenueAmount.filter(function (d){
+				return d.date <= dateMax;
+			})
+			x.domain(revenueAmount.map(function(d) { return d.date.getFullYear(); }));
+		}
+		else {
+			x.domain(revenueAmount.map(function(d) { return d.date.getFullYear(); }));
+		}
+
+		svg.selectAll(".bar")
+			.data(revenueAmount)
+			.enter().append("rect")
+			.attr("class", "bar")
+			.attr("fill", function(d) { return z(d.revenueClass); })
+			.attr("x", function(d) { return x(d.date.getFullYear()); })
+			.attr("width", x.bandwidth())
+			.attr("y", function(d) { return y(d.amount); })
+			.attr("height", function(d) { return height - y(d.amount); })
+			.on("mouseover", function(d) {
+
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
+
+				tooltip.html(
+					"<p><strong>Category:</strong> " + d.revenueCategory + "</p>" +
+					"<p><strong>Class:</strong> " + d.revenueClass + "</p>" +
+					"<p><strong>Year:</strong> " + d.date.getFullYear() + "</p>" +
+					"<p><strong>Actual Revenue:</strong> " + d.amount + "</p>"
+				)
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		svg.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+			.append("text")
+			.attr("x", -10)
+			.attr("y", 15)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Year");
+
+		svg.append("g")
+			.call(d3.axisLeft(y))
+			.append("text")
+			.attr("x", 2)
+			.attr("y", y(y.ticks().pop()) + 0.5)
+			.attr("dy", "0.32em")
+			.attr("fill", "#000")
+			.attr("font-weight", "bold")
+			.attr("text-anchor", "start")
+			.text("Actual Revenue");
+
+		createActualRevenuesFilter(revenueAmount, revenue_category, d3.extent(revenueAmount, function(d) { return d.date; })[0], d3.extent(revenueAmount, function(d) { return d.date; })[1]);
+		createActualRevenuesApplyButton(revenueAmount, d3.extent(revenueAmount, function(d) { return d.date; })[0], d3.extent(revenueAmount, function(d) { return d.date; })[1]);
+		createActualRevenuesResetButton();
+	}
+
+	function createActualRevenuesFilter(revenueAmount, selectedCategory, dateMin, dateMax){
+
+		var dateSlider = "";
+
+		dateSlider += "<p>Date Range for Population By Community Chart:&nbsp;</p>";
+		dateSlider += "<p><input type='date-' id='date-actualRevenuesChart'></p>";
+		dateSlider += "<div id='dateSlider-actualRevenuesChart' style='width:92%; left: 0;'></div></br>";
+
+		var categorySelector = "";
+
+		categorySelector += "<p>Revenue type</p><p><select id='selectCategory-actualRevenuesChart' size='1' style='width: 202px;'>";
+		selectedCategory.forEach(function (d){
+			categorySelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		categorySelector += "</select></p>";
+
+		document.getElementById('actualRevenuesChartFilters').innerHTML = dateSlider + categorySelector;
+
+		var parseTime = d3.timeParse("%Y-%m-%d");
+
+		tempData = [];
+
+		revenueAmount.forEach(function (d){
+			tempData.push(d.date.getTime());
+		});
+
+		if (dateMin != null && dateMin != undefined && dateMax != null && dateMax != undefined) {
+			$(function (){
+				$("#dateSlider-actualRevenuesChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [dateMin.getTime(), dateMax.getTime() ],
+					slide: function( event, ui ) {
+						dateMin = new Date(ui.values[0]);
+						dateMax = new Date(ui.values[1]);
+						$( "#date-actualRevenuesChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+		else {
+			$(function (){
+				$("#dateSlider-actualRevenuesChart").slider({
+					range: true,
+					min: Math.min.apply(null, tempData),
+					max: Math.max.apply(null, tempData),
+					values: [Math.min.apply(null, tempData), Math.max.apply(null, tempData) ],
+					slide: function( event, ui ) {
+						var dateMin = new Date(ui.values[0]);
+						var dateMax = new Date(ui.values[1]);
+						$( "#date-actualRevenuesChart").val((dateMin.getFullYear()) + " - " + (dateMax.getFullYear()) );
+					}
+				});
+			})
+		}
+	}
+
+	function createActualRevenuesApplyButton(revenueAmount, dateMin, dateMax){
+		document.getElementById("actualRevenuesChartApplyButton").innerHTML = "";
+
+		var actualRevenuesChartApplyButton = document.createElement("actualRevenuesChartApplyButton");
+
+		actualRevenuesChartApplyButton.innerHTML = "<button>Apply Filter</button>";
+
+		document.getElementById("actualRevenuesChartApplyButton").appendChild(actualRevenuesChartApplyButton);
+
+		actualRevenuesChartApplyButton.addEventListener ("click", function() {
+			var dateMin = new Date($("#dateSlider-actualRevenuesChart").slider( "values", 0 )),
+				dateMax = new Date($("#dateSlider-actualRevenuesChart").slider( "values", 1 )),
+				category = $("#selectCategory-actualRevenuesChart option:selected").text();
+
+			document.getElementById("actualRevenuesChart").innerHTML = "";
+
+			createActualRevenuesChart(revenueAmount, category, dateMin, dateMax);
+		});		
+	}
+
+	function createActualRevenuesResetButton(){
+		document.getElementById("actualRevenuesChartResetButton").innerHTML = "";
+
+		var actualRevenuesChartResetButton = document.createElement("actualRevenuesChartResetButton");
+
+		actualRevenuesChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("actualRevenuesChartResetButton").appendChild(actualRevenuesChartResetButton);
+
+		actualRevenuesChartResetButton.addEventListener ("click", function() {
+			d3.csv("data/NYC-bigData/Revenue_Actuals.csv", function (data){
+				revenueAmount = [];
+
+				data.forEach(function (d){
+					revenueAmount.push({revenueCategory: d.revenueCategory, revenueClass: d.revenueClass, date: new Date(d.date), amount: d.amount});
+				})
+
+				revenueAmount.sort(function(a, b) { return b.date - a.date || b.amount - a.amount ; });
+
+				document.getElementById("actualRevenuesChart").innerHTML = "";
+
+				createActualRevenuesChart(revenueAmount, "Taxes", d3.extent(revenueAmount, function(d) { return d.date; })[0], d3.extent(revenueAmount, function(d) { return d.date; })[1]);
+
+
+			});
+
+		});
+	}
 
 </script>
 

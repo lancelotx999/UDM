@@ -1,4 +1,6 @@
-<div class="col-xs-6 col-sm-3 sidebar-offcanvas toggle-show" id="sidebar" role="navigation" >
+<div class="overlay"></div>
+
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas toggle-show" id="sidebar-wrapper" role="navigation" >
 	<div class="sidebar-nav">
 
         <h3 style="color:#fff; margin-bottom: 5px;"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Overlays</h3>
@@ -91,3 +93,42 @@
 
     </div>
 </div>
+
+<button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+    <span class="hamb-top"></span>
+    <span class="hamb-middle"></span>
+    <span class="hamb-bottom"></span>
+</button>
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+    var trigger = $('.hamburger'),
+    overlay = $('.overlay'),
+    isClosed = false;
+
+    trigger.click(function () {
+      hamburger_cross();      
+    });
+
+    function hamburger_cross() {
+
+      if (isClosed == true) {          
+        overlay.hide();
+        trigger.removeClass('is-open');
+        trigger.addClass('is-closed');
+        isClosed = false;
+        } else {   
+        overlay.show();
+        trigger.removeClass('is-closed');
+        trigger.addClass('is-open');
+        isClosed = true;
+        }
+    }
+  
+    $('[data-toggle="offcanvas"]').click(function () {
+        $('#wrapper').toggleClass('toggled');
+    });  
+});
+
+</script>

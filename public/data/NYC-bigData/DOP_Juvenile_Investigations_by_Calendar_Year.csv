@@ -1,0 +1,61 @@
+borough,date,count
+Bronx,2006,1829
+Bronx,2007,1293
+Bronx,2008,1123
+Bronx,2009,1827
+Bronx,2010,1404
+Bronx,2011,932
+Brooklyn,2006,1088
+Brooklyn,2007,931
+Brooklyn,2008,1000
+Brooklyn,2009,939
+Brooklyn,2010,1127
+Brooklyn,2011,547
+Brooklyn,2012,741
+Manhattan,2006,627
+Manhattan,2007,728
+Manhattan,2008,840
+Manhattan,2009,1000
+Manhattan,2010,1023
+Manhattan,2011,713
+Manhattan,2012,688
+Queens,2006,1558
+Queens,2007,976
+Queens,2008,837
+Queens,2009,855
+Queens,2010,697
+Queens,2011,635
+Queens,2012,620
+Staten Island,2006,625
+Staten Island,2007,1023
+Staten Island,2008,1240
+Staten Island,2009,687
+Staten Island,2010,741
+Staten Island,2011,692
+Staten Island,2012,564
+Bronx,2013,629
+Brooklyn,2013,644
+Manhattan,2013,387
+Queens,2013,457
+Staten Island,2013,611
+Bronx,2012,1229
+Bronx,2014,437
+Brooklyn,2014,512
+Manhattan,2014,240
+Queens,2014,382
+Staten Island,2014,372
+Bronx,2015,336
+Brooklyn,2015,446
+Manhattan,2015,457
+Queens,2015,425
+Staten Island,2015,315
+Bronx,2016,353
+Brooklyn,2016,394
+Manhattan,2016,455
+Queens,2016,355
+Staten Island,2016,352
+Bronx,2017,228
+Brooklyn,2017,228
+Manhattan,2017,552
+Queens,2017,591
+Staten Island,2017,324

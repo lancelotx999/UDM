@@ -12,6 +12,8 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/leaflet/leaflet.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/leaflet-draw/leaflet.draw.css') }}" rel="stylesheet">
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}">
@@ -19,6 +21,8 @@
                 'csrfToken' => csrf_token(),
             ]) !!};
         </script>
+        <script src="{{ asset('js/prunecluster/PruneCluster.js') }}"></script>
+        <script src="{{ asset('js/leaflet-draw/leaflet.draw.js') }}"></script>
 
     </head>
 
@@ -26,27 +30,26 @@
 
         @include('layouts.partials._header')
 
-        <div class="container-fluid" >
-            <div class="row is-flex row-offcanvas row-offcanvas-left" >
-
-                @if (\Request::is('map') || \Request::is('/') || \Request::is('map/swinburne'))
-                    @include('layouts/partials._overlay')
-                    <div class="col-xs-12 col-sm-9" id="main-content" style="padding: 0px">
-                @endif
-                @if (\Request::is('chart') || \Request::is('/chart'))
-                    <div class="col-xs-12 col-sm-9" id="main-content-chart" style="padding: 0px">
-                @endif
-                
+        <div class="container-fluid wrapper">
+            <div class="row" >
+                <div class="col-xs-12 col-sm-12">
                         
-                    @yield('content')
+                @yield('content')
                     
                 </div>
             </div>
-        
-        
-            
         </div>
-<a class="beta-notice" href="https://github.com/lancelotx999/UDM">A beta project of Urban Development Maps. Swinburne University of Technology. UDM &copy; 2017-2018</a>
+        
+        <a class="beta-notice" href="https://github.com/lancelotx999/UDM">
+            Urban Development Maps Project. Swinburne University of Technology. UDM &copy; 2017-2018
+        </a>
+
+        <script type="text/javascript">
+
+            //uncheck all boxes on Mozilla browser refresh
+            function uncheck() { $(':checkbox:checked').prop('checked',false); }
+
+        </script>
         
     </body>
     

@@ -2,74 +2,137 @@
 
 @section('content')
 
-<!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css"> -->
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
-<!-- <script src="PruneCluster/dist/PruneCluster.js"></script> -->
-<script src="{{URL::asset('js/PruneCluster.js')}}"></script>
-<style type="text/css">
+<div class="row">
+    
+    <div id="sidebar" class="collapse in">
+            
+        <br />
 
-    /* #main-content {
-        width: 85%;
-    } */
+        <hr />
 
-    div.tooltip {
-        position: absolute;
-        padding: 2px;
-        font: 12px sans-serif;
-        background: lightsteelblue;
-        border: 1px;
-        border-radius: 8px;
-        pointer-events: none;
-    }
-/*
-    #map {
-        width: 100%;
-        height: 100vh;
-    }
+        <h3 class="white-text">
+            <a data-toggle="collapse" href="#overlays_group">
+                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>&nbsp;Overlays
+            </a>
+        </h3>
 
-    #main-content {
-        width: 85%;
-    }
-*/
+        <hr />
 
-    #map{
-        width:100%;
-    }
-    svg {
-      position: relative;
-    }
+        <div id="overlays_group" class="collapse in">
+            <ul class="nav">
+                <li>            
+                    <input type="checkbox" id="Borough" class="example">
+                    <label for="Borough"><span class="white-text">Borough</span></label>
+                </li>
+                    
+                <li>
+                    <input type="checkbox" id="District" class="example">
+                    <label for="District"><span class="white-text">District</span></label>
+                </li>               
 
-    /* path {
-      fill: #000;
-      fill-opacity: .2;
-      stroke: #fff;
-      stroke-width: 1.5px;
-    }
+                <li>
+                    <input type="checkbox" id="Precint" class="example">
+                    <label for="Precint"><span class="white-text">Police Precint</span></label>
+                </li> 
 
-    path:hover {
-      fill: brown;
-      fill-opacity: .7;
-    } */
+                <li>
+                    <input type="checkbox" id="Battalion" class="example">
+                    <label for="Battalion"><span class="white-text">Fire Battalion</span></label>
+                </li> 
 
+                <li>
+                    <input type="checkbox" id="School" class="example">
+                    <label for="School"><span class="white-text">School District</span></label>
+                </li> 
 
-</style>
+                <li>
+                    <input type="checkbox" id="Evacuation" class="example">
+                    <label for="Evacuation"><span class="white-text">Disaster Evacuation Areas</span></label>
+                </li> 
 
-<div id="popup"></div>
-<div id="map"></div>
+                <li>
+                    <input type="checkbox" id="Housing" class="example">
+                    <label for="Housing"><span class="white-text">2018 Housing Program</span></label>
+                </li>
+            </ul>
+
+            <hr />
+
+        </div>
+
+        <h3 class="white-text">
+            <a data-toggle="collapse" href="#markers_group">
+                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>&nbsp;Markers
+            </a>
+        </h3>
+
+        <hr />
+
+        <div id="markers_group" class="collapse">
+            <ul class="nav">
+                <li>
+                    <input type="checkbox" id="Subway" class="example">
+                    <label for="Subway"><span class="white-text">Subway Entry & Routes</span></label>
+                </li> 
+
+                <li>
+                    <input type="checkbox" id="Busstop" class="example">
+                    <label for="Busstop"><span class="white-text">Bus Stop</span></label>
+                </li> 
+
+                <li>
+                    <input type="checkbox" id="CollegeUni" class="example">
+                    <label for="CollegeUni"><span class="white-text">Universities</span></label>
+                </li> 
+
+                <li>
+                    <input type="checkbox" id="Neighbourhoods" class="example">
+                    <label for="Neighbourhoods"><span class="white-text">Neighbourhoods</span></label>
+                </li> 
+
+                <li>
+                    <input type="checkbox" id="Facilities" class="example">
+                    <label for="Facilities"><span class="white-text">Faciltiies (All)</span></label>
+                </li> 
+            </ul>
+
+            <hr /> 
+
+        </div>
+
+        @if (Auth::check() and Auth::user()->hasRole('admin'))
+        <ul class="nav">
+            <li>
+                <input type="checkbox" id="Editor" class="example">
+                <label for="Editor"><span class="white-text">Backlog Notes</span></label>
+            </li> 
+        </ul>
+
+        <hr />
+        @endif
+
+        <br />
+
+    </div>
+
+    <button class="filter" href="#sidebar" data-toggle="collapse">
+        <i class="fa fa-map" aria-hidden="true"></i>&nbsp;Show / Hide Data Filters
+    </button>
+
+    <div id="popup"></div>
+    <div id="map"></div>
+</div>
 
 <!-- <img src="{{URL::asset('images/swinlogo.png')}}" alt="profile Pic" height="200" width="200"> -->
 <script>
 
-    var map = L.map('map')
+    var map = L.map('map', { zoomControl: false })
         // .setView([0, 0], 0)
         .setView(new L.LatLng(40, -74), 10) //NYC Location
         .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+
+    //add zoom control with your options
+    L.control.zoom({ position:'topright' }).addTo(map);
 
     map.options.minZoom = 2;
 
@@ -90,7 +153,43 @@
     PruneCluster.Cluster.ENABLE_MARKERS_LIST = true;
     pruneCluster.Cluster.Size = 2;
 
+    // Editor's Note
+    var geojsonLayer = '';
 
+    $.get({
+        type: 'GET',
+        url: "{{ asset('storage/data.geojson') }}",
+        async: false,
+        success : function(text)
+        {
+            geojsonLayer = $.parseJSON(text.replace(/^[^\{]+/, ''));
+        }
+    });
+
+    var geoJSONEditor = L.geoJSON(geojsonLayer);
+
+    geoJSONEditor.eachLayer(function (layer) {
+        layer.bindPopup(
+            "<h5><strong>" + layer.feature.properties.title + "</strong></h5>" + 
+            "<p>" + layer.feature.properties.content + "</p>"
+        );
+    });
+    geoJSONEditor.on('mouseover', function (e) {
+        this.openPopup();
+    });
+    geoJSONEditor.on('mouseout', function (e) {
+        this.closePopup();
+    });
+
+    $('#Editor').click(function() {
+    
+        if (this.checked) {
+            geoJSONEditor.addTo(map);   
+        } else { 
+            geoJSONEditor.removeFrom(map);   
+        }
+    }); 
+        
     //overrides for pruneCluster
     pruneCluster.spiderfier.onAdd = function(map){
         this._map = map;
@@ -657,7 +756,9 @@
      				   .duration(200)
      				   .style("opacity", .9);
 
-                    popup.html("<p>Borough Code: " + d.properties.BoroCode + "</p>" + "<p>Borough Name: " + d.properties.BoroName + "</p>")
+                    popup.html(
+                        "<p><strong>Borough Code:</strong> " + d.properties.BoroCode + "</p>" + 
+                        "<p><strong>Borough Name:</strong> " + d.properties.BoroName + "</p>")
                         .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                         // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -756,7 +857,8 @@
      				   .duration(200)
      				   .style("opacity", .9);
 
-                   popup.html("<p> Borough Community District ID: " + d.properties.BoroCD + "</p>")
+                   popup.html(
+                    "<p><strong>Borough Community District ID:</strong> " + d.properties.BoroCD + "</p>")
                		.attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
    					// .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -856,7 +958,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                    popup.html("<p>Police Precinct: " + d.properties.Precinct + "</p>")
+                    popup.html("<p><strong>Police Precinct:</strong> " + d.properties.Precinct + "</p>")
                         .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                         // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -956,7 +1058,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                    popup.html("<p>Fire Battalion: " + d.properties.FireBN + "</p>")
+                    popup.html("<p><strong>Fire Battalion:</strong> " + d.properties.FireBN + "</p>")
                         .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                         // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1056,7 +1158,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                   popup.html("<p>School District: " + d.properties.SchoolDist + "</p>")
+                   popup.html("<p><strong>School District:</strong> " + d.properties.SchoolDist + "</p>")
                     .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                     // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1179,7 +1281,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                   popup.html("<p>Line: " + d.properties.name + "</p>" )
+                   popup.html("<p><strong>Line:</strong> " + d.properties.name + "</p>" )
                     .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                     // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1291,7 +1393,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                   popup.html("<p>Level of Safety: " + d.properties.HURRICANE_EVACUATION_ZONE + "</p>")
+                   popup.html("<p><strong>Level of Safety:</strong> " + d.properties.HURRICANE_EVACUATION_ZONE + "</p>")
                     .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                     // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1391,7 +1493,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                    popup.html("<p>Project Name: " + d.properties.ProjectNam + "</p>")
+                    popup.html("<p><strong>Project Name:</strong> " + d.properties.ProjectNam + "</p>")
                         .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                         // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1470,8 +1572,8 @@
 
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<P>Subway: " + data.name + "</P>" +
-                    "<P>Line: " + data.line + "</P>"
+                    "<p><strong>Subway:</strong> " + data.name + "</p>" +
+                    "<p><strong>Line:</strong> " + data.line + "</p>"
                 );
                 // marker.setPopupContent(
                 //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
@@ -1479,8 +1581,8 @@
             }
             else {
                 marker.bindPopup(
-                    "<P>Subway: " + data.name + "</P>" +
-                    "<P>Line: " + data.line + "</P>"
+                    "<p><strong>Subway:</strong> " + data.name + "</p>" +
+                    "<p><strong>Line:</strong> " + data.line + "</p>"
                 );
 
                 // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
@@ -1734,10 +1836,10 @@
 
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<P>Borough: " + data.boro_name + "</P>" +
-                    "<P>Borough ID: " + data.boro_code + "</P>" +
-                    "<P>Borough Community District ID: " + data.boro_cd + "</P>" +
-                    "<P>Street: " + data.street + "</P>"
+                    "<p><strong>orough:</strong> " + data.boro_name + "</p>" +
+                    "<p><strong>Borough ID:</strong> " + data.boro_code + "</p>" +
+                    "<p><strong>Borough Community District ID:</strong> " + data.boro_cd + "</p>" +
+                    "<p><strong>Street:</strong> " + data.street + "</p>"
                 );
                 // marker.setPopupContent(
                 //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
@@ -1745,10 +1847,10 @@
             }
             else {
                 marker.bindPopup(
-                    "<P>Borough: " + data.boro_name + "</P>" +
-                    "<P>Borough ID: " + data.boro_code + "</P>" +
-                    "<P>Borough Community District ID: " + data.boro_cd + "</P>" +
-                    "<P>Street: " + data.street + "</P>"
+                    "<p><strong>Borough:</strong> " + data.boro_name + "</p>" +
+                    "<p><strong>Borough ID:</strong> " + data.boro_code + "</p>" +
+                    "<p><strong>Borough Community District ID:</strong> " + data.boro_cd + "</p>" +
+                    "<p><strong>Street:</strong> " + data.street + "</p>"
                 );
 
                 // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
@@ -2001,8 +2103,8 @@
 
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<P>Name: " + data.name + "</P>" +
-                    "<P>Area: " + data.city + "</P>"
+                    "<p><strong>Name:</strong> " + data.name + "</p>" +
+                    "<p><strong>Area:</strong> " + data.city + "</p>"
                 );
                 // marker.setPopupContent(
                 //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
@@ -2010,8 +2112,8 @@
             }
             else {
                 marker.bindPopup(
-                    "<P>Name: " + data.name + "</P>" +
-                    "<P>Area: " + data.city + "</P>"
+                    "<p><strong>Name:</strong> " + data.name + "</p>" +
+                    "<p><strong>Area:</strong> " + data.city + "</p>"
                 );
 
                 // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
@@ -2264,10 +2366,10 @@
 
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<P>Facility Name: " + data.facname + "</P>" +
-                    "<P>Facility Domain: " + data.facdomain + "</P>" +
-                    "<P>Facility Info: " + data.facsubgrp + "</P>" +
-                    "<P>Area: " + data.city + "</P>"
+                    "<p><strong>Facility Name:</strong> " + data.facname + "</p>" +
+                    "<p><strong>Facility Domain:</strong> " + data.facdomain + "</p>" +
+                    "<p><strong>Facility Info:</strong> " + data.facsubgrp + "</p>" +
+                    "<p><strong>Area:</strong> " + data.city + "</p>"
                 );
                 // marker.setPopupContent(
                 //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
@@ -2275,8 +2377,8 @@
             }
             else {
                 marker.bindPopup(
-                    "<P>Name: " + data.name + "</P>" +
-                    "<P>Area: " + data.city + "</P>"
+                    "<p><strong>Name:</strong> " + data.name + "</p>" +
+                    "<p><strong>Area:</strong> " + data.city + "</p>"
                 );
 
                 // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
@@ -2348,8 +2450,8 @@
 
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<P>Name: " + data.Name + "</P>" +
-                    "<P>Borough: " + data.Borough + "</P>"
+                    "<p><strong>Name:</strong> " + data.Name + "</p>" +
+                    "<p><strong>Borough:</strong> " + data.Borough + "</p>"
                 );
                 // marker.setPopupContent(
                 //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
@@ -2357,8 +2459,8 @@
             }
             else {
                 marker.bindPopup(
-                    "<P>Name: " + data.Name + "</P>" +
-                    "<P>Borough: " + data.Borough + "</P>"
+                    "<p><strong>Name:</strong> " + data.Name + "</p>" +
+                    "<p><strong>Borough:</strong> " + data.Borough + "</p>"
                 );
 
                 // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
@@ -2430,16 +2532,10 @@
         })
     }
 
-    function educationModule(){
+    function educationModule() {
         schoolDistrictOverlay();
         collegesUniversitiesMarker();
     }
-
-    //uncheck all boxes on Mozilla browser refresh
-    function uncheck() {
-        $(':checkbox:checked').prop('checked',false);
-    }
-
 
 </script>
 

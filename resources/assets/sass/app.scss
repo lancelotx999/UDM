@@ -1,10 +1,11 @@
 
-// Fonts
+// Fonts: Lato
 @import url("https://fonts.googleapis.com/css?family=Lato:100,300,400,700");
 
 // Fonts: Obitron
 @import url('https://fonts.googleapis.com/css?family=Orbitron');
 
+// Fonts: Oswald
 @import url('https://fonts.googleapis.com/css?family=Oswald');
 
 // Variables
@@ -22,7 +23,7 @@
     display: block;
     font-size: 12px;
     font-weight: 700;
-    line-height: 21px;
+    line-height: 20px;
     text-align: center;
     box-shadow: inset 0 -4px 0 rgba(0,0,0,.1);
     background-color: #d96b27;
@@ -31,14 +32,12 @@
    left: 0;
    bottom: 0;
    width: 100%;
-   z-index:1400;
+   z-index:2001;
 }
 
-
-
-
 html, body {
-    height: 100%;
+  height: 100vh;
+  background-color: #fcfcfc;
 }
 
 body {
@@ -55,21 +54,8 @@ a:active{
   color: blue;
 }
 
-// svg {
-//   width: 100%;
-//   height: 100%;
-//   min-height: 100vh;
-//   background: #f6f6f6;
-// }
-
 .bottom-space {
   padding-bottom: 50vh;
-}
-
-#securityChart svg,
-#enrollmentChart svg,
-#clubRecruitmentChart svg {
-  background: url("/images/concrete_seamless.gif");
 }
 
 .navbar-default .navbar-brand,
@@ -80,13 +66,11 @@ a:active{
 }
 
 .chart-filter {
-  background-color: #252b31;
-  padding: 0.5vh 2% 22% 2%;
-  margin-left: -1%;
+  background-color: #fff;
 }
 
 .white-text {
-  color: #f6f6f6;
+  color: #fcfcfc;
 }
 
 .breadcrumb {
@@ -98,69 +82,71 @@ a:active{
   text-decoration: none;
 }
 
-.row.is-flex {
-  display: flex;
-  flex-wrap: wrap;
+/* CSS3 calc() function to perform calculations */
+@mixin calc($property, $expression) { 
+  #{$property}: -webkit-calc(#{$expression}); 
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: calc(#{$expression}); 
+} 
+
+#map {
+  @include calc(height, "100vh - 50px");
 }
 
-.row.is-flex > [class*='col-'] {
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 1%;
-}
-
-/*Off Canvas*/
-@media screen and (max-width: 768px) {
-	.row-offcanvas {
-  	position: relative;
-  	-webkit-transition: all 0.25s ease-out;
-  	-moz-transition: all 0.25s ease-out;
-  	transition: all 0.25s ease-out;
-  	background:#ecf0f1;
-	}
-
-.row-offcanvas-left
-.sidebar-offcanvas {
-  	left: -40%;
-	}
-
-.row-offcanvas-left.active {
-  	left: 40%;
-	}
-
-.sidebar-offcanvas {
-  	position: relative;
-  	top: 0;
-  	width: 40%;
-  	margin-left: 12px;
-	}
+#sidebar, .filter {
+  position: absolute;
+  z-index: 2000;
 }
 
 #sidebar {
+  width: 35vh;
+  min-width: 350px;
+  @include calc(height, "100vh - 50px");
   padding: 20px;
   background: #161a1d;
   color: #161a1d;
-  width: 15%;
+  overflow: auto;
 }
 
-#cb_span {
-	color: white;
+h3 > a, a:active, a:focus, a:hover {
+  text-decoration: none;
+  outline: none;
 }
 
-#main-content {
-  width: 85%;
-  background: url("/images/concrete_seamless.gif");
-  height:100%;
+.filter {
+  margin: 15px 20px 20px;
+  padding: 5px 15px;
+  border: none;
+  color: #161a1d;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  background-color: #fff;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s; /* Safari */
 }
 
-#main-content-chart {
-  width:100%;
-  background: url("/images/concrete_seamless.gif");
-  padding:20px;
+.filter:hover {
+  background-color: #eeeeee;
+  color: #555;
 }
 
-#map{
-  height: 100vh;
+#export {
+  position: absolute;
+  top: 120px;
+  left: -8.5px;
+  margin: 15px 20px 20px;
+  padding: 7px 9px;
+  border: none;
+  border-radius: 2px;
+  color: #555;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  background-color: #eeeeee;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s; /* Safari */
+}
+
+#export:hover {
+  background-color: #161a1d;
+  color: #f6f6f6;
 }
 
 /*zoom to bounding box */
@@ -228,6 +214,10 @@ ul.links {
 //   width: 100%;
 // }
 
+.navbar {
+  z-index: 9999;
+}
+
 .navbar-nav {
   font-size: 16px;
   font-family: 'Oswald', sans-serif;
@@ -249,31 +239,30 @@ ul.links {
 }
 
 .btn {
-    display: inline-block;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border: 1px solid transparent;
-        border-top-color: transparent;
-        border-right-color: transparent;
-        border-bottom-color: transparent;
-        border-left-color: transparent;
-    padding: .375rem .75rem;
-    line-height: 1.5;
-    border-radius: .25rem;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+  padding: .375rem .75rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+}
 
-    }
-
-    .btn-secondary {
-    color: #fff;
-    background-color: #868e96;
-    border-color: #868e96;
-    }
+.btn-secondary {
+  color: #fff;
+  background-color: #868e96;
+  border-color: #868e96;
+}
 
 .footer-basic-centered{
   background-color: #171a21;
@@ -318,7 +307,11 @@ ul.links {
 
 /* If you don't want the footer to be responsive, remove these media queries */
 
-@media (max-width: 600px) {
+@media (max-width: 380px) {
+
+  #sidebar {
+    width: 100%;
+  }
 
   .footer-basic-centered{
     padding: 35px;
@@ -345,22 +338,27 @@ ul.links {
     line-height: 1.8;
   }
 }
+
 // cheap fix for pointer event
 .leaflet-marker-shadow, .leaflet-image-layer, .leaflet-pane > svg path, .leaflet-tile-container {
     pointer-events: all !important;
 }
 
 div.tooltip {
-    position: absolute;
-    font-size: 100% !important;
-    width: auto;
-    height: auto;
-    padding: 2px;
-    font: 12px sans-serif;
-    background: lightsteelblue;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
+  position: absolute;
+  top: 30%;
+  padding: 10px 10px 0px;
+  font: 12px sans-serif;
+  border: none;
+  color: #161a1d;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  background-color: #fff;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+svg {
+  position: relative;
 }
 
 /*** custom checkboxes ***/
