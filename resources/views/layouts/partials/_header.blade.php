@@ -31,7 +31,7 @@
                 @if (Auth::check() and Auth::user()->hasRole('admin'))
                 <li>
                     <a href="/editor">
-                        <i class="fa fa-pencil fa-fw" aria-hidden="true"></i>&nbsp;Editor
+                        <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>&nbsp;Notes
                     </a>
                 </li>
 

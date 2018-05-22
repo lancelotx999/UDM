@@ -67,16 +67,16 @@
 
 			<hr />
 
-			<strong>Water Consumption Statistics Of New York City</strong>
+			<strong>Births By Race Of New York City</strong>
 
 			<hr />
 
-			<div id='waterConsumptionChart'></div>
+			<div id='birthsByRaceChart'></div>
 
 			<div class="row">
-				<span id='waterConsumptionChartFilters'></span>
-				<span id='waterConsumptionChartApplyButton'></span>
-				<span id='waterConsumptionChartResetButton'></span>
+				<span id='birthsByRaceChartFilters'></span>
+				<span id='birthsByRaceChartApplyButton'></span>
+				<span id='birthsByRaceChartResetButton'></span>
 			</div>
 		</div>
 
@@ -103,16 +103,16 @@
 
 			<hr />
 
-			<strong>Births By Race Of New York City</strong>
+			<strong>Water Consumption Statistics Of New York City</strong>
 
 			<hr />
 
-			<div id='birthsByRaceChart'></div>
+			<div id='waterConsumptionChart'></div>
 
 			<div class="row">
-				<span id='birthsByRaceChartFilters'></span>
-				<span id='birthsByRaceChartApplyButton'></span>
-				<span id='birthsByRaceChartResetButton'></span>
+				<span id='waterConsumptionChartFilters'></span>
+				<span id='waterConsumptionChartApplyButton'></span>
+				<span id='waterConsumptionChartResetButton'></span>
 			</div>
 		</div>
 
@@ -176,7 +176,6 @@
 
 <script>
 
-	// createPopulationByBoroughChart(populationData, null, null);
 	createPopulationByBoroughChart(null, new Date("01/01/1950"), new Date("01/01/2040"));
 	createPopulationByCommunityChart(null, new Date("01/01/1950"), new Date("01/01/2040"), "Manhattan");
 	createWaterConsumptionChart();
@@ -185,8 +184,6 @@
 	createJuvenileInvestigationChart();
 	createJuvenileIntakesChart();
 	createActualRevenuesChart(null, "Taxes", null, null);
-
-
 
 	function createPopulationByBoroughChart(populationData, dateMin, dateMax){
 		// Set the dimensions of the canvas / graph
@@ -301,20 +298,18 @@
 			.attr("y", function(d) { return y(d.population); })
 			.attr("height", function(d) { return height - y(d.population); })
 			.on("mouseover", function(d) {
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
+
 				tooltip.transition()
 					.duration(200)
-					.style("opacity", .9);
+					.style("opacity", 1);
 
 				tooltip.html(
-					"Borough: " + d.boroughName + "<br/>" + "<br/>" +
-					"Date: " + d.date.getFullYear() + "<br/>" + "<br/>" +
-					"Population: " + d.population + "<br/>" + "<br/>"
+					"<p><strong>Borough:</strong> " + d.boroughName + "</p>" +
+					"<p><strong>Date:</strong> " + d.date.getFullYear() + "</p>" +
+					"<p><strong>Population:</strong> " + d.population + "</p>"
 				)
-					.style("left", (d3.event.pageX / 1.5) + "px")
-					.style("top", (d3.event.pageY / 10) + "px");
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
 				tooltip.transition()
@@ -622,21 +617,19 @@
 			.attr("y", function(d) { return y(d.population); })
 			.attr("height", function(d) { return height - y(d.population); })
 			.on("mouseover", function(d) {
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
+
 				tooltip.transition()
 					.duration(200)
-					.style("opacity", .9);
+					.style("opacity", 1);
 
 				tooltip.html(
-					"Borough: " + d.boroughName + "<br/>" + "<br/>" +
-					"Community District: " + d.CDName + "<br/>" + "<br/>" +
-					"Date: " + d.date.getFullYear() + "<br/>" + "<br/>" +
-					"Population: " + d.population + "<br/>" + "<br/>"
+					"<p><strong>Borough:</strong> " + d.boroughName + "</p>" +
+					"<p><strong>Community District:</strong> " + d.CDName + "</p>" +
+					"<p><strong>Date:</strong> " + d.date.getFullYear() + "</p>" +
+					"<p><strong>Population:</strong> " + d.population + "</p>"
 				)
-					.style("left", (d3.event.pageX / 1.5) + "px")
-					.style("top", (d3.event.pageY / 10) + "px");
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
 				tooltip.transition()
@@ -1415,20 +1408,18 @@
 			.enter().append("g")
 			.attr("class", "arc")
 			.on("mouseover", function(d) {
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
+
 				tooltip.transition()
 					.duration(200)
-					.style("opacity", .9);
+					.style("opacity", 1);
 
 				tooltip.html(
-					"Year: " + selectedDate.getFullYear() + "<br/>" + "<br/>" +
-					"Gender: " + d.data.key + "<br/>" + "<br/>" +
-					"Total Births: " + d.data.value.avg + "<br/>" + "<br/>"
+					"<p><strong>Year:</strong> " + selectedDate.getFullYear() + "</p>" +
+					"<p><strong>Gender:</strong> " + d.data.key + "</p>" +
+					"<p><strong>Total Births:</strong> " + d.data.value.avg + "</p>"
 				)
-					.style("left", (d3.event.pageX / 1.5) + "px")
-					.style("top", (d3.event.pageY / 10) + "px");
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
 				tooltip.transition()
@@ -1702,20 +1693,18 @@
 			.enter().append("g")
 			.attr("class", "arc")
 			.on("mouseover", function(d) {
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
+
 				tooltip.transition()
 					.duration(200)
-					.style("opacity", .9);
+					.style("opacity", 1);
 
 				tooltip.html(
-					"Year: " + selectedDate.getFullYear() + "<br/>" + "<br/>" +
-					"Race: " + d.data.key + "<br/>" + "<br/>" +
-					"Total Births: " + d.data.value.avg + "<br/>" + "<br/>"
+					"<p><strong>Year:</strong> " + selectedDate.getFullYear() + "</p>" +
+					"<p><strong>Race:</strong> " + d.data.key + "</p>" +
+					"<p><strong>Total Births:</strong> " + d.data.value.avg + "</p>"
 				)
-					.style("left", (d3.event.pageX / 1.5) + "px")
-					.style("top", (d3.event.pageY / 10) + "px");
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
 				tooltip.transition()
@@ -1918,17 +1907,18 @@
 			.attr("y", function(d) { return y(d.count); })
 			.attr("height", function(d) { return height - y(d.count); })
 			.on("mouseover", function(d) {
+
 				tooltip.transition()
 					.duration(200)
-					.style("opacity", .9);
+					.style("opacity", 1);
 
 				tooltip.html(
-					"Borough: " + d.borough + "<br/>" + "<br/>" +
-					"Total Investigations: " + d.count + "<br/>" + "<br/>" +
-					"Year: " + d.date.getFullYear() + "<br/>" + "<br/>" 
+					"<p><strong>Borough:</strong> " + d.borough + "</p>" +
+					"<p><strong>Total Investigations:</strong> " + d.count + "</p>" +
+					"<p><strong>Year:</strong> " + d.date.getFullYear() + "</p>" 
 				)
-					.style("left", (d3.event.pageX / 1.5) + "px")
-					.style("top", (d3.event.pageY / 10) + "px");
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
 				tooltip.transition()
@@ -2122,17 +2112,18 @@
 			.attr("y", function(d) { return y(d.count); })
 			.attr("height", function(d) { return height - y(d.count); })
 			.on("mouseover", function(d) {
+
 				tooltip.transition()
 					.duration(200)
-					.style("opacity", .9);
+					.style("opacity", 1);
 
 				tooltip.html(
-					"Borough: " + d.borough + "<br/>" + "<br/>" +
-					"Total Intakes: " + d.count + "<br/>" + "<br/>" +
-					"Year: " + d.date.getFullYear() + "<br/>" + "<br/>" 
+					"<p><strong>Borough:</strong> " + d.borough + "</p>" +
+					"<p><strong>Total Intakes:</strong> " + d.count + "</p>" +
+					"<p><strong>Year:</strong> " + d.date.getFullYear() + "</p>" 
 				)
-					.style("left", (d3.event.pageX / 1.5) + "px")
-					.style("top", (d3.event.pageY / 10) + "px");
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
 				tooltip.transition()
@@ -2340,18 +2331,19 @@
 			.attr("y", function(d) { return y(d.amount); })
 			.attr("height", function(d) { return height - y(d.amount); })
 			.on("mouseover", function(d) {
+
 				tooltip.transition()
 					.duration(200)
-					.style("opacity", .9);
+					.style("opacity", 1);
 
 				tooltip.html(
-					"Category: " + d.revenueCategory + "<br/>" + "<br/>" +
-					"Class: " + d.revenueClass + "<br/>" + "<br/>" +
-					"Year: " + d.date.getFullYear() + "<br/>" + "<br/>" +
-					"Actual Revenue: " + d.amount + "<br/>" + "<br/>"
+					"<p><strong>Category:</strong> " + d.revenueCategory + "</p>" +
+					"<p><strong>Class:</strong> " + d.revenueClass + "</p>" +
+					"<p><strong>Year:</strong> " + d.date.getFullYear() + "</p>" +
+					"<p><strong>Actual Revenue:</strong> " + d.amount + "</p>"
 				)
-					.style("left", (d3.event.pageX / 1.5) + "px")
-					.style("top", (d3.event.pageY / 10) + "px");
+					.style("left", d3.select(this).attr("cx") + "px")     
+  					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
 				tooltip.transition()
@@ -2493,6 +2485,7 @@
 
 		});
 	}
+
 </script>
 
 @endsection

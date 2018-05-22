@@ -68,7 +68,7 @@
 
         drawnItems.addLayer(layer);
 
-		var content = '<span><b>Shape Name</b></span><br/><input id="shapeName" type="text"/><br/><br/><span><b>Shape Description<b/></span><br/><textarea id="shapeDesc" cols="25" rows="5"></textarea><br/><br/><input type="button" id="okBtn" value="Save" onclick="saveIdIW()"/>'; 
+		var content = '<span><strong>Shape Name</strong></span><br/><input id="shapeName" type="text"/><br/><br/><span><strong>Shape Description<strong/></span><br/><textarea id="shapeDesc" cols="25" rows="5"></textarea><br/><br/><input type="button" id="okBtn" value="Save" onclick="saveIdIW()"/>'; 
 
 		idIW.setContent(content);
 

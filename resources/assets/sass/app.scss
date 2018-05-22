@@ -345,12 +345,15 @@ ul.links {
 }
 
 div.tooltip {
-  position: fixed;
-  padding: 2px;
+  position: absolute;
+  top: 30%;
+  padding: 10px 10px 0px;
   font: 12px sans-serif;
-  background: lightsteelblue;
-  border: 1px;
-  border-radius: 8px;
+  border: none;
+  color: #161a1d;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  background-color: #fff;
+  border-radius: 2px;
   pointer-events: none;
 }
 

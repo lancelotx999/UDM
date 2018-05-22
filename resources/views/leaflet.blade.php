@@ -104,14 +104,14 @@
         <ul class="nav">
             <li>
                 <input type="checkbox" id="Editor" class="example">
-                <label for="Editor"><span class="white-text">Editor's Note</span></label>
+                <label for="Editor"><span class="white-text">Backlog Notes</span></label>
             </li> 
         </ul>
 
         <hr />
         @endif
 
-        <br /><br />
+        <br />
 
     </div>
 
@@ -170,7 +170,7 @@
 
     geoJSONEditor.eachLayer(function (layer) {
         layer.bindPopup(
-            "<h5>" + layer.feature.properties.title + "</h5>" + 
+            "<h5><strong>" + layer.feature.properties.title + "</strong></h5>" + 
             "<p>" + layer.feature.properties.content + "</p>"
         );
     });
@@ -756,7 +756,9 @@
      				   .duration(200)
      				   .style("opacity", .9);
 
-                    popup.html("<p>Borough Code: " + d.properties.BoroCode + "</p>" + "<p>Borough Name: " + d.properties.BoroName + "</p>")
+                    popup.html(
+                        "<p><strong>Borough Code:</strong> " + d.properties.BoroCode + "</p>" + 
+                        "<p><strong>Borough Name:</strong> " + d.properties.BoroName + "</p>")
                         .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                         // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -855,7 +857,8 @@
      				   .duration(200)
      				   .style("opacity", .9);
 
-                   popup.html("<p> Borough Community District ID: " + d.properties.BoroCD + "</p>")
+                   popup.html(
+                    "<p><strong>Borough Community District ID:</strong> " + d.properties.BoroCD + "</p>")
                		.attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
    					// .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -955,7 +958,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                    popup.html("<p>Police Precinct: " + d.properties.Precinct + "</p>")
+                    popup.html("<p><strong>Police Precinct:</strong> " + d.properties.Precinct + "</p>")
                         .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                         // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1055,7 +1058,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                    popup.html("<p>Fire Battalion: " + d.properties.FireBN + "</p>")
+                    popup.html("<p><strong>Fire Battalion:</strong> " + d.properties.FireBN + "</p>")
                         .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                         // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1155,7 +1158,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                   popup.html("<p>School District: " + d.properties.SchoolDist + "</p>")
+                   popup.html("<p><strong>School District:</strong> " + d.properties.SchoolDist + "</p>")
                     .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                     // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1278,7 +1281,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                   popup.html("<p>Line: " + d.properties.name + "</p>" )
+                   popup.html("<p><strong>Line:</strong> " + d.properties.name + "</p>" )
                     .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                     // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1390,7 +1393,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                   popup.html("<p>Level of Safety: " + d.properties.HURRICANE_EVACUATION_ZONE + "</p>")
+                   popup.html("<p><strong>Level of Safety:</strong> " + d.properties.HURRICANE_EVACUATION_ZONE + "</p>")
                     .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                     // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1490,7 +1493,7 @@
                        .duration(200)
                        .style("opacity", .9);
 
-                    popup.html("<p>Project Name: " + d.properties.ProjectNam + "</p>")
+                    popup.html("<p><strong>Project Name:</strong> " + d.properties.ProjectNam + "</p>")
                         .attr("style", "top: "+ ((d3.event.y)) + "px; left: "+ ((d3.event.x)) + "px; position: absolute;");
                         // .attr("style", "top: 58%; left: 0px; position: absolute;");
                 })
@@ -1569,8 +1572,8 @@
 
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<P>Subway: " + data.name + "</P>" +
-                    "<P>Line: " + data.line + "</P>"
+                    "<p><strong>Subway:</strong> " + data.name + "</p>" +
+                    "<p><strong>Line:</strong> " + data.line + "</p>"
                 );
                 // marker.setPopupContent(
                 //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
@@ -1578,8 +1581,8 @@
             }
             else {
                 marker.bindPopup(
-                    "<P>Subway: " + data.name + "</P>" +
-                    "<P>Line: " + data.line + "</P>"
+                    "<p><strong>Subway:</strong> " + data.name + "</p>" +
+                    "<p><strong>Line:</strong> " + data.line + "</p>"
                 );
 
                 // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
@@ -1833,10 +1836,10 @@
 
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<P>Borough: " + data.boro_name + "</P>" +
-                    "<P>Borough ID: " + data.boro_code + "</P>" +
-                    "<P>Borough Community District ID: " + data.boro_cd + "</P>" +
-                    "<P>Street: " + data.street + "</P>"
+                    "<p><strong>orough:</strong> " + data.boro_name + "</p>" +
+                    "<p><strong>Borough ID:</strong> " + data.boro_code + "</p>" +
+                    "<p><strong>Borough Community District ID:</strong> " + data.boro_cd + "</p>" +
+                    "<p><strong>Street:</strong> " + data.street + "</p>"
                 );
                 // marker.setPopupContent(
                 //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
@@ -1844,10 +1847,10 @@
             }
             else {
                 marker.bindPopup(
-                    "<P>Borough: " + data.boro_name + "</P>" +
-                    "<P>Borough ID: " + data.boro_code + "</P>" +
-                    "<P>Borough Community District ID: " + data.boro_cd + "</P>" +
-                    "<P>Street: " + data.street + "</P>"
+                    "<p><strong>Borough:</strong> " + data.boro_name + "</p>" +
+                    "<p><strong>Borough ID:</strong> " + data.boro_code + "</p>" +
+                    "<p><strong>Borough Community District ID:</strong> " + data.boro_cd + "</p>" +
+                    "<p><strong>Street:</strong> " + data.street + "</p>"
                 );
 
                 // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
@@ -2100,8 +2103,8 @@
 
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<P>Name: " + data.name + "</P>" +
-                    "<P>Area: " + data.city + "</P>"
+                    "<p><strong>Name:</strong> " + data.name + "</p>" +
+                    "<p><strong>Area:</strong> " + data.city + "</p>"
                 );
                 // marker.setPopupContent(
                 //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
@@ -2109,8 +2112,8 @@
             }
             else {
                 marker.bindPopup(
-                    "<P>Name: " + data.name + "</P>" +
-                    "<P>Area: " + data.city + "</P>"
+                    "<p><strong>Name:</strong> " + data.name + "</p>" +
+                    "<p><strong>Area:</strong> " + data.city + "</p>"
                 );
 
                 // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
@@ -2363,10 +2366,10 @@
 
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<P>Facility Name: " + data.facname + "</P>" +
-                    "<P>Facility Domain: " + data.facdomain + "</P>" +
-                    "<P>Facility Info: " + data.facsubgrp + "</P>" +
-                    "<P>Area: " + data.city + "</P>"
+                    "<p><strong>Facility Name:</strong> " + data.facname + "</p>" +
+                    "<p><strong>Facility Domain:</strong> " + data.facdomain + "</p>" +
+                    "<p><strong>Facility Info:</strong> " + data.facsubgrp + "</p>" +
+                    "<p><strong>Area:</strong> " + data.city + "</p>"
                 );
                 // marker.setPopupContent(
                 //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
@@ -2374,8 +2377,8 @@
             }
             else {
                 marker.bindPopup(
-                    "<P>Name: " + data.name + "</P>" +
-                    "<P>Area: " + data.city + "</P>"
+                    "<p><strong>Name:</strong> " + data.name + "</p>" +
+                    "<p><strong>Area:</strong> " + data.city + "</p>"
                 );
 
                 // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
@@ -2447,8 +2450,8 @@
 
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<P>Name: " + data.Name + "</P>" +
-                    "<P>Borough: " + data.Borough + "</P>"
+                    "<p><strong>Name:</strong> " + data.Name + "</p>" +
+                    "<p><strong>Borough:</strong> " + data.Borough + "</p>"
                 );
                 // marker.setPopupContent(
                 //     "<P>Purpose: "+data.purpose + " - " + category + "</P>"
@@ -2456,8 +2459,8 @@
             }
             else {
                 marker.bindPopup(
-                    "<P>Name: " + data.Name + "</P>" +
-                    "<P>Borough: " + data.Borough + "</P>"
+                    "<p><strong>Name:</strong> " + data.Name + "</p>" +
+                    "<p><strong>Borough:</strong> " + data.Borough + "</p>"
                 );
 
                 // marker.bindPopup("<P>Purpose: " + data.purpose + "</P>" + "<P>Well Name: " + data.well_name + "</P>" + "<P>Wellbore Name: " + data.wellbore_name + "</P>" + "<P>Operation Name: " + data.operation_name + "</P>" +"<P>Latitude: " + data.latitude + "</P>" +"<P>Longitude: " + data.longitude + "</P>");
