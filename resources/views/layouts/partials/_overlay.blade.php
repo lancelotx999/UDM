@@ -55,10 +55,10 @@
                 <label for="check_evac"><span id="cb_span">Disaster Evacuation Areas</span></label>
             </li> 
 
-            <li>
+            <!-- <li>
                 <input type="checkbox" id="Housing" class="example">
                 <label for="check_evac"><span id="cb_span">Affordable Housing Program (2018)</span></label>
-            </li>
+            </li> -->
 
             <li>
                 <input type="checkbox" id="Subway" class="example">
@@ -82,7 +82,7 @@
 
             <li>
                 <input type="checkbox" id="Facilities" class="example">
-                <label for="check_subway"><span id="cb_span">Faciltiies (All)</span></label>
+                <label for="check_subway"><span id="cb_span">Public Facilities</span></label>
             </li> 
             @endif
         </ul>
