@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-12">
+        <div class="col-xs-12 col-sm-12 bottom-space">
 
         <br />
 
@@ -35,5 +35,7 @@
         </div>
     </div>
 </div>
+
+@include('layouts.partials._footer')
 
 @endsection

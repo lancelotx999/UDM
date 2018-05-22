@@ -2488,4 +2488,6 @@
 
 </script>
 
+@include('layouts.partials._footer')
+
 @endsection

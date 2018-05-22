@@ -1836,7 +1836,7 @@
 
             if (marker.getPopup()) {
                 marker.setPopupContent(
-                    "<p><strong>orough:</strong> " + data.boro_name + "</p>" +
+                    "<p><strong>Borough:</strong> " + data.boro_name + "</p>" +
                     "<p><strong>Borough ID:</strong> " + data.boro_code + "</p>" +
                     "<p><strong>Borough Community District ID:</strong> " + data.boro_cd + "</p>" +
                     "<p><strong>Street:</strong> " + data.street + "</p>"

@@ -8,6 +8,9 @@
 // Fonts: Oswald
 @import url('https://fonts.googleapis.com/css?family=Oswald');
 
+// Fonts: Montserrat
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 // Variables
 @import "variables";
 
@@ -16,6 +19,69 @@
 
 // Font Awesome
 @import "node_modules/font-awesome/scss/font-awesome";
+
+.panel-one > .jumbotron {
+    /*background: no-repeat url("/images/panel-one.png");*/
+    background-color: #d96b27;
+    min-height: 300px;
+    height: auto;
+    width: 100%;
+}
+
+.panel-one {
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+}
+
+.panel-one > div > h1 {
+    text-shadow: 6px 6px 0px #974a1b;
+}
+
+.panel-one > div > p {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.6em;
+    font-weight: 400;
+}
+
+.panel-one > div > a {
+    font-size: 18px;
+    font-weight: 400;
+    text-decoration: none;
+    border-bottom: 1px dotted #fff;
+    color: #fff;
+    padding: 0 3px;
+    transition-duration: 0.3s;
+}
+
+.panel-one > div > a:hover {
+    border-color: #000;
+    color: #000;
+}
+
+.panel-two {
+    font-family: 'Montserrat', Helvetica,Arial, sans-serif;
+}
+
+.panel-two > div > h3 {
+    line-height: 1.6;
+}
+
+.panel-two img {
+    max-width: 100%;
+    height: auto;
+}
+
+.button-style > a {
+    border-bottom: 1px dotted;
+    padding: 0 3px;
+}
+
+@media (max-width: 1080px) {
+
+    .panel-two > div > h3 {
+        font-size: 14px;
+    }
+}
 
 .beta-notice {
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
@@ -42,11 +108,6 @@ html, body {
 
 body {
 	padding-top: 50px;
-}
-
-footer {
-	padding-left: 15px;
-	padding-right: 15px;
 }
 
 a:active{
@@ -172,11 +233,6 @@ h3 > a, a:active, a:focus, a:hover {
 }
 
 /*footer*/
-footer {
-  margin-left:-15px;
-  margin-right:-15px;
-}
-
 footer.page-footer {
   padding-top: 20px;
   background-color: #262626;
@@ -184,7 +240,7 @@ footer.page-footer {
   color: #fff;
 }
 
-footer.page-footer .container-fluid {
+footer.page-footer {
   width: auto;
 }
 

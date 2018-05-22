@@ -12,7 +12,10 @@
 */
 
 // Routes for public access of maps and charts
-Route::get('/', 'LeafletController@mainMap');
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('/map', 'LeafletController@mainMap');
 Route::get('/chart', 'ChartController@chartPage');
 Route::get('/home', 'HomeController@index')->name('home');

@@ -18,6 +18,12 @@
 
                 <li>
                     <a href="/">
+                        <i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/map">
                         <i class="fa fa-globe fa-fw" aria-hidden="true"></i>&nbsp;Map
                     </a>
                 </li>
