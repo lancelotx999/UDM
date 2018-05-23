@@ -685,7 +685,7 @@
 
 		var boroughSelector = "";
 
-		boroughSelector += "<p>Floor For Security Chart:</p><p><select id='selectBorough-populationByCommunityChart' size='1' style='width: 202px;'>";
+		boroughSelector += "<p>Select Borough:</p><p><select id='selectBorough-populationByCommunityChart' size='1' style='width: 202px;'>";
 		boroughs.forEach(function (d){
 			boroughSelector += "<option value=" + d + ">" + d + "</option>";
 		})

@@ -20,20 +20,20 @@
             <div class="col-md-12 col-xs-12">
                 <p>As one of the administrator of the system, you have now gained access to the following features:</p>
                 <ul class="list-group">
-                    <a href="/" class="list-group-item">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <a href="/map" class="list-group-item">
+                        <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
                         &nbsp;Map
                     </a>
                     <a href="/chart" class="list-group-item">
-                        <i class="fa fa-area-chart" aria-hidden="true"></i>
+                        <i class="fa fa-area-chart fa-fw" aria-hidden="true"></i>
                         &nbsp;Chart
                     </a>
                     <a href="/editor" class="list-group-item">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                        &nbsp;Editor
+                        <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+                        &nbsp;Notes
                     </a>
                     <a href="/upload" class="list-group-item">
-                        <i class="fa fa-upload" aria-hidden="true"></i>
+                        <i class="fa fa-upload fa-fw" aria-hidden="true"></i>
                         &nbsp;Upload
                     </a>
                 </ul>
@@ -51,13 +51,17 @@
             <div class="col-md-12 col-xs-12">
                 <p>As one the user of the system, you have now gained access to the following features:</p>
                 <ul class="list-group">
-                    <a href="/" class="list-group-item">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <a href="/map" class="list-group-item">
+                        <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
                         &nbsp;Maps
                     </a>
                     <a href="/chart" class="list-group-item">
-                        <i class="fa fa-area-chart" aria-hidden="true"></i>
+                        <i class="fa fa-area-chart fa-fw" aria-hidden="true"></i>
                         &nbsp;Charts
+                    </a>
+                    <a href="/editor" class="list-group-item">
+                        <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+                        &nbsp;Notes
                     </a>
                 </ul>
 
@@ -67,7 +71,7 @@
         </div>
         @endif
 
-        <h3>You'll be redirected back to the main page in <span class="count" id="5"></span> seconds, or click any links to go now!</h3>
+        <h3>You'll be redirected back to the map page in <span class="count" id="5"></span> seconds, or click any links to go now!</h3>
             
     </div>
 </div>
@@ -101,7 +105,7 @@ setInterval(function() {
 
 @php
 
-header("refresh:5; url=/");
+header("refresh:5; url='/map'");
 
 @endphp
 
