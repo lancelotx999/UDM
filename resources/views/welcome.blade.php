@@ -21,7 +21,7 @@
             <br />
 
             <h3 class="text-uppercase">Success stories</h3>
-            <h4>See how others who have used our map has achieved in their lives</h4>
+            <h4>See how others who have used our map achieved success in their lives.</h4>
 
             <br />
 
