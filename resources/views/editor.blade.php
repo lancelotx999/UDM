@@ -5,9 +5,68 @@
 <div class="row">
 
 	<div id="map"></div>
-	<button class="filter" id='export'>
+	<button class="filter" id='export' data-toggle="modal" data-target="#myModal">
 		<i class="fa fa-floppy-o" aria-hidden="true"></i>
 	</button>
+
+    <!-- Save Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+
+        <br /><br /><br /><br />
+
+        <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Markers Saved</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Your markers have been successfully saved!</p> 
+                <p>The administrators will see them when they're around.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="firstLoad" role="dialog">
+
+        <br /><br /><br /><br />
+
+        <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">First Visit Instructions</h4>
+            </div>
+        
+            <div class="modal-body">
+                <p>Welcome to the Notes page, here are some basic steps that you can follow:</p> 
+                <ol>
+                    <li>Access the tools on the top left corner.</li>
+                    <li>Place your marker on the desired location.</li>
+                    <li>Enter a title and description for the marker, then save it.</li>
+                    <li>Rinse, repeat step 1-3 until satisfied.</li>
+                    <li>Click the floppy disk icon to save your markers.</li>
+                </ol>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Got it!</button>
+            </div>
+        </div>
+
+        </div>
+    </div>
 
 </div>
 
@@ -117,6 +176,11 @@
         // Create export
         $.post("{{ action('EditorController@saveFile') }}", convertedData, console.log('success'));
     }
+
+    // first load modal
+    $(window).on('load',function(){
+        $('#firstLoad').modal('show');
+    });
 
 </script>
 
