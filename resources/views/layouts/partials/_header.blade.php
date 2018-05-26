@@ -34,15 +34,13 @@
                     </a>
                 </li>
                 
-                @if (Auth::check())
+                @if (Auth::check() and Auth::user()->hasRole('admin'))
                 <li>
                     <a href="/editor">
                         <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>&nbsp;Notes
                     </a>
                 </li>
-                @endif
-
-                @if (Auth::check() and Auth::user()->hasRole('admin'))
+                
                 <li>
                     <a href="/upload">
                         <i class="fa fa-upload fa-fw" aria-hidden="true"></i>&nbsp;Upload
