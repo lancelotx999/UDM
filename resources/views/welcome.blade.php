@@ -109,7 +109,7 @@
                 </div>
                 <div class="col-xs-6 col-sm-6 button-style">
                     <h4><strong>Adding Future Notes</strong></h4>
-                    <p><em>Admin feature</em></p>
+                    <p><em>Registered user feature</em></p>
                     <p>Missing markers, overlays and others? This is where you can mark them for us.</p>
                     <a href="/editor">Click to go</a>
                 </div>

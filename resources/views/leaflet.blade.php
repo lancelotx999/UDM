@@ -100,7 +100,7 @@
 
         </div>
 
-        @if (Auth::check() and Auth::user()->hasRole('admin'))
+        @if (Auth::check())
         <ul class="nav">
             <li>
                 <input type="checkbox" id="Editor" class="example">
