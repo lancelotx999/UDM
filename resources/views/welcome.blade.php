@@ -73,7 +73,7 @@
 
             <br />
 
-            <h3 class="text-uppercase">Feautures</h3>
+            <h3 class="text-uppercase">Features</h3>
 
             <hr />
 
