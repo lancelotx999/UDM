@@ -29,7 +29,9 @@ php artisan serve
 ```
 
 Now download the CSV files from [here](https://drive.google.com/open?id=1zLgwCNJxv62V7NRsvSAAel_ckYG98dXJ) and extract the contents into your clone folder path: 
-```./UDM/public/[Extract the "data" folder to here]```
+```
+./UDM/public/[Extract the "data" folder to here]
+```
 
 Next, login as an adminstrator:
 ```
