@@ -9,8 +9,11 @@
 
 ## Quickstart Running UDM
 Make sure you have [Docker](https://www.docker.com/get-docker) installed and enabled, then on your console run the following:
-```dockerfile
+```Dockerfile
+# For database
 docker run --name mariadb-udm -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=udm -p 3306:3306 -d mariadb
+# For phpMyAdmin
+docker run --name phpmyadmin-udm -d --link mariadb-udm:db -p 8080:80 phpmyadmin/phpmyadmin
 ```
 
 The database is created inside the container titled `mariadb-udm`, migrate the database with Laravel's `artisan` command and wait for completion:
@@ -25,7 +28,9 @@ Once migration is done, you can now serve the web application (default http://12
 php artisan serve
 ```
 
-You can login as either an admin or an user available by default, or register as a user if you like:
+Now download the CSV files from [here](https://drive.google.com/open?id=1zLgwCNJxv62V7NRsvSAAel_ckYG98dXJ) and extract the contents into your clone folder path `./UDM/public/[Extract content to here]`.
+
+Next, login as an adminstrator:
 ```
 // Admins
 Name => Sean Lee
@@ -35,16 +40,18 @@ Password => 4308131
 Name => Kenneth Yeo
 Email => 4332466@UDM.com
 Password => 4332466
-
-// Users          
-Name => Kevin Wong
-Email => 4310128@SCVMS.com
-Password => 4310128
-
-Name => Leslie Ling
-Email => 4331990@UDM.com
-Password => 4331990
 ```
+
+Finally, head to the **Upload** page and upload the following CSVs from `./UDM/public/data/NYC-bigData`:
+> `DOP_Juvenile_Intakes_by_Calendar_Year`
+> `DOP_Juvenile_Investigations_by_Calendar_Year`
+> `Natality`
+> `New_York_City_Population_by_Borough__1950_-_2040`
+> `New_York_City_Population_By_Community_Districts`
+> `Revenue_Actuals`
+> `Water_Consumption_In_The_New_York_City`
+
+Once these are all uploaded, the chart page is ready to go as well as everything else. 
 
 ## About Laravel
 
