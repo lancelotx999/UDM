@@ -28,7 +28,8 @@ Once migration is done, you can now serve the web application (default http://12
 php artisan serve
 ```
 
-Now download the CSV files from [here](https://drive.google.com/open?id=1zLgwCNJxv62V7NRsvSAAel_ckYG98dXJ) and extract the contents into your clone folder path `./UDM/public/[Extract content to here]`.
+Now download the CSV files from [here](https://drive.google.com/open?id=1zLgwCNJxv62V7NRsvSAAel_ckYG98dXJ) and extract the contents into your clone folder path: 
+`./UDM/public/[Extract the "data" folder to here]`
 
 Next, login as an adminstrator:
 ```
@@ -43,13 +44,13 @@ Password => 4332466
 ```
 
 Finally, head to the **Upload** page and upload the following CSVs from `./UDM/public/data/NYC-bigData`:
-> `DOP_Juvenile_Intakes_by_Calendar_Year`
-> `DOP_Juvenile_Investigations_by_Calendar_Year`
-> `Natality`
-> `New_York_City_Population_by_Borough__1950_-_2040`
-> `New_York_City_Population_By_Community_Districts`
-> `Revenue_Actuals`
-> `Water_Consumption_In_The_New_York_City`
+1. `DOP_Juvenile_Intakes_by_Calendar_Year`
+2. `DOP_Juvenile_Investigations_by_Calendar_Year`
+3. `Natality`
+4. `New_York_City_Population_by_Borough__1950_-_2040`
+5. `New_York_City_Population_By_Community_Districts`
+6. `Revenue_Actuals`
+7. `Water_Consumption_In_The_New_York_City`
 
 Once these are all uploaded, the chart page is ready to go as well as everything else. 
 
