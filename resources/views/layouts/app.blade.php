@@ -24,7 +24,8 @@
         </script>
         <script src="{{ asset('js/prunecluster/PruneCluster.js') }}"></script>
         <script src="{{ asset('js/leaflet-draw/leaflet.draw.js') }}"></script>
-
+        <script src="{{ asset('js/echarts/echarts.min.js') }}"></script>
+        <script src="{{ asset('js/echarts/custom.js') }}"></script>
     </head>
 
     <body id="app-layout" onload="uncheck()">

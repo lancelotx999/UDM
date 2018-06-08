@@ -25,9 +25,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/chart/enrollment', 'ChartController@enrollmentChartPage');
 // Route::get('/chart/clubRecruitment', 'ChartController@clubRecruitmentChartPage');
 
-// Routes for Admin use only
+// Routes for login use only
 Route::get('/editor', function () {
     return view('editor');
+})->middleware('auth');;
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
 })->middleware('auth');;
 
 Route::get('/upload', function() {

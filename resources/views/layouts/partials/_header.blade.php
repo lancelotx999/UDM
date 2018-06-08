@@ -28,12 +28,6 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="/chart">
-                        <i class="fa fa-area-chart fa-fw" aria-hidden="true"></i>&nbsp;Chart
-                    </a>
-                </li>
-                
                 @if (Auth::check())
                 <li>
                     <a href="/editor">
@@ -42,7 +36,19 @@
                 </li>
                 @endif
 
+                <li>
+                    <a href="/chart">
+                        <i class="fa fa-area-chart fa-fw" aria-hidden="true"></i>&nbsp;Chart
+                    </a>
+                </li>
+
                 @if (Auth::check() and Auth::user()->hasRole('admin'))
+                <li>
+                    <a href="/dashboard">
+                        <i class="fa fa-pie-chart fa-fw" aria-hidden="true"></i>&nbsp;Dashboard
+                    </a>
+                </li>
+
                 <li>
                     <a href="/upload">
                         <i class="fa fa-upload fa-fw" aria-hidden="true"></i>&nbsp;Upload

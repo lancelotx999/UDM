@@ -32,6 +32,10 @@
                         <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
                         &nbsp;Notes
                     </a>
+                    <a href="/dashboard" class="list-group-item">
+                        <i class="fa fa-pie-chart fa-fw" aria-hidden="true"></i>
+                        &nbsp;Dashboard
+                    </a>
                     <a href="/upload" class="list-group-item">
                         <i class="fa fa-upload fa-fw" aria-hidden="true"></i>
                         &nbsp;Upload
