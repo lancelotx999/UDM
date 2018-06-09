@@ -251,7 +251,7 @@
 
 		// Set the ranges
 		// var x = d3.scaleTime().range([0, width]);
-		var x = d3.scaleBand().rangeRound([0, width]),
+		var x = d3.scaleBand().rangeRound([width, 0]),
 			y = d3.scaleLinear().rangeRound([height, 0]),
 			z = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -308,7 +308,7 @@
 					"<p><strong>Date:</strong> " + d.date.getFullYear() + "</p>" +
 					"<p><strong>Population:</strong> " + d.population + "</p>"
 				)
-					.style("left", d3.select(this).attr("cx") + "px")     
+					.style("left", d3.select(this).attr("cx") + "px")
   					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
@@ -564,7 +564,7 @@
 		// console.log("---------- populationData ----------");
 
 		// Set the ranges
-		var x = d3.scaleBand().rangeRound([0, width]),
+		var x = d3.scaleBand().rangeRound([width, 0]),
 			y = d3.scaleLinear().rangeRound([height, 0]),
 			z = d3.scaleOrdinal(d3.schemeCategory20);
 
@@ -628,7 +628,7 @@
 					"<p><strong>Date:</strong> " + d.date.getFullYear() + "</p>" +
 					"<p><strong>Population:</strong> " + d.population + "</p>"
 				)
-					.style("left", d3.select(this).attr("cx") + "px")     
+					.style("left", d3.select(this).attr("cx") + "px")
   					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
@@ -1418,7 +1418,7 @@
 					"<p><strong>Gender:</strong> " + d.data.key + "</p>" +
 					"<p><strong>Total Births:</strong> " + d.data.value.avg + "</p>"
 				)
-					.style("left", d3.select(this).attr("cx") + "px")     
+					.style("left", d3.select(this).attr("cx") + "px")
   					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
@@ -1703,7 +1703,7 @@
 					"<p><strong>Race:</strong> " + d.data.key + "</p>" +
 					"<p><strong>Total Births:</strong> " + d.data.value.avg + "</p>"
 				)
-					.style("left", d3.select(this).attr("cx") + "px")     
+					.style("left", d3.select(this).attr("cx") + "px")
   					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
@@ -1915,9 +1915,9 @@
 				tooltip.html(
 					"<p><strong>Borough:</strong> " + d.borough + "</p>" +
 					"<p><strong>Total Investigations:</strong> " + d.count + "</p>" +
-					"<p><strong>Year:</strong> " + d.date.getFullYear() + "</p>" 
+					"<p><strong>Year:</strong> " + d.date.getFullYear() + "</p>"
 				)
-					.style("left", d3.select(this).attr("cx") + "px")     
+					.style("left", d3.select(this).attr("cx") + "px")
   					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
@@ -2120,9 +2120,9 @@
 				tooltip.html(
 					"<p><strong>Borough:</strong> " + d.borough + "</p>" +
 					"<p><strong>Total Intakes:</strong> " + d.count + "</p>" +
-					"<p><strong>Year:</strong> " + d.date.getFullYear() + "</p>" 
+					"<p><strong>Year:</strong> " + d.date.getFullYear() + "</p>"
 				)
-					.style("left", d3.select(this).attr("cx") + "px")     
+					.style("left", d3.select(this).attr("cx") + "px")
   					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
@@ -2257,10 +2257,10 @@
 			});
 		});
 	}
-	
+
 	function createActualRevenuesChart(revenueAmount, selectedCategory, dateMin, dateMax){
 		console.log(revenueAmount, selectedCategory, dateMin, dateMax);
-		
+
 		var margin = {top: 30, right: 80, bottom: 70, left: 60},
 			width = 600 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom;
@@ -2303,7 +2303,7 @@
 			y = d3.scaleLinear().rangeRound([height, 0]),
 			z = d3.scaleOrdinal(d3.schemeCategory20);
 
-		
+
 		y.domain([0, Math.max.apply(Math, revenueAmount.map(function(d) { return d.amount; }))]).nice();
 		z.domain(revenue_class);
 
@@ -2342,7 +2342,7 @@
 					"<p><strong>Year:</strong> " + d.date.getFullYear() + "</p>" +
 					"<p><strong>Actual Revenue:</strong> " + d.amount + "</p>"
 				)
-					.style("left", d3.select(this).attr("cx") + "px")     
+					.style("left", d3.select(this).attr("cx") + "px")
   					.style("top", d3.select(this).attr("cy") + "px");
 			})
 			.on("mouseout", function(d) {
@@ -2454,7 +2454,7 @@
 			document.getElementById("actualRevenuesChart").innerHTML = "";
 
 			createActualRevenuesChart(revenueAmount, category, dateMin, dateMax);
-		});		
+		});
 	}
 
 	function createActualRevenuesResetButton(){

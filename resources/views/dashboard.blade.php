@@ -31,7 +31,7 @@
       	<div class="title_left">
         	<h1>Dashboard</h1><hr />
       	</div>
-     
+
     	<div class="clearfix"></div>
 
     	<div class="row">
@@ -125,7 +125,7 @@
         		</div>
       		</div>
 		</div>
-      
+
 		<div class="row">
       		<div class="col-md-6 col-sm-6 col-xs-12">
         		<div class="x_panel">
