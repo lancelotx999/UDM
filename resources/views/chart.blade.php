@@ -251,7 +251,7 @@
 
 		// Set the ranges
 		// var x = d3.scaleTime().range([0, width]);
-		var x = d3.scaleBand().rangeRound([width, 0]),
+		var x = d3.scaleBand().rangeRound([0, width]),
 			y = d3.scaleLinear().rangeRound([height, 0]),
 			z = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -456,33 +456,61 @@
 
 		document.getElementById("populationByBoroughChartResetButton").appendChild(populationByBoroughChartResetButton);
 
+		var populationData = [];
+		var boroughs = [];
+
+		var populationByBorough = {!! json_encode($populationByBorough->toArray()) !!};
+
+		populationByBorough.forEach(function (d){
+			if (boroughs.indexOf(d.Borough) == -1) {
+				boroughs.push(d.Borough);
+			}
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+
+			populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
+			populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
+			populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
+			populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
+			populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
+			populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
+			populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
+			populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
+			// populationData.push()
+			// Borough,CDNumber,CDName,1970Population,1980Population,1990Population,2000Population,2010Population
+
+
+		})
+
+		populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
 		populationByBoroughChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/New_York_City_Population_by_Borough__1950_-_2040.csv", function (data){
-				populationData = [];
+			populationData = [];
+			console.log("---------- populationData ----------");
+			console.log(populationData);
+			console.log("---------- populationData ----------");
 
-				data.forEach(function (d){
-					populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
-					populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
-					populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
-					populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
-					populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
-					populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
-					populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
-					populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
-				})
+			populationByBorough.forEach(function (d){
+				populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
+				populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
+				populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
+				populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
+				populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
+				populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
+				populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
+				populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
+			})
 
-				populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+			populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
 
-				console.log("---------- populationData ----------");
-				console.log(populationData);
-				console.log("---------- populationData ----------");
+			document.getElementById("populationByBoroughChart").innerHTML = "";
 
-				document.getElementById("populationByBoroughChart").innerHTML = "";
-
-				createPopulationByBoroughChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
-
-
-			});
+			createPopulationByBoroughChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
 
 		});
 
@@ -564,7 +592,7 @@
 		// console.log("---------- populationData ----------");
 
 		// Set the ranges
-		var x = d3.scaleBand().rangeRound([width, 0]),
+		var x = d3.scaleBand().rangeRound([0, width]),
 			y = d3.scaleLinear().rangeRound([height, 0]),
 			z = d3.scaleOrdinal(d3.schemeCategory20);
 
@@ -799,30 +827,56 @@
 
 		document.getElementById("populationByCommunityChartResetButton").appendChild(populationByCommunityChartResetButton);
 
-		populationByCommunityChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/New_York_City_Population_By_Community_Districts.csv", function (data){
-				populationData = [];
+		var populationData = [];
+		var boroughs = [];
+		var communityDistricts = [];
 
-				data.forEach(function (d){
+		populationByCommunityChartResetButton.addEventListener ("click", function() {
+			populationData = [];
+
+			var populationByCommunityDistricts = {!! json_encode($populationByCommunityDistricts->toArray()) !!};
+
+			// console.log("---------- populationByCommunityDistricts ----------");
+			// console.log(populationByCommunityDistricts);
+			// console.log("---------- populationByCommunityDistricts ----------");
+			// var selectedBorough = "Bronx";
+
+			populationByCommunityDistricts.forEach(function (d){
+				if (boroughs.indexOf(d.Borough) == -1) {
+					boroughs.push(d.Borough);
+				}
+
+				if (communityDistricts.indexOf(d.CDName) == -1) {
+					communityDistricts.push(d.CDName);
+				}
+
+				// if (communityDistricts.map(function(e) { return e.id; }).indexOf(d.CDNumber) == -1) {
+				// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
+				// }
+
+				// if ((communityDistricts.findIndex(x => x.id == d.CDNumber) == -1) && (d.Borough == selectedBorough)) {
+				// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
+				// }
+
+				if (d.Borough == selectedBorough) {
 					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1970"), population: d.Population1970});
 					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1980"), population: d.Population1980});
 					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1990"), population: d.Population1990});
 					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2000"), population: d.Population2000});
 					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2010"), population: d.Population2010});
-				})
+					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2020"), population: d.population2020});
+					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2030"), population: d.population2030});
+					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2040"), population: d.population2040});
+				}
+			})
 
-				populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+			populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
 
-				// console.log("---------- populationData ----------");
-				// console.log(populationData);
-				// console.log("---------- populationData ----------");
+			document.getElementById("populationByCommunityChart").innerHTML = "";
 
-				document.getElementById("populationByCommunityChart").innerHTML = "";
-
-				createPopulationByCommunityChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1], "Manhattan");
+			createPopulationByCommunityChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1], "Manhattan");
 
 
-			});
 
 		});
 
@@ -1258,29 +1312,31 @@
 
 		document.getElementById("waterConsumptionChartResetButton").appendChild(waterConsumptionChartResetButton);
 
+
+		var waterConsumptionData = [];
+
+
+
 		waterConsumptionChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/Water_Consumption_In_The_New_York_City.csv", function (data){
-				waterConsumptionData = [];
-
-				data.forEach(function(d){
-					waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
-				})
-
-				waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
-				// console.log("---------- waterConsumptionData ----------");
-				// console.log(waterConsumptionData);
-				// console.log("---------- waterConsumptionData ----------");
-
-				document.getElementById("waterConsumptionChart").innerHTML = "";
-
-				createWaterConsumptionChart(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1], "Manhattan");
+			waterConsumptionData = [];
+			document.getElementById("waterConsumptionChart").innerHTML = "";
+			var waterConsumption = {!! json_encode($waterConsumption->toArray()) !!};
 
 
-			});
+			waterConsumption.forEach(function(d){
+				waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
+			})
+
+			waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
+
+			createWaterConsumptionChart(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1], "Manhattan");
 
 		});
 
 
+		// console.log("---------- waterConsumption ----------");
+		// console.log(waterConsumption);
+		// console.log("---------- waterConsumption ----------");
 	}
 
 	function createBirthsByGenderChart(birthData, selectedDate){
@@ -1440,11 +1496,6 @@
 		createBirthsByGenderApplyButton(birthData);
 		createBirthsByGenderResetButton(birthData);
 
-
-
-		d3.csv("data/NYC-bigData/Natality.csv", function (data){
-
-		})
 		//here
 	}
 
@@ -1540,30 +1591,29 @@
 		document.getElementById("birthsByGenderChartResetButton").appendChild(birthsByGenderChartResetButton);
 
 		birthsByGenderChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/Natality.csv", function (data){
-				birthData = [];
-				data.forEach(function(d){
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
+			var natality = {!! json_encode($natality->toArray()) !!};
+			birthData = [];
 
-					birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
-				})
+			natality.forEach(function(d){
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
 
-				birthData.sort(function(a, b) { return a.date - b.date; });
+				birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
+			})
 
-				// console.log("---------- birthData ----------");
-				// console.log(birthData);
-				// console.log("---------- birthData ----------");
+			birthData.sort(function(a, b) { return a.date - b.date; });
 
-				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+			// console.log("---------- birthData ----------");
+			// console.log(birthData);
+			// console.log("---------- birthData ----------");
 
-				document.getElementById("birthsByGenderChart").innerHTML = "";
+			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
 
-				createBirthsByGenderChart(birthData,selectedDate);
+			document.getElementById("birthsByGenderChart").innerHTML = "";
 
+			createBirthsByGenderChart(birthData,selectedDate);
 
-			});
 
 		});
 	}
@@ -1820,30 +1870,28 @@
 		document.getElementById("birthsByRaceChartResetButton").appendChild(birthsByRaceChartResetButton);
 
 		birthsByRaceChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/Natality.csv", function (data){
-				birthData = [];
-				data.forEach(function(d){
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
+			var natality = {!! json_encode($natality->toArray()) !!};
 
-					birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
-				})
+			birthData = [];
+			natality.forEach(function(d){
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
 
-				birthData.sort(function(a, b) { return a.date - b.date; });
+				birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
+			})
 
-				// console.log("---------- birthData ----------");
-				// console.log(birthData);
-				// console.log("---------- birthData ----------");
+			birthData.sort(function(a, b) { return a.date - b.date; });
 
-				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+			// console.log("---------- birthData ----------");
+			// console.log(birthData);
+			// console.log("---------- birthData ----------");
 
-				document.getElementById("birthsByRaceChart").innerHTML = "";
+			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
 
-				createBirthsByRaceChart(birthData,selectedDate);
+			document.getElementById("birthsByRaceChart").innerHTML = "";
 
-
-			});
+			createBirthsByRaceChart(birthData,selectedDate);
 
 		});
 	}
@@ -2036,20 +2084,21 @@
 
 		document.getElementById("juvenileInvestigationChartResetButton").appendChild(juvenileInvestigationChartResetButton);
 
+
 		juvenileInvestigationChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/DOP_Juvenile_Investigations_by_Calendar_Year.csv", function (data){
-				investigationCount = [];
+			var juvenileInvestigation = {!! json_encode($juvenileInvestigation->toArray()) !!};
 
-				data.forEach(function(d){
-					investigationCount.push({borough: d.borough, date: new Date(d.date), count: Number(d.count) });
-				})
+			investigationCount = [];
 
-				investigationCount.sort(function(a, b) { return a.date - b.date; });
+			juvenileInvestigation.forEach(function(d){
+				investigationCount.push({borough: d.borough, date: new Date(d.date), count: Number(d.count) });
+			})
 
-				document.getElementById("juvenileInvestigationChart").innerHTML = "";
+			investigationCount.sort(function(a, b) { return a.date - b.date; });
 
-				createJuvenileInvestigationChart(investigationCount, d3.extent(investigationCount, function(d) { return d.date; })[0], d3.extent(investigationCount, function(d) { return d.date; })[1]);
-			});
+			document.getElementById("juvenileInvestigationChart").innerHTML = "";
+
+			createJuvenileInvestigationChart(investigationCount, d3.extent(investigationCount, function(d) { return d.date; })[0], d3.extent(investigationCount, function(d) { return d.date; })[1]);
 		});
 	}
 
@@ -2242,19 +2291,18 @@
 		document.getElementById("juvenileIntakesChartResetButton").appendChild(juvenileIntakesChartResetButton);
 
 		juvenileIntakesChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/DOP_Juvenile_Intakes_by_Calendar_Year.csv", function (data){
-				intakesCount = [];
+			var juvenileIntakes = {!! json_encode($juvenileIntakes->toArray()) !!};
+			intakesCount = [];
 
-				data.forEach(function(d){
-					intakesCount.push({borough: d.borough, date: new Date(d.date), count: Number(d.count) });
-				})
+			data.forEach(function(d){
+				intakesCount.push({borough: d.borough, date: new Date(d.date), count: Number(d.count) });
+			})
 
-				intakesCount.sort(function(a, b) { return a.date - b.date; });
+			intakesCount.sort(function(a, b) { return a.date - b.date; });
 
-				document.getElementById("juvenileIntakesChart").innerHTML = "";
+			document.getElementById("juvenileIntakesChart").innerHTML = "";
 
-				createJuvenileIntakesChart(intakesCount, d3.extent(intakesCount, function(d) { return d.date; })[0], d3.extent(intakesCount, function(d) { return d.date; })[1]);
-			});
+			createJuvenileIntakesChart(intakesCount, d3.extent(intakesCount, function(d) { return d.date; })[0], d3.extent(intakesCount, function(d) { return d.date; })[1]);
 		});
 	}
 
@@ -2467,21 +2515,18 @@
 		document.getElementById("actualRevenuesChartResetButton").appendChild(actualRevenuesChartResetButton);
 
 		actualRevenuesChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/Revenue_Actuals.csv", function (data){
-				revenueAmount = [];
+			var actualRevenues = {!! json_encode($actualRevenues->toArray()) !!};
 
-				data.forEach(function (d){
-					revenueAmount.push({revenueCategory: d.revenueCategory, revenueClass: d.revenueClass, date: new Date(d.date), amount: d.amount});
-				})
+			data.forEach(function (d){
+				revenueAmount.push({revenueCategory: d.revenueCategory, revenueClass: d.revenueClass, date: new Date(d.date), amount: d.amount});
+			})
 
-				revenueAmount.sort(function(a, b) { return b.date - a.date || b.amount - a.amount ; });
+			revenueAmount.sort(function(a, b) { return b.date - a.date || b.amount - a.amount ; });
 
-				document.getElementById("actualRevenuesChart").innerHTML = "";
+			document.getElementById("actualRevenuesChart").innerHTML = "";
 
-				createActualRevenuesChart(revenueAmount, "Taxes", d3.extent(revenueAmount, function(d) { return d.date; })[0], d3.extent(revenueAmount, function(d) { return d.date; })[1]);
+			createActualRevenuesChart(revenueAmount, "Taxes", d3.extent(revenueAmount, function(d) { return d.date; })[0], d3.extent(revenueAmount, function(d) { return d.date; })[1]);
 
-
-			});
 
 		});
 	}
