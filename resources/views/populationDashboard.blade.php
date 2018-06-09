@@ -181,570 +181,6 @@
 	createWaterConsumptionChart();
 
 
-	function createBirthsByGenderChart(birthData, selectedDate){
-		// Set the dimensions of the canvas / graph
-		var margin = {top: 30, right: 80, bottom: 70, left: 60},
-			width = 600 - margin.left - margin.right,
-			height = 300 - margin.top - margin.bottom
-			radius = Math.min(width, height) / 2;
-
-		var arc = d3.arc()
-			.outerRadius(radius - 10)
-			.innerRadius(0);
-
-		var labelArc = d3.arc()
-			.outerRadius(radius - 40)
-			.innerRadius(radius - 40);
-
-		var pie = d3.pie()
-			.sort(null)
-			.value(function(d) { return d.value.total; });
-
-		// Adds the svg canvas
-		var svg = d3.select("#birthsByGenderChart")
-			.append("svg")
-			.attr("width", width + margin.left + margin.right)
-			.attr("height", height + margin.top + margin.bottom)
-			.append("g")
-			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-			// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-		// Define the div for the tooltip
-		var tooltip = d3.select("#birthsByGenderChart").append("div")
-			.attr("class", "tooltip")
-			.style("opacity", 0);
-
-		var color = d3.scaleOrdinal(d3.schemeCategory10);
-
-		var natality = {!! json_encode($natality->toArray()) !!};
-
-		// console.log("---------- natality ----------");
-		// console.log(natality);
-		// console.log("---------- natality ----------");
-
-		natality.forEach(function(d){
-			// console.log("---------- d ----------");
-			// console.log(d);
-			// console.log("---------- d ----------");
-			d.date = new Date(d.date)
-		})
-
-		birthData = natality;
-
-		birthData.sort(function(a, b) { return a.date - b.date; });
-
-		// console.log("---------- birthData ----------");
-		// console.log(birthData);
-		// console.log("---------- birthData ----------");
-
-
-		// if (selectedDate != null && selectedDate != undefined) {
-		// 	selectedDate = selectedDate;
-		// }
-		// else {
-		// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
-		// }
-
-		// console.log("---------- selectedDate-pre ----------");
-		// console.log(selectedDate);
-		// console.log("---------- selectedDate-pre ----------");
-
-		if (selectedDate == null && selectedDate == undefined) {
-			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
-			// selectedDate = new Date(selectedDate.toString());
-		}
-		else {
-			selectedDate = new Date(selectedDate.toString());
-		}
-
-		// console.log("---------- selectedDate-post ----------");
-		// console.log(selectedDate);
-		// console.log("---------- selectedDate-post ----------");
-		//
-		// console.log("---------- new Date ----------");
-		// console.log(new Date("2015"));
-		// console.log("---------- new Date ----------");
-
-		filteredBirthData = [];
-
-		// console.log("---------- selectedDate ----------");
-		// console.log(selectedDate);
-		// console.log("---------- selectedDate ----------");
-
-		birthData.forEach(function(d){
-			// console.log("---------- d ----------");
-			// console.log(d);
-			// console.log("---------- d ----------");
-			if (d.date.getFullYear() == selectedDate.getFullYear()) {
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
-				filteredBirthData.push(d);
-			}
-		})
-
-		// console.log("---------- filteredBirthData ----------");
-		// console.log(filteredBirthData);
-		// console.log("---------- filteredBirthData ----------");
-
-		var nestedBirthData = d3.nest()
-			.key(function(d) { return d.sex; })
-			.rollup(function(v) { return {
-				total: d3.sum(v, function(d) { return d.births; }),
-				avg: d3.mean(v, function(d) { return d.births; })
-			}; })
-			.entries(filteredBirthData);
-
-		// console.log("---------- nestedBirthData ----------");
-		// console.log(nestedBirthData);
-		// console.log("---------- nestedBirthData ----------");
-
-		// birthData = birthData.filter(function(d){return d.date == selectedDate;})
-
-		var g = svg.selectAll(".arc")
-			.data(pie(nestedBirthData))
-			.enter().append("g")
-			.attr("class", "arc")
-			.on("mouseover", function(d) {
-
-				tooltip.transition()
-					.duration(200)
-					.style("opacity", 1);
-
-				tooltip.html(
-					"<p><strong>Year:</strong> " + selectedDate.getFullYear() + "</p>" +
-					"<p><strong>Gender:</strong> " + d.data.key + "</p>" +
-					"<p><strong>Total Births:</strong> " + d.data.value.avg + "</p>"
-				)
-					.style("left", d3.select(this).attr("cx") + "px")
-					.style("top", d3.select(this).attr("cy") + "px");
-			})
-			.on("mouseout", function(d) {
-				tooltip.transition()
-					.duration(500)
-					.style("opacity", 0);
-			});
-
-		g.append("path")
-			.attr("d", arc)
-			.style("fill", function(d) { return color(d.data.key); });
-
-		g.append("text")
-			.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
-			.attr("dy", ".35em")
-			.text(function(d) { return d.data.value.total; });
-
-		createBirthsByGenderFilter(birthData);
-		createBirthsByGenderApplyButton(birthData);
-		createBirthsByGenderResetButton(birthData);
-
-
-
-		d3.csv("data/NYC-bigData/Natality.csv", function (data){
-
-		})
-		//here
-	}
-
-	function createBirthsByGenderFilter(birthData){
-		var dateSelector = "";
-
-		// console.log("---------- createWaterConsumptionFilter ----------");
-		// console.log("---------- dateMax ----------");
-		// console.log(dateMax);
-		// console.log("---------- dateMax ----------");
-		// console.log("---------- dateMin ----------");
-		// console.log(dateMin);
-		// console.log("---------- dateMin ----------");
-
-		// dateSelector += "<p>Select Year for Birth By Gender Chart:&nbsp;</p>";
-		// dateSelector += "<p><input type='text' id='datepicker-birthsByGenderChart'></p>";
-		// dateSelector += "<div id='datepicker-birthsByGenderChart' style='width:92%; left: 0;'></div></br>";
-
-		var years = [];
-
-		birthData.forEach(function(d){
-			if (years.includes(d.date.getFullYear()) != true) {
-				years.push(d.date.getFullYear());
-			}
-		})
-
-		// console.log("---------- years ----------");
-		// console.log(years);
-		// console.log("---------- years ----------");
-
-
-		dateSelector += "<p>Select Year for Birth By Gender Chart:</p><p><select id='selectYear-birthsByGenderChart' size='1' style='width: 202px;'>";
-		years.forEach(function (d){
-			dateSelector += "<option value=" + d + ">" + d + "</option>";
-		})
-		dateSelector += "</select></p>";
-
-		document.getElementById('birthsByGenderChartFilters').innerHTML = dateSelector;
-
-
-
-		// $(function (){
-		// 	$("#datepicker-birthsByGenderChart").datepicker({
-		// 		dateFormat: 'yy',
-		// 		changeYear: true,
-		// 		changeMonth: false
-		// 	});
-		// })
-
-
-	}
-
-	function createBirthsByGenderApplyButton(birthData){
-		document.getElementById("birthsByGenderChartApplyButton").innerHTML = "";
-
-		var birthsByGenderChartApplyButton = document.createElement("birthsByGenderChartApplyButton");
-
-		birthsByGenderChartApplyButton.innerHTML = "<button>Apply Filter</button>";
-
-		document.getElementById("birthsByGenderChartApplyButton").appendChild(birthsByGenderChartApplyButton);
-
-		birthsByGenderChartApplyButton.addEventListener ("click", function() {
-			// console.log("---------- Submit Button Clicked ----------");
-			// console.log($("#dateSlider-birthsByGenderChart").val());
-			// console.log($("#selectBorough-birthsByGenderChart").val());
-
-			var selectedYear = $("#selectYear-birthsByGenderChart").val();
-
-			// console.log("---------- min ----------");
-			// console.log(min);
-			// console.log("---------- min ----------");
-			// console.log("---------- max ----------");
-			// console.log(max);
-			// console.log("---------- max ----------");
-			console.log("---------- selectedYear ----------");
-			console.log(selectedYear);
-			console.log("---------- selectedYear ----------");
-
-
-			document.getElementById("birthsByGenderChart").innerHTML = "";
-
-			createBirthsByGenderChart(birthData, selectedYear);
-		});
-	}
-
-	function createBirthsByGenderResetButton(birthdata){
-		document.getElementById("birthsByGenderChartResetButton").innerHTML = "";
-
-		var birthsByGenderChartResetButton = document.createElement("birthsByGenderChartResetButton");
-
-		birthsByGenderChartResetButton.innerHTML = "<button>Reset Filter</button>";
-
-		document.getElementById("birthsByGenderChartResetButton").appendChild(birthsByGenderChartResetButton);
-
-		birthsByGenderChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/Natality.csv", function (data){
-				birthData = [];
-				data.forEach(function(d){
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
-
-					birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
-				})
-
-				birthData.sort(function(a, b) { return a.date - b.date; });
-
-				// console.log("---------- birthData ----------");
-				// console.log(birthData);
-				// console.log("---------- birthData ----------");
-
-				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
-
-				document.getElementById("birthsByGenderChart").innerHTML = "";
-
-				createBirthsByGenderChart(birthData,selectedDate);
-
-
-			});
-
-		});
-	}
-
-	function createBirthsByRaceChart(birthData, selectedDate){
-		// Set the dimensions of the canvas / graph
-		var margin = {top: 30, right: 80, bottom: 70, left: 60},
-			width = 600 - margin.left - margin.right,
-			height = 300 - margin.top - margin.bottom
-			radius = Math.min(width, height) / 2;
-
-		var arc = d3.arc()
-			.outerRadius(radius - 10)
-			.innerRadius(0);
-
-		var labelArc = d3.arc()
-			.outerRadius(radius - 40)
-			.innerRadius(radius - 40);
-
-		var pie = d3.pie()
-			.sort(null)
-			.value(function(d) { return d.value.total; });
-
-		// Adds the svg canvas
-		var svg = d3.select("#birthsByRaceChart")
-			.append("svg")
-			.attr("width", width + margin.left + margin.right)
-			.attr("height", height + margin.top + margin.bottom)
-			.append("g")
-			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-			// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-		// Define the div for the tooltip
-		var tooltip = d3.select("#birthsByRaceChart").append("div")
-			.attr("class", "tooltip")
-			.style("opacity", 0);
-
-		var color = d3.scaleOrdinal(d3.schemeCategory10);
-
-		var natality = {!! json_encode($natality->toArray()) !!};
-
-		// console.log("---------- natality ----------");
-		// console.log(natality);
-		// console.log("---------- natality ----------");
-
-		natality.forEach(function(d){
-			// console.log("---------- d ----------");
-			// console.log(d);
-			// console.log("---------- d ----------");
-			d.date = new Date(d.date)
-		})
-
-		birthData = natality;
-
-		birthData.sort(function(a, b) { return a.date - b.date; });
-
-		// console.log("---------- birthData ----------");
-		// console.log(birthData);
-		// console.log("---------- birthData ----------");
-
-
-		// if (selectedDate != null && selectedDate != undefined) {
-		// 	selectedDate = selectedDate;
-		// }
-		// else {
-		// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
-		// }
-
-		// console.log("---------- selectedDate-pre ----------");
-		// console.log(selectedDate);
-		// console.log("---------- selectedDate-pre ----------");
-
-		if (selectedDate == null && selectedDate == undefined) {
-			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
-			// selectedDate = new Date(selectedDate.toString());
-		}
-		else {
-			selectedDate = new Date(selectedDate.toString());
-		}
-
-		// console.log("---------- selectedDate-post ----------");
-		// console.log(selectedDate);
-		// console.log("---------- selectedDate-post ----------");
-		//
-		// console.log("---------- new Date ----------");
-		// console.log(new Date("2015"));
-		// console.log("---------- new Date ----------");
-
-		filteredBirthData = [];
-
-		// console.log("---------- selectedDate ----------");
-		// console.log(selectedDate);
-		// console.log("---------- selectedDate ----------");
-
-		birthData.forEach(function(d){
-			// console.log("---------- d ----------");
-			// console.log(d);
-			// console.log("---------- d ----------");
-			if (d.date.getFullYear() == selectedDate.getFullYear()) {
-				// console.log("---------- d ----------");
-				// console.log(d);
-				// console.log("---------- d ----------");
-				filteredBirthData.push(d);
-			}
-		})
-
-		// console.log("---------- filteredBirthData ----------");
-		// console.log(filteredBirthData);
-		// console.log("---------- filteredBirthData ----------");
-
-		var nestedBirthData = d3.nest()
-			.key(function(d) { return d.race; })
-			.rollup(function(v) { return {
-				total: d3.sum(v, function(d) { return d.births; }),
-				avg: d3.mean(v, function(d) { return d.births; })
-			}; })
-			.entries(filteredBirthData);
-
-		// console.log("---------- nestedBirthData ----------");
-		// console.log(nestedBirthData);
-		// console.log("---------- nestedBirthData ----------");
-
-		// birthData = birthData.filter(function(d){return d.date == selectedDate;})
-
-		var g = svg.selectAll(".arc")
-			.data(pie(nestedBirthData))
-			.enter().append("g")
-			.attr("class", "arc")
-			.on("mouseover", function(d) {
-
-				tooltip.transition()
-					.duration(200)
-					.style("opacity", 1);
-
-				tooltip.html(
-					"<p><strong>Year:</strong> " + selectedDate.getFullYear() + "</p>" +
-					"<p><strong>Race:</strong> " + d.data.key + "</p>" +
-					"<p><strong>Total Births:</strong> " + d.data.value.avg + "</p>"
-				)
-					.style("left", d3.select(this).attr("cx") + "px")
-					.style("top", d3.select(this).attr("cy") + "px");
-			})
-			.on("mouseout", function(d) {
-				tooltip.transition()
-					.duration(500)
-					.style("opacity", 0);
-			});
-
-		g.append("path")
-			.attr("d", arc)
-			.style("fill", function(d) { return color(d.data.key); });
-
-		g.append("text")
-			.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
-			.attr("dy", ".35em")
-			.text(function(d) { return d.data.value.total; });
-
-		createBirthsByRaceFilter(birthData);
-		createBirthsByRaceApplyButton(birthData);
-		createBirthsByRaceResetButton(birthData);
-
-
-	}
-
-	function createBirthsByRaceFilter(birthData){
-		var dateSelector = "";
-
-		// console.log("---------- createWaterConsumptionFilter ----------");
-		// console.log("---------- dateMax ----------");
-		// console.log(dateMax);
-		// console.log("---------- dateMax ----------");
-		// console.log("---------- dateMin ----------");
-		// console.log(dateMin);
-		// console.log("---------- dateMin ----------");
-
-		// dateSelector += "<p>Select Year for Birth By Race Chart:&nbsp;</p>";
-		// dateSelector += "<p><input type='text' id='datepicker-birthsByRaceChart'></p>";
-		// dateSelector += "<div id='datepicker-birthsByRaceChart' style='width:92%; left: 0;'></div></br>";
-
-		var years = [];
-
-		birthData.forEach(function(d){
-			if (years.includes(d.date.getFullYear()) != true) {
-				years.push(d.date.getFullYear());
-			}
-		})
-
-		// console.log("---------- years ----------");
-		// console.log(years);
-		// console.log("---------- years ----------");
-
-
-		dateSelector += "<p>Select Year for Birth By Race Chart:</p><p><select id='selectYear-birthsByRaceChart' size='1' style='width: 202px;'>";
-		years.forEach(function (d){
-			dateSelector += "<option value=" + d + ">" + d + "</option>";
-		})
-		dateSelector += "</select></p>";
-
-		document.getElementById('birthsByRaceChartFilters').innerHTML = dateSelector;
-
-
-
-		// $(function (){
-		// 	$("#datepicker-birthsByRaceChart").datepicker({
-		// 		dateFormat: 'yy',
-		// 		changeYear: true,
-		// 		changeMonth: false
-		// 	});
-		// })
-
-
-	}
-
-	function createBirthsByRaceApplyButton(birthData){
-		document.getElementById("birthsByRaceChartApplyButton").innerHTML = "";
-
-		var birthsByRaceChartApplyButton = document.createElement("birthsByRaceChartApplyButton");
-
-		birthsByRaceChartApplyButton.innerHTML = "<button>Apply Filter</button>";
-
-		document.getElementById("birthsByRaceChartApplyButton").appendChild(birthsByRaceChartApplyButton);
-
-		birthsByRaceChartApplyButton.addEventListener ("click", function() {
-			// console.log("---------- Submit Button Clicked ----------");
-			// console.log($("#dateSlider-birthsByRaceChart").val());
-			// console.log($("#selectBorough-birthsByRaceChart").val());
-
-			var selectedYear = $("#selectYear-birthsByRaceChart").val();
-
-			// console.log("---------- min ----------");
-			// console.log(min);
-			// console.log("---------- min ----------");
-			// console.log("---------- max ----------");
-			// console.log(max);
-			// console.log("---------- max ----------");
-			// console.log("---------- selectedYear ----------");
-			// console.log(selectedYear);
-			// console.log("---------- selectedYear ----------");
-
-
-			document.getElementById("birthsByRaceChart").innerHTML = "";
-
-			createBirthsByRaceChart(birthData, selectedYear);
-		});
-	}
-
-	function createBirthsByRaceResetButton(birthdata){
-		document.getElementById("birthsByRaceChartResetButton").innerHTML = "";
-
-		var birthsByRaceChartResetButton = document.createElement("birthsByRaceChartResetButton");
-
-		birthsByRaceChartResetButton.innerHTML = "<button>Reset Filter</button>";
-
-		document.getElementById("birthsByRaceChartResetButton").appendChild(birthsByRaceChartResetButton);
-
-		birthsByRaceChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/Natality.csv", function (data){
-				birthData = [];
-				data.forEach(function(d){
-					// console.log("---------- d ----------");
-					// console.log(d);
-					// console.log("---------- d ----------");
-
-					birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
-				})
-
-				birthData.sort(function(a, b) { return a.date - b.date; });
-
-				// console.log("---------- birthData ----------");
-				// console.log(birthData);
-				// console.log("---------- birthData ----------");
-
-				selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
-
-				document.getElementById("birthsByRaceChart").innerHTML = "";
-
-				createBirthsByRaceChart(birthData,selectedDate);
-
-
-			});
-
-		});
-	}
 
 	function createPopulationByBoroughChart(populationData, dateMin, dateMax){
 		// Set the dimensions of the canvas / graph
@@ -812,7 +248,7 @@
 
 		// Set the ranges
 		// var x = d3.scaleTime().range([0, width]);
-		var x = d3.scaleBand().rangeRound([width, 0]),
+		var x = d3.scaleBand().rangeRound([0, width]),
 			y = d3.scaleLinear().rangeRound([height, 0]),
 			z = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -1017,33 +453,61 @@
 
 		document.getElementById("populationByBoroughChartResetButton").appendChild(populationByBoroughChartResetButton);
 
+		var populationData = [];
+		var boroughs = [];
+
+		var populationByBorough = {!! json_encode($populationByBorough->toArray()) !!};
+
+		populationByBorough.forEach(function (d){
+			if (boroughs.indexOf(d.Borough) == -1) {
+				boroughs.push(d.Borough);
+			}
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+
+			populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
+			populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
+			populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
+			populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
+			populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
+			populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
+			populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
+			populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
+			// populationData.push()
+			// Borough,CDNumber,CDName,1970Population,1980Population,1990Population,2000Population,2010Population
+
+
+		})
+
+		populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+
 		populationByBoroughChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/New_York_City_Population_by_Borough__1950_-_2040.csv", function (data){
-				populationData = [];
+			populationData = [];
+			console.log("---------- populationData ----------");
+			console.log(populationData);
+			console.log("---------- populationData ----------");
 
-				data.forEach(function (d){
-					populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
-					populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
-					populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
-					populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
-					populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
-					populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
-					populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
-					populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
-				})
+			populationByBorough.forEach(function (d){
+				populationData.push({boroughName: d.Borough, date: new Date("1970"), population: d.population1970});
+				populationData.push({boroughName: d.Borough, date: new Date("1980"), population: d.population1980});
+				populationData.push({boroughName: d.Borough, date: new Date("1990"), population: d.population1990});
+				populationData.push({boroughName: d.Borough, date: new Date("2000"), population: d.population2000});
+				populationData.push({boroughName: d.Borough, date: new Date("2010"), population: d.population2010});
+				populationData.push({boroughName: d.Borough, date: new Date("2020"), population: d.population2020});
+				populationData.push({boroughName: d.Borough, date: new Date("2030"), population: d.population2030});
+				populationData.push({boroughName: d.Borough, date: new Date("2040"), population: d.population2040});
+			})
 
-				populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+			populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
 
-				console.log("---------- populationData ----------");
-				console.log(populationData);
-				console.log("---------- populationData ----------");
+			document.getElementById("populationByBoroughChart").innerHTML = "";
 
-				document.getElementById("populationByBoroughChart").innerHTML = "";
-
-				createPopulationByBoroughChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
-
-
-			});
+			createPopulationByBoroughChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1]);
 
 		});
 
@@ -1125,7 +589,7 @@
 		// console.log("---------- populationData ----------");
 
 		// Set the ranges
-		var x = d3.scaleBand().rangeRound([width, 0]),
+		var x = d3.scaleBand().rangeRound([0, width]),
 			y = d3.scaleLinear().rangeRound([height, 0]),
 			z = d3.scaleOrdinal(d3.schemeCategory20);
 
@@ -1360,30 +824,57 @@
 
 		document.getElementById("populationByCommunityChartResetButton").appendChild(populationByCommunityChartResetButton);
 
-		populationByCommunityChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/New_York_City_Population_By_Community_Districts.csv", function (data){
-				populationData = [];
+		var populationData = [];
+		var boroughs = [];
+		var communityDistricts = [];
 
-				data.forEach(function (d){
+		populationByCommunityChartResetButton.addEventListener ("click", function() {
+			populationData = [];
+			selectedBorough = "Manhattan";
+
+			var populationByCommunityDistricts = {!! json_encode($populationByCommunityDistricts->toArray()) !!};
+
+			// console.log("---------- populationByCommunityDistricts ----------");
+			// console.log(populationByCommunityDistricts);
+			// console.log("---------- populationByCommunityDistricts ----------");
+			// var selectedBorough = "Bronx";
+
+			populationByCommunityDistricts.forEach(function (d){
+				if (boroughs.indexOf(d.Borough) == -1) {
+					boroughs.push(d.Borough);
+				}
+
+				if (communityDistricts.indexOf(d.CDName) == -1) {
+					communityDistricts.push(d.CDName);
+				}
+
+				// if (communityDistricts.map(function(e) { return e.id; }).indexOf(d.CDNumber) == -1) {
+				// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
+				// }
+
+				// if ((communityDistricts.findIndex(x => x.id == d.CDNumber) == -1) && (d.Borough == selectedBorough)) {
+				// 	communityDistricts.push({id: d.CDNumber, name: d.CDName});
+				// }
+
+				if (d.Borough == selectedBorough) {
 					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1970"), population: d.Population1970});
 					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1980"), population: d.Population1980});
 					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("1990"), population: d.Population1990});
 					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2000"), population: d.Population2000});
 					populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2010"), population: d.Population2010});
-				})
+					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2020"), population: d.population2020});
+					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2030"), population: d.population2030});
+					// populationData.push({boroughName: d.Borough, CDId: d.CDNumber, CDName: d.CDName, date: new Date("2040"), population: d.population2040});
+				}
+			})
 
-				populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
+			populationData.sort(function(a, b) { return b.date - a.date || b.population - a.population ; });
 
-				// console.log("---------- populationData ----------");
-				// console.log(populationData);
-				// console.log("---------- populationData ----------");
+			document.getElementById("populationByCommunityChart").innerHTML = "";
 
-				document.getElementById("populationByCommunityChart").innerHTML = "";
-
-				createPopulationByCommunityChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1], "Manhattan");
+			createPopulationByCommunityChart(populationData, d3.extent(populationData, function(d) { return d.date; })[0], d3.extent(populationData, function(d) { return d.date; })[1], "Manhattan");
 
 
-			});
 
 		});
 
@@ -1819,29 +1310,588 @@
 
 		document.getElementById("waterConsumptionChartResetButton").appendChild(waterConsumptionChartResetButton);
 
+
+		var waterConsumptionData = [];
+
+
+
 		waterConsumptionChartResetButton.addEventListener ("click", function() {
-			d3.csv("data/NYC-bigData/Water_Consumption_In_The_New_York_City.csv", function (data){
-				waterConsumptionData = [];
-
-				data.forEach(function(d){
-					waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
-				})
-
-				waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
-				// console.log("---------- waterConsumptionData ----------");
-				// console.log(waterConsumptionData);
-				// console.log("---------- waterConsumptionData ----------");
-
-				document.getElementById("waterConsumptionChart").innerHTML = "";
-
-				createWaterConsumptionChart(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1], "Manhattan");
+			waterConsumptionData = [];
+			document.getElementById("waterConsumptionChart").innerHTML = "";
+			var waterConsumption = {!! json_encode($waterConsumption->toArray()) !!};
 
 
-			});
+			waterConsumption.forEach(function(d){
+				waterConsumptionData.push({date: new Date(d.Year), population: Number(d.NewYorkCityPopulation), consumption: Number(d.NYCConsumption), consumptionPerCapita: Number(d.PerCapita) });
+			})
+
+			waterConsumptionData.sort(function(a, b) { return a.date - b.date; });
+
+			createWaterConsumptionChart(waterConsumptionData, d3.extent(waterConsumptionData, function(d) { return d.date; })[0], d3.extent(waterConsumptionData, function(d) { return d.date; })[1], "Manhattan");
 
 		});
 
 
+		// console.log("---------- waterConsumption ----------");
+		// console.log(waterConsumption);
+		// console.log("---------- waterConsumption ----------");
+	}
+
+	function createBirthsByGenderChart(birthData, selectedDate){
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom
+			radius = Math.min(width, height) / 2;
+
+		var arc = d3.arc()
+			.outerRadius(radius - 10)
+			.innerRadius(0);
+
+		var labelArc = d3.arc()
+			.outerRadius(radius - 40)
+			.innerRadius(radius - 40);
+
+		var pie = d3.pie()
+			.sort(null)
+			.value(function(d) { return d.value.total; });
+
+		// Adds the svg canvas
+		var svg = d3.select("#birthsByGenderChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the div for the tooltip
+		var tooltip = d3.select("#birthsByGenderChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+		var natality = {!! json_encode($natality->toArray()) !!};
+
+		// console.log("---------- natality ----------");
+		// console.log(natality);
+		// console.log("---------- natality ----------");
+
+		natality.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			d.date = new Date(d.date)
+		})
+
+		birthData = natality;
+
+		birthData.sort(function(a, b) { return a.date - b.date; });
+
+		// console.log("---------- birthData ----------");
+		// console.log(birthData);
+		// console.log("---------- birthData ----------");
+
+
+		// if (selectedDate != null && selectedDate != undefined) {
+		// 	selectedDate = selectedDate;
+		// }
+		// else {
+		// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+		// }
+
+		// console.log("---------- selectedDate-pre ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-pre ----------");
+
+		if (selectedDate == null && selectedDate == undefined) {
+			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+			// selectedDate = new Date(selectedDate.toString());
+		}
+		else {
+			selectedDate = new Date(selectedDate.toString());
+		}
+
+		// console.log("---------- selectedDate-post ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-post ----------");
+		//
+		// console.log("---------- new Date ----------");
+		// console.log(new Date("2015"));
+		// console.log("---------- new Date ----------");
+
+		filteredBirthData = [];
+
+		// console.log("---------- selectedDate ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate ----------");
+
+		birthData.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			if (d.date.getFullYear() == selectedDate.getFullYear()) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				filteredBirthData.push(d);
+			}
+		})
+
+		// console.log("---------- filteredBirthData ----------");
+		// console.log(filteredBirthData);
+		// console.log("---------- filteredBirthData ----------");
+
+		var nestedBirthData = d3.nest()
+			.key(function(d) { return d.sex; })
+			.rollup(function(v) { return {
+				total: d3.sum(v, function(d) { return d.births; }),
+				avg: d3.mean(v, function(d) { return d.births; })
+			}; })
+			.entries(filteredBirthData);
+
+		// console.log("---------- nestedBirthData ----------");
+		// console.log(nestedBirthData);
+		// console.log("---------- nestedBirthData ----------");
+
+		// birthData = birthData.filter(function(d){return d.date == selectedDate;})
+
+		var g = svg.selectAll(".arc")
+			.data(pie(nestedBirthData))
+			.enter().append("g")
+			.attr("class", "arc")
+			.on("mouseover", function(d) {
+
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
+
+				tooltip.html(
+					"<p><strong>Year:</strong> " + selectedDate.getFullYear() + "</p>" +
+					"<p><strong>Gender:</strong> " + d.data.key + "</p>" +
+					"<p><strong>Total Births:</strong> " + d.data.value.avg + "</p>"
+				)
+					.style("left", d3.select(this).attr("cx") + "px")
+  					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		g.append("path")
+			.attr("d", arc)
+			.style("fill", function(d) { return color(d.data.key); });
+
+		g.append("text")
+			.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+			.attr("dy", ".35em")
+			.text(function(d) { return d.data.value.total; });
+
+		createBirthsByGenderFilter(birthData);
+		createBirthsByGenderApplyButton(birthData);
+		createBirthsByGenderResetButton(birthData);
+
+		//here
+	}
+
+	function createBirthsByGenderFilter(birthData){
+		var dateSelector = "";
+
+		// console.log("---------- createWaterConsumptionFilter ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+
+		// dateSelector += "<p>Select Year for Birth By Gender Chart:&nbsp;</p>";
+		// dateSelector += "<p><input type='text' id='datepicker-birthsByGenderChart'></p>";
+		// dateSelector += "<div id='datepicker-birthsByGenderChart' style='width:92%; left: 0;'></div></br>";
+
+		var years = [];
+
+		birthData.forEach(function(d){
+			if (years.includes(d.date.getFullYear()) != true) {
+				years.push(d.date.getFullYear());
+			}
+		})
+
+		// console.log("---------- years ----------");
+		// console.log(years);
+		// console.log("---------- years ----------");
+
+
+		dateSelector += "<p>Select Year for Birth By Gender Chart:</p><p><select id='selectYear-birthsByGenderChart' size='1' style='width: 202px;'>";
+		years.forEach(function (d){
+			dateSelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		dateSelector += "</select></p>";
+
+		document.getElementById('birthsByGenderChartFilters').innerHTML = dateSelector;
+
+
+
+		// $(function (){
+		// 	$("#datepicker-birthsByGenderChart").datepicker({
+		// 		dateFormat: 'yy',
+		// 		changeYear: true,
+		// 		changeMonth: false
+		// 	});
+		// })
+
+
+	}
+
+	function createBirthsByGenderApplyButton(birthData){
+		document.getElementById("birthsByGenderChartApplyButton").innerHTML = "";
+
+		var birthsByGenderChartApplyButton = document.createElement("birthsByGenderChartApplyButton");
+
+		birthsByGenderChartApplyButton.innerHTML = "<button>Apply Filter</button>";
+
+		document.getElementById("birthsByGenderChartApplyButton").appendChild(birthsByGenderChartApplyButton);
+
+		birthsByGenderChartApplyButton.addEventListener ("click", function() {
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-birthsByGenderChart").val());
+			// console.log($("#selectBorough-birthsByGenderChart").val());
+
+			var selectedYear = $("#selectYear-birthsByGenderChart").val();
+
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
+			console.log("---------- selectedYear ----------");
+			console.log(selectedYear);
+			console.log("---------- selectedYear ----------");
+
+
+			document.getElementById("birthsByGenderChart").innerHTML = "";
+
+			createBirthsByGenderChart(birthData, selectedYear);
+		});
+	}
+
+	function createBirthsByGenderResetButton(birthdata){
+		document.getElementById("birthsByGenderChartResetButton").innerHTML = "";
+
+		var birthsByGenderChartResetButton = document.createElement("birthsByGenderChartResetButton");
+
+		birthsByGenderChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("birthsByGenderChartResetButton").appendChild(birthsByGenderChartResetButton);
+
+		birthsByGenderChartResetButton.addEventListener ("click", function() {
+			var natality = {!! json_encode($natality->toArray()) !!};
+			birthData = [];
+
+			natality.forEach(function(d){
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+
+				birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
+			})
+
+			birthData.sort(function(a, b) { return a.date - b.date; });
+
+			// console.log("---------- birthData ----------");
+			// console.log(birthData);
+			// console.log("---------- birthData ----------");
+
+			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+
+			document.getElementById("birthsByGenderChart").innerHTML = "";
+
+			createBirthsByGenderChart(birthData,selectedDate);
+
+
+		});
+	}
+
+	function createBirthsByRaceChart(birthData, selectedDate){
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom
+			radius = Math.min(width, height) / 2;
+
+		var arc = d3.arc()
+			.outerRadius(radius - 10)
+			.innerRadius(0);
+
+		var labelArc = d3.arc()
+			.outerRadius(radius - 40)
+			.innerRadius(radius - 40);
+
+		var pie = d3.pie()
+			.sort(null)
+			.value(function(d) { return d.value.total; });
+
+		// Adds the svg canvas
+		var svg = d3.select("#birthsByRaceChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the div for the tooltip
+		var tooltip = d3.select("#birthsByRaceChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+		var natality = {!! json_encode($natality->toArray()) !!};
+
+		// console.log("---------- natality ----------");
+		// console.log(natality);
+		// console.log("---------- natality ----------");
+
+		natality.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			d.date = new Date(d.date)
+		})
+
+		birthData = natality;
+
+		birthData.sort(function(a, b) { return a.date - b.date; });
+
+		// console.log("---------- birthData ----------");
+		// console.log(birthData);
+		// console.log("---------- birthData ----------");
+
+
+		// if (selectedDate != null && selectedDate != undefined) {
+		// 	selectedDate = selectedDate;
+		// }
+		// else {
+		// 	selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+		// }
+
+		// console.log("---------- selectedDate-pre ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-pre ----------");
+
+		if (selectedDate == null && selectedDate == undefined) {
+			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+			// selectedDate = new Date(selectedDate.toString());
+		}
+		else {
+			selectedDate = new Date(selectedDate.toString());
+		}
+
+		// console.log("---------- selectedDate-post ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate-post ----------");
+		//
+		// console.log("---------- new Date ----------");
+		// console.log(new Date("2015"));
+		// console.log("---------- new Date ----------");
+
+		filteredBirthData = [];
+
+		// console.log("---------- selectedDate ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate ----------");
+
+		birthData.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			if (d.date.getFullYear() == selectedDate.getFullYear()) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				filteredBirthData.push(d);
+			}
+		})
+
+		// console.log("---------- filteredBirthData ----------");
+		// console.log(filteredBirthData);
+		// console.log("---------- filteredBirthData ----------");
+
+		var nestedBirthData = d3.nest()
+			.key(function(d) { return d.race; })
+			.rollup(function(v) { return {
+				total: d3.sum(v, function(d) { return d.births; }),
+				avg: d3.mean(v, function(d) { return d.births; })
+			}; })
+			.entries(filteredBirthData);
+
+		// console.log("---------- nestedBirthData ----------");
+		// console.log(nestedBirthData);
+		// console.log("---------- nestedBirthData ----------");
+
+		// birthData = birthData.filter(function(d){return d.date == selectedDate;})
+
+		var g = svg.selectAll(".arc")
+			.data(pie(nestedBirthData))
+			.enter().append("g")
+			.attr("class", "arc")
+			.on("mouseover", function(d) {
+
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
+
+				tooltip.html(
+					"<p><strong>Year:</strong> " + selectedDate.getFullYear() + "</p>" +
+					"<p><strong>Race:</strong> " + d.data.key + "</p>" +
+					"<p><strong>Total Births:</strong> " + d.data.value.avg + "</p>"
+				)
+					.style("left", d3.select(this).attr("cx") + "px")
+  					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		g.append("path")
+			.attr("d", arc)
+			.style("fill", function(d) { return color(d.data.key); });
+
+		g.append("text")
+			.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+			.attr("dy", ".35em")
+			.text(function(d) { return d.data.value.total; });
+
+		createBirthsByRaceFilter(birthData);
+		createBirthsByRaceApplyButton(birthData);
+		createBirthsByRaceResetButton(birthData);
+
+
+	}
+
+	function createBirthsByRaceFilter(birthData){
+		var dateSelector = "";
+
+		// console.log("---------- createWaterConsumptionFilter ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+
+		// dateSelector += "<p>Select Year for Birth By Race Chart:&nbsp;</p>";
+		// dateSelector += "<p><input type='text' id='datepicker-birthsByRaceChart'></p>";
+		// dateSelector += "<div id='datepicker-birthsByRaceChart' style='width:92%; left: 0;'></div></br>";
+
+		var years = [];
+
+		birthData.forEach(function(d){
+			if (years.includes(d.date.getFullYear()) != true) {
+				years.push(d.date.getFullYear());
+			}
+		})
+
+		// console.log("---------- years ----------");
+		// console.log(years);
+		// console.log("---------- years ----------");
+
+
+		dateSelector += "<p>Select Year for Birth By Race Chart:</p><p><select id='selectYear-birthsByRaceChart' size='1' style='width: 202px;'>";
+		years.forEach(function (d){
+			dateSelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		dateSelector += "</select></p>";
+
+		document.getElementById('birthsByRaceChartFilters').innerHTML = dateSelector;
+
+
+
+		// $(function (){
+		// 	$("#datepicker-birthsByRaceChart").datepicker({
+		// 		dateFormat: 'yy',
+		// 		changeYear: true,
+		// 		changeMonth: false
+		// 	});
+		// })
+
+
+	}
+
+	function createBirthsByRaceApplyButton(birthData){
+		document.getElementById("birthsByRaceChartApplyButton").innerHTML = "";
+
+		var birthsByRaceChartApplyButton = document.createElement("birthsByRaceChartApplyButton");
+
+		birthsByRaceChartApplyButton.innerHTML = "<button>Apply Filter</button>";
+
+		document.getElementById("birthsByRaceChartApplyButton").appendChild(birthsByRaceChartApplyButton);
+
+		birthsByRaceChartApplyButton.addEventListener ("click", function() {
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-birthsByRaceChart").val());
+			// console.log($("#selectBorough-birthsByRaceChart").val());
+
+			var selectedYear = $("#selectYear-birthsByRaceChart").val();
+
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
+			// console.log("---------- selectedYear ----------");
+			// console.log(selectedYear);
+			// console.log("---------- selectedYear ----------");
+
+
+			document.getElementById("birthsByRaceChart").innerHTML = "";
+
+			createBirthsByRaceChart(birthData, selectedYear);
+		});
+	}
+
+	function createBirthsByRaceResetButton(birthdata){
+		document.getElementById("birthsByRaceChartResetButton").innerHTML = "";
+
+		var birthsByRaceChartResetButton = document.createElement("birthsByRaceChartResetButton");
+
+		birthsByRaceChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("birthsByRaceChartResetButton").appendChild(birthsByRaceChartResetButton);
+
+		birthsByRaceChartResetButton.addEventListener ("click", function() {
+			var natality = {!! json_encode($natality->toArray()) !!};
+
+			birthData = [];
+			natality.forEach(function(d){
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+
+				birthData.push({date: new Date(d.date), sex: d.sex, births: Number(d.births)});
+			})
+
+			birthData.sort(function(a, b) { return a.date - b.date; });
+
+			// console.log("---------- birthData ----------");
+			// console.log(birthData);
+			// console.log("---------- birthData ----------");
+
+			selectedDate = d3.extent(birthData, function(d) { return d.date; })[0];
+
+			document.getElementById("birthsByRaceChart").innerHTML = "";
+
+			createBirthsByRaceChart(birthData,selectedDate);
+
+		});
 	}
 
 </script>
