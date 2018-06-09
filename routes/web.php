@@ -31,10 +31,6 @@ Route::get('/editor', function () {
     return view('editor');
 })->middleware('auth');;
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth');;
-
 Route::get('/upload', function() {
 	return view ('dbManager/Upload');
 })->middleware('auth');;

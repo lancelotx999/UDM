@@ -44,9 +44,14 @@
 
                 @if (Auth::check() and Auth::user()->hasRole('admin'))
                 <li>
-                    <a href="/dashboard">
-                        <i class="fa fa-pie-chart fa-fw" aria-hidden="true"></i>&nbsp;Dashboard
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-pie-chart fa-fw" aria-hidden="true"></i>
+                        &nbsp;Dashboards&nbsp;
+                        <span class="caret"></span>
                     </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/dashboard/population">Population</a></li>
+                    </ul>
                 </li>
 
                 <li>

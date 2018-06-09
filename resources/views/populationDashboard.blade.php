@@ -41,32 +41,36 @@
       		<div class="col-md-6 col-sm-6 col-xs-12">
         		<div class="x_panel">
           			<div class="x_title" >
-            			<h3>Population Statistics by Boroughs</h3>
             			<ul class="nav navbar-right panel_toolbox">
 	              			<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
             			</ul>
+            			<h4>Population Statistics by Boroughs</h4>
             			<div class="clearfix"></div>
           			</div>
-					<div id='populationByBoroughChart'></div>					
-					<span id='populationByBoroughChartFilters'></span>
-					<span id='populationByBoroughChartApplyButton'></span>
-					<span id='populationByBoroughChartResetButton'></span>
+          			<div class="x_content">
+						<div id='populationByBoroughChart'></div><br /><br /><br />
+						<span id='populationByBoroughChartFilters'></span>
+						<span id='populationByBoroughChartApplyButton'></span>
+						<span id='populationByBoroughChartResetButton'></span>
+					</div>
         		</div>
       		</div>
 
       		<div class="col-md-6 col-sm-6 col-xs-12">
         		<div class="x_panel">
           			<div class="x_title">
-            			<h3>Population Statistics by Community District In A Borough</h3>
             			<ul class="nav navbar-right panel_toolbox">
               				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
             			</ul>
+            			<h4>Population Statistics by Community District In A Borough</h4>
             			<div class="clearfix"></div>
           			</div>
-					<div id='populationByCommunityChart'></div>
-					<span id='populationByCommunityChartFilters'></span>
-					<span id='populationByCommunityChartApplyButton'></span>
-					<span id='populationByCommunityChartResetButton'></span>
+          			<div class="x_content">
+						<div id='populationByCommunityChart'></div>
+						<span id='populationByCommunityChartFilters'></span>
+						<span id='populationByCommunityChartApplyButton'></span>
+						<span id='populationByCommunityChartResetButton'></span>
+					</div>
         		</div>
       		</div>
       	</div>
@@ -75,29 +79,17 @@
       		<div class="col-md-6 col-sm-6 col-xs-12">
         		<div class="x_panel">
           			<div class="x_title">
-            			<h3>Births By Race Of New York City</h3>
             			<ul class="nav navbar-right panel_toolbox">
               				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-              				<!-- <li class="dropdown">
-                				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                				<ul class="dropdown-menu" role="menu">
-                  					<li><a href="#">Settings 1</a></li>
-                  					<li><a href="#">Settings 2</a></li>
-                				</ul>
-              				</li> -->
             			</ul>
+            			<h4>Births By Race Of New York City</h4>
             			<div class="clearfix"></div>
           			</div>
           			<div class="x_content">
-						<hr />
-
 						<div id='birthsByRaceChart'></div>
-
-						<div class="row">
-							<span id='birthsByRaceChartFilters'></span>
-							<span id='birthsByRaceChartApplyButton'></span>
-							<span id='birthsByRaceChartResetButton'></span>
-						</div>
+						<span id='birthsByRaceChartFilters'></span>
+						<span id='birthsByRaceChartApplyButton'></span>
+						<span id='birthsByRaceChartResetButton'></span>
           			</div>
         		</div>
       		</div>
@@ -105,67 +97,41 @@
 	      	<div class="col-md-6 col-sm-6 col-xs-12">
         		<div class="x_panel">
           			<div class="x_title">
-            			<h3>Births By Gender Of New York City</h3>
             			<ul class="nav navbar-right panel_toolbox">
               				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-              				<!-- <li class="dropdown">
-                				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                				<ul class="dropdown-menu" role="menu">
-                  					<li><a href="#">Settings 1</a></li>
-                  					<li><a href="#">Settings 2</a></li>
-                				</ul>
-              				</li> -->
             			</ul>
+            			<h4>Births By Gender Of New York City</h4>
             			<div class="clearfix"></div>
           			</div>
           			<div class="x_content">
-						<hr />
-
 						<div id='birthsByGenderChart'></div>
-
-						<div class="row">
-							<span id='birthsByGenderChartFilters'></span>
-							<span id='birthsByGenderChartApplyButton'></span>
-							<span id='birthsByGenderChartResetButton'></span>
-						</div>
+						<span id='birthsByGenderChartFilters'></span>
+						<span id='birthsByGenderChartApplyButton'></span>
+						<span id='birthsByGenderChartResetButton'></span>
           			</div>
         		</div>
       		</div>
-
-
 		</div>
 
 		<div class="row">
-      		<div class="col-md-12 col-sm-12 col-xs-12">
+      		<div class="col-md-6 col-sm-6 col-xs-12">
         		<div class="x_panel">
           			<div class="x_title">
-            			<h3>Water Consumption Statistics Of New York City Based On Population</h3>
             			<ul class="nav navbar-right panel_toolbox">
               				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-              				<!-- <li class="dropdown">
-                				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                				<ul class="dropdown-menu" role="menu">
-                  					<li><a href="#">Settings 1</a></li>
-                  					<li><a href="#">Settings 2</a></li>
-                				</ul>
-              				</li> -->
             			</ul>
+            			<h4>Water Consumption Statistics Of New York City Based On Population</h4>
             			<div class="clearfix"></div>
           			</div>
           			<div class="x_content">
 						<div id='waterConsumptionChart'></div>
-
-						<div class="row">
-							<span id='waterConsumptionChartFilters'></span>
-							<span id='waterConsumptionChartApplyButton'></span>
-							<span id='waterConsumptionChartResetButton'></span>
-						</div>
+						<span id='waterConsumptionChartFilters'></span>
+						<span id='waterConsumptionChartApplyButton'></span>
+						<span id='waterConsumptionChartResetButton'></span>
           			</div>
         		</div>
       		</div>
-
   		</div>
-
 
     	<br />
 
