@@ -11,6 +11,9 @@ use App\WaterConsumption;
 use App\JuvenileInvestigation;
 use App\JuvenileIntakes;
 use App\ActualRevenues;
+use App\AirQuality;
+use App\HospitalSatisfaction;
+use App\HIVDiagnose;
 
 class ChartController extends Controller
 {
@@ -31,6 +34,9 @@ class ChartController extends Controller
          $juvenileInvestigation = JuvenileInvestigation::all();
          $juvenileIntakes = JuvenileIntakes::all();
          $actualRevenues = ActualRevenues::all();
+         $airQuality = AirQuality::all();
+         $hospitalSatisfaction = HospitalSatisfaction::all();
+         $hivDiagnose = HIVDiagnose::all();
          $data = [];
 
          // $data['securityLogs'] = $securityLogs;
@@ -43,6 +49,9 @@ class ChartController extends Controller
          $data['juvenileInvestigation'] = $juvenileInvestigation;
          $data['juvenileIntakes'] = $juvenileIntakes;
          $data['actualRevenues'] = $actualRevenues;
+         $data['airQuality'] = $airQuality;
+         $data['hospitalSatisfaction'] = $hospitalSatisfaction;
+         $data['hivDiagnose'] = $HIVDiagnose;
 
          return view('/chart',$data);
      }

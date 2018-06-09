@@ -170,6 +170,61 @@
 		</div>
 	</div>
 
+	<div class="row">
+		<div class="col-sm-4 col-xs-12">
+
+			<hr />
+
+			<strong>Air Quality</strong>
+
+			<hr />
+
+			<div id='airQualityChart'></div>
+
+			<div class="row">
+				<span id='airQualityChartFilters'></span>
+				<span id='airQualityChartApplyButton'></span>
+				<span id='airQualityChartResetButton'></span>
+			</div>
+		</div>
+
+		<div class=" col-sm-4 col-xs-12">
+
+			<hr />
+
+			<strong>Hospital Satisfaction</strong>
+
+			<hr />
+
+			<div id='hospitalSatisfactionChart'></div>
+
+			<div class="row">
+				<span id='hospitalSatisfactionChartFilters'></span>
+				<span id='hospitalSatisfactionChartApplyButton'></span>
+				<span id='hospitalSatisfactionChartResetButton'></span>
+			</div>
+		</div>
+
+		<div class="col-sm-4 col-xs-12">
+
+			<hr />
+
+			<strong>HIV AIDS Diagnoses By Neighbourhood Age Group And Race</strong>
+
+			<hr />
+
+			<div id='hivDiagnoseChart'></div>
+
+			<div class="row">
+				<span id='hivDiagnoseChartFilters'></span>
+				<span id='hivDiagnoseChartApplyButton'></span>
+				<span id='hivDiagnoseChartResetButton'></span>
+			</div>
+		</div>
+
+	</div>
+
+
 	<br /><br /><br />
 
 </div>
@@ -184,6 +239,9 @@
 	createJuvenileInvestigationChart();
 	createJuvenileIntakesChart();
 	createActualRevenuesChart(null, "Taxes", null, null);
+	createAirQualityChart();
+	createHospitalSatisfactionChart();
+	createHIVDiagnose();
 
 	function createPopulationByBoroughChart(populationData, dateMin, dateMax){
 		// Set the dimensions of the canvas / graph
