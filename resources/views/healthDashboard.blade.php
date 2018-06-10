@@ -32,48 +32,58 @@
 <div class="dashboard" role="main">
     <div class="page-title">
       	<div class="title_left">
-        	<h1>Juvenile Statistics Of New York</h1><hr />
+        	<h1>Health Statistics of New York</h1><hr />
       	</div>
 
     	<div class="clearfix"></div>
 
-		<div class="row">
-      		<div class="col-md-6 col-sm-6 col-xs-12">
+    	<div class="row">
+      		<div class="col-md-12 col-sm-12 col-xs-12">
         		<div class="x_panel">
           			<div class="x_title" >
+            			<h3>Juvenile Statistics of New York</h3>
             			<ul class="nav navbar-right panel_toolbox">
 	              			<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+	              			<!-- <li class="dropdown">
+	                			<a href="#" classh="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+	                			<ul class="dropdown-menu" role="menu">
+	                  				<li><a href="#">Settings 1</a></li>
+	                  				<li><a href="#">Settings 2</a></li>
+	                			</ul>
+	              			</li> -->
             			</ul>
-            			<h4>Juvenile Investigations By Year</h4>
             			<div class="clearfix"></div>
           			</div>
           			<div class="x_content">
-						<div id='juvenileInvestigationChart'></div><br /><br /><br />
-						<span id='juvenileInvestigationChartFilters'></span>
-						<span id='juvenileInvestigationChartApplyButton'></span>
-						<span id='juvenileInvestigationChartResetButton'></span>
-					</div>
-        		</div>
-      		</div>
+						<strong>Population Statistics by Boroughs</strong>
 
-      		<div class="col-md-6 col-sm-6 col-xs-12">
-        		<div class="x_panel">
-          			<div class="x_title">
-            			<ul class="nav navbar-right panel_toolbox">
-              				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-            			</ul>
-            			<h4>Juvenile Intakes By Year</h4>
-            			<div class="clearfix"></div>
-          			</div>
-          			<div class="x_content">
+						<hr />
+
+						<div id='juvenileInvestigationChart'></div>
+
+						<div class="row">
+							<span id='juvenileInvestigationChartFilters'></span>
+							<span id='juvenileInvestigationChartApplyButton'></span>
+							<span id='juvenileInvestigationChartResetButton'></span>
+						</div>
+						<strong>Population Statistics by Community District In A Borough</strong>
+
+						<hr />
+
 						<div id='juvenileIntakesChart'></div>
-						<span id='juvenileIntakesChartFilters'></span>
-						<span id='juvenileIntakesChartApplyButton'></span>
-						<span id='juvenileIntakesChartResetButton'></span>
-					</div>
+
+						<div class="row">
+							<span id='juvenileIntakesChartFilters'></span>
+							<span id='juvenileIntakesChartApplyButton'></span>
+							<span id='juvenileIntakesChartResetButton'></span>
+						</div>
+            			<!-- <div id="mainb" style="height:350px;"></div> -->
+          			</div>
         		</div>
       		</div>
       	</div>
+
+
 
     	<br />
 

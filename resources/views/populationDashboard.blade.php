@@ -32,7 +32,7 @@
 <div class="dashboard" role="main">
     <div class="page-title">
       	<div class="title_left">
-        	<h1>Dashboards</h1><hr />
+        	<h1>Population Statistics Of New York City</h1><hr />
       	</div>
 
     	<div class="clearfix"></div>
@@ -94,7 +94,7 @@
         		</div>
       		</div>
 
-	      	<div class="col-md-6 col-sm-6 col-xs-12">
+			<div class="col-md-6 col-sm-6 col-xs-12">
         		<div class="x_panel">
           			<div class="x_title">
             			<ul class="nav navbar-right panel_toolbox">
@@ -108,6 +108,60 @@
 						<span id='birthsByGenderChartFilters'></span>
 						<span id='birthsByGenderChartApplyButton'></span>
 						<span id='birthsByGenderChartResetButton'></span>
+          			</div>
+        		</div>
+      		</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4 col-sm-4 col-xs-12">
+        		<div class="x_panel">
+          			<div class="x_title">
+            			<ul class="nav navbar-right panel_toolbox">
+              				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+            			</ul>
+            			<h4>Total Infant Mortality By Race Of New York City</h4>
+            			<div class="clearfix"></div>
+          			</div>
+          			<div class="x_content">
+						<div id='infantMortalityByRaceChart'></div>
+						<span id='infantMortalityByRaceChartFilters'></span>
+						<span id='infantMortalityByRaceChartApplyButton'></span>
+						<span id='infantMortalityByRaceChartResetButton'></span>
+          			</div>
+        		</div>
+      		</div>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+        		<div class="x_panel">
+          			<div class="x_title">
+            			<ul class="nav navbar-right panel_toolbox">
+              				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+            			</ul>
+            			<h4>Neonatal Infant Mortality By Race Of New York City</h4>
+            			<div class="clearfix"></div>
+          			</div>
+          			<div class="x_content">
+						<div id='infantNeonatalMortalityByRaceChart'></div>
+						<span id='infantNeonatalMortalityByRaceChartFilters'></span>
+						<span id='infantNeonatalMortalityByRaceChartApplyButton'></span>
+						<span id='infantNeonatalMortalityByRaceChartResetButton'></span>
+          			</div>
+        		</div>
+      		</div>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+        		<div class="x_panel">
+          			<div class="x_title">
+            			<ul class="nav navbar-right panel_toolbox">
+              				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+            			</ul>
+            			<h4>Post-Neonatal Infant Mortality By Race Of New York City</h4>
+            			<div class="clearfix"></div>
+          			</div>
+          			<div class="x_content">
+						<div id='infantPostNeonatalMortalityByRaceChart'></div>
+						<span id='infantPostNeonatalMortalityByRaceChartFilters'></span>
+						<span id='infantPostNeonatalMortalityByRaceChartApplyButton'></span>
+						<span id='infantPostNeonatalMortalityByRaceChartResetButton'></span>
           			</div>
         		</div>
       		</div>
@@ -133,6 +187,8 @@
       		</div>
   		</div>
 
+
+
     	<br />
 
   	</div>
@@ -145,6 +201,9 @@
 	createBirthsByGenderChart();
 	createBirthsByRaceChart();
 	createWaterConsumptionChart();
+	createInfantMortalityByRaceChart();
+	createInfantNeonatalMortalityByRaceChart();
+	createInfantPostNeonatalMortalityByRaceChart();
 
 
 
@@ -1859,6 +1918,841 @@
 
 		});
 	}
+
+	function createInfantMortalityByRaceChart(mortalityData, selectedDate){
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom
+			radius = Math.min(width, height) / 2;
+
+		var arc = d3.arc()
+			.outerRadius(radius - 10)
+			.innerRadius(0);
+
+		var labelArc = d3.arc()
+			.outerRadius(radius - 40)
+			.innerRadius(radius - 40);
+
+		var pie = d3.pie()
+			.sort(null)
+			.value(function(d) { return d.value.total; });
+
+		// Adds the svg canvas
+		var svg = d3.select("#infantMortalityByRaceChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the div for the tooltip
+		var tooltip = d3.select("#infantMortalityByRaceChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+		var infantMortality = {!! json_encode($infantMortality->toArray()) !!};
+
+		console.log("---------- infantMortality ----------");
+		console.log(infantMortality);
+		console.log("---------- infantMortality ----------");
+
+		infantMortality.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			d.Year = new Date(d.Year);
+			d.Maternal_Race_or_Ethnicity = d.Maternal_Race_or_Ethnicity;
+			d.Infant_Deaths = d.Infant_Deaths;
+			d.Infant_Mortality_Rate = d.Infant_Mortality_Rate;
+			d.Neonatal_Infant_Deaths = d.Neonatal_Infant_Deaths;
+			d.Neonatal_Mortality_Rate = d.Neonatal_Mortality_Rate;
+			d.Postneonatal_Infant_Deaths = d.Postneonatal_Infant_Deaths;
+			d.Postneonatal_Mortality_Rate = d.Postneonatal_Mortality_Rate;
+			d.Number_of_Live_Births = d.Number_of_Live_Births;
+		})
+
+		mortalityData = infantMortality;
+
+		console.log("---------- mortalityData ----------");
+		console.log(mortalityData);
+		console.log("---------- mortalityData ----------");
+
+		mortalityData.sort(function(a, b) { return a.Year - b.Year; });
+
+		if (selectedDate == null && selectedDate == undefined) {
+			selectedDate = d3.extent(mortalityData, function(d) { return d.Year; })[0];
+			// selectedDate = new Date(selectedDate.toString());
+		}
+		else {
+			selectedDate = new Date(selectedDate.toString());
+		}
+
+		filteredMortalityData = [];
+
+		// console.log("---------- selectedDate ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate ----------");
+
+		mortalityData.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			if (d.Year.getFullYear() == selectedDate.getFullYear()) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				filteredMortalityData.push(d);
+			}
+		})
+
+		var nestedMortalityData = d3.nest()
+			.key(function(d) { return d.Maternal_Race_or_Ethnicity; })
+			.rollup(function(v) { return {
+				total: d3.sum(v, function(d) { return d.Infant_Deaths; }),
+				avg: d3.mean(v, function(d) { return d.Infant_Deaths; })
+			}; })
+			.entries(filteredMortalityData);
+
+		console.log("---------- nestedMortalityData ----------");
+		console.log(nestedMortalityData);
+		console.log("---------- nestedMortalityData ----------");
+
+		// birthData = birthData.filter(function(d){return d.date == selectedDate;})
+
+		var g = svg.selectAll(".arc")
+			.data(pie(nestedMortalityData))
+			.enter().append("g")
+			.attr("class", "arc")
+			.on("mouseover", function(d) {
+
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
+
+				tooltip.html(
+					"<p><strong>Year:</strong> " + selectedDate.getFullYear() + "</p>" +
+					"<p><strong>Race:</strong> " + d.data.key + "</p>" +
+					"<p><strong>Total Infant Deaths:</strong> " + d.data.value.total + "</p>"
+				)
+					.style("left", d3.select(this).attr("cx") + "px")
+  					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		g.append("path")
+			.attr("d", arc)
+			.style("fill", function(d) { return color(d.data.key); });
+
+		g.append("text")
+			.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+			.attr("dy", ".35em")
+			.text(function(d) { return d.data.value.total; });
+
+		createInfantMortalityByRaceFilter(mortalityData);
+		createInfantMortalityByRaceApplyButton(mortalityData);
+		createInfantMortalityByRaceResetButton(mortalityData);
+
+
+	}
+
+	function createInfantMortalityByRaceFilter(mortalityData){
+		var dateSelector = "";
+
+		// console.log("---------- createWaterConsumptionFilter ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+
+		// dateSelector += "<p>Select Year for Birth By Race Chart:&nbsp;</p>";
+		// dateSelector += "<p><input type='text' id='datepicker-birthsByRaceChart'></p>";
+		// dateSelector += "<div id='datepicker-birthsByRaceChart' style='width:92%; left: 0;'></div></br>";
+
+		var years = [];
+
+		mortalityData.forEach(function(d){
+			if (years.includes(d.Year.getFullYear()) != true) {
+				years.push(d.Year.getFullYear());
+			}
+		})
+
+		// console.log("---------- years ----------");
+		// console.log(years);
+		// console.log("---------- years ----------");
+
+
+		dateSelector += "<p>Select Year for Total Infant Mortality By Race Chart:</p><p><select id='selectYear-infantMortalityByRaceChart' size='1' style='width: 202px;'>";
+		years.forEach(function (d){
+			dateSelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		dateSelector += "</select></p>";
+
+		document.getElementById('infantMortalityByRaceChartFilters').innerHTML = dateSelector;
+
+
+
+		// $(function (){
+		// 	$("#datepicker-birthsByRaceChart").datepicker({
+		// 		dateFormat: 'yy',
+		// 		changeYear: true,
+		// 		changeMonth: false
+		// 	});
+		// })
+
+
+	}
+
+	function createInfantMortalityByRaceApplyButton(mortalityData){
+		document.getElementById("infantMortalityByRaceChartApplyButton").innerHTML = "";
+
+		var infantMortalityByRaceChartApplyButton = document.createElement("infantMortalityByRaceChartApplyButton");
+
+		infantMortalityByRaceChartApplyButton.innerHTML = "<button>Apply Filter</button>";
+
+		document.getElementById("infantMortalityByRaceChartApplyButton").appendChild(infantMortalityByRaceChartApplyButton);
+
+		infantMortalityByRaceChartApplyButton.addEventListener ("click", function() {
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-birthsByRaceChart").val());
+			// console.log($("#selectBorough-birthsByRaceChart").val());
+
+			var selectedYear = $("#selectYear-infantMortalityByRaceChart").val();
+
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
+			// console.log("---------- selectedYear ----------");
+			// console.log(selectedYear);
+			// console.log("---------- selectedYear ----------");
+
+
+			document.getElementById("infantMortalityByRaceChart").innerHTML = "";
+
+			createInfantMortalityByRaceChart(mortalityData, selectedYear);
+		});
+	}
+
+	function createInfantMortalityByRaceResetButton(mortalityData){
+		document.getElementById("infantMortalityByRaceChartResetButton").innerHTML = "";
+
+		var infantMortalityByRaceChartResetButton = document.createElement("infantMortalityByRaceChartResetButton");
+
+		infantMortalityByRaceChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("infantMortalityByRaceChartResetButton").appendChild(infantMortalityByRaceChartResetButton);
+
+		infantMortalityByRaceChartResetButton.addEventListener ("click", function() {
+			var infantMortality = {!! json_encode($infantMortality->toArray()) !!};
+
+			// console.log("---------- infantMortality ----------");
+			// console.log(infantMortality);
+			// console.log("---------- infantMortality ----------");
+
+			infantMortality.forEach(function(d){
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				d.Year = new Date(d.Year);
+				d.Maternal_Race_or_Ethnicity = d.Maternal_Race_or_Ethnicity;
+				d.Infant_Deaths = d.Infant_Deaths;
+				d.Infant_Mortality_Rate = d.Infant_Mortality_Rate;
+				d.Neonatal_Infant_Deaths = d.Neonatal_Infant_Deaths;
+				d.Neonatal_Mortality_Rate = d.Neonatal_Mortality_Rate;
+				d.Postneonatal_Infant_Deaths = d.Postneonatal_Infant_Deaths;
+				d.Postneonatal_Mortality_Rate = d.Postneonatal_Mortality_Rate;
+				d.Number_of_Live_Births = d.Number_of_Live_Births;
+			})
+
+			mortalityData = infantMortality;
+
+			console.log("---------- mortalityData ----------");
+			console.log(mortalityData);
+			console.log("---------- mortalityData ----------");
+
+			mortalityData.sort(function(a, b) { return a.Year - b.Year; });
+
+			// console.log("---------- birthData ----------");
+			// console.log(birthData);
+			// console.log("---------- birthData ----------");
+
+			selectedDate = d3.extent(mortalityData, function(d) { return d.Year; })[0];
+
+			document.getElementById("infantMortalityByRaceChart").innerHTML = "";
+
+			createInfantMortalityByRaceChart(mortalityData,selectedDate);
+
+		});
+	}
+
+	function createInfantNeonatalMortalityByRaceChart(mortalityData, selectedDate){
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom
+			radius = Math.min(width, height) / 2;
+
+		var arc = d3.arc()
+			.outerRadius(radius - 10)
+			.innerRadius(0);
+
+		var labelArc = d3.arc()
+			.outerRadius(radius - 40)
+			.innerRadius(radius - 40);
+
+		var pie = d3.pie()
+			.sort(null)
+			.value(function(d) { return d.value.total; });
+
+		// Adds the svg canvas
+		var svg = d3.select("#infantNeonatalMortalityByRaceChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the div for the tooltip
+		var tooltip = d3.select("#infantNeonatalMortalityByRaceChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+		var infantMortality = {!! json_encode($infantMortality->toArray()) !!};
+
+		console.log("---------- infantMortality ----------");
+		console.log(infantMortality);
+		console.log("---------- infantMortality ----------");
+
+		infantMortality.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			d.Year = new Date(d.Year);
+			d.Maternal_Race_or_Ethnicity = d.Maternal_Race_or_Ethnicity;
+			d.Infant_Deaths = d.Infant_Deaths;
+			d.Infant_Mortality_Rate = d.Infant_Mortality_Rate;
+			d.Neonatal_Infant_Deaths = d.Neonatal_Infant_Deaths;
+			d.Neonatal_Mortality_Rate = d.Neonatal_Mortality_Rate;
+			d.Postneonatal_Infant_Deaths = d.Postneonatal_Infant_Deaths;
+			d.Postneonatal_Mortality_Rate = d.Postneonatal_Mortality_Rate;
+			d.Number_of_Live_Births = d.Number_of_Live_Births;
+		})
+
+		mortalityData = infantMortality;
+
+		console.log("---------- mortalityData ----------");
+		console.log(mortalityData);
+		console.log("---------- mortalityData ----------");
+
+		mortalityData.sort(function(a, b) { return a.Year - b.Year; });
+
+		if (selectedDate == null && selectedDate == undefined) {
+			selectedDate = d3.extent(mortalityData, function(d) { return d.Year; })[0];
+			// selectedDate = new Date(selectedDate.toString());
+		}
+		else {
+			selectedDate = new Date(selectedDate.toString());
+		}
+
+		filteredMortalityData = [];
+
+		// console.log("---------- selectedDate ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate ----------");
+
+		mortalityData.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			if (d.Year.getFullYear() == selectedDate.getFullYear()) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				filteredMortalityData.push(d);
+			}
+		})
+
+		var nestedMortalityData = d3.nest()
+			.key(function(d) { return d.Maternal_Race_or_Ethnicity; })
+			.rollup(function(v) { return {
+				total: d3.sum(v, function(d) { return d.Neonatal_Infant_Deaths; }),
+				avg: d3.mean(v, function(d) { return d.Neonatal_Infant_Deaths; })
+			}; })
+			.entries(filteredMortalityData);
+
+		console.log("---------- nestedMortalityData ----------");
+		console.log(nestedMortalityData);
+		console.log("---------- nestedMortalityData ----------");
+
+		// birthData = birthData.filter(function(d){return d.date == selectedDate;})
+
+		var g = svg.selectAll(".arc")
+			.data(pie(nestedMortalityData))
+			.enter().append("g")
+			.attr("class", "arc")
+			.on("mouseover", function(d) {
+
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
+
+				tooltip.html(
+					"<p><strong>Year:</strong> " + selectedDate.getFullYear() + "</p>" +
+					"<p><strong>Race:</strong> " + d.data.key + "</p>" +
+					"<p><strong>Total Infant Neonatal Deaths:</strong> " + d.data.value.total + "</p>"
+				)
+					.style("left", d3.select(this).attr("cx") + "px")
+					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		g.append("path")
+			.attr("d", arc)
+			.style("fill", function(d) { return color(d.data.key); });
+
+		g.append("text")
+			.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+			.attr("dy", ".35em")
+			.text(function(d) { return d.data.value.total; });
+
+		createInfantNeonatalMortalityByRaceFilter(mortalityData);
+		createInfantNeonatalMortalityByRaceApplyButton(mortalityData);
+		createInfantNeonatalMortalityByRaceResetButton(mortalityData);
+
+
+	}
+
+	function createInfantNeonatalMortalityByRaceFilter(mortalityData){
+		var dateSelector = "";
+
+		// console.log("---------- createWaterConsumptionFilter ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+
+		// dateSelector += "<p>Select Year for Birth By Race Chart:&nbsp;</p>";
+		// dateSelector += "<p><input type='text' id='datepicker-birthsByRaceChart'></p>";
+		// dateSelector += "<div id='datepicker-birthsByRaceChart' style='width:92%; left: 0;'></div></br>";
+
+		var years = [];
+
+		mortalityData.forEach(function(d){
+			if (years.includes(d.Year.getFullYear()) != true) {
+				years.push(d.Year.getFullYear());
+			}
+		})
+
+		// console.log("---------- years ----------");
+		// console.log(years);
+		// console.log("---------- years ----------");
+
+
+		dateSelector += "<p>Select Year for Neonatal Infant Mortality By Race Chart:</p><p><select id='selectYear-infantNeonatalMortalityByRaceChart' size='1' style='width: 202px;'>";
+		years.forEach(function (d){
+			dateSelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		dateSelector += "</select></p>";
+
+		document.getElementById('infantNeonatalMortalityByRaceChartFilters').innerHTML = dateSelector;
+
+
+
+		// $(function (){
+		// 	$("#datepicker-birthsByRaceChart").datepicker({
+		// 		dateFormat: 'yy',
+		// 		changeYear: true,
+		// 		changeMonth: false
+		// 	});
+		// })
+
+
+	}
+
+	function createInfantNeonatalMortalityByRaceApplyButton(mortalityData){
+		document.getElementById("infantNeonatalMortalityByRaceChartApplyButton").innerHTML = "";
+
+		var infantNeonatalMortalityByRaceChartApplyButton = document.createElement("infantNeonatalMortalityByRaceChartApplyButton");
+
+		infantNeonatalMortalityByRaceChartApplyButton.innerHTML = "<button>Apply Filter</button>";
+
+		document.getElementById("infantNeonatalMortalityByRaceChartApplyButton").appendChild(infantNeonatalMortalityByRaceChartApplyButton);
+
+		infantNeonatalMortalityByRaceChartApplyButton.addEventListener ("click", function() {
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-birthsByRaceChart").val());
+			// console.log($("#selectBorough-birthsByRaceChart").val());
+
+			var selectedYear = $("#selectYear-infantNeonatalMortalityByRaceChart").val();
+
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
+			// console.log("---------- selectedYear ----------");
+			// console.log(selectedYear);
+			// console.log("---------- selectedYear ----------");
+
+
+			document.getElementById("infantNeonatalMortalityByRaceChart").innerHTML = "";
+
+			createInfantNeonatalMortalityByRaceChart(mortalityData, selectedYear);
+		});
+	}
+
+	function createInfantNeonatalMortalityByRaceResetButton(mortalityData){
+		document.getElementById("infantNeonatalMortalityByRaceChartResetButton").innerHTML = "";
+
+		var infantNeonatalMortalityByRaceChartResetButton = document.createElement("infantNeonatalMortalityByRaceChartResetButton");
+
+		infantNeonatalMortalityByRaceChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("infantNeonatalMortalityByRaceChartResetButton").appendChild(infantNeonatalMortalityByRaceChartResetButton);
+
+		infantNeonatalMortalityByRaceChartResetButton.addEventListener ("click", function() {
+			var infantMortality = {!! json_encode($infantMortality->toArray()) !!};
+
+			// console.log("---------- infantMortality ----------");
+			// console.log(infantMortality);
+			// console.log("---------- infantMortality ----------");
+
+			infantMortality.forEach(function(d){
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				d.Year = new Date(d.Year);
+				d.Maternal_Race_or_Ethnicity = d.Maternal_Race_or_Ethnicity;
+				d.Infant_Deaths = d.Infant_Deaths;
+				d.Infant_Mortality_Rate = d.Infant_Mortality_Rate;
+				d.Neonatal_Infant_Deaths = d.Neonatal_Infant_Deaths;
+				d.Neonatal_Mortality_Rate = d.Neonatal_Mortality_Rate;
+				d.Postneonatal_Infant_Deaths = d.Postneonatal_Infant_Deaths;
+				d.Postneonatal_Mortality_Rate = d.Postneonatal_Mortality_Rate;
+				d.Number_of_Live_Births = d.Number_of_Live_Births;
+			})
+
+			mortalityData = infantMortality;
+
+			console.log("---------- mortalityData ----------");
+			console.log(mortalityData);
+			console.log("---------- mortalityData ----------");
+
+			mortalityData.sort(function(a, b) { return a.Year - b.Year; });
+
+			// console.log("---------- birthData ----------");
+			// console.log(birthData);
+			// console.log("---------- birthData ----------");
+
+			selectedDate = d3.extent(mortalityData, function(d) { return d.Year; })[0];
+
+			document.getElementById("infantNeonatalMortalityByRaceChart").innerHTML = "";
+
+			createInfantNeonatalMortalityByRaceChart(mortalityData,selectedDate);
+
+		});
+	}
+
+	function createInfantPostNeonatalMortalityByRaceChart(mortalityData, selectedDate){
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 80, bottom: 70, left: 60},
+			width = 600 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom
+			radius = Math.min(width, height) / 2;
+
+		var arc = d3.arc()
+			.outerRadius(radius - 10)
+			.innerRadius(0);
+
+		var labelArc = d3.arc()
+			.outerRadius(radius - 40)
+			.innerRadius(radius - 40);
+
+		var pie = d3.pie()
+			.sort(null)
+			.value(function(d) { return d.value.total; });
+
+		// Adds the svg canvas
+		var svg = d3.select("#infantPostNeonatalMortalityByRaceChart")
+			.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+			// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		// Define the div for the tooltip
+		var tooltip = d3.select("#infantPostNeonatalMortalityByRaceChart").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+		var infantMortality = {!! json_encode($infantMortality->toArray()) !!};
+
+		console.log("---------- infantMortality ----------");
+		console.log(infantMortality);
+		console.log("---------- infantMortality ----------");
+
+		infantMortality.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			d.Year = new Date(d.Year);
+			d.Maternal_Race_or_Ethnicity = d.Maternal_Race_or_Ethnicity;
+			d.Infant_Deaths = d.Infant_Deaths;
+			d.Infant_Mortality_Rate = d.Infant_Mortality_Rate;
+			d.Neonatal_Infant_Deaths = d.Neonatal_Infant_Deaths;
+			d.Neonatal_Mortality_Rate = d.Neonatal_Mortality_Rate;
+			d.Postneonatal_Infant_Deaths = d.Postneonatal_Infant_Deaths;
+			d.Postneonatal_Mortality_Rate = d.Postneonatal_Mortality_Rate;
+			d.Number_of_Live_Births = d.Number_of_Live_Births;
+		})
+
+		mortalityData = infantMortality;
+
+		console.log("---------- mortalityData ----------");
+		console.log(mortalityData);
+		console.log("---------- mortalityData ----------");
+
+		mortalityData.sort(function(a, b) { return a.Year - b.Year; });
+
+		if (selectedDate == null && selectedDate == undefined) {
+			selectedDate = d3.extent(mortalityData, function(d) { return d.Year; })[0];
+			// selectedDate = new Date(selectedDate.toString());
+		}
+		else {
+			selectedDate = new Date(selectedDate.toString());
+		}
+
+		filteredMortalityData = [];
+
+		// console.log("---------- selectedDate ----------");
+		// console.log(selectedDate);
+		// console.log("---------- selectedDate ----------");
+
+		mortalityData.forEach(function(d){
+			// console.log("---------- d ----------");
+			// console.log(d);
+			// console.log("---------- d ----------");
+			if (d.Year.getFullYear() == selectedDate.getFullYear()) {
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				filteredMortalityData.push(d);
+			}
+		})
+
+		var nestedMortalityData = d3.nest()
+			.key(function(d) { return d.Maternal_Race_or_Ethnicity; })
+			.rollup(function(v) { return {
+				total: d3.sum(v, function(d) { return d.Postneonatal_Infant_Deaths; }),
+				avg: d3.mean(v, function(d) { return d.Postneonatal_Infant_Deaths; })
+			}; })
+			.entries(filteredMortalityData);
+
+		console.log("---------- nestedMortalityData ----------");
+		console.log(nestedMortalityData);
+		console.log("---------- nestedMortalityData ----------");
+
+		// birthData = birthData.filter(function(d){return d.date == selectedDate;})
+
+		var g = svg.selectAll(".arc")
+			.data(pie(nestedMortalityData))
+			.enter().append("g")
+			.attr("class", "arc")
+			.on("mouseover", function(d) {
+
+				tooltip.transition()
+					.duration(200)
+					.style("opacity", 1);
+
+				tooltip.html(
+					"<p><strong>Year:</strong> " + selectedDate.getFullYear() + "</p>" +
+					"<p><strong>Race:</strong> " + d.data.key + "</p>" +
+					"<p><strong>Total Post-Neonatal Infant Deaths:</strong> " + d.data.value.total + "</p>"
+				)
+					.style("left", d3.select(this).attr("cx") + "px")
+					.style("top", d3.select(this).attr("cy") + "px");
+			})
+			.on("mouseout", function(d) {
+				tooltip.transition()
+					.duration(500)
+					.style("opacity", 0);
+			});
+
+		g.append("path")
+			.attr("d", arc)
+			.style("fill", function(d) { return color(d.data.key); });
+
+		g.append("text")
+			.attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+			.attr("dy", ".35em")
+			.text(function(d) { return d.data.value.total; });
+
+		createInfantPostNeonatalMortalityByRaceFilter(mortalityData);
+		createInfantPostNeonatalMortalityByRaceApplyButton(mortalityData);
+		createInfantPostNeonatalMortalityByRaceResetButton(mortalityData);
+
+
+	}
+
+	function createInfantPostNeonatalMortalityByRaceFilter(mortalityData){
+		var dateSelector = "";
+
+		// console.log("---------- createWaterConsumptionFilter ----------");
+		// console.log("---------- dateMax ----------");
+		// console.log(dateMax);
+		// console.log("---------- dateMax ----------");
+		// console.log("---------- dateMin ----------");
+		// console.log(dateMin);
+		// console.log("---------- dateMin ----------");
+
+		// dateSelector += "<p>Select Year for Birth By Race Chart:&nbsp;</p>";
+		// dateSelector += "<p><input type='text' id='datepicker-birthsByRaceChart'></p>";
+		// dateSelector += "<div id='datepicker-birthsByRaceChart' style='width:92%; left: 0;'></div></br>";
+
+		var years = [];
+
+		mortalityData.forEach(function(d){
+			if (years.includes(d.Year.getFullYear()) != true) {
+				years.push(d.Year.getFullYear());
+			}
+		})
+
+		// console.log("---------- years ----------");
+		// console.log(years);
+		// console.log("---------- years ----------");
+
+
+		dateSelector += "<p>Select Year for Post-Neonatal Infant Mortality By Race Chart:</p><p><select id='selectYear-infantPostNeonatalMortalityByRaceChart' size='1' style='width: 202px;'>";
+		years.forEach(function (d){
+			dateSelector += "<option value=" + d + ">" + d + "</option>";
+		})
+		dateSelector += "</select></p>";
+
+		document.getElementById('infantPostNeonatalMortalityByRaceChartFilters').innerHTML = dateSelector;
+
+
+
+		// $(function (){
+		// 	$("#datepicker-birthsByRaceChart").datepicker({
+		// 		dateFormat: 'yy',
+		// 		changeYear: true,
+		// 		changeMonth: false
+		// 	});
+		// })
+
+
+	}
+
+	function createInfantPostNeonatalMortalityByRaceApplyButton(mortalityData){
+		document.getElementById("infantPostNeonatalMortalityByRaceChartApplyButton").innerHTML = "";
+
+		var infantPostNeonatalMortalityByRaceChartApplyButton = document.createElement("infantPostNeonatalMortalityByRaceChartApplyButton");
+
+		infantPostNeonatalMortalityByRaceChartApplyButton.innerHTML = "<button>Apply Filter</button>";
+
+		document.getElementById("infantPostNeonatalMortalityByRaceChartApplyButton").appendChild(infantPostNeonatalMortalityByRaceChartApplyButton);
+
+		infantPostNeonatalMortalityByRaceChartApplyButton.addEventListener ("click", function() {
+			// console.log("---------- Submit Button Clicked ----------");
+			// console.log($("#dateSlider-birthsByRaceChart").val());
+			// console.log($("#selectBorough-birthsByRaceChart").val());
+
+			var selectedYear = $("#selectYear-infantPostNeonatalMortalityByRaceChart").val();
+
+			// console.log("---------- min ----------");
+			// console.log(min);
+			// console.log("---------- min ----------");
+			// console.log("---------- max ----------");
+			// console.log(max);
+			// console.log("---------- max ----------");
+			// console.log("---------- selectedYear ----------");
+			// console.log(selectedYear);
+			// console.log("---------- selectedYear ----------");
+
+
+			document.getElementById("infantPostNeonatalMortalityByRaceChart").innerHTML = "";
+
+			createInfantPostNeonatalMortalityByRaceChart(mortalityData, selectedYear);
+		});
+	}
+
+	function createInfantPostNeonatalMortalityByRaceResetButton(mortalityData){
+		document.getElementById("infantPostNeonatalMortalityByRaceChartResetButton").innerHTML = "";
+
+		var infantPostNeonatalMortalityByRaceChartResetButton = document.createElement("infantPostNeonatalMortalityByRaceChartResetButton");
+
+		infantPostNeonatalMortalityByRaceChartResetButton.innerHTML = "<button>Reset Filter</button>";
+
+		document.getElementById("infantPostNeonatalMortalityByRaceChartResetButton").appendChild(infantPostNeonatalMortalityByRaceChartResetButton);
+
+		infantPostNeonatalMortalityByRaceChartResetButton.addEventListener ("click", function() {
+			var infantMortality = {!! json_encode($infantMortality->toArray()) !!};
+
+			// console.log("---------- infantMortality ----------");
+			// console.log(infantMortality);
+			// console.log("---------- infantMortality ----------");
+
+			infantMortality.forEach(function(d){
+				// console.log("---------- d ----------");
+				// console.log(d);
+				// console.log("---------- d ----------");
+				d.Year = new Date(d.Year);
+				d.Maternal_Race_or_Ethnicity = d.Maternal_Race_or_Ethnicity;
+				d.Infant_Deaths = d.Infant_Deaths;
+				d.Infant_Mortality_Rate = d.Infant_Mortality_Rate;
+				d.Neonatal_Infant_Deaths = d.Neonatal_Infant_Deaths;
+				d.Neonatal_Mortality_Rate = d.Neonatal_Mortality_Rate;
+				d.Postneonatal_Infant_Deaths = d.Postneonatal_Infant_Deaths;
+				d.Postneonatal_Mortality_Rate = d.Postneonatal_Mortality_Rate;
+				d.Number_of_Live_Births = d.Number_of_Live_Births;
+			})
+
+			mortalityData = infantMortality;
+
+			console.log("---------- mortalityData ----------");
+			console.log(mortalityData);
+			console.log("---------- mortalityData ----------");
+
+			mortalityData.sort(function(a, b) { return a.Year - b.Year; });
+
+			// console.log("---------- birthData ----------");
+			// console.log(birthData);
+			// console.log("---------- birthData ----------");
+
+			selectedDate = d3.extent(mortalityData, function(d) { return d.Year; })[0];
+
+			document.getElementById("infantPostNeonatalMortalityByRaceChart").innerHTML = "";
+
+			createInfantPostNeonatalMortalityByRaceChart(mortalityData,selectedDate);
+
+		});
+	}
+
 
 </script>
 <!-- /page content -->

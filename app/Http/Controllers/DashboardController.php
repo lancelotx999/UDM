@@ -11,6 +11,7 @@ use App\WaterConsumption;
 use App\JuvenileInvestigation;
 use App\JuvenileIntakes;
 use App\ActualRevenues;
+use App\InfantMortality;
 
 class DashboardController extends Controller
 {
@@ -20,6 +21,7 @@ class DashboardController extends Controller
         $populationByBorough = PopulationByBorough::all();
         $populationByCommunityDistricts = PopulationByCommunityDistricts::all();
         $waterConsumption = WaterConsumption::all();
+        $infantMortality = InfantMortality::all();
 
         $data = [];
 
@@ -27,6 +29,7 @@ class DashboardController extends Controller
         $data['populationByCommunityDistricts'] = $populationByCommunityDistricts;
         $data['natality'] = $natality;
         $data['waterConsumption'] = $waterConsumption;
+        $data['infantMortality'] = $infantMortality;
 
         return view('/populationDashboard',$data);
     }
