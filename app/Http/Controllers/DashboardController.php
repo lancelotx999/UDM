@@ -30,4 +30,17 @@ class DashboardController extends Controller
 
         return view('/populationDashboard',$data);
     }
+
+    public function populationDashboard()
+    {
+        $juvenileInvestigation = JuvenileInvestigation::all();
+        $juvenileIntakes = JuvenileIntakes::all();
+
+        $data = [];
+
+        $data['juvenileIntakes'] = $juvenileIntakes;
+        $data['juvenileInvestigation'] = $juvenileInvestigation;
+
+        return view('/juvenileDashboard',$data);
+    }
 }

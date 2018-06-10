@@ -20,6 +20,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/chart', 'ChartController@chartPage');
 Route::get('/map', 'LeafletController@mainMap');
 Route::get('/dashboard/population', 'DashboardController@populationDashboard');
+Route::get('/dashboard/juvenile', 'DashboardController@juvenileDashboard');
 
 // Route::get('/map/swinburne', 'HeatmapController@heatmapMap');
 // Route::get('/chart/security', 'ChartController@securityChartPage');
