@@ -48,7 +48,7 @@
             			<div class="clearfix"></div>
           			</div>
           			<div class="x_content">
-						<div id='populationByBoroughChart'></div><br /><br /><br />
+						<div id='populationByBoroughChart'></div>
 						<span id='populationByBoroughChartFilters'></span>
 						<span id='populationByBoroughChartApplyButton'></span>
 						<span id='populationByBoroughChartResetButton'></span>
@@ -186,8 +186,6 @@
         		</div>
       		</div>
   		</div>
-
-
 
     	<br />
 

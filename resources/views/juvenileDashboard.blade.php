@@ -29,7 +29,7 @@
 </style>
 
 <!-- page content -->
-<div class="dashboard" role="main">
+<div class="dashboard bottom-space" role="main">
     <div class="page-title">
       	<div class="title_left">
         	<h1>Juvenile Statistics Of New York</h1><hr />
@@ -48,7 +48,7 @@
             			<div class="clearfix"></div>
           			</div>
           			<div class="x_content">
-						<div id='juvenileInvestigationChart'></div><br /><br /><br />
+						<div id='juvenileInvestigationChart'></div>
 						<span id='juvenileInvestigationChartFilters'></span>
 						<span id='juvenileInvestigationChartApplyButton'></span>
 						<span id='juvenileInvestigationChartResetButton'></span>

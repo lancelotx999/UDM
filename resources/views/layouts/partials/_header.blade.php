@@ -42,7 +42,7 @@
                     </a>
                 </li>
 
-                @if (Auth::check() and Auth::user()->hasRole('admin'))
+                @if (Auth::check())
                 <li>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-pie-chart fa-fw" aria-hidden="true"></i>
@@ -51,9 +51,12 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="/dashboard/population">Population</a></li>
+                        <li><a href="/dashboard/juvenile">Juvenile</a></li>
                     </ul>
                 </li>
-
+                @endif
+                
+                @if (Auth::check() and Auth::user()->hasRole('admin'))
                 <li>
                     <a href="/upload">
                         <i class="fa fa-upload fa-fw" aria-hidden="true"></i>&nbsp;Upload

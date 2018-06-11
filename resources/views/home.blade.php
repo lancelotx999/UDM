@@ -32,7 +32,7 @@
                         <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
                         &nbsp;Notes
                     </a>
-                    <a href="/dashboard" class="list-group-item">
+                    <a href="/dashboard/population" class="list-group-item">
                         <i class="fa fa-pie-chart fa-fw" aria-hidden="true"></i>
                         &nbsp;Dashboard
                     </a>
